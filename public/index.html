@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FOR-DAILY — File Manager</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #252836;
+      --border: #2e3248;
+      --accent: #6c63ff;
+      --accent2: #00d4aa;
+      --text: #e2e8f0;
+      --muted: #6b7280;
+      --danger: #ef4444;
+      --success: #22c55e;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    header .icon { font-size: 28px; }
+
+    header h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    header h1 span { color: var(--accent); }
+
+    header .path {
+      margin-left: auto;
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--surface2);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: monospace;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-header h2 { font-size: 15px; font-weight: 600; }
+
+    .badge {
+      background: var(--surface2);
+      color: var(--muted);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+
+    /* File list */
+    #file-list { padding: 8px 0; min-height: 200px; }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 20px;
+      transition: background 0.15s;
+      cursor: default;
+    }
+
+    .file-item:hover { background: var(--surface2); }
+
+    .file-icon { font-size: 18px; width: 24px; text-align: center; }
+
+    .file-info { flex: 1; min-width: 0; }
+
+    .file-name {
+      font-size: 14px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    .btn-delete {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: all 0.15s;
+      opacity: 0;
+    }
+
+    .file-item:hover .btn-delete { opacity: 1; }
+    .btn-delete:hover { background: rgba(239,68,68,.15); color: var(--danger); }
+
+    .empty {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .empty .icon { font-size: 40px; margin-bottom: 12px; }
+
+    /* Stats bar */
+    .stats-bar {
+      display: flex;
+      gap: 8px;
+      padding: 12px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .stats-bar span { margin-right: 4px; }
+
+    /* Side panel */
+    .side { display: flex; flex-direction: column; gap: 20px; }
+
+    /* Create file form */
+    .form-group { padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; }
+
+    label { font-size: 12px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    input[type="text"], textarea {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      padding: 9px 12px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    input[type="text"]:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+
+    textarea { resize: vertical; min-height: 90px; font-family: monospace; font-size: 12px; }
+
+    .btn {
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: #5a52e0; }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-secondary {
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    /* Upload zone */
+    .upload-zone {
+      margin: 0 20px 16px;
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--accent2);
+      background: rgba(0, 212, 170, 0.05);
+    }
+
+    .upload-zone .icon { font-size: 28px; }
+    .upload-zone p { font-size: 13px; color: var(--muted); margin-top: 8px; }
+    .upload-zone strong { color: var(--accent2); }
+
+    #upload-input { display: none; }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 100;
+    }
+
+    #toast.show { transform: translateY(0); opacity: 1; }
+    #toast.success { border-color: var(--success); }
+    #toast.error { border-color: var(--danger); }
+
+    @media (max-width: 768px) {
+      .container { grid-template-columns: 1fr; }
+      header { padding: 14px 16px; }
+      header .path { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="icon">📁</span>
+  <h1>FOR-<span>DAILY</span></h1>
+  <span class="path">d:\Locals\git-working\for-daily</span>
+</header>
+
+<div class="container">
+  <!-- File list -->
+  <div class="card">
+    <div class="card-header">
+      <h2>📂 Danh sách file</h2>
+      <span class="badge" id="count-badge">0 items</span>
+    </div>
+    <div id="file-list">
+      <div class="empty"><div class="icon">🌀</div>Đang tải...</div>
+    </div>
+    <div class="stats-bar" id="stats-bar">
+      <span>📄 <span id="stat-files">0</span> files</span>
+      <span>📁 <span id="stat-folders">0</span> folders</span>
+    </div>
+  </div>
+
+  <!-- Side panel -->
+  <div class="side">
+    <!-- Create file -->
+    <div class="card">
+      <div class="card-header">
+        <h2>✏️ Tạo file mới</h2>
+      </div>
+      <div class="form-group">
+        <label>Tên file</label>
+        <input type="text" id="new-name" placeholder="example.txt" />
+
+        <label>Nội dung (tuỳ chọn)</label>
+        <textarea id="new-content" placeholder="Nhập nội dung file..."></textarea>
+
+        <button class="btn btn-primary" id="btn-create">
+          <span>➕</span> Tạo file
+        </button>
+      </div>
+    </div>
+
+    <!-- Upload file -->
+    <div class="card">
+      <div class="card-header">
+        <h2>⬆️ Upload file</h2>
+      </div>
+      <div style="height: 12px;"></div>
+      <div class="upload-zone" id="upload-zone">
+        <div class="icon">📤</div>
+        <p>Kéo thả file vào đây hoặc<br/><strong>click để chọn file</strong></p>
+      </div>
+      <input type="file" id="upload-input" multiple />
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+  const fileList = document.getElementById('file-list');
+  const countBadge = document.getElementById('count-badge');
+  const statFiles = document.getElementById('stat-files');
+  const statFolders = document.getElementById('stat-folders');
+  const btnCreate = document.getElementById('btn-create');
+  const newName = document.getElementById('new-name');
+  const newContent = document.getElementById('new-content');
+  const uploadZone = document.getElementById('upload-zone');
+  const uploadInput = document.getElementById('upload-input');
+  const toast = document.getElementById('toast');
+
+  let toastTimer;
+
+  function showToast(msg, type = 'success') {
+    clearTimeout(toastTimer);
+    toast.textContent = '';
+    toast.className = 'show ' + type;
+    toast.innerHTML = (type === 'success' ? '✅ ' : '❌ ') + msg;
+    toastTimer = setTimeout(() => toast.className = '', 3000);
+  }
+
+  function formatSize(bytes) {
+    if (bytes === null) return '';
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+  }
+
+  function formatDate(iso) {
+    return new Date(iso).toLocaleString('vi-VN', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+  }
+
+  function fileIcon(name, type) {
+    if (type === 'folder') return '📁';
+    const ext = name.split('.').pop().toLowerCase();
+    const map = {
+      md: '📝', txt: '📄', js: '🟨', ts: '🔷', json: '🔧',
+      html: '🌐', css: '🎨', py: '🐍', sh: '⚙️', png: '🖼️',
+      jpg: '🖼️', jpeg: '🖼️', gif: '🖼️', svg: '🖼️', pdf: '📕',
+      zip: '📦', rar: '📦', env: '🔒', gitignore: '🙈',
+    };
+    return map[ext] || '📄';
+  }
+
+  async function loadFiles() {
+    try {
+      const res = await fetch('/api/files');
+      const files = await res.json();
+
+      if (!files.length) {
+        fileList.innerHTML = '<div class="empty"><div class="icon">📭</div>Thư mục trống</div>';
+        countBadge.textContent = '0 items';
+        statFiles.textContent = '0';
+        statFolders.textContent = '0';
+        return;
+      }
+
+      const sorted = [...files].sort((a, b) => {
+        if (a.type !== b.type) return a.type === 'folder' ? -1 : 1;
+        return a.name.localeCompare(b.name);
+      });
+
+      fileList.innerHTML = sorted.map(f => `
+        <div class="file-item" data-name="${f.name}" data-type="${f.type}">
+          <span class="file-icon">${fileIcon(f.name, f.type)}</span>
+          <div class="file-info">
+            <div class="file-name">${f.name}</div>
+            <div class="file-meta">${formatDate(f.modified)}${f.size !== null ? ' · ' + formatSize(f.size) : ''}</div>
+          </div>
+          ${f.type === 'file' ? `<button class="btn-delete" title="Xóa" onclick="deleteFile('${f.name}')">🗑️</button>` : ''}
+        </div>
+      `).join('');
+
+      const fc = files.filter(f => f.type === 'file').length;
+      const dc = files.filter(f => f.type === 'folder').length;
+      countBadge.textContent = files.length + ' items';
+      statFiles.textContent = fc;
+      statFolders.textContent = dc;
+    } catch {
+      fileList.innerHTML = '<div class="empty"><div class="icon">⚠️</div>Không thể tải danh sách</div>';
+    }
+  }
+
+  async function deleteFile(name) {
+    if (!confirm(`Xóa "${name}"?`)) return;
+    try {
+      const res = await fetch(`/api/files/${encodeURIComponent(name)}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) {
+        showToast(`Đã xóa "${name}"`);
+        loadFiles();
+      } else {
+        showToast(data.error, 'error');
+      }
+    } catch {
+      showToast('Lỗi khi xóa file', 'error');
+    }
+  }
+
+  btnCreate.addEventListener('click', async () => {
+    const name = newName.value.trim();
+    const content = newContent.value;
+    if (!name) { showToast('Vui lòng nhập tên file', 'error'); return; }
+
+    btnCreate.disabled = true;
+    try {
+      const res = await fetch('/api/files/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, content }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast(`Đã tạo "${data.name}"`);
+        newName.value = '';
+        newContent.value = '';
+        loadFiles();
+      } else {
+        showToast(data.error, 'error');
+      }
+    } catch {
+      showToast('Lỗi khi tạo file', 'error');
+    } finally {
+      btnCreate.disabled = false;
+    }
+  });
+
+  newName.addEventListener('keydown', e => { if (e.key === 'Enter') btnCreate.click(); });
+
+  async function uploadFiles(files) {
+    if (!files.length) return;
+    const fd = new FormData();
+    for (const f of files) fd.append('files', f);
+
+    try {
+      const res = await fetch('/api/files/upload', { method: 'POST', body: fd });
+      const data = await res.json();
+      if (data.success) {
+        showToast(`Đã upload ${data.uploaded.length} file`);
+        loadFiles();
+      }
+    } catch {
+      showToast('Lỗi khi upload', 'error');
+    }
+  }
+
+  uploadZone.addEventListener('click', () => uploadInput.click());
+
+  uploadInput.addEventListener('change', () => {
+    uploadFiles(Array.from(uploadInput.files));
+    uploadInput.value = '';
+  });
+
+  uploadZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    uploadZone.classList.add('dragover');
+  });
+
+  uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+
+  uploadZone.addEventListener('drop', e => {
+    e.preventDefault();
+    uploadZone.classList.remove('dragover');
+    uploadFiles(Array.from(e.dataTransfer.files));
+  });
+
+  loadFiles();
+  setInterval(loadFiles, 5000);
+</script>
+
+</body>
+</html>
