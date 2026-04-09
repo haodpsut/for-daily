@@ -13,11 +13,14 @@ if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 // ─── JSON Database ────────────────────────────────────────────────────────────
 function loadDB() {
   if (!fs.existsSync(DB_FILE)) {
-    fs.writeFileSync(DB_FILE, JSON.stringify({ evidence: [], assessments: [], nextId: 1, nextAssessId: 1 }, null, 2), 'utf8');
+    fs.writeFileSync(DB_FILE, JSON.stringify({ evidence: [], assessments: [], kpi_data: [], school_info: {}, nextId: 1, nextAssessId: 1, nextKpiId: 1 }, null, 2), 'utf8');
   }
   const db = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
   if (!db.assessments)  db.assessments  = [];
   if (!db.nextAssessId) db.nextAssessId = 1;
+  if (!db.kpi_data)     db.kpi_data     = [];
+  if (!db.school_info)  db.school_info  = {};
+  if (!db.nextKpiId)    db.nextKpiId    = 1;
   return db;
 }
 
@@ -246,6 +249,74 @@ app.delete('/api/assessments/:id', (req, res) => {
   const idx = db.assessments.findIndex(a => a.id === parseInt(req.params.id));
   if (idx === -1) return res.status(404).json({ error: 'Không tìm thấy' });
   db.assessments.splice(idx, 1);
+  saveDB(db);
+  res.json({ message: 'Đã xóa' });
+});
+
+// ─── API: School Info ─────────────────────────────────────────────────────────
+app.get('/api/school-info', (req, res) => {
+  const db = loadDB();
+  res.json(db.school_info);
+});
+
+app.put('/api/school-info', (req, res) => {
+  const db = loadDB();
+  db.school_info = { ...db.school_info, ...req.body };
+  saveDB(db);
+  res.json({ message: 'Đã lưu thông tin trường' });
+});
+
+// ─── API: KPI Data (Biểu 16) ─────────────────────────────────────────────────
+app.get('/api/kpi', (req, res) => {
+  const db = loadDB();
+  // Return lightweight summary list (exclude heavy fields for list view)
+  const list = db.kpi_data.map(r => ({
+    id: r.id, nam_hoc: r.nam_hoc, created_at: r.created_at, updated_at: r.updated_at,
+    // Key summary fields for table
+    so_gv_co_huu: r.so_gv_co_huu, pct_gv_ts: r.pct_gv_ts,
+    pct_tot_nghiep: r.pct_tot_nghiep, pct_viec_lam_12t: r.pct_viec_lam_12t,
+    so_bao_isi_scopus: r.so_bao_isi_scopus, so_nguoi_hoc_dh: r.so_nguoi_hoc_dh,
+  }));
+  res.json(list.sort((a, b) => (b.nam_hoc || '').localeCompare(a.nam_hoc || '')));
+});
+
+app.get('/api/kpi/:id', (req, res) => {
+  const db = loadDB();
+  const record = db.kpi_data.find(r => r.id === parseInt(req.params.id));
+  if (!record) return res.status(404).json({ error: 'Không tìm thấy' });
+  res.json(record);
+});
+
+app.post('/api/kpi', (req, res) => {
+  const db = loadDB();
+  const { nam_hoc } = req.body;
+  if (!nam_hoc) return res.status(400).json({ error: 'Thiếu năm học' });
+  if (db.kpi_data.find(r => r.nam_hoc === nam_hoc))
+    return res.status(400).json({ error: `Đã có dữ liệu năm học ${nam_hoc}` });
+
+  const record = { id: db.nextKpiId++, nam_hoc, ...req.body,
+    created_at: new Date().toLocaleString('vi-VN'),
+    updated_at: new Date().toLocaleString('vi-VN') };
+  db.kpi_data.push(record);
+  saveDB(db);
+  res.json({ id: record.id, message: 'Đã tạo dữ liệu năm học' });
+});
+
+app.put('/api/kpi/:id', (req, res) => {
+  const db = loadDB();
+  const idx = db.kpi_data.findIndex(r => r.id === parseInt(req.params.id));
+  if (idx === -1) return res.status(404).json({ error: 'Không tìm thấy' });
+  db.kpi_data[idx] = { ...db.kpi_data[idx], ...req.body,
+    updated_at: new Date().toLocaleString('vi-VN') };
+  saveDB(db);
+  res.json({ message: 'Đã cập nhật' });
+});
+
+app.delete('/api/kpi/:id', (req, res) => {
+  const db = loadDB();
+  const idx = db.kpi_data.findIndex(r => r.id === parseInt(req.params.id));
+  if (idx === -1) return res.status(404).json({ error: 'Không tìm thấy' });
+  db.kpi_data.splice(idx, 1);
   saveDB(db);
   res.json({ message: 'Đã xóa' });
 });

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KPI Database – Biểu 16</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0f1117; --panel: #1a1d27; --border: #2a2d3e;
+  --accent: #4f8ef7; --accent2: #7c5cbf; --green: #2ea87e;
+  --red: #e05a5a; --yellow: #e0a847; --text: #e2e8f0; --muted: #64748b; --hover: #22263a;
+}
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); display: flex; flex-direction: column; height: 100vh; overflow: hidden; font-size: 14px; }
+
+/* ── Nav ── */
+.topnav { background: var(--panel); border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; align-items: center; height: 44px; flex-shrink: 0; }
+.topnav .brand { font-size: 13px; font-weight: 800; color: var(--accent); margin-right: 24px; }
+.nav-link { display: flex; align-items: center; height: 44px; padding: 0 14px; font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; transition: all .15s; }
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── Layout ── */
+.layout { display: flex; flex: 1; overflow: hidden; }
+
+/* ── Sidebar ── */
+#sidebar { width: 240px; background: var(--panel); border-right: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; }
+.sb-head { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+.sb-head h2 { font-size: 12px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+.sb-head p  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.year-list { padding: 8px; border-bottom: 1px solid var(--border); }
+.year-btn { width: 100%; text-align: left; background: none; border: 1px solid var(--border); color: var(--muted); padding: 7px 10px; border-radius: 5px; margin-bottom: 4px; cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: space-between; }
+.year-btn:hover { background: var(--hover); color: var(--text); }
+.year-btn.active { background: #1e2a4a; border-color: var(--accent); color: var(--accent); font-weight: 700; }
+.year-btn .del-year { font-size: 14px; color: var(--muted); line-height: 1; }
+.year-btn:hover .del-year { color: var(--red); }
+.btn-add-year { width: 100%; padding: 7px; background: none; border: 1px dashed var(--border); color: var(--muted); border-radius: 5px; cursor: pointer; font-size: 12px; }
+.btn-add-year:hover { border-color: var(--accent); color: var(--accent); }
+.group-nav { flex: 1; overflow-y: auto; padding: 8px; }
+.grp-btn { width: 100%; text-align: left; background: none; border: none; color: var(--muted); padding: 8px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
+.grp-btn:hover { background: var(--hover); color: var(--text); }
+.grp-btn.active { background: var(--hover); color: var(--text); font-weight: 600; }
+.grp-btn .grp-badge { width: 22px; height: 18px; border-radius: 3px; background: var(--accent2); color: #fff; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.grp-btn.active .grp-badge { background: var(--accent); }
+
+/* ── Main ── */
+#main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.main-head { background: var(--panel); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.main-head h2 { font-size: 15px; font-weight: 700; flex: 1; }
+.year-tag { font-size: 12px; font-weight: 700; background: #1e2a4a; color: var(--accent); padding: 4px 12px; border-radius: 20px; }
+.btn-export { background: none; border: 1px solid var(--border); color: var(--muted); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; }
+.btn-export:hover { border-color: var(--green); color: var(--green); }
+.main-body { flex: 1; overflow-y: auto; padding: 20px; }
+
+/* ── No-year state ── */
+.no-year { text-align: center; padding: 80px 20px; color: var(--muted); }
+.no-year .icon { font-size: 52px; margin-bottom: 16px; }
+.no-year h3 { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.btn-primary { background: var(--accent); color: #fff; border: none; padding: 10px 24px; border-radius: 7px; cursor: pointer; font-size: 14px; font-weight: 700; }
+.btn-primary:hover { opacity: .85; }
+
+/* ── Dashboard ── */
+.dash-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+.kpi-card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; position: relative; overflow: hidden; }
+.kpi-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
+.kpi-card.ok::before { background: var(--green); }
+.kpi-card.warn::before { background: var(--yellow); }
+.kpi-card.bad::before { background: var(--red); }
+.kpi-card.neutral::before { background: var(--border); }
+.kpi-card .kc-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
+.kpi-card .kc-val   { font-size: 26px; font-weight: 800; margin: 4px 0 2px; }
+.kpi-card.ok   .kc-val { color: var(--green); }
+.kpi-card.warn .kc-val { color: var(--yellow); }
+.kpi-card.bad  .kc-val { color: var(--red); }
+.kpi-card.neutral .kc-val { color: var(--text); }
+.kpi-card .kc-bench { font-size: 11px; color: var(--muted); }
+.kpi-card .kc-unit  { font-size: 12px; color: var(--muted); margin-left: 3px; font-weight: normal; }
+
+/* Charts section */
+.charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.chart-box { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+.chart-box h3 { font-size: 13px; font-weight: 700; margin-bottom: 14px; }
+.chart-box canvas { max-height: 220px; }
+
+/* ── KPI Form ── */
+.form-section-head { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 14px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.kpi-form-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
+.kf-group { }
+.kf-group label { display: block; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .3px; margin-bottom: 5px; }
+.kf-group .kf-wrap { display: flex; align-items: center; gap: 0; }
+.kf-group input { flex: 1; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 8px 10px; border-radius: 6px 0 0 6px; font-size: 13px; width: 100%; }
+.kf-group input:focus { outline: 2px solid var(--accent); }
+.kf-group .kf-unit { background: var(--hover); border: 1px solid var(--border); border-left: none; color: var(--muted); padding: 8px 8px; border-radius: 0 6px 6px 0; font-size: 11px; white-space: nowrap; min-width: 36px; text-align: center; }
+.kf-group.has-bench input { border-color: var(--border); }
+.kf-group.bench-ok input { border-color: var(--green); }
+.kf-group.bench-warn input { border-color: var(--yellow); }
+.kf-group.bench-bad input { border-color: var(--red); }
+.kf-bench-hint { font-size: 10px; margin-top: 3px; }
+.kf-bench-hint.ok   { color: var(--green); }
+.kf-bench-hint.warn { color: var(--yellow); }
+.kf-bench-hint.bad  { color: var(--red); }
+
+.form-sticky-footer { position: sticky; bottom: 0; background: var(--panel); border-top: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; gap: 10px; margin: 0 -20px -20px; }
+.btn-save { background: var(--accent); color: #fff; border: none; padding: 9px 24px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 700; }
+.btn-save:hover { opacity: .85; }
+.btn-save:disabled { opacity: .4; cursor: not-allowed; }
+.save-hint { font-size: 12px; color: var(--muted); }
+
+/* ── Modal (add year) ── */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); backdrop-filter: blur(3px); z-index: 100; align-items: center; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; width: 380px; padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+.modal h3 { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+.modal input { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 9px 12px; border-radius: 6px; font-size: 13px; margin-bottom: 16px; }
+.modal input:focus { outline: 2px solid var(--accent); }
+.modal-btns { display: flex; gap: 10px; justify-content: flex-end; }
+.btn-cancel { background: none; border: 1px solid var(--border); color: var(--muted); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+.btn-cancel:hover { color: var(--text); }
+
+/* Toast */
+.toast { position: fixed; bottom: 24px; right: 24px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 12px 18px; font-size: 13px; font-weight: 600; z-index: 200; display: none; box-shadow: 0 8px 30px rgba(0,0,0,.4); }
+.toast.show { display: flex; align-items: center; gap: 8px; }
+.toast.success { border-color: var(--green); color: var(--green); }
+.toast.error   { border-color: var(--red);   color: var(--red); }
+
+::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <span class="brand">KĐCLGD · ĐH Kiến trúc Đà Nẵng</span>
+  <a class="nav-link" href="/">📂 Minh chứng</a>
+  <a class="nav-link" href="/module2.html">📋 Đánh giá TC</a>
+  <a class="nav-link active" href="/module3.html">📊 KPI – Biểu 16</a>
+</nav>
+
+<div class="layout">
+
+<!-- ── Sidebar ── -->
+<div id="sidebar">
+  <div class="sb-head">
+    <h2>Cơ sở dữ liệu</h2>
+    <p>Biểu 16 – Thông tư 2026</p>
+  </div>
+  <div class="year-list" id="year-list">
+    <button class="btn-add-year" onclick="openAddYear()">＋ Thêm năm học</button>
+  </div>
+  <div class="group-nav" id="group-nav"></div>
+</div>
+
+<!-- ── Main ── -->
+<div id="main">
+  <div class="main-head">
+    <h2 id="main-title">📊 KPI Database – Biểu 16</h2>
+    <span class="year-tag" id="year-tag" style="display:none"></span>
+    <button class="btn-export" onclick="exportCSV()">⬇ Xuất CSV</button>
+  </div>
+  <div class="main-body" id="main-body">
+    <div class="no-year" id="no-year-msg">
+      <div class="icon">📊</div>
+      <h3>Chưa có dữ liệu năm học</h3>
+      <p style="margin-bottom:20px;font-size:13px">Thêm năm học đầu tiên để bắt đầu nhập dữ liệu KPI (Biểu 16)</p>
+      <button class="btn-primary" onclick="openAddYear()">＋ Thêm năm học</button>
+    </div>
+    <div id="content-area" style="display:none"></div>
+  </div>
+</div>
+
+</div><!-- /layout -->
+
+<!-- Add Year Modal -->
+<div class="modal-overlay" id="modal-year">
+  <div class="modal">
+    <h3>Thêm năm học mới</h3>
+    <input id="inp-nam-hoc" type="text" placeholder="Năm học (vd: 2024-2025)" maxlength="20">
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeAddYear()">Huỷ</button>
+      <button class="btn-primary" onclick="createYear()">Tạo</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── KPI Schema ────────────────────────────────────────────────
+const KPI_GROUPS = [
+  { id: 'overview', name: 'Tổng quan', icon: '📈' },
+  {
+    id: 'B', name: 'Chương trình ĐT', icon: '🎓',
+    fields: [
+      { key: 'so_ctdt_dh',        label: 'Số CTĐT trình độ ĐH',           unit: 'CT' },
+      { key: 'so_ctdt_ths',       label: 'Số CTĐT trình độ ThS',          unit: 'CT' },
+      { key: 'so_ctdt_ts',        label: 'Số CTĐT trình độ TS',           unit: 'CT' },
+      { key: 'so_ctdt_kiem_dinh', label: 'Số CTĐT đã kiểm định (AUN-QA...)', unit: 'CT' },
+      { key: 'so_nguoi_hoc_dh',   label: 'Tổng số người học ĐH',          unit: 'SV' },
+      { key: 'so_nguoi_hoc_ths',  label: 'Tổng số người học ThS',         unit: 'HV' },
+      { key: 'so_nguoi_hoc_ts',   label: 'Tổng số người học TS',          unit: 'NCS' },
+    ]
+  },
+  {
+    id: 'C', name: 'Đội ngũ GV/CBQL', icon: '👩‍🏫',
+    fields: [
+      { key: 'so_gv_co_huu',      label: 'Số GV cơ hữu',                  unit: 'người' },
+      { key: 'so_gv_gs_pgs',      label: 'GV có học hàm GS/PGS',          unit: 'người' },
+      { key: 'so_gv_tien_si',     label: 'GV có học vị TS',               unit: 'người' },
+      { key: 'so_gv_thac_si',     label: 'GV có học vị ThS',              unit: 'người' },
+      { key: 'pct_gv_ts',         label: 'Tỉ lệ GV có TS',               unit: '%',    bench: { min: 50, dir: 'up',   hint: 'Tối thiểu 50%' } },
+      { key: 'ti_le_gv_sv',       label: 'Tỉ lệ GV/SV (1:N)',            unit: ':N',   bench: { max: 25, dir: 'down', hint: 'Tối đa 1:25' } },
+      { key: 'so_cbql_nv',        label: 'CBQL và nhân viên HC',          unit: 'người' },
+    ]
+  },
+  {
+    id: 'D', name: 'Tuyển sinh', icon: '📋',
+    fields: [
+      { key: 'chi_tieu_ts',       label: 'Chỉ tiêu tuyển sinh',           unit: 'chỉ tiêu' },
+      { key: 'so_tuyen_duoc',     label: 'Số tuyển được',                 unit: 'SV' },
+      { key: 'pct_tuyen_sinh',    label: 'Tỉ lệ tuyển sinh/chỉ tiêu',    unit: '%',  bench: { min: 80, dir: 'up', hint: 'Tối thiểu 80%' } },
+      { key: 'diem_chuan_tb',     label: 'Điểm chuẩn trung bình',         unit: 'điểm' },
+      { key: 'pct_nhap_hoc',      label: 'Tỉ lệ nhập học/trúng tuyển',   unit: '%' },
+    ]
+  },
+  {
+    id: 'E', name: 'Kết quả đào tạo', icon: '🏆',
+    fields: [
+      { key: 'pct_tot_nghiep',    label: 'Tỉ lệ tốt nghiệp đúng hạn',   unit: '%', bench: { min: 70, dir: 'up',   hint: 'Tối thiểu 70%' } },
+      { key: 'pct_thoi_hoc',      label: 'Tỉ lệ thôi học',               unit: '%', bench: { max: 10, dir: 'down', hint: 'Tối đa 10%' } },
+      { key: 'pct_viec_lam_6t',   label: 'Việc làm sau 6 tháng',         unit: '%', bench: { min: 70, dir: 'up',   hint: 'Tối thiểu 70%' } },
+      { key: 'pct_viec_lam_12t',  label: 'Việc làm sau 12 tháng',        unit: '%', bench: { min: 80, dir: 'up',   hint: 'Tối thiểu 80%' } },
+      { key: 'thu_nhap_tb',       label: 'Thu nhập bình quân sau TN',    unit: 'tr/tháng', bench: { min: 8, dir: 'up', hint: 'Tối thiểu 8 triệu/tháng' } },
+      { key: 'pct_hai_long_sv',   label: 'Tỉ lệ hài lòng người học',     unit: '%', bench: { min: 70, dir: 'up',   hint: 'Tối thiểu 70%' } },
+    ]
+  },
+  {
+    id: 'F', name: 'Nghiên cứu KH', icon: '🔬',
+    fields: [
+      { key: 'so_dt_cap_nn',      label: 'Đề tài cấp Nhà nước',           unit: 'đề tài' },
+      { key: 'so_dt_cap_bo_tinh', label: 'Đề tài cấp Bộ/Tỉnh',           unit: 'đề tài' },
+      { key: 'so_dt_cap_co_so',   label: 'Đề tài cấp cơ sở',              unit: 'đề tài' },
+      { key: 'so_bao_isi_scopus', label: 'Bài báo ISI/Scopus',            unit: 'bài', bench: { min: 10, dir: 'up', hint: 'Khuyến nghị ≥10' } },
+      { key: 'so_bao_trong_nuoc', label: 'Bài báo tạp chí trong nước',    unit: 'bài' },
+      { key: 'so_hoi_thao',       label: 'Bài hội thảo (QT + trong nước)', unit: 'bài' },
+      { key: 'so_sang_che',       label: 'Sáng chế / GPHI',               unit: 'cái' },
+      { key: 'dt_chuyen_giao',    label: 'Doanh thu chuyển giao KH-CN',   unit: 'tỉ VNĐ' },
+    ]
+  },
+  {
+    id: 'G', name: 'NCKH người học', icon: '🧑‍🎓',
+    fields: [
+      { key: 'so_dt_sv',          label: 'Đề tài NCKH SV được nghiệm thu', unit: 'đề tài' },
+      { key: 'so_bao_sv',         label: 'Bài báo đồng tác giả SV/GV',   unit: 'bài' },
+      { key: 'so_giai_thuong_sv', label: 'Giải thưởng SV NCKH cấp trên', unit: 'giải' },
+    ]
+  },
+  {
+    id: 'H', name: 'CSVC & Thư viện', icon: '🏛️',
+    fields: [
+      { key: 'dien_tich_dat',     label: 'Tổng diện tích đất',            unit: 'm²' },
+      { key: 'dien_tich_san_xd',  label: 'Diện tích sàn xây dựng',        unit: 'm²' },
+      { key: 'dien_tich_phong_hoc', label: 'Diện tích phòng học',         unit: 'm²' },
+      { key: 'dien_tich_lab',     label: 'Diện tích phòng TN/thực hành', unit: 'm²' },
+      { key: 'so_may_tinh',       label: 'Số máy tính phục vụ đào tạo',  unit: 'máy' },
+      { key: 'so_may_100sv',      label: 'Máy tính / 100 SV',            unit: 'máy', bench: { min: 20, dir: 'up', hint: 'Tối thiểu 20 máy/100SV' } },
+      { key: 'so_dau_sach_in',    label: 'Số đầu sách in',               unit: 'đầu sách' },
+      { key: 'so_csdl_dien_tu',   label: 'Số CSDL/đầu sách điện tử',    unit: 'đầu' },
+      { key: 'bang_thong',        label: 'Băng thông Internet',           unit: 'Mbps' },
+    ]
+  },
+];
+
+// Key KPIs shown on dashboard
+const DASH_KPIS = [
+  { key: 'pct_gv_ts',        label: 'GV có TS',           unit: '%',        bench: { min: 50, dir: 'up' } },
+  { key: 'ti_le_gv_sv',      label: 'Tỉ lệ GV/SV',        unit: ':N',       bench: { max: 25, dir: 'down' } },
+  { key: 'pct_tot_nghiep',   label: 'Tốt nghiệp đúng hạn', unit: '%',       bench: { min: 70, dir: 'up' } },
+  { key: 'pct_viec_lam_12t', label: 'Việc làm 12 tháng',  unit: '%',        bench: { min: 80, dir: 'up' } },
+  { key: 'pct_hai_long_sv',  label: 'Hài lòng SV',         unit: '%',        bench: { min: 70, dir: 'up' } },
+  { key: 'so_bao_isi_scopus',label: 'Bài báo ISI/Scopus',  unit: 'bài',     bench: { min: 10, dir: 'up' } },
+  { key: 'so_gv_co_huu',     label: 'GV cơ hữu',           unit: 'người',   bench: null },
+  { key: 'so_nguoi_hoc_dh',  label: 'Người học ĐH',        unit: 'SV',      bench: null },
+  { key: 'chi_tieu_ts',      label: 'Chỉ tiêu tuyển sinh', unit: 'chỉ tiêu', bench: null },
+];
+
+// ── State ────────────────────────────────────────────────────
+let years = [];       // [{id, nam_hoc, ...summary}]
+let activeYearId = null;
+let activeYearData = {};
+let activeGroup = 'overview';
+let charts = {};
+
+// ── Init ─────────────────────────────────────────────────────
+async function init() {
+  await loadYears();
+  renderGroupNav();
+  if (years.length > 0) selectYear(years[0].id);
+}
+
+async function loadYears() {
+  const res = await fetch('/api/kpi');
+  years = await res.json();
+  renderYearList();
+}
+
+// ── Year list ─────────────────────────────────────────────────
+function renderYearList() {
+  const el = document.getElementById('year-list');
+  el.innerHTML = years.map(y => `
+    <button class="year-btn ${y.id === activeYearId ? 'active' : ''}" onclick="selectYear(${y.id})">
+      <span>${y.nam_hoc}</span>
+      <span class="del-year" onclick="event.stopPropagation(); deleteYear(${y.id},'${y.nam_hoc}')">✕</span>
+    </button>`).join('') +
+    `<button class="btn-add-year" onclick="openAddYear()">＋ Thêm năm học</button>`;
+}
+
+async function selectYear(id) {
+  activeYearId = id;
+  renderYearList();
+  const res = await fetch(`/api/kpi/${id}`);
+  activeYearData = await res.json();
+  const y = years.find(y => y.id === id);
+  document.getElementById('year-tag').textContent = y?.nam_hoc || '';
+  document.getElementById('year-tag').style.display = '';
+  document.getElementById('no-year-msg').style.display = 'none';
+  document.getElementById('content-area').style.display = '';
+  renderContent();
+}
+
+function renderContent() {
+  if (activeGroup === 'overview') renderDashboard();
+  else renderForm(activeGroup);
+}
+
+// ── Group nav ─────────────────────────────────────────────────
+function renderGroupNav() {
+  const el = document.getElementById('group-nav');
+  el.innerHTML = KPI_GROUPS.map(g => `
+    <button class="grp-btn ${g.id === activeGroup ? 'active' : ''}" onclick="setGroup('${g.id}')">
+      <span class="grp-badge">${g.id === 'overview' ? '◉' : g.id}</span>
+      <span>${g.icon} ${g.name}</span>
+    </button>`).join('');
+}
+
+function setGroup(id) {
+  activeGroup = id;
+  renderGroupNav();
+  if (activeYearId) renderContent();
+}
+
+// ── Dashboard ─────────────────────────────────────────────────
+function renderDashboard() {
+  document.getElementById('main-title').textContent = '📈 Tổng quan KPI';
+
+  let html = '<div class="dash-grid">';
+  for (const kpi of DASH_KPIS) {
+    const val = activeYearData[kpi.key];
+    const display = val !== undefined && val !== '' ? val : '—';
+    let cls = 'neutral';
+    let benchText = '';
+    if (kpi.bench && val !== undefined && val !== '') {
+      const n = parseFloat(val);
+      if (kpi.bench.dir === 'up') {
+        cls = n >= kpi.bench.min ? 'ok' : n >= kpi.bench.min * 0.85 ? 'warn' : 'bad';
+        benchText = `Chuẩn: ≥ ${kpi.bench.min}${kpi.unit}`;
+      } else {
+        cls = n <= kpi.bench.max ? 'ok' : n <= kpi.bench.max * 1.15 ? 'warn' : 'bad';
+        benchText = `Chuẩn: ≤ ${kpi.bench.max}${kpi.unit}`;
+      }
+    }
+    html += `<div class="kpi-card ${cls}">
+      <div class="kc-label">${kpi.label}</div>
+      <div class="kc-val">${display}<span class="kc-unit">${display !== '—' ? kpi.unit : ''}</span></div>
+      ${benchText ? `<div class="kc-bench">${benchText}</div>` : ''}
+    </div>`;
+  }
+  html += '</div>';
+
+  // Trend charts (only if multiple years)
+  if (years.length >= 2) {
+    html += '<div class="charts-row">';
+    html += '<div class="chart-box"><h3>📉 Tỉ lệ tốt nghiệp & Việc làm (%)</h3><canvas id="chart-dao-tao"></canvas></div>';
+    html += '<div class="chart-box"><h3>🔬 Bài báo khoa học (bài)</h3><canvas id="chart-nckh"></canvas></div>';
+    html += '</div>';
+  }
+
+  document.getElementById('content-area').innerHTML = html;
+
+  if (years.length >= 2) {
+    setTimeout(() => buildTrendCharts(), 100);
+  }
+}
+
+async function buildTrendCharts() {
+  // Fetch all years data for trends
+  const allData = await Promise.all(years.map(y => fetch(`/api/kpi/${y.id}`).then(r => r.json())));
+  const labels = allData.map(d => d.nam_hoc).reverse();
+  const get = (arr, key) => arr.map(d => parseFloat(d[key]) || null).reverse();
+
+  destroyChart('chart-dao-tao');
+  destroyChart('chart-nckh');
+
+  const c1 = document.getElementById('chart-dao-tao');
+  const c2 = document.getElementById('chart-nckh');
+  if (!c1 || !c2) return;
+
+  charts['chart-dao-tao'] = new Chart(c1, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Tốt nghiệp đúng hạn (%)', data: get(allData, 'pct_tot_nghiep'), borderColor: '#2ea87e', tension: .3, pointRadius: 4 },
+        { label: 'Việc làm 12 tháng (%)',    data: get(allData, 'pct_viec_lam_12t'), borderColor: '#4f8ef7', tension: .3, pointRadius: 4 },
+        { label: 'Hài lòng SV (%)',          data: get(allData, 'pct_hai_long_sv'), borderColor: '#e0a847', tension: .3, pointRadius: 4 },
+      ]
+    },
+    options: chartOpts('Tỉ lệ (%)', 0, 100)
+  });
+
+  charts['chart-nckh'] = new Chart(c2, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: 'ISI/Scopus', data: get(allData, 'so_bao_isi_scopus'), backgroundColor: '#4f8ef7cc' },
+        { label: 'Trong nước', data: get(allData, 'so_bao_trong_nuoc'), backgroundColor: '#7c5cbfcc' },
+        { label: 'Hội thảo',   data: get(allData, 'so_hoi_thao'),       backgroundColor: '#2ea87ecc' },
+      ]
+    },
+    options: chartOpts('Số bài')
+  });
+}
+
+function chartOpts(yLabel, yMin, yMax) {
+  return {
+    responsive: true, maintainAspectRatio: true,
+    plugins: { legend: { labels: { color: '#94a3b8', font: { size: 11 } } } },
+    scales: {
+      x: { ticks: { color: '#64748b', font: { size: 11 } }, grid: { color: '#2a2d3e' } },
+      y: { ticks: { color: '#64748b', font: { size: 11 } }, grid: { color: '#2a2d3e' },
+           title: { display: true, text: yLabel, color: '#64748b', font: { size: 11 } },
+           min: yMin, max: yMax }
+    }
+  };
+}
+
+function destroyChart(id) {
+  if (charts[id]) { charts[id].destroy(); delete charts[id]; }
+}
+
+// ── KPI Form ──────────────────────────────────────────────────
+function renderForm(groupId) {
+  const group = KPI_GROUPS.find(g => g.id === groupId);
+  if (!group || !group.fields) return;
+  document.getElementById('main-title').textContent = `${group.icon} ${group.name}`;
+
+  let html = `<div class="form-section-head">Nhóm ${group.id}: ${group.name}</div>`;
+  html += '<div class="kpi-form-grid">';
+
+  for (const f of group.fields) {
+    const val = activeYearData[f.key] ?? '';
+    let cls = 'kf-group';
+    let hint = '';
+    if (f.bench && val !== '') {
+      const n = parseFloat(val);
+      if (f.bench.dir === 'up') {
+        const s = n >= f.bench.min ? 'ok' : n >= f.bench.min * 0.85 ? 'warn' : 'bad';
+        cls += ' has-bench bench-' + s;
+        hint = `<div class="kf-bench-hint ${s}">${s === 'ok' ? '✓' : s === 'warn' ? '⚠' : '✗'} ${f.bench.hint}</div>`;
+      } else {
+        const s = n <= f.bench.max ? 'ok' : n <= f.bench.max * 1.15 ? 'warn' : 'bad';
+        cls += ' has-bench bench-' + s;
+        hint = `<div class="kf-bench-hint ${s}">${s === 'ok' ? '✓' : s === 'warn' ? '⚠' : '✗'} ${f.bench.hint}</div>`;
+      }
+    }
+    html += `<div class="${cls}">
+      <label>${f.label}</label>
+      <div class="kf-wrap">
+        <input type="number" step="any" id="kf-${f.key}" value="${val}" placeholder="0"
+          oninput="onFieldChange('${f.key}', this)">
+        <span class="kf-unit">${f.unit}</span>
+      </div>
+      ${hint}
+    </div>`;
+  }
+
+  html += '</div>';
+  html += `<div class="form-sticky-footer">
+    <button class="btn-save" onclick="saveCurrentGroup()">💾 Lưu nhóm ${group.id}</button>
+    <span class="save-hint" id="form-save-hint">Cập nhật lần cuối: ${activeYearData.updated_at || 'Chưa lưu'}</span>
+  </div>`;
+
+  document.getElementById('content-area').innerHTML = html;
+}
+
+function onFieldChange(key, input) {
+  activeYearData[key] = input.value;
+  // Live bench feedback
+  const group = KPI_GROUPS.find(g => g.fields?.some(f => f.key === key));
+  if (!group) return;
+  const f = group.fields.find(f => f.key === key);
+  if (!f?.bench) return;
+  const wrapper = input.closest('.kf-group');
+  const val = parseFloat(input.value);
+  let s;
+  if (f.bench.dir === 'up')   s = val >= f.bench.min ? 'ok' : val >= f.bench.min * 0.85 ? 'warn' : 'bad';
+  else                         s = val <= f.bench.max ? 'ok' : val <= f.bench.max * 1.15 ? 'warn' : 'bad';
+  wrapper.className = `kf-group has-bench bench-${s}`;
+  const hint = wrapper.querySelector('.kf-bench-hint');
+  if (hint) { hint.className = `kf-bench-hint ${s}`; hint.textContent = (s === 'ok' ? '✓' : s === 'warn' ? '⚠' : '✗') + ' ' + f.bench.hint; }
+}
+
+async function saveCurrentGroup() {
+  if (!activeYearId) return;
+  const group = KPI_GROUPS.find(g => g.id === activeGroup);
+  if (!group?.fields) return;
+
+  const payload = { nam_hoc: activeYearData.nam_hoc };
+  for (const f of group.fields) {
+    const el = document.getElementById(`kf-${f.key}`);
+    if (el) payload[f.key] = el.value !== '' ? parseFloat(el.value) : null;
+  }
+
+  const res = await fetch(`/api/kpi/${activeYearId}`, {
+    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+  });
+  if (res.ok) {
+    // Refresh local data
+    const full = await fetch(`/api/kpi/${activeYearId}`).then(r => r.json());
+    activeYearData = full;
+    const hint = document.getElementById('form-save-hint');
+    if (hint) hint.textContent = `Đã lưu lúc: ${new Date().toLocaleTimeString('vi-VN')}`;
+    showToast('success', `✅ Đã lưu nhóm ${activeGroup} — ${activeYearData.nam_hoc}`);
+    await loadYears();
+    renderYearList();
+  } else {
+    showToast('error', '❌ Lưu thất bại');
+  }
+}
+
+// ── Add / Delete Year ─────────────────────────────────────────
+function openAddYear() { document.getElementById('modal-year').classList.add('open'); document.getElementById('inp-nam-hoc').focus(); }
+function closeAddYear() { document.getElementById('modal-year').classList.remove('open'); document.getElementById('inp-nam-hoc').value = ''; }
+
+async function createYear() {
+  const nh = document.getElementById('inp-nam-hoc').value.trim();
+  if (!nh) return;
+  const res = await fetch('/api/kpi', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ nam_hoc: nh })
+  });
+  const data = await res.json();
+  if (res.ok) {
+    closeAddYear();
+    await loadYears();
+    selectYear(data.id);
+    showToast('success', `✅ Đã tạo năm học ${nh}`);
+  } else {
+    showToast('error', `❌ ${data.error}`);
+  }
+}
+
+async function deleteYear(id, nh) {
+  if (!confirm(`Xoá toàn bộ dữ liệu năm học ${nh}?`)) return;
+  await fetch(`/api/kpi/${id}`, { method: 'DELETE' });
+  if (activeYearId === id) {
+    activeYearId = null;
+    activeYearData = {};
+    document.getElementById('year-tag').style.display = 'none';
+    document.getElementById('no-year-msg').style.display = '';
+    document.getElementById('content-area').style.display = 'none';
+  }
+  await loadYears();
+  showToast('success', `✅ Đã xoá năm học ${nh}`);
+}
+
+// ── Export CSV ────────────────────────────────────────────────
+function exportCSV() {
+  if (!activeYearId) return showToast('error', '❌ Chọn năm học trước');
+  const rows = [['Năm học', 'Chỉ số', 'Giá trị', 'Đơn vị']];
+  for (const g of KPI_GROUPS) {
+    if (!g.fields) continue;
+    for (const f of g.fields) {
+      const val = activeYearData[f.key] ?? '';
+      rows.push([activeYearData.nam_hoc, f.label, val, f.unit]);
+    }
+  }
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = `Bieu16_${activeYearData.nam_hoc || 'export'}.csv`; a.click();
+}
+
+// ── Toast ─────────────────────────────────────────────────────
+let toastTimer;
+function showToast(type, msg) {
+  const el = document.getElementById('toast');
+  el.className = `toast show ${type}`; el.textContent = msg;
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+// Keyboard shortcut for add year modal
+document.getElementById('inp-nam-hoc').addEventListener('keydown', e => { if (e.key === 'Enter') createYear(); });
+document.getElementById('modal-year').addEventListener('click', e => { if (e.target === document.getElementById('modal-year')) closeAddYear(); });
+
+init();
+</script>
+</body>
+</html>
