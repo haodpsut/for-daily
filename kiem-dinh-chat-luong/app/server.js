@@ -21,6 +21,9 @@ function loadDB() {
   if (!db.kpi_data)     db.kpi_data     = [];
   if (!db.school_info)  db.school_info  = {};
   if (!db.nextKpiId)    db.nextKpiId    = 1;
+  if (!db.tdg_plans)    db.tdg_plans    = [];
+  if (!db.nextTdgId)    db.nextTdgId    = 1;
+  if (!db.nextTaskId)   db.nextTaskId   = 1;
   return db;
 }
 
@@ -319,6 +322,118 @@ app.delete('/api/kpi/:id', (req, res) => {
   db.kpi_data.splice(idx, 1);
   saveDB(db);
   res.json({ message: 'Đã xóa' });
+});
+
+// ─── Default TĐG tasks (24 tuần) ─────────────────────────────────────────────
+function defaultTasks(startId) {
+  let id = startId;
+  const t = (phase, ws, we, title, priority = 'normal') =>
+    ({ id: id++, phase, week_start: ws, week_end: we, title, assignee: '', status: 'todo', priority, notes: '' });
+  return [
+    t(1,  1,  1,  'Ra quyết định thành lập Hội đồng TĐG (Biểu 01)', 'high'),
+    t(1,  1,  2,  'Phân công nhiệm vụ cho các nhóm TĐG'),
+    t(1,  2,  2,  'Xây dựng Kế hoạch TĐG chi tiết (Biểu 02)', 'high'),
+    t(1,  3,  4,  'Tập huấn Hội đồng TĐG về quy trình & biểu mẫu'),
+    t(2,  5,  6,  'Thu thập minh chứng — Tiêu chuẩn 1, 2, 3'),
+    t(2,  7,  8,  'Thu thập minh chứng — Tiêu chuẩn 4, 5, 6'),
+    t(2,  9,  10, 'Thu thập minh chứng — Tiêu chuẩn 7, 8, 9'),
+    t(2,  11, 12, 'Thu thập minh chứng — Tiêu chuẩn 10–15'),
+    t(2,  10, 12, 'Mã hóa và phân loại minh chứng (Hn.ab.cd.ef)'),
+    t(2,  12, 12, 'Nhập dữ liệu KPI vào Biểu 16', 'high'),
+    t(3,  13, 14, 'Đánh giá Tiêu chuẩn 1–4 (Biểu 04)', 'high'),
+    t(3,  15, 16, 'Đánh giá Tiêu chuẩn 5–9 (Biểu 04)', 'high'),
+    t(3,  17, 18, 'Đánh giá Tiêu chuẩn 10–15 (Biểu 04)', 'high'),
+    t(3,  18, 18, 'Họp Hội đồng TĐG — xem xét kết quả đánh giá'),
+    t(4,  19, 20, 'Viết Báo cáo TĐG — Phần mở đầu & TC 1–7 (Biểu 05)', 'high'),
+    t(4,  21, 22, 'Viết Báo cáo TĐG — TC 8–15 & kết luận', 'high'),
+    t(4,  22, 22, 'Rà soát, chỉnh sửa Báo cáo TĐG lần 1'),
+    t(5,  23, 23, 'Thẩm định nội bộ, chỉnh sửa lần cuối', 'high'),
+    t(5,  23, 24, 'Hoàn thiện và đóng gói hồ sơ minh chứng'),
+    t(5,  24, 24, 'Nộp hồ sơ TĐG cho cơ quan kiểm định', 'high'),
+  ];
+}
+
+// ─── API: TĐG Plans ───────────────────────────────────────────────────────────
+app.get('/api/tdg', (req, res) => {
+  const db = loadDB();
+  res.json(db.tdg_plans.map(p => ({
+    id: p.id, name: p.name, ngay_bat_dau: p.ngay_bat_dau,
+    total: p.tasks.length,
+    done: p.tasks.filter(t => t.status === 'done').length,
+    late: p.tasks.filter(t => t.status === 'late').length,
+    in_progress: p.tasks.filter(t => t.status === 'in_progress').length,
+  })));
+});
+
+app.get('/api/tdg/:id', (req, res) => {
+  const db = loadDB();
+  const plan = db.tdg_plans.find(p => p.id === parseInt(req.params.id));
+  if (!plan) return res.status(404).json({ error: 'Không tìm thấy' });
+  res.json(plan);
+});
+
+app.post('/api/tdg', (req, res) => {
+  const db = loadDB();
+  const { name, ngay_bat_dau, use_defaults } = req.body;
+  if (!name) return res.status(400).json({ error: 'Thiếu tên kế hoạch' });
+  const tasks = use_defaults !== false ? defaultTasks(db.nextTaskId) : [];
+  db.nextTaskId += tasks.length;
+  const plan = { id: db.nextTdgId++, name, ngay_bat_dau: ngay_bat_dau || '', tasks,
+    created_at: new Date().toLocaleString('vi-VN') };
+  db.tdg_plans.push(plan);
+  saveDB(db);
+  res.json({ id: plan.id, message: 'Đã tạo kế hoạch TĐG' });
+});
+
+app.put('/api/tdg/:id', (req, res) => {
+  const db = loadDB();
+  const plan = db.tdg_plans.find(p => p.id === parseInt(req.params.id));
+  if (!plan) return res.status(404).json({ error: 'Không tìm thấy' });
+  const { name, ngay_bat_dau } = req.body;
+  if (name) plan.name = name;
+  if (ngay_bat_dau !== undefined) plan.ngay_bat_dau = ngay_bat_dau;
+  saveDB(db);
+  res.json({ message: 'Đã cập nhật' });
+});
+
+app.delete('/api/tdg/:id', (req, res) => {
+  const db = loadDB();
+  const idx = db.tdg_plans.findIndex(p => p.id === parseInt(req.params.id));
+  if (idx === -1) return res.status(404).json({ error: 'Không tìm thấy' });
+  db.tdg_plans.splice(idx, 1);
+  saveDB(db);
+  res.json({ message: 'Đã xóa' });
+});
+
+// ─── API: Tasks ───────────────────────────────────────────────────────────────
+app.post('/api/tdg/:id/tasks', (req, res) => {
+  const db = loadDB();
+  const plan = db.tdg_plans.find(p => p.id === parseInt(req.params.id));
+  if (!plan) return res.status(404).json({ error: 'Không tìm thấy kế hoạch' });
+  const task = { id: db.nextTaskId++, status: 'todo', priority: 'normal', notes: '', ...req.body };
+  plan.tasks.push(task);
+  saveDB(db);
+  res.json({ id: task.id });
+});
+
+app.put('/api/tdg/:id/tasks/:taskId', (req, res) => {
+  const db = loadDB();
+  const plan = db.tdg_plans.find(p => p.id === parseInt(req.params.id));
+  if (!plan) return res.status(404).json({ error: 'Không tìm thấy kế hoạch' });
+  const task = plan.tasks.find(t => t.id === parseInt(req.params.taskId));
+  if (!task) return res.status(404).json({ error: 'Không tìm thấy task' });
+  Object.assign(task, req.body);
+  saveDB(db);
+  res.json({ message: 'Đã cập nhật task' });
+});
+
+app.delete('/api/tdg/:id/tasks/:taskId', (req, res) => {
+  const db = loadDB();
+  const plan = db.tdg_plans.find(p => p.id === parseInt(req.params.id));
+  if (!plan) return res.status(404).json({ error: 'Không tìm thấy kế hoạch' });
+  plan.tasks = plan.tasks.filter(t => t.id !== parseInt(req.params.taskId));
+  saveDB(db);
+  res.json({ message: 'Đã xóa task' });
 });
 
 // ─── Start ────────────────────────────────────────────────────────────────────

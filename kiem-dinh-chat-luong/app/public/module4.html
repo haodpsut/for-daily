@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiến độ TĐG – 24 Tuần</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0f1117; --panel: #1a1d27; --border: #2a2d3e;
+  --accent: #4f8ef7; --accent2: #7c5cbf; --green: #2ea87e;
+  --red: #e05a5a; --yellow: #e0a847; --orange: #e07847;
+  --text: #e2e8f0; --muted: #64748b; --hover: #22263a;
+  --p1: #7c5cbf; --p2: #2563eb; --p3: #d97706; --p4: #059669; --p5: #dc2626;
+}
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); display: flex; flex-direction: column; height: 100vh; overflow: hidden; font-size: 14px; }
+
+/* ── Nav ── */
+.topnav { background: var(--panel); border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; align-items: center; height: 44px; flex-shrink: 0; }
+.topnav .brand { font-size: 13px; font-weight: 800; color: var(--accent); margin-right: 24px; }
+.nav-link { display: flex; align-items: center; height: 44px; padding: 0 14px; font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; transition: all .15s; }
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── Layout ── */
+.layout { display: flex; flex: 1; overflow: hidden; }
+
+/* ── Sidebar ── */
+#sidebar { width: 240px; background: var(--panel); border-right: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden; }
+.sb-head { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+.sb-head h2 { font-size: 12px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+.sb-head p  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.plan-list { overflow-y: auto; flex: 1; padding: 8px; }
+.plan-btn { width: 100%; text-align: left; background: none; border: 1px solid var(--border); color: var(--muted); padding: 8px 10px; border-radius: 6px; margin-bottom: 6px; cursor: pointer; font-size: 12px; display: flex; align-items: flex-start; gap: 6px; }
+.plan-btn:hover { background: var(--hover); color: var(--text); }
+.plan-btn.active { background: #1e2a4a; border-color: var(--accent); color: var(--accent); }
+.plan-btn .plan-info { flex: 1; }
+.plan-btn .plan-name { font-weight: 700; font-size: 12px; }
+.plan-btn .plan-meta { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.plan-btn.active .plan-meta { color: #7aa3e0; }
+.plan-btn .del-plan { color: var(--muted); font-size: 14px; }
+.plan-btn:hover .del-plan { color: var(--red); }
+.btn-add-plan { width: 100%; padding: 8px; background: none; border: 1px dashed var(--border); color: var(--muted); border-radius: 6px; cursor: pointer; font-size: 12px; }
+.btn-add-plan:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── Main ── */
+#main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.main-head { background: var(--panel); border-bottom: 1px solid var(--border); padding: 11px 20px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.main-head h2 { font-size: 15px; font-weight: 700; flex: 1; }
+.head-date { font-size: 11px; color: var(--muted); }
+.btn-edit-plan { font-size: 12px; background: none; border: 1px solid var(--border); color: var(--muted); padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+.btn-edit-plan:hover { border-color: var(--accent); color: var(--accent); }
+.btn-add-task { font-size: 12px; background: var(--accent); color: #fff; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-weight: 600; }
+.btn-add-task:hover { opacity: .85; }
+
+.main-body { flex: 1; overflow-y: auto; }
+
+/* ── No plan state ── */
+.no-plan { text-align: center; padding: 80px 20px; color: var(--muted); }
+.no-plan .icon { font-size: 52px; margin-bottom: 16px; }
+.no-plan h3 { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.btn-primary { background: var(--accent); color: #fff; border: none; padding: 10px 24px; border-radius: 7px; cursor: pointer; font-size: 14px; font-weight: 700; }
+.btn-primary:hover { opacity: .85; }
+
+/* ── Stats bar ── */
+.stats-bar { display: flex; align-items: center; gap: 16px; padding: 14px 20px; background: var(--panel); border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.stat-pill { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
+.stat-pill .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.stat-pill.done   .dot { background: var(--green); }
+.stat-pill.prog   .dot { background: var(--yellow); }
+.stat-pill.late   .dot { background: var(--red); }
+.stat-pill.todo   .dot { background: var(--muted); }
+.stat-pill.done   { color: var(--green); }
+.stat-pill.prog   { color: var(--yellow); }
+.stat-pill.late   { color: var(--red); }
+.stat-pill.todo   { color: var(--muted); }
+.overall-pct { font-size: 13px; font-weight: 800; color: var(--accent); margin-left: auto; }
+
+/* ── Gantt ── */
+.gantt-section { padding: 16px 20px 8px; flex-shrink: 0; }
+.gantt-title { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
+.gantt-wrap { overflow-x: auto; }
+.gantt-grid { display: grid; grid-template-columns: 160px repeat(24, 1fr); min-width: 900px; font-size: 10px; }
+.gantt-hdr { background: var(--panel); border-bottom: 1px solid var(--border); }
+.gantt-hdr-label { padding: 4px 6px; color: var(--muted); font-weight: 700; text-align: right; font-size: 10px; }
+.gantt-week-hdr { padding: 4px 2px; color: var(--muted); text-align: center; border-left: 1px solid var(--border); font-size: 10px; }
+.gantt-phase-label { padding: 5px 8px; font-size: 11px; font-weight: 700; display: flex; align-items: center; border-bottom: 1px solid var(--border); }
+.gantt-cell { border-left: 1px solid var(--border); border-bottom: 1px solid var(--border); height: 28px; position: relative; }
+.gantt-bar { position: absolute; top: 4px; bottom: 4px; border-radius: 3px; opacity: .85; left: 0; right: 0; }
+
+/* Phase colors */
+.ph-1 { background: var(--p1); }
+.ph-2 { background: var(--p2); }
+.ph-3 { background: var(--p3); }
+.ph-4 { background: var(--p4); }
+.ph-5 { background: var(--p5); }
+.ph-color-1 { color: var(--p1); }
+.ph-color-2 { color: var(--p2); }
+.ph-color-3 { color: var(--p3); }
+.ph-color-4 { color: var(--p4); }
+.ph-color-5 { color: var(--p5); }
+.ph-border-1 { border-left: 3px solid var(--p1) !important; }
+.ph-border-2 { border-left: 3px solid var(--p2) !important; }
+.ph-border-3 { border-left: 3px solid var(--p3) !important; }
+.ph-border-4 { border-left: 3px solid var(--p4) !important; }
+.ph-border-5 { border-left: 3px solid var(--p5) !important; }
+
+/* Current week marker */
+.gantt-cell.current-week { background: rgba(79,142,247,.07); }
+.gantt-week-hdr.current-week { color: var(--accent); font-weight: 800; }
+
+/* ── Phase sections ── */
+.phases-wrap { padding: 0 20px 20px; }
+.phase-block { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 12px; overflow: hidden; }
+.phase-header { display: flex; align-items: center; gap: 10px; padding: 10px 14px; cursor: pointer; user-select: none; }
+.phase-header:hover { background: var(--hover); }
+.phase-badge { font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 4px; color: #fff; flex-shrink: 0; }
+.phase-name { font-size: 13px; font-weight: 700; flex: 1; }
+.phase-weeks { font-size: 11px; color: var(--muted); }
+.phase-pct-wrap { display: flex; align-items: center; gap: 8px; }
+.phase-pct-bar { width: 80px; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.phase-pct-fill { height: 100%; border-radius: 3px; transition: width .3s; }
+.phase-pct-txt { font-size: 11px; font-weight: 700; min-width: 28px; text-align: right; }
+.phase-arrow { color: var(--muted); transition: transform .2s; font-size: 10px; }
+.phase-arrow.open { transform: rotate(90deg); }
+.phase-tasks { display: none; }
+.phase-tasks.open { display: block; }
+
+/* ── Task card ── */
+.task-card { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border-top: 1px solid var(--border); transition: background .1s; }
+.task-card:hover { background: var(--hover); }
+.task-card.late   { background: rgba(224,90,90,.04); }
+.task-week-badge { font-size: 10px; font-weight: 800; background: var(--hover); color: var(--muted); padding: 3px 7px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+.task-main { flex: 1; min-width: 0; }
+.task-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.task-title.done { text-decoration: line-through; color: var(--muted); }
+.task-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.task-assignee { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+.task-assignee input { background: none; border: none; color: var(--muted); font-size: 11px; width: 120px; padding: 0; font-family: inherit; cursor: text; }
+.task-assignee input:focus { outline: none; color: var(--text); }
+.task-due { font-size: 11px; color: var(--muted); }
+.task-due.late { color: var(--red); font-weight: 700; }
+.prio-high { font-size: 10px; color: var(--red); font-weight: 700; background: rgba(224,90,90,.1); padding: 2px 6px; border-radius: 3px; }
+.task-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.status-sel { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 4px 8px; border-radius: 5px; font-size: 11px; cursor: pointer; font-family: inherit; }
+.status-sel.done       { border-color: var(--green); color: var(--green); }
+.status-sel.in_progress{ border-color: var(--yellow); color: var(--yellow); }
+.status-sel.late       { border-color: var(--red); color: var(--red); }
+.status-sel.todo       { border-color: var(--border); color: var(--muted); }
+.btn-del-task { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 14px; padding: 4px; border-radius: 4px; }
+.btn-del-task:hover { color: var(--red); background: rgba(224,90,90,.1); }
+.add-task-row { padding: 10px 14px; border-top: 1px solid var(--border); }
+.add-task-row input { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 7px 10px; border-radius: 5px; font-size: 12px; }
+.add-task-row input:focus { outline: 2px solid var(--accent); }
+
+/* ── Modals ── */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); backdrop-filter: blur(3px); z-index: 100; align-items: center; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; width: 460px; max-width: 95vw; padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+.modal h3 { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+.mf { margin-bottom: 14px; }
+.mf label { display: block; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 5px; }
+.mf input, .mf select { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 9px 12px; border-radius: 6px; font-size: 13px; font-family: inherit; }
+.mf input:focus, .mf select:focus { outline: 2px solid var(--accent); }
+.mf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.modal-btns { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; }
+.btn-cancel { background: none; border: 1px solid var(--border); color: var(--muted); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+.btn-cancel:hover { color: var(--text); }
+.modal-check { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; font-size: 13px; color: var(--muted); }
+.modal-check input { width: auto; accent-color: var(--accent); }
+
+/* Toast */
+.toast { position: fixed; bottom: 24px; right: 24px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 12px 18px; font-size: 13px; font-weight: 600; z-index: 200; display: none; box-shadow: 0 8px 30px rgba(0,0,0,.4); }
+.toast.show { display: flex; align-items: center; gap: 8px; }
+.toast.success { border-color: var(--green); color: var(--green); }
+.toast.error   { border-color: var(--red); color: var(--red); }
+
+::-webkit-scrollbar { width: 5px; height: 5px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <span class="brand">KĐCLGD · ĐH Kiến trúc Đà Nẵng</span>
+  <a class="nav-link" href="/">📂 Minh chứng</a>
+  <a class="nav-link" href="/module2.html">📋 Đánh giá TC</a>
+  <a class="nav-link" href="/module3.html">📊 KPI – Biểu 16</a>
+  <a class="nav-link active" href="/module4.html">📅 Tiến độ TĐG</a>
+</nav>
+
+<div class="layout">
+
+<!-- ── Sidebar ── -->
+<div id="sidebar">
+  <div class="sb-head">
+    <h2>Kế hoạch TĐG</h2>
+    <p>Quy trình tự đánh giá</p>
+  </div>
+  <div class="plan-list" id="plan-list">
+    <button class="btn-add-plan" onclick="openNewPlan()">＋ Tạo kế hoạch TĐG</button>
+  </div>
+</div>
+
+<!-- ── Main ── -->
+<div id="main">
+  <div class="main-head">
+    <h2 id="plan-title">📅 Kế hoạch Tự Đánh Giá</h2>
+    <span class="head-date" id="plan-date-info"></span>
+    <button class="btn-edit-plan" id="btn-edit-plan" style="display:none" onclick="openEditPlan()">✏ Sửa</button>
+    <button class="btn-add-task" id="btn-add-task" style="display:none" onclick="openAddTask()">＋ Thêm việc</button>
+  </div>
+
+  <div class="main-body" id="main-body">
+    <div class="no-plan" id="no-plan-msg">
+      <div class="icon">📅</div>
+      <h3>Chưa có kế hoạch TĐG</h3>
+      <p style="margin-bottom:20px;font-size:13px">Tạo kế hoạch để theo dõi tiến độ tự đánh giá 24 tuần</p>
+      <button class="btn-primary" onclick="openNewPlan()">＋ Tạo kế hoạch TĐG</button>
+    </div>
+    <div id="plan-content" style="display:none"></div>
+  </div>
+</div>
+
+</div><!-- /layout -->
+
+<!-- ── Modal: New Plan ── -->
+<div class="modal-overlay" id="modal-plan">
+  <div class="modal">
+    <h3 id="modal-plan-title">Tạo kế hoạch TĐG mới</h3>
+    <div class="mf">
+      <label>Tên kế hoạch *</label>
+      <input id="inp-plan-name" type="text" placeholder="Kế hoạch TĐG 2025-2026...">
+    </div>
+    <div class="mf">
+      <label>Ngày bắt đầu (Tuần 1)</label>
+      <input id="inp-plan-date" type="date">
+    </div>
+    <div class="modal-check" id="defaults-check-row">
+      <input type="checkbox" id="chk-defaults" checked>
+      <label for="chk-defaults">Tạo sẵn 20 công việc mặc định theo khung 24 tuần (Biểu 02)</label>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal('modal-plan')">Huỷ</button>
+      <button class="btn-primary" onclick="savePlan()">Tạo kế hoạch</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Modal: Add Task ── -->
+<div class="modal-overlay" id="modal-task">
+  <div class="modal">
+    <h3>Thêm công việc mới</h3>
+    <div class="mf">
+      <label>Tên công việc *</label>
+      <input id="inp-task-title" type="text" placeholder="Mô tả công việc cần làm...">
+    </div>
+    <div class="mf-row">
+      <div class="mf">
+        <label>Tuần bắt đầu</label>
+        <input id="inp-task-ws" type="number" min="1" max="24" placeholder="1">
+      </div>
+      <div class="mf">
+        <label>Tuần kết thúc</label>
+        <input id="inp-task-we" type="number" min="1" max="24" placeholder="1">
+      </div>
+    </div>
+    <div class="mf-row">
+      <div class="mf">
+        <label>Giai đoạn</label>
+        <select id="inp-task-phase">
+          <option value="1">GĐ 1: Chuẩn bị (T1–4)</option>
+          <option value="2">GĐ 2: Thu thập MC (T5–12)</option>
+          <option value="3">GĐ 3: Đánh giá TC (T13–18)</option>
+          <option value="4">GĐ 4: Viết báo cáo (T19–22)</option>
+          <option value="5">GĐ 5: Hoàn thiện (T23–24)</option>
+        </select>
+      </div>
+      <div class="mf">
+        <label>Ưu tiên</label>
+        <select id="inp-task-prio">
+          <option value="normal">Bình thường</option>
+          <option value="high">Cao</option>
+        </select>
+      </div>
+    </div>
+    <div class="mf">
+      <label>Người phụ trách</label>
+      <input id="inp-task-assignee" type="text" placeholder="Tên người phụ trách...">
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal('modal-task')">Huỷ</button>
+      <button class="btn-primary" onclick="addTask()">Thêm</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PHASES = [
+  { id: 1, name: 'Chuẩn bị',         weeks: '1–4',   color: '#7c5cbf' },
+  { id: 2, name: 'Thu thập MC',       weeks: '5–12',  color: '#2563eb' },
+  { id: 3, name: 'Đánh giá TC',       weeks: '13–18', color: '#d97706' },
+  { id: 4, name: 'Viết báo cáo',      weeks: '19–22', color: '#059669' },
+  { id: 5, name: 'Hoàn thiện & Nộp', weeks: '23–24', color: '#dc2626' },
+];
+
+let plans = [];
+let activePlanId = null;
+let activePlan = null;
+let editingPlanId = null;
+
+// ── Init ────────────────────────────────────────────────────────────
+async function init() {
+  await loadPlans();
+  if (plans.length > 0) await selectPlan(plans[0].id);
+}
+
+async function loadPlans() {
+  const res = await fetch('/api/tdg');
+  plans = await res.json();
+  renderPlanList();
+}
+
+function renderPlanList() {
+  const el = document.getElementById('plan-list');
+  const items = plans.map(p => {
+    const pct = p.total ? Math.round(p.done / p.total * 100) : 0;
+    return `<button class="plan-btn ${p.id === activePlanId ? 'active' : ''}" onclick="selectPlan(${p.id})">
+      <div class="plan-info">
+        <div class="plan-name">${p.name}</div>
+        <div class="plan-meta">${p.done}/${p.total} hoàn thành · ${pct}%${p.late ? ` · <span style="color:var(--red)">${p.late} trễ</span>` : ''}</div>
+      </div>
+      <span class="del-plan" onclick="event.stopPropagation();deletePlan(${p.id},'${escHtml(p.name)}')">✕</span>
+    </button>`;
+  }).join('');
+  el.innerHTML = items + `<button class="btn-add-plan" onclick="openNewPlan()">＋ Tạo kế hoạch TĐG</button>`;
+}
+
+// ── Select plan ─────────────────────────────────────────────────────
+async function selectPlan(id) {
+  activePlanId = id;
+  const res = await fetch(`/api/tdg/${id}`);
+  activePlan = await res.json();
+  renderPlanList();
+  renderPlanContent();
+}
+
+function renderPlanContent() {
+  const p = activePlan;
+  document.getElementById('no-plan-msg').style.display = 'none';
+  document.getElementById('plan-content').style.display = '';
+  document.getElementById('plan-title').textContent = `📅 ${p.name}`;
+  document.getElementById('btn-edit-plan').style.display = '';
+  document.getElementById('btn-add-task').style.display = '';
+
+  // Date info
+  let dateInfo = '';
+  if (p.ngay_bat_dau) {
+    const start = new Date(p.ngay_bat_dau);
+    const end = new Date(start); end.setDate(end.getDate() + 167); // 24 weeks
+    dateInfo = `${fmt(start)} — ${fmt(end)}`;
+  }
+  document.getElementById('plan-date-info').textContent = dateInfo;
+
+  // Auto-update late status
+  autoMarkLate();
+
+  const total = p.tasks.length;
+  const done  = p.tasks.filter(t => t.status === 'done').length;
+  const prog  = p.tasks.filter(t => t.status === 'in_progress').length;
+  const late  = p.tasks.filter(t => t.status === 'late').length;
+  const todo  = p.tasks.filter(t => t.status === 'todo').length;
+  const pct   = total ? Math.round(done / total * 100) : 0;
+
+  let html = '';
+
+  // Stats bar
+  html += `<div class="stats-bar">
+    <span class="stat-pill done"><span class="dot"></span>Hoàn thành: ${done}</span>
+    <span class="stat-pill prog"><span class="dot"></span>Đang làm: ${prog}</span>
+    <span class="stat-pill late"><span class="dot"></span>Trễ hạn: ${late}</span>
+    <span class="stat-pill todo"><span class="dot"></span>Chưa làm: ${todo}</span>
+    <span class="overall-pct">${pct}% hoàn thành</span>
+  </div>`;
+
+  // Gantt
+  html += renderGantt(p);
+
+  // Phase sections
+  html += '<div class="phases-wrap">';
+  for (const phase of PHASES) {
+    const tasks = p.tasks.filter(t => t.phase === phase.id).sort((a,b) => a.week_start - b.week_start);
+    const pDone = tasks.filter(t => t.status === 'done').length;
+    const pPct  = tasks.length ? Math.round(pDone / tasks.length * 100) : 0;
+    const hasLate = tasks.some(t => t.status === 'late');
+    html += `<div class="phase-block">
+      <div class="phase-header" onclick="togglePhase(${phase.id})">
+        <span class="phase-badge" style="background:${phase.color}">GĐ ${phase.id}</span>
+        <span class="phase-name">Giai đoạn ${phase.id}: ${phase.name}</span>
+        <span class="phase-weeks">Tuần ${phase.weeks}</span>
+        <div class="phase-pct-wrap">
+          <div class="phase-pct-bar"><div class="phase-pct-fill" style="width:${pPct}%;background:${phase.color}"></div></div>
+          <span class="phase-pct-txt" style="color:${hasLate?'var(--red)':phase.color}">${pPct}%</span>
+        </div>
+        <span class="phase-arrow open" id="ph-arr-${phase.id}">▶</span>
+      </div>
+      <div class="phase-tasks open" id="ph-tasks-${phase.id}">
+        ${tasks.map(t => renderTaskCard(t, phase)).join('')}
+        <div class="add-task-row">
+          <input type="text" placeholder="＋ Thêm việc vào Giai đoạn ${phase.id}..."
+            onkeydown="if(event.key==='Enter')quickAddTask(this,${phase.id})">
+        </div>
+      </div>
+    </div>`;
+  }
+  html += '</div>';
+
+  document.getElementById('plan-content').innerHTML = html;
+}
+
+function renderTaskCard(t, phase) {
+  const statusLabel = { todo: 'Chưa làm', in_progress: 'Đang làm', done: 'Hoàn thành', late: 'Trễ hạn' };
+  const dueText = activePlan.ngay_bat_dau ? `Hạn: T${t.week_end} (${weekToDate(t.week_end)})` : `Tuần ${t.week_start}–${t.week_end}`;
+  const isLate = t.status === 'late';
+  return `<div class="task-card ${isLate ? 'late' : ''}" id="task-${t.id}">
+    <span class="task-week-badge ph-color-${phase.id}" style="color:${phase.color}">T${t.week_start}${t.week_end > t.week_start ? '–'+t.week_end : ''}</span>
+    <div class="task-main">
+      <div class="task-title ${t.status === 'done' ? 'done' : ''}">${escHtml(t.title)}${t.priority === 'high' ? ' <span class="prio-high">ƯU TIÊN</span>' : ''}</div>
+      <div class="task-meta">
+        <span class="task-assignee">👤 <input type="text" value="${escHtml(t.assignee)}" placeholder="Người phụ trách..."
+          onchange="updateTask(${t.id},{assignee:this.value})" onblur="updateTask(${t.id},{assignee:this.value})"></span>
+        <span class="task-due ${isLate ? 'late' : ''}">${dueText}</span>
+      </div>
+    </div>
+    <div class="task-actions">
+      <select class="status-sel ${t.status}" onchange="updateTask(${t.id},{status:this.value});this.className='status-sel '+this.value">
+        <option value="todo"       ${t.status==='todo'?'selected':''}>Chưa làm</option>
+        <option value="in_progress"${t.status==='in_progress'?'selected':''}>Đang làm</option>
+        <option value="done"       ${t.status==='done'?'selected':''}>✓ Hoàn thành</option>
+        <option value="late"       ${t.status==='late'?'selected':''}>⚠ Trễ hạn</option>
+      </select>
+      <button class="btn-del-task" onclick="deleteTask(${t.id})" title="Xóa">🗑</button>
+    </div>
+  </div>`;
+}
+
+// ── Gantt ──────────────────────────────────────────────────────────────
+function renderGantt(p) {
+  const currentWeek = p.ngay_bat_dau ? getCurrentWeek(p.ngay_bat_dau) : -1;
+  let html = `<div class="gantt-section"><div class="gantt-title">Biểu đồ Gantt — 24 tuần</div><div class="gantt-wrap"><div class="gantt-grid">`;
+
+  // Header row
+  html += `<div class="gantt-hdr gantt-hdr-label">Giai đoạn</div>`;
+  for (let w = 1; w <= 24; w++) {
+    html += `<div class="gantt-hdr gantt-week-hdr ${w === currentWeek ? 'current-week' : ''}">T${w}</div>`;
+  }
+
+  // Phase rows
+  for (const phase of PHASES) {
+    html += `<div class="gantt-phase-label ph-border-${phase.id}">
+      <span class="ph-color-${phase.id}" style="color:${phase.color};font-weight:700">GĐ ${phase.id}: ${phase.name}</span>
+    </div>`;
+
+    // Compute coverage per week for this phase
+    const tasks = p.tasks.filter(t => t.phase === phase.id);
+    for (let w = 1; w <= 24; w++) {
+      const inPhase = tasks.some(t => w >= t.week_start && w <= t.week_end);
+      const allDone = tasks.filter(t => w >= t.week_start && w <= t.week_end).every(t => t.status === 'done');
+      const anyLate = tasks.filter(t => w >= t.week_start && w <= t.week_end).some(t => t.status === 'late');
+      const anyProg = tasks.filter(t => w >= t.week_start && w <= t.week_end).some(t => t.status === 'in_progress');
+      let barStyle = '';
+      if (inPhase) {
+        const bg = anyLate ? 'var(--red)' : allDone ? 'var(--green)' : anyProg ? 'var(--yellow)' : phase.color;
+        barStyle = `<div class="gantt-bar" style="background:${bg};opacity:.75"></div>`;
+      }
+      html += `<div class="gantt-cell ${w === currentWeek ? 'current-week' : ''}">${barStyle}</div>`;
+    }
+  }
+  html += `</div></div></div>`;
+  return html;
+}
+
+// ── Status / Late detection ────────────────────────────────────────────
+function autoMarkLate() {
+  if (!activePlan?.ngay_bat_dau) return;
+  const cw = getCurrentWeek(activePlan.ngay_bat_dau);
+  if (cw < 1) return;
+  for (const t of activePlan.tasks) {
+    if (t.status === 'todo' && t.week_end < cw) {
+      t.status = 'late'; // mark locally; will save when user next saves
+    }
+  }
+}
+
+function getCurrentWeek(startDateStr) {
+  const start = new Date(startDateStr);
+  const now = new Date();
+  const diffMs = now - start;
+  if (diffMs < 0) return 0;
+  return Math.min(24, Math.floor(diffMs / (7 * 24 * 60 * 60 * 1000)) + 1);
+}
+
+function weekToDate(weekNum) {
+  if (!activePlan?.ngay_bat_dau) return '';
+  const start = new Date(activePlan.ngay_bat_dau);
+  start.setDate(start.getDate() + (weekNum - 1) * 7);
+  return fmt(start);
+}
+
+function fmt(d) { return d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }); }
+
+function togglePhase(id) {
+  document.getElementById(`ph-tasks-${id}`).classList.toggle('open');
+  document.getElementById(`ph-arr-${id}`).classList.toggle('open');
+}
+
+// ── Update task ────────────────────────────────────────────────────────
+async function updateTask(taskId, changes) {
+  await fetch(`/api/tdg/${activePlanId}/tasks/${taskId}`, {
+    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(changes)
+  });
+  // Update local state
+  const t = activePlan.tasks.find(t => t.id === taskId);
+  if (t) Object.assign(t, changes);
+  // Refresh stats bar + plan list
+  await loadPlans();
+}
+
+// ── Quick add task (inline) ────────────────────────────────────────────
+async function quickAddTask(input, phaseId) {
+  const title = input.value.trim();
+  if (!title) return;
+  const phase = PHASES.find(p => p.id === phaseId);
+  const weekRanges = { 1: [1,4], 2: [5,12], 3: [13,18], 4: [19,22], 5: [23,24] };
+  const [ws, we] = weekRanges[phaseId];
+  const res = await fetch(`/api/tdg/${activePlanId}/tasks`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title, phase: phaseId, week_start: ws, week_end: we, priority: 'normal' })
+  });
+  if (res.ok) {
+    input.value = '';
+    const full = await fetch(`/api/tdg/${activePlanId}`).then(r => r.json());
+    activePlan = full;
+    renderPlanContent();
+    await loadPlans();
+  }
+}
+
+// ── Delete task ────────────────────────────────────────────────────────
+async function deleteTask(taskId) {
+  await fetch(`/api/tdg/${activePlanId}/tasks/${taskId}`, { method: 'DELETE' });
+  activePlan.tasks = activePlan.tasks.filter(t => t.id !== taskId);
+  renderPlanContent();
+  await loadPlans();
+}
+
+// ── Plan CRUD ──────────────────────────────────────────────────────────
+function openNewPlan() {
+  editingPlanId = null;
+  document.getElementById('modal-plan-title').textContent = 'Tạo kế hoạch TĐG mới';
+  document.getElementById('inp-plan-name').value = '';
+  document.getElementById('inp-plan-date').value = '';
+  document.getElementById('chk-defaults').checked = true;
+  document.getElementById('defaults-check-row').style.display = '';
+  document.getElementById('modal-plan').classList.add('open');
+}
+
+function openEditPlan() {
+  if (!activePlan) return;
+  editingPlanId = activePlan.id;
+  document.getElementById('modal-plan-title').textContent = 'Sửa kế hoạch TĐG';
+  document.getElementById('inp-plan-name').value = activePlan.name;
+  document.getElementById('inp-plan-date').value = activePlan.ngay_bat_dau || '';
+  document.getElementById('defaults-check-row').style.display = 'none';
+  document.getElementById('modal-plan').classList.add('open');
+}
+
+async function savePlan() {
+  const name = document.getElementById('inp-plan-name').value.trim();
+  const ngay_bat_dau = document.getElementById('inp-plan-date').value;
+  const use_defaults = document.getElementById('chk-defaults').checked;
+  if (!name) return;
+
+  if (editingPlanId) {
+    await fetch(`/api/tdg/${editingPlanId}`, {
+      method: 'PUT', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, ngay_bat_dau })
+    });
+    closeModal('modal-plan');
+    await loadPlans();
+    await selectPlan(editingPlanId);
+    showToast('success', '✅ Đã cập nhật kế hoạch');
+  } else {
+    const res = await fetch('/api/tdg', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, ngay_bat_dau, use_defaults })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      closeModal('modal-plan');
+      await loadPlans();
+      await selectPlan(data.id);
+      showToast('success', `✅ Đã tạo "${name}" với ${use_defaults ? '20 việc mặc định' : '0 việc'}`);
+    } else {
+      showToast('error', `❌ ${data.error}`);
+    }
+  }
+}
+
+async function deletePlan(id, name) {
+  if (!confirm(`Xoá kế hoạch "${name}"?\nTất cả công việc sẽ bị xoá.`)) return;
+  await fetch(`/api/tdg/${id}`, { method: 'DELETE' });
+  if (activePlanId === id) {
+    activePlanId = null; activePlan = null;
+    document.getElementById('no-plan-msg').style.display = '';
+    document.getElementById('plan-content').style.display = 'none';
+    document.getElementById('plan-title').textContent = '📅 Kế hoạch Tự Đánh Giá';
+    document.getElementById('plan-date-info').textContent = '';
+    document.getElementById('btn-edit-plan').style.display = 'none';
+    document.getElementById('btn-add-task').style.display = 'none';
+  }
+  await loadPlans();
+  showToast('success', `✅ Đã xoá kế hoạch`);
+}
+
+// ── Add task modal ──────────────────────────────────────────────────────
+function openAddTask() { document.getElementById('modal-task').classList.add('open'); }
+
+async function addTask() {
+  const title = document.getElementById('inp-task-title').value.trim();
+  const ws = parseInt(document.getElementById('inp-task-ws').value) || 1;
+  const we = parseInt(document.getElementById('inp-task-we').value) || ws;
+  const phase = parseInt(document.getElementById('inp-task-phase').value);
+  const priority = document.getElementById('inp-task-prio').value;
+  const assignee = document.getElementById('inp-task-assignee').value;
+  if (!title) return;
+
+  const res = await fetch(`/api/tdg/${activePlanId}/tasks`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title, phase, week_start: ws, week_end: we, priority, assignee })
+  });
+  if (res.ok) {
+    closeModal('modal-task');
+    const full = await fetch(`/api/tdg/${activePlanId}`).then(r => r.json());
+    activePlan = full;
+    renderPlanContent();
+    await loadPlans();
+    showToast('success', '✅ Đã thêm công việc');
+  }
+}
+
+// ── Helpers ─────────────────────────────────────────────────────────────
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function escHtml(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+let toastTimer;
+function showToast(type, msg) {
+  const el = document.getElementById('toast');
+  el.className = `toast show ${type}`; el.textContent = msg;
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+document.querySelectorAll('.modal-overlay').forEach(el =>
+  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); }));
+document.getElementById('inp-plan-name').addEventListener('keydown', e => { if (e.key === 'Enter') savePlan(); });
+
+init();
+</script>
+</body>
+</html>
