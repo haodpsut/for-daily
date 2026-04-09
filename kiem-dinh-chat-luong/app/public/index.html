@@ -27,9 +27,16 @@ body {
   background: var(--bg);
   color: var(--text);
   display: flex;
+  flex-direction: column;
   height: 100vh;
   overflow: hidden;
   font-size: 14px;
+}
+
+.layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
 }
 
 /* ── Sidebar ───────────────────────────────────────────────── */
@@ -590,10 +597,25 @@ td {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ── Top Nav ── */
+.topnav { background: var(--panel); border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; align-items: center; gap: 0; height: 44px; flex-shrink: 0; }
+.topnav .brand { font-size: 13px; font-weight: 800; color: var(--accent); margin-right: 24px; white-space: nowrap; }
+.nav-link { display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px; font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; transition: all .15s; white-space: nowrap; }
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
 </style>
 </head>
 <body>
 
+<!-- ── Top Nav ─────────────────────────────────────────────── -->
+<nav class="topnav">
+  <span class="brand">KĐCLGD · ĐH Kiến trúc Đà Nẵng</span>
+  <a class="nav-link active" href="/">📂 Minh chứng</a>
+  <a class="nav-link" href="/module2.html">📋 Đánh giá tiêu chí</a>
+</nav>
+
+<div class="layout">
 <!-- ── Sidebar ─────────────────────────────────────────────── -->
 <nav id="sidebar">
   <div class="sidebar-header">
@@ -723,6 +745,8 @@ td {
     </div>
   </div>
 </div>
+
+</div><!-- /layout -->
 
 <!-- ── Toast ───────────────────────────────────────────────── -->
 <div class="toast" id="toast"></div>

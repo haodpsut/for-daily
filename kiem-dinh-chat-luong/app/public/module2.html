@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đánh giá Tiêu chí – Biểu 04</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #0f1117;
+  --panel:   #1a1d27;
+  --border:  #2a2d3e;
+  --accent:  #4f8ef7;
+  --accent2: #7c5cbf;
+  --green:   #2ea87e;
+  --red:     #e05a5a;
+  --yellow:  #e0a847;
+  --text:    #e2e8f0;
+  --muted:   #64748b;
+  --hover:   #22263a;
+  --sidebar: 300px;
+}
+
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); display: flex; flex-direction: column; height: 100vh; overflow: hidden; font-size: 14px; }
+
+/* ── Top Nav ─────────────────────── */
+.topnav { background: var(--panel); border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; align-items: center; gap: 0; height: 44px; flex-shrink: 0; }
+.topnav .brand { font-size: 13px; font-weight: 800; color: var(--accent); margin-right: 24px; white-space: nowrap; }
+.nav-link { display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px; font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; transition: all .15s; white-space: nowrap; }
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── Layout ──────────────────────── */
+.layout { display: flex; flex: 1; overflow: hidden; }
+
+/* ── Sidebar ─────────────────────── */
+#sidebar { width: var(--sidebar); background: var(--panel); border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+.sidebar-header { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+.sidebar-header h2 { font-size: 12px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+.sidebar-header p  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+#tree { overflow-y: auto; flex: 1; padding: 6px 0; }
+
+.std-item { border-bottom: 1px solid var(--border); }
+.std-header { display: flex; align-items: center; gap: 8px; padding: 7px 12px; cursor: pointer; user-select: none; }
+.std-header:hover { background: var(--hover); }
+.std-badge { min-width: 24px; height: 18px; border-radius: 3px; background: var(--accent2); color: #fff; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.std-name { font-size: 11px; font-weight: 600; flex: 1; line-height: 1.3; }
+.std-prog { font-size: 10px; color: var(--muted); flex-shrink: 0; white-space: nowrap; }
+.std-arrow { font-size: 9px; color: var(--muted); transition: transform .2s; flex-shrink: 0; }
+.std-arrow.open { transform: rotate(90deg); }
+.criteria-list { display: none; padding-bottom: 2px; }
+.criteria-list.open { display: block; }
+
+.tc-item { display: flex; align-items: center; gap: 8px; padding: 5px 12px 5px 32px; cursor: pointer; font-size: 11px; transition: background .1s; }
+.tc-item:hover { background: var(--hover); }
+.tc-item.active { background: #1e2a4a; }
+.tc-code { font-weight: 700; color: var(--accent); min-width: 28px; flex-shrink: 0; }
+.tc-name { flex: 1; color: var(--muted); }
+.tc-item.active .tc-name { color: var(--text); }
+
+/* Status dot */
+.status-dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--muted); flex-shrink: 0; }
+.status-dot.dat      { background: var(--green); border-color: var(--green); }
+.status-dot.kdat     { background: var(--red);   border-color: var(--red); }
+.status-dot.draft    { background: var(--yellow); border-color: var(--yellow); }
+.status-dot.approved { background: var(--green); border-color: var(--green); box-shadow: 0 0 4px var(--green); }
+
+/* ── Main ────────────────────────── */
+#main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+/* Dashboard */
+#dashboard { padding: 20px; overflow-y: auto; flex: 1; }
+.dash-title { font-size: 18px; font-weight: 800; margin-bottom: 16px; }
+.dash-subtitle { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+.stat-card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+.stat-card .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+.stat-card .val { font-size: 28px; font-weight: 800; margin-top: 4px; }
+.stat-card.blue   .val { color: var(--accent); }
+.stat-card.green  .val { color: var(--green); }
+.stat-card.red    .val { color: var(--red); }
+.stat-card.yellow .val { color: var(--yellow); }
+
+/* Overall progress bar */
+.progress-section { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; }
+.progress-section h3 { font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+.prog-bar-wrap { background: var(--border); border-radius: 4px; height: 14px; overflow: hidden; display: flex; }
+.prog-seg { height: 100%; transition: width .4s; }
+.prog-seg.green  { background: var(--green); }
+.prog-seg.red    { background: var(--red); }
+.prog-seg.yellow { background: var(--yellow); }
+.prog-legend { display: flex; gap: 20px; margin-top: 10px; }
+.prog-legend span { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+/* Standards overview table */
+.overview-table-wrap { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.overview-table-wrap h3 { font-size: 13px; font-weight: 700; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+.std-overview-row { display: flex; align-items: center; gap: 12px; padding: 8px 16px; border-bottom: 1px solid var(--border); }
+.std-overview-row:last-child { border-bottom: none; }
+.sov-badge { min-width: 24px; text-align: center; font-size: 11px; font-weight: 700; color: var(--accent2); }
+.sov-name  { flex: 1; font-size: 12px; }
+.sov-bar   { width: 120px; background: var(--border); border-radius: 3px; height: 6px; overflow: hidden; }
+.sov-fill  { height: 100%; background: var(--green); border-radius: 3px; transition: width .3s; }
+.sov-count { font-size: 11px; color: var(--muted); min-width: 40px; text-align: right; }
+.btn-open-tc { font-size: 11px; color: var(--accent); background: none; border: none; cursor: pointer; padding: 2px 6px; border-radius: 3px; }
+.btn-open-tc:hover { background: var(--hover); }
+
+/* ── Biểu 04 Form ────────────────── */
+#form-panel { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.form-topbar { background: var(--panel); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.form-topbar h2 { font-size: 14px; font-weight: 700; flex: 1; }
+.tchi-badge { font-size: 12px; font-weight: 800; background: #1e2a4a; color: var(--accent); padding: 4px 10px; border-radius: 4px; white-space: nowrap; }
+
+.status-pill { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; border: 1px solid; white-space: nowrap; }
+.status-pill.draft    { color: var(--yellow); border-color: var(--yellow); background: rgba(224,168,71,.1); }
+.status-pill.approved { color: var(--green);  border-color: var(--green);  background: rgba(46,168,126,.1); }
+
+.form-body { flex: 1; overflow-y: auto; padding: 20px; }
+
+.bieu04-header { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 20px; }
+.bieu04-header h3 { font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--accent); }
+.bieu04-header .tc-title { font-size: 13px; line-height: 1.5; }
+.bieu04-header .tc-reqs  { margin-top: 10px; }
+.bieu04-header .tc-reqs li { font-size: 12px; color: var(--muted); margin: 3px 0 3px 16px; line-height: 1.5; }
+
+.form-section { margin-bottom: 18px; }
+.form-section label { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+.form-section label .section-num { display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; flex-shrink: 0; }
+.form-section textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 10px 12px; border-radius: 6px; font-size: 13px; font-family: inherit; resize: vertical; min-height: 100px; line-height: 1.6; }
+.form-section textarea:focus { outline: 2px solid var(--accent); }
+.form-section textarea.short { min-height: 70px; }
+
+/* Result radio */
+.result-row { display: flex; gap: 16px; }
+.result-opt { display: flex; align-items: center; gap: 10px; padding: 12px 20px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; transition: all .15s; flex: 1; }
+.result-opt:hover { border-color: var(--muted); }
+.result-opt.selected-dat  { border-color: var(--green); background: rgba(46,168,126,.08); }
+.result-opt.selected-kdat { border-color: var(--red);   background: rgba(224,90,90,.08); }
+.result-opt input { display: none; }
+.result-opt .opt-icon { font-size: 20px; }
+.result-opt .opt-label { font-size: 14px; font-weight: 700; }
+.result-opt .opt-desc  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.result-opt.selected-dat  .opt-label { color: var(--green); }
+.result-opt.selected-kdat .opt-label { color: var(--red); }
+
+/* Evidence linked */
+.mc-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.mc-table th { background: var(--panel); padding: 8px 10px; text-align: left; color: var(--muted); font-size: 11px; border-bottom: 1px solid var(--border); }
+.mc-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+.mc-table tr:hover td { background: var(--hover); }
+.mc-code { font-family: monospace; font-weight: 700; color: var(--accent); }
+.no-mc { text-align: center; color: var(--muted); font-size: 12px; padding: 16px; }
+
+.mc-supplement { margin-top: 10px; }
+.mc-supplement input { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 6px; font-size: 12px; }
+.mc-supplement input:focus { outline: 2px solid var(--accent); }
+
+/* Meta row */
+.meta-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.meta-field label { display: block; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 5px; }
+.meta-field input, .meta-field select { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 8px 10px; border-radius: 6px; font-size: 12px; }
+.meta-field input:focus, .meta-field select:focus { outline: 2px solid var(--accent); }
+
+/* Form footer */
+.form-footer { background: var(--panel); border-top: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.btn-save    { background: var(--accent); color: #fff; border: none; padding: 9px 20px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 700; }
+.btn-save:hover { opacity: .85; }
+.btn-save:disabled { opacity: .4; cursor: not-allowed; }
+.btn-print   { background: none; border: 1px solid var(--border); color: var(--muted); padding: 9px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+.btn-print:hover  { border-color: var(--accent2); color: var(--accent2); }
+.btn-delete  { background: none; border: 1px solid var(--border); color: var(--muted); padding: 9px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; margin-left: auto; }
+.btn-delete:hover { border-color: var(--red); color: var(--red); }
+.save-status { font-size: 12px; color: var(--muted); }
+
+/* Toast */
+.toast { position: fixed; bottom: 24px; right: 24px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 12px 18px; font-size: 13px; font-weight: 600; z-index: 200; display: none; box-shadow: 0 8px 30px rgba(0,0,0,.4); }
+.toast.show { display: flex; align-items: center; gap: 8px; }
+.toast.success { border-color: var(--green); color: var(--green); }
+.toast.error   { border-color: var(--red); color: var(--red); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ── Print (Biểu 04) ─────────────── */
+@media print {
+  .topnav, #sidebar, .form-topbar, .form-footer, .toast, #dashboard { display: none !important; }
+  body { background: #fff; color: #000; display: block; height: auto; }
+  .layout { display: block; }
+  #form-panel { display: block; overflow: visible; }
+  #main { display: block; overflow: visible; }
+  .form-body { overflow: visible; padding: 0; }
+  .print-bieu04 { display: block !important; }
+  .form-section { display: none; }
+  .bieu04-header, .result-row, .meta-row { display: none; }
+}
+.print-bieu04 { display: none; }
+
+@media print {
+  @page { margin: 20mm; size: A4; }
+  .print-bieu04 table { width: 100%; border-collapse: collapse; }
+  .print-bieu04 td, .print-bieu04 th { border: 1px solid #000; padding: 6px 8px; font-size: 11pt; vertical-align: top; }
+  .print-bieu04 h2 { text-align: center; font-size: 13pt; margin-bottom: 6px; }
+  .print-bieu04 h3 { text-align: center; font-size: 11pt; font-weight: normal; margin-bottom: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Top Nav ─────────────────────────────── -->
+<nav class="topnav">
+  <span class="brand">KĐCLGD · ĐH Kiến trúc Đà Nẵng</span>
+  <a class="nav-link" href="/">📂 Minh chứng</a>
+  <a class="nav-link active" href="/module2.html">📋 Đánh giá tiêu chí</a>
+</nav>
+
+<div class="layout">
+
+<!-- ── Sidebar ─────────────────────────────── -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <h2>Tiêu chuẩn / Tiêu chí</h2>
+    <p id="sidebar-prog-text">0 / 60 đã đánh giá</p>
+  </div>
+  <div id="tree"></div>
+</nav>
+
+<!-- ── Main ────────────────────────────────── -->
+<div id="main">
+
+  <!-- Dashboard (shown when no criterion selected) -->
+  <div id="dashboard">
+    <div class="dash-title">📋 Đánh giá Tiêu chí — Biểu 04</div>
+    <div class="dash-subtitle">Thông tư /2026/TT-BGDĐT &nbsp;·&nbsp; 15 Tiêu chuẩn / 60 Tiêu chí</div>
+
+    <div class="stats-grid">
+      <div class="stat-card blue">
+        <div class="lbl">Đã đánh giá</div>
+        <div class="val" id="s-total">0</div>
+      </div>
+      <div class="stat-card green">
+        <div class="lbl">Đạt</div>
+        <div class="val" id="s-dat">0</div>
+      </div>
+      <div class="stat-card red">
+        <div class="lbl">Không đạt</div>
+        <div class="val" id="s-kdat">0</div>
+      </div>
+      <div class="stat-card yellow">
+        <div class="lbl">Chưa đánh giá</div>
+        <div class="val" id="s-chua">60</div>
+      </div>
+    </div>
+
+    <div class="progress-section">
+      <h3>Tiến độ hoàn thành (60 tiêu chí)</h3>
+      <div class="prog-bar-wrap">
+        <div class="prog-seg green"  id="prog-dat"  style="width:0%"></div>
+        <div class="prog-seg red"    id="prog-kdat" style="width:0%"></div>
+        <div class="prog-seg yellow" id="prog-draft" style="width:0%"></div>
+      </div>
+      <div class="prog-legend">
+        <span><div class="leg-dot" style="background:var(--green)"></div> Đạt (<span id="leg-dat">0</span>)</span>
+        <span><div class="leg-dot" style="background:var(--red)"></div> Không đạt (<span id="leg-kdat">0</span>)</span>
+        <span><div class="leg-dot" style="background:var(--yellow)"></div> Bản nháp (<span id="leg-draft">0</span>)</span>
+        <span><div class="leg-dot" style="background:var(--border);border:1px solid var(--muted)"></div> Chưa đánh giá (<span id="leg-chua">60</span>)</span>
+      </div>
+    </div>
+
+    <div class="overview-table-wrap">
+      <h3>Tổng quan theo Tiêu chuẩn</h3>
+      <div id="std-overview"></div>
+    </div>
+  </div>
+
+  <!-- Biểu 04 Form (hidden initially) -->
+  <div id="form-panel" style="display:none">
+    <div class="form-topbar">
+      <span class="tchi-badge" id="fp-code">TC x.y</span>
+      <h2 id="fp-title">Tên tiêu chí</h2>
+      <span class="status-pill draft" id="fp-status">Bản nháp</span>
+      <button class="btn-print" onclick="printBieu04()">🖨 In Biểu 04</button>
+    </div>
+
+    <div class="form-body">
+      <!-- Header info -->
+      <div class="bieu04-header">
+        <h3>PHIẾU TỰ ĐÁNH GIÁ TIÊU CHÍ (Biểu 04)</h3>
+        <div class="tc-title" id="fp-fulltitle"></div>
+        <div class="tc-reqs"><ul id="fp-reqs"></ul></div>
+      </div>
+
+      <!-- I. Hiện trạng -->
+      <div class="form-section">
+        <label><span class="section-num">I</span> Mô tả hiện trạng</label>
+        <textarea id="f-hientrang" placeholder="Mô tả thực trạng hiện tại của nhà trường liên quan đến tiêu chí này. Nêu cụ thể các hoạt động, kết quả, số liệu minh chứng..."></textarea>
+      </div>
+
+      <!-- II. Điểm mạnh -->
+      <div class="form-section">
+        <label><span class="section-num">II</span> Điểm mạnh</label>
+        <textarea id="f-diemmanh" class="short" placeholder="Liệt kê những điểm mạnh, thành tích nổi bật đã đạt được..."></textarea>
+      </div>
+
+      <!-- III. Tồn tại -->
+      <div class="form-section">
+        <label><span class="section-num">III</span> Điểm còn tồn tại / hạn chế</label>
+        <textarea id="f-tontai" class="short" placeholder="Nêu rõ những hạn chế, bất cập cần khắc phục..."></textarea>
+      </div>
+
+      <!-- IV. Kế hoạch hành động -->
+      <div class="form-section">
+        <label><span class="section-num">IV</span> Kế hoạch hành động</label>
+        <textarea id="f-kehoach" class="short" placeholder="Các biện pháp, thời hạn và người chịu trách nhiệm để cải thiện..."></textarea>
+      </div>
+
+      <!-- V. Minh chứng -->
+      <div class="form-section">
+        <label><span class="section-num">V</span> Danh mục minh chứng</label>
+        <table class="mc-table">
+          <thead>
+            <tr><th>Mã MC</th><th>Mô tả</th><th>Nguồn</th><th>File</th></tr>
+          </thead>
+          <tbody id="mc-list"><tr><td colspan="4" class="no-mc">Chưa có minh chứng. Upload tại Module 1.</td></tr></tbody>
+        </table>
+        <div class="mc-supplement">
+          <input id="f-mcbosung" type="text" placeholder="Bổ sung mã MC chưa upload (vd: H1.01.01.03, H1.01.01.04)...">
+        </div>
+      </div>
+
+      <!-- VI. Kết quả -->
+      <div class="form-section">
+        <label><span class="section-num">VI</span> Kết quả tự đánh giá</label>
+        <div class="result-row">
+          <label class="result-opt" id="opt-dat" onclick="selectResult('DAT')">
+            <input type="radio" name="ket_qua" value="DAT">
+            <span class="opt-icon">✅</span>
+            <div>
+              <div class="opt-label">ĐẠT</div>
+              <div class="opt-desc">Đáp ứng đủ các yêu cầu của tiêu chí</div>
+            </div>
+          </label>
+          <label class="result-opt" id="opt-kdat" onclick="selectResult('KHONG_DAT')">
+            <input type="radio" name="ket_qua" value="KHONG_DAT">
+            <span class="opt-icon">❌</span>
+            <div>
+              <div class="opt-label">KHÔNG ĐẠT</div>
+              <div class="opt-desc">Chưa đáp ứng một hoặc nhiều yêu cầu</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Meta -->
+      <div class="form-section">
+        <label><span class="section-num" style="background:var(--muted)">⚙</span> Thông tin thực hiện</label>
+        <div class="meta-row">
+          <div class="meta-field">
+            <label>Người thực hiện</label>
+            <input id="f-nguoi" type="text" placeholder="Họ tên, chức vụ...">
+          </div>
+          <div class="meta-field">
+            <label>Trạng thái</label>
+            <select id="f-trangthai">
+              <option value="draft">Bản nháp</option>
+              <option value="reviewed">Đã xem xét</option>
+              <option value="approved">Đã phê duyệt</option>
+            </select>
+          </div>
+          <div class="meta-field">
+            <label>Ngày đánh giá</label>
+            <input id="f-ngay" type="text" placeholder="dd/mm/yyyy">
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /form-body -->
+
+    <div class="form-footer">
+      <button class="btn-save" id="btn-save" onclick="saveAssessment()">💾 Lưu đánh giá</button>
+      <span class="save-status" id="save-status"></span>
+      <button class="btn-delete" id="btn-delete" onclick="deleteAssessment()" style="display:none">🗑 Xoá đánh giá này</button>
+    </div>
+
+    <!-- Print-only Biểu 04 -->
+    <div class="print-bieu04" id="print-content"></div>
+  </div>
+
+</div><!-- /main -->
+</div><!-- /layout -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+let standards = [];
+let statusMap = {};
+let currentTC = null;
+let currentAssessId = null;
+let selectedResult = 'CHUA';
+
+const CRITERIA_TITLES = {
+  '1.1': 'Lãnh đạo CSĐT công bố tầm nhìn, sứ mạng đáp ứng nhu cầu các bên liên quan',
+  '1.2': 'CSĐT có hệ thống quản trị theo Luật GDĐH đảm bảo trách nhiệm giải trình và minh bạch',
+  '1.3': 'Lãnh đạo CSĐT thúc đẩy giá trị văn hóa, liêm chính học thuật và hành vi chuẩn mực',
+  '1.4': 'Tầm nhìn, sứ mạng và giá trị văn hóa được truyền đạt đến nhân sự tất cả các cấp',
+  '1.5': 'Quyết định quản trị được cụ thể hóa thành kế hoạch, thể hiện trách nhiệm xã hội',
+  '1.6': 'Hệ thống quản trị được cải tiến để nâng cao hiệu quả và quản lý rủi ro',
+  '2.1': 'CSĐT có cơ cấu tổ chức quản lý rõ ràng, thông tin trao đổi thông suốt đa chiều',
+  '2.2': 'Cơ cấu tổ chức được rà soát định kỳ nhằm nâng cao hiệu quả vận hành',
+  '2.3': 'Kế hoạch chiến lược ngắn/trung/dài hạn được triển khai đáp ứng nhu cầu đào tạo và NCKH',
+  '2.4': 'Kế hoạch chiến lược được giám sát, đánh giá và cải tiến liên tục',
+  '2.5': 'Lãnh đạo và quản lý được cải tiến để nâng cao hiệu quả CSĐT',
+  '3.1': 'CSĐT có chiến lược quy hoạch và tuyển dụng nhân sự phù hợp',
+  '3.2': 'CSĐT có hệ thống đánh giá hiệu quả công việc của nhân sự',
+  '3.3': 'CSĐT có chính sách phát triển chuyên môn và nghiệp vụ cho nhân sự',
+  '3.4': 'CSĐT có chế độ đãi ngộ, phúc lợi và môi trường làm việc phù hợp',
+  '3.5': 'Công tác quản lý nguồn nhân lực được cải tiến liên tục',
+  '4.1': 'CSĐT có hệ thống lập kế hoạch và quản lý tài chính hiệu quả',
+  '4.2': 'CSĐT có cơ sở vật chất đủ điều kiện đáp ứng yêu cầu đào tạo',
+  '4.3': 'CSĐT có thư viện và tài nguyên học liệu số đáp ứng nhu cầu người dạy và người học',
+  '4.4': 'CSĐT có hạ tầng CNTT và hệ thống thông tin phục vụ đào tạo và quản lý',
+  '4.5': 'Công tác quản lý tài chính và cơ sở vật chất được cải tiến',
+  '5.1': 'CSĐT có mạng lưới hợp tác trong nước và quốc tế phục vụ đào tạo và NCKH',
+  '5.2': 'Hoạt động hợp tác và kết nối được cải tiến để nâng cao chất lượng',
+  '6.1': 'Tiêu chí và quy trình tuyển chọn người học được công bố công khai và thực hiện đúng quy định',
+  '6.2': 'CTĐT được thiết kế theo hướng OBE, rà soát định kỳ và cải tiến',
+  '6.3': 'Phương pháp giảng dạy và học tập đa dạng, lấy người học làm trung tâm',
+  '6.4': 'Kiểm tra đánh giá người học đa dạng, minh bạch và phù hợp chuẩn đầu ra',
+  '6.5': 'CSĐT có hệ thống hỗ trợ người học toàn diện',
+  '6.6': 'Thông tin người học được quản lý đầy đủ, chính xác và bảo mật',
+  '6.7': 'Chính sách và hoạt động đào tạo được cải tiến liên tục',
+  '7.1': 'CSĐT có chiến lược và định hướng NCKH rõ ràng',
+  '7.2': 'CSĐT tạo môi trường thuận lợi và cung cấp nguồn lực cho NCKH',
+  '7.3': 'CSĐT có chính sách về sở hữu trí tuệ và đạo đức nghiên cứu',
+  '7.4': 'CSĐT có chương trình phát triển năng lực nghiên cứu cho GV và NCS',
+  '7.5': 'Chính sách NCKH được cải tiến để nâng cao hiệu quả',
+  '8.1': 'CSĐT có chính sách và kế hoạch kết nối với cộng đồng',
+  '8.2': 'CSĐT triển khai hiệu quả các hoạt động kết nối và phục vụ cộng đồng',
+  '8.3': 'Hoạt động kết nối cộng đồng được đánh giá và cải tiến',
+  '9.1': 'CSĐT có hệ thống IQA với cơ cấu tổ chức và chính sách BĐCL rõ ràng',
+  '9.2': 'CSĐT có quy trình và công cụ BĐCL cho tất cả hoạt động cốt lõi',
+  '9.3': 'CSĐT giám sát và đánh giá định kỳ chất lượng các hoạt động',
+  '9.4': 'Hệ thống BĐCL được cải tiến liên tục',
+  '10.1': 'CSĐT có hệ thống thu thập, quản lý và sử dụng dữ liệu chất lượng',
+  '10.2': 'CSĐT báo cáo và công bố thông tin chất lượng đầy đủ, minh bạch',
+  '11.1': 'CSĐT áp dụng chu trình cải tiến liên tục (PDCA) trong tất cả hoạt động',
+  '11.2': 'CSĐT khuyến khích và triển khai đổi mới sáng tạo',
+  '12.1': 'Tỉ lệ tốt nghiệp đúng hạn và tỉ lệ thôi học đạt mức theo yêu cầu',
+  '12.2': 'Chất lượng sinh viên tốt nghiệp đáp ứng chuẩn đầu ra CTĐT',
+  '12.3': 'Tỉ lệ có việc làm sau tốt nghiệp và mức thu nhập đạt yêu cầu',
+  '12.4': 'Người học hài lòng với chương trình đào tạo và dịch vụ của CSĐT',
+  '13.1': 'CSĐT có kết quả tốt về số lượng và chất lượng đề tài NCKH',
+  '13.2': 'GV và NCS có các công bố khoa học trên tạp chí trong nước và quốc tế',
+  '13.3': 'CSĐT có sáng chế, giải pháp hữu ích và hoạt động chuyển giao công nghệ',
+  '13.4': 'Người học tích cực tham gia NCKH và có các công bố khoa học',
+  '14.1': 'CSĐT có nhiều hợp tác hiệu quả với doanh nghiệp và địa phương',
+  '14.2': 'CSĐT có hoạt động chuyển giao công nghệ và tư vấn KH-CN',
+  '14.3': 'CSĐT có các hoạt động phục vụ cộng đồng thiết thực',
+  '14.4': 'Hoạt động kết nối có tác động tích cực đến cộng đồng và xã hội',
+  '15.1': 'CSĐT có kết quả tài chính lành mạnh, thu chi cân đối và tăng trưởng',
+  '15.2': 'CSĐT có uy tín và vị thế tốt trên thị trường giáo dục',
+};
+
+// ── Init ─────────────────────────────────────────────────────
+async function init() {
+  const [stdRes, statsRes] = await Promise.all([
+    fetch('/api/standards'),
+    fetch('/api/assess-stats'),
+  ]);
+  standards = await stdRes.json();
+  const stats = await statsRes.json();
+  statusMap = stats.statusMap || {};
+  renderStats(stats);
+  renderTree();
+  renderStdOverview(stats);
+}
+
+// ── Stats ─────────────────────────────────────────────────────
+function renderStats(s) {
+  document.getElementById('s-total').textContent = s.total;
+  document.getElementById('s-dat').textContent   = s.dat;
+  document.getElementById('s-kdat').textContent  = s.khongDat;
+  document.getElementById('s-chua').textContent  = 60 - s.total;
+
+  document.getElementById('leg-dat').textContent   = s.dat;
+  document.getElementById('leg-kdat').textContent  = s.khongDat;
+  document.getElementById('leg-draft').textContent = s.draft;
+  document.getElementById('leg-chua').textContent  = 60 - s.total;
+
+  const datPct   = (s.dat / 60 * 100).toFixed(1);
+  const kdatPct  = (s.khongDat / 60 * 100).toFixed(1);
+  const draftPct = (s.draft / 60 * 100).toFixed(1);
+  document.getElementById('prog-dat').style.width   = datPct + '%';
+  document.getElementById('prog-kdat').style.width  = kdatPct + '%';
+  document.getElementById('prog-draft').style.width = draftPct + '%';
+
+  document.getElementById('sidebar-prog-text').textContent = `${s.total} / 60 đã đánh giá`;
+}
+
+// ── Tree ─────────────────────────────────────────────────────
+function renderTree() {
+  const el = document.getElementById('tree');
+  el.innerHTML = standards.map(s => {
+    const tcodes = s.criteria.map((_, i) => `${s.id}.${i+1}`);
+    const done = tcodes.filter(c => statusMap[c]).length;
+    return `
+    <div class="std-item">
+      <div class="std-header" onclick="toggleStd(${s.id})" id="std-hdr-${s.id}">
+        <div class="std-badge">${s.id}</div>
+        <div class="std-name">TC${s.id}: ${s.name}</div>
+        <div class="std-prog">${done}/${s.criteria.length}</div>
+        <div class="std-arrow" id="std-arr-${s.id}">▶</div>
+      </div>
+      <div class="criteria-list" id="cl-${s.id}">
+        ${s.criteria.map((c, i) => {
+          const code = `${s.id}.${i+1}`;
+          const st = statusMap[code];
+          const dotClass = !st ? '' : st.ket_qua === 'DAT' ? 'dat' : st.ket_qua === 'KHONG_DAT' ? 'kdat' : st.trang_thai === 'approved' ? 'approved' : 'draft';
+          return `<div class="tc-item" onclick="openCriteria('${code}')" id="tc-${code.replace('.','_')}">
+            <span class="tc-code">${code}</span>
+            <span class="tc-name">${c}</span>
+            <span class="status-dot ${dotClass}" id="dot-${code.replace('.','_')}"></span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleStd(id) {
+  document.getElementById(`cl-${id}`).classList.toggle('open');
+  document.getElementById(`std-arr-${id}`).classList.toggle('open');
+}
+
+// ── Standard overview table ───────────────────────────────────
+function renderStdOverview(stats) {
+  const el = document.getElementById('std-overview');
+  el.innerHTML = standards.map(s => {
+    const tcodes = s.criteria.map((_, i) => `${s.id}.${i+1}`);
+    const done = tcodes.filter(c => statusMap[c]).length;
+    const pct = Math.round(done / s.criteria.length * 100);
+    return `<div class="std-overview-row">
+      <span class="sov-badge">TC${s.id}</span>
+      <span class="sov-name">${s.name}</span>
+      <div class="sov-bar"><div class="sov-fill" style="width:${pct}%"></div></div>
+      <span class="sov-count">${done}/${s.criteria.length}</span>
+      <button class="btn-open-tc" onclick="openCriteria('${s.id}.1')">Mở →</button>
+    </div>`;
+  }).join('');
+}
+
+// ── Open Criterion ────────────────────────────────────────────
+async function openCriteria(code) {
+  currentTC = code;
+  selectedResult = 'CHUA';
+
+  // Highlight sidebar
+  document.querySelectorAll('.tc-item').forEach(e => e.classList.remove('active'));
+  const tcEl = document.getElementById(`tc-${code.replace('.','_')}`);
+  if (tcEl) {
+    tcEl.classList.add('active');
+    // Open parent standard
+    const tc = parseInt(code.split('.')[0]);
+    document.getElementById(`cl-${tc}`).classList.add('open');
+    document.getElementById(`std-arr-${tc}`).classList.add('open');
+  }
+
+  // Switch views
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('form-panel').style.display = 'flex';
+
+  // Load data
+  const res = await fetch(`/api/assessments/by-criteria/${encodeURIComponent(code)}`);
+  const data = await res.json();
+
+  // Fill header
+  const tc = parseInt(code.split('.')[0]);
+  const std = standards.find(s => s.id === tc);
+  const critIdx = parseInt(code.split('.')[1]) - 1;
+  const shortName = std ? std.criteria[critIdx] : code;
+  const fullTitle = CRITERIA_TITLES[code] || shortName;
+
+  document.getElementById('fp-code').textContent = `TC ${code}`;
+  document.getElementById('fp-title').textContent = shortName;
+  document.getElementById('fp-fulltitle').textContent = fullTitle;
+
+  // Fill form
+  const a = data.assessment;
+  currentAssessId = a ? a.id : null;
+  document.getElementById('f-hientrang').value = a?.hien_trang || '';
+  document.getElementById('f-diemmanh').value  = a?.diem_manh  || '';
+  document.getElementById('f-tontai').value    = a?.ton_tai    || '';
+  document.getElementById('f-kehoach').value   = a?.ke_hoach   || '';
+  document.getElementById('f-mcbosung').value  = a?.mc_bo_sung || '';
+  document.getElementById('f-nguoi').value     = a?.nguoi_thuc_hien || '';
+  document.getElementById('f-trangthai').value = a?.trang_thai || 'draft';
+  document.getElementById('f-ngay').value      = a?.ngay_danh_gia || new Date().toLocaleDateString('vi-VN');
+
+  if (a) selectResult(a.ket_qua || 'CHUA');
+  else   clearResultUI();
+
+  // Status pill
+  const pill = document.getElementById('fp-status');
+  const tt = a?.trang_thai || 'none';
+  pill.className = 'status-pill ' + (tt === 'approved' ? 'approved' : 'draft');
+  pill.textContent = tt === 'draft' ? 'Bản nháp' : tt === 'reviewed' ? 'Đã xem xét' : tt === 'approved' ? 'Đã phê duyệt' : 'Chưa đánh giá';
+
+  // Delete button
+  document.getElementById('btn-delete').style.display = a ? 'block' : 'none';
+  document.getElementById('save-status').textContent = a ? `Cập nhật lần cuối: ${a.updated_at}` : '';
+
+  // Evidence table
+  renderEvidenceTable(data.evidence);
+}
+
+function renderEvidenceTable(list) {
+  const tbody = document.getElementById('mc-list');
+  if (!list || list.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4" class="no-mc">Chưa có minh chứng được upload tại Module 1 cho tiêu chí này.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map(e => `<tr>
+    <td class="mc-code">${e.code}</td>
+    <td>${escHtml(e.mo_ta)}</td>
+    <td>${escHtml(e.nguon)}</td>
+    <td><a href="/api/evidence/${e.id}/download" target="_blank" style="color:var(--accent);text-decoration:none;">⬇ ${escHtml(e.file_name)}</a></td>
+  </tr>`).join('');
+}
+
+// ── Result selection ──────────────────────────────────────────
+function selectResult(val) {
+  selectedResult = val;
+  document.getElementById('opt-dat').className  = 'result-opt' + (val === 'DAT' ? ' selected-dat' : '');
+  document.getElementById('opt-kdat').className = 'result-opt' + (val === 'KHONG_DAT' ? ' selected-kdat' : '');
+}
+function clearResultUI() {
+  selectedResult = 'CHUA';
+  document.getElementById('opt-dat').className  = 'result-opt';
+  document.getElementById('opt-kdat').className = 'result-opt';
+}
+
+// ── Save ──────────────────────────────────────────────────────
+async function saveAssessment() {
+  if (!currentTC) return;
+  const tc = parseInt(currentTC.split('.')[0]);
+  const btn = document.getElementById('btn-save');
+  btn.disabled = true; btn.textContent = 'Đang lưu...';
+
+  const payload = {
+    tieu_chuan:       tc,
+    tieu_chi:         currentTC,
+    hien_trang:       document.getElementById('f-hientrang').value,
+    diem_manh:        document.getElementById('f-diemmanh').value,
+    ton_tai:          document.getElementById('f-tontai').value,
+    ke_hoach:         document.getElementById('f-kehoach').value,
+    ket_qua:          selectedResult,
+    trang_thai:       document.getElementById('f-trangthai').value,
+    nguoi_thuc_hien:  document.getElementById('f-nguoi').value,
+    mc_bo_sung:       document.getElementById('f-mcbosung').value,
+    ngay_danh_gia:    document.getElementById('f-ngay').value,
+  };
+
+  try {
+    const res = await fetch('/api/assessments', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    const data = await res.json();
+    if (res.ok) {
+      showToast('success', `✅ ${data.updated ? 'Đã cập nhật' : 'Đã lưu'} đánh giá TC ${currentTC}`);
+      currentAssessId = data.id;
+      document.getElementById('btn-delete').style.display = 'block';
+      document.getElementById('save-status').textContent = `Lưu lúc: ${new Date().toLocaleString('vi-VN')}`;
+      // Refresh status
+      await refreshStatus();
+    } else {
+      showToast('error', `❌ ${data.error}`);
+    }
+  } catch { showToast('error', '❌ Lỗi kết nối'); }
+
+  btn.disabled = false; btn.textContent = '💾 Lưu đánh giá';
+}
+
+async function deleteAssessment() {
+  if (!currentAssessId || !confirm(`Xoá đánh giá tiêu chí ${currentTC}?`)) return;
+  const res = await fetch(`/api/assessments/${currentAssessId}`, { method: 'DELETE' });
+  if (res.ok) {
+    showToast('success', `✅ Đã xoá đánh giá TC ${currentTC}`);
+    currentAssessId = null;
+    document.getElementById('btn-delete').style.display = 'none';
+    document.getElementById('f-hientrang').value = '';
+    document.getElementById('f-diemmanh').value = '';
+    document.getElementById('f-tontai').value = '';
+    document.getElementById('f-kehoach').value = '';
+    clearResultUI();
+    await refreshStatus();
+  }
+}
+
+async function refreshStatus() {
+  const res = await fetch('/api/assess-stats');
+  const stats = await res.json();
+  statusMap = stats.statusMap || {};
+  renderStats(stats);
+  renderTree();
+  renderStdOverview(stats);
+  // Re-highlight current
+  if (currentTC) {
+    const el = document.getElementById(`tc-${currentTC.replace('.','_')}`);
+    if (el) el.classList.add('active');
+  }
+}
+
+// ── Print Biểu 04 ─────────────────────────────────────────────
+function printBieu04() {
+  if (!currentTC) return;
+  const tc = parseInt(currentTC.split('.')[0]);
+  const std = standards.find(s => s.id === tc);
+  const critIdx = parseInt(currentTC.split('.')[1]) - 1;
+  const shortName = std ? std.criteria[critIdx] : currentTC;
+  const fullTitle = CRITERIA_TITLES[currentTC] || shortName;
+  const ket_qua = selectedResult === 'DAT' ? '☑ Đạt  ☐ Không đạt' : selectedResult === 'KHONG_DAT' ? '☐ Đạt  ☑ Không đạt' : '☐ Đạt  ☐ Không đạt';
+
+  document.getElementById('print-content').innerHTML = `
+    <table>
+      <tr><td colspan="2" style="text-align:center;font-weight:bold;font-size:13pt">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</td></tr>
+      <tr><td colspan="2" style="text-align:center;font-size:11pt">Độc lập – Tự do – Hạnh phúc</td></tr>
+      <tr><td colspan="2" style="text-align:center;font-weight:bold;font-size:14pt;padding:8px 0">PHIẾU TỰ ĐÁNH GIÁ TIÊU CHÍ</td></tr>
+      <tr><td colspan="2" style="text-align:center;font-size:11pt">(Kèm theo Thông tư /2026/TT-BGDĐT)</td></tr>
+      <tr><td style="width:30%;font-weight:bold">Tên CSĐT:</td><td>Trường Đại học Kiến trúc Đà Nẵng</td></tr>
+      <tr><td style="font-weight:bold">Tiêu chuẩn / Tiêu chí:</td><td>Tiêu chí ${currentTC}: ${fullTitle}</td></tr>
+      <tr><td style="font-weight:bold">Người thực hiện:</td><td>${document.getElementById('f-nguoi').value || '...'}&nbsp;&nbsp;&nbsp;&nbsp;Ngày: ${document.getElementById('f-ngay').value || '...'}</td></tr>
+      <tr><td style="font-weight:bold;vertical-align:top;padding-top:6px">I. Mô tả hiện trạng:</td><td style="white-space:pre-wrap">${escHtml(document.getElementById('f-hientrang').value)}</td></tr>
+      <tr><td style="font-weight:bold;vertical-align:top;padding-top:6px">II. Điểm mạnh:</td><td style="white-space:pre-wrap">${escHtml(document.getElementById('f-diemmanh').value)}</td></tr>
+      <tr><td style="font-weight:bold;vertical-align:top;padding-top:6px">III. Tồn tại / Hạn chế:</td><td style="white-space:pre-wrap">${escHtml(document.getElementById('f-tontai').value)}</td></tr>
+      <tr><td style="font-weight:bold;vertical-align:top;padding-top:6px">IV. Kế hoạch hành động:</td><td style="white-space:pre-wrap">${escHtml(document.getElementById('f-kehoach').value)}</td></tr>
+      <tr><td style="font-weight:bold">V. Kết quả đánh giá:</td><td><b>${ket_qua}</b></td></tr>
+    </table>`;
+  window.print();
+}
+
+// ── Helpers ───────────────────────────────────────────────────
+function escHtml(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+let toastTimer;
+function showToast(type, msg) {
+  const el = document.getElementById('toast');
+  el.className = `toast show ${type}`;
+  el.textContent = msg;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+init();
+</script>
+</body>
+</html>

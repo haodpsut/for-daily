@@ -13,9 +13,12 @@ if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 // ─── JSON Database ────────────────────────────────────────────────────────────
 function loadDB() {
   if (!fs.existsSync(DB_FILE)) {
-    fs.writeFileSync(DB_FILE, JSON.stringify({ evidence: [], nextId: 1 }, null, 2), 'utf8');
+    fs.writeFileSync(DB_FILE, JSON.stringify({ evidence: [], assessments: [], nextId: 1, nextAssessId: 1 }, null, 2), 'utf8');
   }
-  return JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
+  const db = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
+  if (!db.assessments)  db.assessments  = [];
+  if (!db.nextAssessId) db.nextAssessId = 1;
+  return db;
 }
 
 function saveDB(db) {
@@ -162,6 +165,89 @@ app.get('/api/evidence/:id/download', (req, res) => {
   if (!record) return res.status(404).json({ error: 'Không tìm thấy' });
   const filePath = path.join(UPLOADS_DIR, record.file_stored);
   res.download(filePath, record.file_name);
+});
+
+// ─── API: Assessment Stats (Biểu 04) ─────────────────────────────────────────
+app.get('/api/assess-stats', (req, res) => {
+  const db = loadDB();
+  const total = db.assessments.length;
+  const dat = db.assessments.filter(a => a.ket_qua === 'DAT').length;
+  const khongDat = db.assessments.filter(a => a.ket_qua === 'KHONG_DAT').length;
+  const draft = db.assessments.filter(a => a.trang_thai === 'draft').length;
+  const approved = db.assessments.filter(a => a.trang_thai === 'approved').length;
+  // Map tieu_chi → status for tree coloring
+  const statusMap = {};
+  for (const a of db.assessments) statusMap[a.tieu_chi] = { ket_qua: a.ket_qua, trang_thai: a.trang_thai };
+  res.json({ total, dat, khongDat, draft, approved, statusMap });
+});
+
+// ─── API: List Assessments ────────────────────────────────────────────────────
+app.get('/api/assessments', (req, res) => {
+  const db = loadDB();
+  res.json(db.assessments);
+});
+
+// ─── API: Get Assessment for one criterion ────────────────────────────────────
+app.get('/api/assessments/by-criteria/:tieu_chi', (req, res) => {
+  const db = loadDB();
+  const code = decodeURIComponent(req.params.tieu_chi);
+  const record = db.assessments.find(a => a.tieu_chi === code);
+  // Also fetch linked evidence from Module 1
+  const evidence = db.evidence.filter(e => e.tieu_chi === code);
+  res.json({ assessment: record || null, evidence });
+});
+
+// ─── API: Save Assessment (create or update) ──────────────────────────────────
+app.post('/api/assessments', (req, res) => {
+  const { tieu_chuan, tieu_chi, hien_trang, diem_manh, ton_tai, ke_hoach, ket_qua, trang_thai, nguoi_thuc_hien, mc_bo_sung } = req.body;
+  if (!tieu_chuan || !tieu_chi) return res.status(400).json({ error: 'Thiếu thông tin tiêu chí' });
+
+  const db = loadDB();
+  const existing = db.assessments.find(a => a.tieu_chi === tieu_chi);
+
+  if (existing) {
+    existing.tieu_chuan      = parseInt(tieu_chuan);
+    existing.hien_trang      = hien_trang || '';
+    existing.diem_manh       = diem_manh || '';
+    existing.ton_tai         = ton_tai || '';
+    existing.ke_hoach        = ke_hoach || '';
+    existing.ket_qua         = ket_qua || 'CHUA';
+    existing.trang_thai      = trang_thai || 'draft';
+    existing.nguoi_thuc_hien = nguoi_thuc_hien || '';
+    existing.mc_bo_sung      = mc_bo_sung || '';
+    existing.updated_at      = new Date().toLocaleString('vi-VN');
+    saveDB(db);
+    return res.json({ id: existing.id, message: 'Đã cập nhật đánh giá', updated: true });
+  }
+
+  const record = {
+    id:               db.nextAssessId++,
+    tieu_chuan:       parseInt(tieu_chuan),
+    tieu_chi,
+    hien_trang:       hien_trang || '',
+    diem_manh:        diem_manh || '',
+    ton_tai:          ton_tai || '',
+    ke_hoach:         ke_hoach || '',
+    ket_qua:          ket_qua || 'CHUA',
+    trang_thai:       trang_thai || 'draft',
+    nguoi_thuc_hien:  nguoi_thuc_hien || '',
+    mc_bo_sung:       mc_bo_sung || '',
+    created_at:       new Date().toLocaleString('vi-VN'),
+    updated_at:       new Date().toLocaleString('vi-VN'),
+  };
+  db.assessments.push(record);
+  saveDB(db);
+  res.json({ id: record.id, message: 'Đã tạo đánh giá', updated: false });
+});
+
+// ─── API: Delete Assessment ───────────────────────────────────────────────────
+app.delete('/api/assessments/:id', (req, res) => {
+  const db = loadDB();
+  const idx = db.assessments.findIndex(a => a.id === parseInt(req.params.id));
+  if (idx === -1) return res.status(404).json({ error: 'Không tìm thấy' });
+  db.assessments.splice(idx, 1);
+  saveDB(db);
+  res.json({ message: 'Đã xóa' });
 });
 
 // ─── Start ────────────────────────────────────────────────────────────────────
