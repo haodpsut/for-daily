@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "kiem-dinh-chat-luong/app/server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "kiem-dinh-chat-luong/app/server.js"
+    }
+  ]
+}
