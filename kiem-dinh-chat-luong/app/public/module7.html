@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Lãnh đạo – KĐCLGD</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --bg:#0f1117; --panel:#1a1d27; --border:#2a2d3e;
+  --accent:#4f8ef7; --green:#2ea87e; --red:#e05a5a; --yellow:#e0a847; --purple:#c084fc;
+  --text:#e2e8f0; --muted:#64748b; --hover:#22263a;
+}
+body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); display:flex; flex-direction:column; min-height:100vh; }
+
+/* Nav */
+.topnav { background:var(--panel); border-bottom:1px solid var(--border); padding:0 20px; display:flex; align-items:center; gap:0; height:44px; flex-shrink:0; }
+.topnav .brand { font-size:13px; font-weight:800; color:var(--accent); margin-right:20px; white-space:nowrap; }
+.nav-link { display:flex; align-items:center; height:44px; padding:0 12px; font-size:12px; font-weight:600; color:var(--muted); text-decoration:none; border-bottom:2px solid transparent; transition:all .15s; white-space:nowrap; }
+.nav-link:hover { color:var(--text); }
+.nav-link.active { color:var(--accent); border-bottom-color:var(--accent); }
+
+/* Dashboard layout */
+.dash-wrap { flex:1; overflow-y:auto; padding:20px 24px 32px; }
+.dash-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:10px; }
+.dash-header h1 { font-size:20px; font-weight:800; }
+.dash-header .school { font-size:12px; color:var(--muted); margin-top:2px; }
+.header-actions { display:flex; align-items:center; gap:10px; }
+.refresh-time { font-size:12px; color:var(--muted); }
+.btn-refresh { padding:6px 14px; background:var(--hover); border:1px solid var(--border); border-radius:7px; color:var(--text); font-size:12px; font-weight:600; cursor:pointer; }
+.btn-refresh:hover { background:var(--border); }
+
+/* Cards */
+.card { background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:16px 18px; }
+.card-title { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:14px; display:flex; align-items:center; gap:6px; }
+.card-title a { color:var(--muted); text-decoration:none; font-size:10px; margin-left:auto; }
+.card-title a:hover { color:var(--accent); }
+
+/* Metric row */
+.metrics-row { display:grid; grid-template-columns:repeat(6,1fr); gap:12px; margin-bottom:16px; }
+.metric-card { background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:14px 16px; display:flex; flex-direction:column; gap:4px; }
+.metric-label { font-size:11px; color:var(--muted); font-weight:600; }
+.metric-value { font-size:26px; font-weight:900; line-height:1; }
+.metric-sub { font-size:11px; color:var(--muted); }
+.metric-bar { height:4px; background:var(--border); border-radius:2px; margin-top:6px; overflow:hidden; }
+.metric-bar-fill { height:100%; border-radius:2px; transition:width .6s; }
+
+/* Grid rows */
+.row-2 { display:grid; grid-template-columns:380px 1fr; gap:14px; margin-bottom:14px; }
+.row-3 { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+.row-4 { display:grid; grid-template-columns:260px 1fr; gap:14px; }
+
+/* Radar */
+.radar-wrap { position:relative; height:320px; display:flex; align-items:center; justify-content:center; }
+
+/* Heatmap */
+.heatmap-grid { display:flex; flex-direction:column; gap:6px; }
+.hm-row { display:flex; align-items:center; gap:6px; }
+.hm-label { font-size:10px; color:var(--muted); width:56px; flex-shrink:0; text-align:right; line-height:1.2; }
+.hm-cells { display:flex; gap:4px; flex-wrap:wrap; }
+.hm-cell { width:22px; height:22px; border-radius:4px; cursor:pointer; position:relative; transition:transform .1s; border:1px solid transparent; }
+.hm-cell:hover { transform:scale(1.3); z-index:10; }
+.hm-cell.dat    { background:var(--green); border-color:#1a7a5a; }
+.hm-cell.kdat   { background:var(--red);   border-color:#a03535; }
+.hm-cell.draft  { background:var(--yellow); border-color:#a07a28; }
+.hm-cell.none   { background:#2a2d3e; border-color:#3a3d4e; }
+.hm-legend { display:flex; gap:12px; margin-top:10px; flex-wrap:wrap; }
+.hm-leg { display:flex; align-items:center; gap:5px; font-size:10px; color:var(--muted); }
+.hm-dot { width:10px; height:10px; border-radius:2px; }
+.hm-tooltip { position:fixed; background:#1e2235; border:1px solid var(--border); border-radius:6px; padding:6px 10px; font-size:11px; color:var(--text); pointer-events:none; z-index:200; white-space:nowrap; display:none; }
+
+/* Chart containers */
+.kpi-chart-wrap { height:220px; }
+.survey-wrap { display:flex; flex-direction:column; gap:8px; }
+.survey-type-row { display:flex; align-items:center; gap:10px; }
+.stype-label { font-size:12px; font-weight:600; width:72px; flex-shrink:0; }
+.stype-bar-track { flex:1; height:14px; background:var(--border); border-radius:7px; overflow:hidden; }
+.stype-bar-fill  { height:100%; border-radius:7px; transition:width .5s; }
+.stype-count { font-size:12px; color:var(--muted); width:64px; text-align:right; }
+.survey-empty { font-size:12px; color:var(--muted); font-style:italic; text-align:center; padding:20px 0; }
+
+/* TĐG summary */
+.tdg-ring-wrap { display:flex; flex-direction:column; align-items:center; gap:8px; }
+.ring { width:100px; height:100px; position:relative; }
+.ring svg { transform:rotate(-90deg); }
+.ring-bg  { fill:none; stroke:var(--border); }
+.ring-fill { fill:none; stroke:var(--green); stroke-linecap:round; transition:stroke-dashoffset .8s; }
+.ring-text { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.ring-pct { font-size:20px; font-weight:800; }
+.ring-lbl { font-size:9px; color:var(--muted); }
+.tdg-phases { width:100%; margin-top:8px; }
+.tdg-ph-row { display:flex; justify-content:space-between; font-size:11px; padding:3px 0; border-bottom:1px solid var(--border); }
+.tdg-ph-row:last-child { border-bottom:none; }
+.phase-name { color:var(--muted); }
+.phase-prog { font-weight:700; }
+
+/* Action items */
+.action-list { display:flex; flex-direction:column; gap:6px; max-height:200px; overflow-y:auto; }
+.action-item { display:flex; align-items:center; gap:10px; padding:7px 10px; border-radius:7px; background:var(--hover); border:1px solid var(--border); }
+.action-tc { font-size:11px; font-weight:800; min-width:32px; }
+.action-name { flex:1; font-size:12px; }
+.action-badge { font-size:10px; font-weight:700; padding:2px 7px; border-radius:4px; }
+.action-badge.kdat { background:var(--red)25; color:var(--red); }
+.action-badge.none { background:var(--border); color:var(--muted); }
+.action-link { font-size:10px; color:var(--accent); text-decoration:none; flex-shrink:0; }
+.action-link:hover { text-decoration:underline; }
+.empty-msg { font-size:12px; color:var(--green); text-align:center; padding:16px 0; }
+
+/* Loading */
+.skeleton { background:var(--hover); border-radius:8px; animation:pulse 1.4s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:.6} 50%{opacity:1} }
+
+@media (max-width:1100px) {
+  .metrics-row { grid-template-columns:repeat(3,1fr); }
+  .row-2 { grid-template-columns:1fr; }
+  .row-3 { grid-template-columns:1fr; }
+  .row-4 { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <span class="brand">KĐCLGD · ĐH Kiến trúc Đà Nẵng</span>
+  <a class="nav-link" href="/">📂 Minh chứng</a>
+  <a class="nav-link" href="/module2.html">📋 Đánh giá TC</a>
+  <a class="nav-link" href="/module3.html">📊 KPI – Biểu 16</a>
+  <a class="nav-link" href="/module4.html">📅 Tiến độ TĐG</a>
+  <a class="nav-link" href="/module5.html">📝 Khảo sát</a>
+  <a class="nav-link" href="/module6.html">📄 Báo cáo TĐG</a>
+  <a class="nav-link active" href="/module7.html">🏛 Dashboard</a>
+</nav>
+
+<div class="dash-wrap">
+  <!-- Header -->
+  <div class="dash-header">
+    <div>
+      <h1>🏛 Dashboard Lãnh đạo KĐCLGD</h1>
+      <div class="school" id="school-name">Trường Đại học Kiến trúc Đà Nẵng</div>
+    </div>
+    <div class="header-actions">
+      <span class="refresh-time" id="refresh-time">Đang tải...</span>
+      <button class="btn-refresh" onclick="loadAll()">🔄 Làm mới</button>
+    </div>
+  </div>
+
+  <!-- Row 1: Metric cards -->
+  <div class="metrics-row" id="metrics-row">
+    <div class="metric-card skeleton" style="height:90px"></div>
+    <div class="metric-card skeleton" style="height:90px"></div>
+    <div class="metric-card skeleton" style="height:90px"></div>
+    <div class="metric-card skeleton" style="height:90px"></div>
+    <div class="metric-card skeleton" style="height:90px"></div>
+    <div class="metric-card skeleton" style="height:90px"></div>
+  </div>
+
+  <!-- Row 2: Radar + Heatmap -->
+  <div class="row-2">
+    <div class="card">
+      <div class="card-title">📡 Kết quả 15 Tiêu chuẩn <a href="/module2.html">→ Chi tiết</a></div>
+      <div class="radar-wrap"><canvas id="chart-radar"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">🗺 Bản đồ 60 Tiêu chí <a href="/module2.html">→ Đánh giá</a></div>
+      <div id="heatmap"></div>
+      <div class="hm-legend">
+        <div class="hm-leg"><div class="hm-dot" style="background:var(--green)"></div>ĐẠT</div>
+        <div class="hm-leg"><div class="hm-dot" style="background:var(--red)"></div>Không ĐẠT</div>
+        <div class="hm-leg"><div class="hm-dot" style="background:var(--yellow)"></div>Nháp</div>
+        <div class="hm-leg"><div class="hm-dot" style="background:#2a2d3e"></div>Chưa đánh giá</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 3: KPI trends + Surveys -->
+  <div class="row-3">
+    <div class="card">
+      <div class="card-title">📈 Xu hướng KPI theo năm <a href="/module3.html">→ Biểu 16</a></div>
+      <div class="kpi-chart-wrap"><canvas id="chart-kpi"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📝 Tổng hợp Khảo sát (Biểu 08–11) <a href="/module5.html">→ Chi tiết</a></div>
+      <div id="survey-wrap" class="survey-wrap"></div>
+    </div>
+  </div>
+
+  <!-- Row 4: TĐG progress + Action items -->
+  <div class="row-4">
+    <div class="card">
+      <div class="card-title">📅 Tiến độ TĐG <a href="/module4.html">→ Chi tiết</a></div>
+      <div id="tdg-wrap" class="tdg-ring-wrap"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">⚠️ Cần chú ý <a href="/module2.html">→ Đánh giá TC</a></div>
+      <div id="action-items"></div>
+    </div>
+  </div>
+</div>
+
+<div class="hm-tooltip" id="hm-tooltip"></div>
+
+<script>
+// ── Chart instances (keep refs to destroy on refresh) ────────────────────────
+let radarChart = null;
+let kpiChart   = null;
+
+const STD_NAMES = [
+  'TC1 Tầm nhìn, SM','TC2 Lãnh đạo','TC3 Nhân lực','TC4 TC & CSVC','TC5 Đối ngoại',
+  'TC6 Đào tạo','TC7 NCKH','TC8 Kết nối CĐ','TC9 BĐCL','TC10 TT BĐCL',
+  'TC11 Nâng cao CL','TC12 KQ ĐT','TC13 KQ NCKH','TC14 KQ Kết nối','TC15 TC & TT',
+];
+const STD_N = [6,5,5,5,2,7,5,3,4,2,2,4,4,4,2]; // criteria count per standard
+
+const TYPE_COLORS  = { bieu08:'#4f8ef7', bieu09:'#2ea87e', bieu10:'#e0a847', bieu11:'#c084fc' };
+const TYPE_LABELS  = { bieu08:'Biểu 08 (CB/GV)', bieu09:'Biểu 09 (Người học)', bieu10:'Biểu 10 (NTD)', bieu11:'Biểu 11 (Cựu SV)' };
+
+// ── Main load ─────────────────────────────────────────────────────────────────
+async function loadAll() {
+  document.getElementById('refresh-time').textContent = 'Đang tải...';
+  try {
+    const [rData, kpiList, tdgList, surveyList] = await Promise.all([
+      fetch('/api/report/data').then(r => r.json()),
+      fetch('/api/kpi').then(r => r.json()),
+      fetch('/api/tdg').then(r => r.json()),
+      fetch('/api/surveys').then(r => r.json()),
+    ]);
+    renderMetrics(rData, tdgList, surveyList, kpiList);
+    renderRadar(rData);
+    renderHeatmap(rData);
+    renderKpiChart(kpiList);
+    renderSurveys(surveyList);
+    renderTdg(tdgList);
+    renderActions(rData);
+
+    const si = rData.school_info || {};
+    if (si.ten_truong) document.getElementById('school-name').textContent = si.ten_truong;
+    document.getElementById('refresh-time').textContent = 'Cập nhật lúc ' + new Date().toLocaleTimeString('vi-VN');
+  } catch(e) {
+    document.getElementById('refresh-time').textContent = 'Lỗi: ' + e.message;
+  }
+}
+
+// ── Metrics ───────────────────────────────────────────────────────────────────
+function renderMetrics(rData, tdgList, surveyList, kpiList) {
+  const s = rData.stats;
+  const dat = s.dat, total = 60, assessed = s.assessed;
+  const datPct = Math.round(dat / total * 100);
+  const assPct = Math.round(assessed / total * 100);
+  const totalResp = surveyList.reduce((a, s) => a + s.response_count, 0);
+
+  // Latest TĐG plan
+  const latestPlan = tdgList[0];
+  const tdgPct = latestPlan && latestPlan.total
+    ? Math.round(latestPlan.done / latestPlan.total * 100) : 0;
+
+  // Latest KPI value
+  const latestKpi = [...kpiList].sort((a,b)=>(b.nam_hoc||'').localeCompare(a.nam_hoc||''))[0];
+  const tnPct = latestKpi?.pct_tot_nghiep ?? null;
+
+  const metrics = [
+    { label:'Tiêu chí đã ĐG', value:`${assessed}/60`, sub:'trên 60 tiêu chí', pct:assPct, color:'#4f8ef7' },
+    { label:'Tiêu chí ĐẠT',   value:dat, sub:`${datPct}% tổng số`, pct:datPct, color:'#2ea87e' },
+    { label:'Không ĐẠT',      value:s.khong_dat, sub:`${60-assessed} chưa đánh giá`, pct:Math.round(s.khong_dat/total*100), color:'#e05a5a' },
+    { label:'Minh chứng',     value:s.total_evidence, sub:'tài liệu đã lưu', pct:null, color:'#e0a847' },
+    { label:'Phản hồi KS',    value:totalResp, sub:`${surveyList.length} khảo sát`, pct:null, color:'#c084fc' },
+    tnPct != null
+      ? { label:'Tỉ lệ tốt nghiệp', value:`${tnPct}%`, sub:latestKpi.nam_hoc, pct:parseFloat(tnPct), color:'#2ea87e' }
+      : { label:'Tiến độ TĐG', value:`${tdgPct}%`, sub:latestPlan ? latestPlan.name.slice(0,22) : 'Chưa có KH', pct:tdgPct, color:'#4f8ef7' },
+  ];
+
+  document.getElementById('metrics-row').innerHTML = metrics.map(m => `
+    <div class="metric-card">
+      <div class="metric-label">${m.label}</div>
+      <div class="metric-value" style="color:${m.color}">${m.value}</div>
+      <div class="metric-sub">${m.sub}</div>
+      ${m.pct != null ? `
+        <div class="metric-bar">
+          <div class="metric-bar-fill" style="width:${Math.min(m.pct,100)}%;background:${m.color}"></div>
+        </div>` : ''}
+    </div>`).join('');
+}
+
+// ── Radar ─────────────────────────────────────────────────────────────────────
+function renderRadar(rData) {
+  const datValues  = rData.standards.map(std => std.criteria.length ? Math.round(std.dat       / std.criteria.length * 100) : 0);
+  const assValues  = rData.standards.map(std => std.criteria.length ? Math.round(std.assessed  / std.criteria.length * 100) : 0);
+
+  if (radarChart) radarChart.destroy();
+  const ctx = document.getElementById('chart-radar').getContext('2d');
+  radarChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: STD_NAMES,
+      datasets: [
+        {
+          label: '% ĐẠT', data: datValues,
+          borderColor:'#2ea87e', backgroundColor:'#2ea87e22',
+          pointBackgroundColor:'#2ea87e', pointRadius:3, borderWidth:2,
+        },
+        {
+          label: '% Đã ĐG', data: assValues,
+          borderColor:'#4f8ef7', backgroundColor:'#4f8ef712',
+          pointBackgroundColor:'#4f8ef7', pointRadius:3, borderWidth:1.5,
+          borderDash:[4,3],
+        },
+      ],
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      scales: {
+        r: {
+          min:0, max:100, ticks:{ display:false, stepSize:25 },
+          grid:{ color:'#2a2d3e' }, angleLines:{ color:'#2a2d3e' },
+          pointLabels:{ color:'#94a3b8', font:{ size:9 } },
+        },
+      },
+      plugins: {
+        legend:{ labels:{ color:'#94a3b8', font:{ size:11 }, boxWidth:12 } },
+        tooltip:{ callbacks:{
+          label: ctx => ` ${ctx.dataset.label}: ${ctx.raw}%`
+        }},
+      },
+    },
+  });
+}
+
+// ── Heatmap ───────────────────────────────────────────────────────────────────
+function renderHeatmap(rData) {
+  const tt = document.getElementById('hm-tooltip');
+  let rows = '';
+  for (const std of rData.standards) {
+    const cells = std.criteriaData.map(c => {
+      const a = c.assess;
+      let cls = 'none', label = 'Chưa đánh giá';
+      if (a) {
+        if (a.ket_qua === 'DAT')       { cls = 'dat';   label = 'ĐẠT'; }
+        else if (a.ket_qua === 'KHONG_DAT') { cls = 'kdat'; label = 'Không ĐẠT'; }
+        else                            { cls = 'draft'; label = 'Nháp'; }
+      }
+      const tip = `TC ${c.key}: ${c.name} — ${label}`;
+      return `<div class="hm-cell ${cls}" title="${tip}"
+        onmouseenter="showTip(event,'${tip.replace(/'/g,"&#39;")}')"
+        onmouseleave="hideTip()"></div>`;
+    }).join('');
+    rows += `<div class="hm-row">
+      <div class="hm-label">TC${std.id}</div>
+      <div class="hm-cells">${cells}</div>
+    </div>`;
+  }
+  document.getElementById('heatmap').innerHTML = `<div class="heatmap-grid">${rows}</div>`;
+}
+
+function showTip(e, text) {
+  const t = document.getElementById('hm-tooltip');
+  t.textContent = text; t.style.display = 'block';
+  t.style.left = (e.clientX + 12) + 'px';
+  t.style.top  = (e.clientY - 28) + 'px';
+}
+function hideTip() { document.getElementById('hm-tooltip').style.display = 'none'; }
+
+// ── KPI trend chart ───────────────────────────────────────────────────────────
+function renderKpiChart(kpiList) {
+  const sorted = [...kpiList].sort((a,b) => (a.nam_hoc||'').localeCompare(b.nam_hoc||''));
+  const labels = sorted.map(r => r.nam_hoc || '?');
+
+  if (kpiChart) kpiChart.destroy();
+  const ctx = document.getElementById('chart-kpi').getContext('2d');
+
+  if (sorted.length === 0) {
+    ctx.fillStyle = '#64748b'; ctx.font = '13px Segoe UI';
+    ctx.textAlign = 'center';
+    ctx.fillText('Chưa có dữ liệu KPI. Nhập tại Biểu 16.', ctx.canvas.width/2, 80);
+    return;
+  }
+
+  const datasets = [
+    { label:'Tốt nghiệp (%)', data: sorted.map(r=>r.pct_tot_nghiep??null), borderColor:'#2ea87e', backgroundColor:'#2ea87e22', tension:.3 },
+    { label:'Việc làm 12t (%)', data: sorted.map(r=>r.pct_viec_lam_12t??null), borderColor:'#4f8ef7', backgroundColor:'#4f8ef722', tension:.3 },
+    { label:'GV có TS (%)', data: sorted.map(r=>r.pct_gv_ts??null), borderColor:'#e0a847', backgroundColor:'#e0a84722', tension:.3 },
+  ].filter(d => d.data.some(v => v != null));
+
+  kpiChart = new Chart(ctx, {
+    type:'line',
+    data:{ labels, datasets: datasets.map(d => ({ ...d, fill:false, pointRadius:4, borderWidth:2 })) },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      scales:{
+        x:{ ticks:{ color:'#64748b', font:{size:11} }, grid:{ color:'#1e2235' } },
+        y:{ min:0, max:100, ticks:{ color:'#64748b', font:{size:11}, callback: v=>v+'%' }, grid:{ color:'#1e2235' } },
+      },
+      plugins:{
+        legend:{ labels:{ color:'#94a3b8', font:{size:11}, boxWidth:12 } },
+        tooltip:{ callbacks:{ label: c => ` ${c.dataset.label}: ${c.raw ?? '–'}%` } },
+      },
+    },
+  });
+}
+
+// ── Surveys ───────────────────────────────────────────────────────────────────
+function renderSurveys(surveyList) {
+  const types = ['bieu08','bieu09','bieu10','bieu11'];
+  const grouped = {};
+  for (const t of types) {
+    const items = surveyList.filter(s => s.type === t);
+    grouped[t] = { count: items.length, responses: items.reduce((a,s)=>a+s.response_count,0) };
+  }
+  const maxResp = Math.max(1, ...Object.values(grouped).map(g=>g.responses));
+
+  if (surveyList.length === 0) {
+    document.getElementById('survey-wrap').innerHTML = `
+      <div class="survey-empty">Chưa có khảo sát nào.<br>Tạo khảo sát tại <a href="/module5.html" style="color:var(--accent)">Module 5</a>.</div>`;
+    return;
+  }
+
+  document.getElementById('survey-wrap').innerHTML = types.map(t => {
+    const g = grouped[t];
+    const pct = Math.round(g.responses / maxResp * 100);
+    return `<div class="survey-type-row">
+      <div class="stype-label" style="color:${TYPE_COLORS[t]}">${t === 'bieu08' ? 'Biểu 08' : t === 'bieu09' ? 'Biểu 09' : t === 'bieu10' ? 'Biểu 10' : 'Biểu 11'}</div>
+      <div class="stype-bar-track">
+        <div class="stype-bar-fill" style="width:${pct}%;background:${TYPE_COLORS[t]}"></div>
+      </div>
+      <div class="stype-count">${g.responses} phản hồi</div>
+    </div>
+    <div style="font-size:10px;color:var(--muted);padding-left:72px;margin-top:-4px;margin-bottom:4px">${TYPE_LABELS[t]} · ${g.count} khảo sát</div>`;
+  }).join('');
+}
+
+// ── TĐG progress ring ─────────────────────────────────────────────────────────
+function renderTdg(tdgList) {
+  const el = document.getElementById('tdg-wrap');
+  if (!tdgList.length) {
+    el.innerHTML = `<div class="empty-msg" style="color:var(--muted)">Chưa có kế hoạch TĐG.<br>Tạo tại <a href="/module4.html" style="color:var(--accent)">Module 4</a>.</div>`;
+    return;
+  }
+  const p = tdgList[0]; // latest plan (already sorted by creation on server)
+  const pct    = p.total ? Math.round(p.done / p.total * 100) : 0;
+  const radius = 44;
+  const circ   = 2 * Math.PI * radius;
+  const offset = circ * (1 - pct / 100);
+  const ringColor = pct >= 80 ? '#2ea87e' : pct >= 40 ? '#4f8ef7' : '#e0a847';
+
+  el.innerHTML = `
+    <div class="ring">
+      <svg viewBox="0 0 100 100" width="100" height="100">
+        <circle class="ring-bg" cx="50" cy="50" r="${radius}" stroke-width="8"/>
+        <circle class="ring-fill" cx="50" cy="50" r="${radius}" stroke-width="8"
+          stroke="${ringColor}" stroke-dasharray="${circ}" stroke-dashoffset="${offset}"/>
+      </svg>
+      <div class="ring-text">
+        <span class="ring-pct" style="color:${ringColor}">${pct}%</span>
+        <span class="ring-lbl">hoàn thành</span>
+      </div>
+    </div>
+    <div style="font-size:12px;font-weight:600;text-align:center;margin-top:2px">${escHtml(p.name.slice(0,30))}</div>
+    <div class="tdg-phases">
+      ${[
+        { ph:'Chuẩn bị', total: p.total > 0 ? 4 : 0 },
+        { ph:'Thu thập MC', total: p.total > 0 ? 6 : 0 },
+        { ph:'Đánh giá TC', total: p.total > 0 ? 4 : 0 },
+        { ph:'Viết BC', total: p.total > 0 ? 3 : 0 },
+        { ph:'Hoàn thiện', total: p.total > 0 ? 3 : 0 },
+      ].map(({ ph }) => `
+        <div class="tdg-ph-row">
+          <span class="phase-name">${ph}</span>
+          <span class="phase-prog" style="color:var(--muted)">–</span>
+        </div>`).join('')}
+      <div style="font-size:10px;color:var(--muted);margin-top:6px;text-align:center">
+        ${p.done} xong · ${p.in_progress} đang làm · ${p.late} trễ · ${p.total - p.done - p.in_progress - p.late} chờ
+      </div>
+    </div>
+  `;
+}
+
+// ── Action items ──────────────────────────────────────────────────────────────
+function renderActions(rData) {
+  const actions = [];
+
+  // KHÔNG ĐẠT criteria (most critical)
+  for (const std of rData.standards) {
+    for (const c of std.criteriaData) {
+      if (c.assess?.ket_qua === 'KHONG_DAT') {
+        actions.push({ tc: c.key, name: c.name, type: 'kdat', label: 'Không ĐẠT' });
+      }
+    }
+  }
+
+  // Unassessed criteria (show top 5 only if no KHÔNG ĐẠT dominate)
+  const maxNone = Math.max(0, 8 - actions.length);
+  let noneCount = 0;
+  for (const std of rData.standards) {
+    for (const c of std.criteriaData) {
+      if (!c.assess && noneCount < maxNone) {
+        actions.push({ tc: c.key, name: c.name, type: 'none', label: 'Chưa đánh giá' });
+        noneCount++;
+      }
+    }
+  }
+
+  const el = document.getElementById('action-items');
+  if (!actions.length) {
+    el.innerHTML = '<div class="empty-msg">🎉 Tất cả 60 tiêu chí đã được đánh giá ĐẠT!</div>';
+    return;
+  }
+
+  const totalKdat = rData.standards.reduce((a, s) => a + s.khong_dat, 0);
+  const totalNone = 60 - rData.stats.assessed;
+  el.innerHTML = `
+    <div style="font-size:11px;color:var(--muted);margin-bottom:8px">
+      ${totalKdat ? `<span style="color:var(--red)">${totalKdat} tiêu chí Không ĐẠT</span> · ` : ''}
+      ${totalNone ? `<span>${totalNone} tiêu chí chưa đánh giá</span>` : ''}
+    </div>
+    <div class="action-list">
+      ${actions.map(a => `
+        <div class="action-item">
+          <span class="action-tc" style="color:${a.type==='kdat'?'var(--red)':'var(--muted)'}">${a.tc}</span>
+          <span class="action-name">${escHtml(a.name)}</span>
+          <span class="action-badge ${a.type}">${a.label}</span>
+          <a class="action-link" href="/module2.html">→ Đánh giá</a>
+        </div>`).join('')}
+    </div>
+    ${actions.length < (totalKdat + totalNone) ? `<div style="font-size:11px;color:var(--muted);text-align:right;margin-top:6px">Hiển thị ${actions.length}/${totalKdat+totalNone} mục</div>` : ''}
+  `;
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+loadAll();
+// Auto-refresh every 5 minutes
+setInterval(loadAll, 5 * 60 * 1000);
+</script>
+</body>
+</html>
