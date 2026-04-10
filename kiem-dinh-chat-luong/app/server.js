@@ -27,6 +27,8 @@ function loadDB() {
   if (!db.surveys)         db.surveys         = [];
   if (!db.nextSurveyId)    db.nextSurveyId    = 1;
   if (!db.nextResponseId)  db.nextResponseId  = 1;
+  if (!db.reports)         db.reports         = [];
+  if (!db.nextReportId)    db.nextReportId    = 1;
   return db;
 }
 
@@ -621,6 +623,94 @@ app.get('/api/surveys/:id/stats', (req, res) => {
   const averages = sums.map((s, i) => counts[i] ? Math.round(s / counts[i] * 10) / 10 : 0);
   const overall  = averages.length ? Math.round(averages.reduce((a, b) => a + b, 0) / averages.length * 10) / 10 : 0;
   res.json({ count: n, averages, overall, distribution: dist, comments: comments.slice(-30) });
+});
+
+// ─── API: Report data (Biểu 05) ──────────────────────────────────────────────
+app.get('/api/report/data', (req, res) => {
+  const db = loadDB();
+  const assessMap = {};
+  for (const a of db.assessments) assessMap[a.tieu_chi] = a;
+
+  const standards = STANDARDS.map(std => {
+    const criteriaData = std.criteria.map((name, idx) => {
+      const key = `${std.id}.${idx + 1}`;
+      return {
+        key, name, idx: idx + 1,
+        assess: assessMap[key] || null,
+        evidence: db.evidence.filter(e => e.tieu_chi === key),
+      };
+    });
+    const assessed  = criteriaData.filter(c => c.assess).length;
+    const dat       = criteriaData.filter(c => c.assess?.ket_qua === 'DAT').length;
+    const khong_dat = criteriaData.filter(c => c.assess?.ket_qua === 'KHONG_DAT').length;
+    return { ...std, criteriaData, assessed, dat, khong_dat };
+  });
+
+  const totalAssessed  = db.assessments.length;
+  const totalDat       = db.assessments.filter(a => a.ket_qua === 'DAT').length;
+  const totalKhongDat  = db.assessments.filter(a => a.ket_qua === 'KHONG_DAT').length;
+  const latestKpi      = db.kpi_data.sort((a, b) => (b.nam_hoc||'').localeCompare(a.nam_hoc||''))[0] || null;
+
+  res.json({
+    school_info:    db.school_info,
+    standards,
+    evidence:       db.evidence,
+    kpi_data:       db.kpi_data,
+    latest_kpi:     latestKpi,
+    stats: { total_criteria: 60, assessed: totalAssessed, dat: totalDat, khong_dat: totalKhongDat, total_evidence: db.evidence.length },
+  });
+});
+
+// ─── API: Reports CRUD ────────────────────────────────────────────────────────
+app.get('/api/reports', (req, res) => {
+  const db = loadDB();
+  res.json(db.reports.map(r => ({
+    id: r.id, title: r.title, period: r.period, author: r.author,
+    created_at: r.created_at, updated_at: r.updated_at,
+  })));
+});
+
+app.get('/api/reports/:id', (req, res) => {
+  const db = loadDB();
+  const r = db.reports.find(x => x.id === parseInt(req.params.id));
+  if (!r) return res.status(404).json({ error: 'Không tìm thấy' });
+  res.json(r);
+});
+
+app.post('/api/reports', (req, res) => {
+  const db = loadDB();
+  const { title, period, author } = req.body;
+  if (!title) return res.status(400).json({ error: 'Thiếu tiêu đề' });
+  const now = new Date().toLocaleString('vi-VN');
+  const report = {
+    id: db.nextReportId++, title, period: period || '', author: author || '',
+    co_so_phap_ly: '', mo_ta_qua_trinh: '', mo_ta_csdt: '',
+    tom_tat_ket_qua: '', ke_hoach_cai_tien: '',
+    created_at: now, updated_at: now,
+  };
+  db.reports.push(report);
+  saveDB(db);
+  res.json({ id: report.id, message: 'Đã tạo báo cáo' });
+});
+
+app.put('/api/reports/:id', (req, res) => {
+  const db = loadDB();
+  const r = db.reports.find(x => x.id === parseInt(req.params.id));
+  if (!r) return res.status(404).json({ error: 'Không tìm thấy' });
+  // Prevent overwriting id and created_at
+  const { id: _id, created_at: _ca, ...rest } = req.body;
+  Object.assign(r, rest, { updated_at: new Date().toLocaleString('vi-VN') });
+  saveDB(db);
+  res.json({ message: 'Đã lưu' });
+});
+
+app.delete('/api/reports/:id', (req, res) => {
+  const db = loadDB();
+  const idx = db.reports.findIndex(x => x.id === parseInt(req.params.id));
+  if (idx === -1) return res.status(404).json({ error: 'Không tìm thấy' });
+  db.reports.splice(idx, 1);
+  saveDB(db);
+  res.json({ message: 'Đã xóa' });
 });
 
 // ─── Start ────────────────────────────────────────────────────────────────────

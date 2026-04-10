@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Báo cáo TĐG – Biểu 05</title>
+<style>
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --bg:#0f1117; --panel:#1a1d27; --border:#2a2d3e;
+  --accent:#4f8ef7; --green:#2ea87e; --red:#e05a5a; --yellow:#e0a847;
+  --text:#e2e8f0; --muted:#64748b; --hover:#22263a; --sidebar:270px;
+}
+body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); display:flex; flex-direction:column; height:100vh; overflow:hidden; }
+.topnav { background:var(--panel); border-bottom:1px solid var(--border); padding:0 20px; display:flex; align-items:center; gap:0; height:44px; flex-shrink:0; }
+.topnav .brand { font-size:13px; font-weight:800; color:var(--accent); margin-right:24px; white-space:nowrap; }
+.nav-link { display:flex; align-items:center; height:44px; padding:0 14px; font-size:13px; font-weight:600; color:var(--muted); text-decoration:none; border-bottom:2px solid transparent; transition:all .15s; white-space:nowrap; }
+.nav-link:hover { color:var(--text); }
+.nav-link.active { color:var(--accent); border-bottom-color:var(--accent); }
+.layout { display:flex; flex:1; overflow:hidden; }
+
+/* Sidebar */
+#sidebar { width:var(--sidebar); background:var(--panel); border-right:1px solid var(--border); display:flex; flex-direction:column; overflow:hidden; }
+.sidebar-header { padding:14px 16px 10px; border-bottom:1px solid var(--border); flex-shrink:0; }
+.sidebar-header h2 { font-size:13px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; }
+.report-list { flex:1; overflow-y:auto; padding:8px; }
+.report-item { padding:9px 11px; border-radius:8px; cursor:pointer; border:1px solid transparent; margin-bottom:4px; transition:all .15s; }
+.report-item:hover { background:var(--hover); }
+.report-item.active { background:var(--hover); border-color:var(--border); }
+.report-item .r-title { font-size:13px; font-weight:600; margin-bottom:3px; }
+.report-item .r-meta  { font-size:11px; color:var(--muted); }
+.btn-add { display:block; width:calc(100% - 16px); margin:8px; padding:8px; background:var(--accent); border:none; border-radius:8px; color:#fff; font-size:13px; font-weight:600; cursor:pointer; }
+.btn-add:hover { opacity:.85; }
+
+/* Main */
+#main { flex:1; overflow-y:auto; padding:24px 28px; }
+
+/* Readiness dashboard */
+.dash-title { font-size:18px; font-weight:800; margin-bottom:20px; }
+.readiness-bar-wrap { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:18px 22px; margin-bottom:20px; }
+.readiness-bar-wrap h3 { font-size:12px; font-weight:700; color:var(--muted); text-transform:uppercase; margin-bottom:12px; }
+.progress-track { height:18px; background:var(--border); border-radius:9px; overflow:hidden; display:flex; }
+.prog-dat  { background:var(--green); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; transition:flex .5s; }
+.prog-kdat { background:var(--red); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; transition:flex .5s; }
+.prog-draft { background:var(--yellow); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; transition:flex .5s; }
+.prog-none { background:var(--border); flex:1; }
+.prog-legend { display:flex; gap:16px; margin-top:10px; flex-wrap:wrap; }
+.prog-leg { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--muted); }
+.prog-dot { width:10px; height:10px; border-radius:2px; }
+
+/* Standard cards */
+.std-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:24px; }
+.std-card { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
+.std-card .sc-id { font-size:11px; font-weight:700; color:var(--muted); margin-bottom:4px; }
+.std-card .sc-name { font-size:12px; font-weight:600; margin-bottom:8px; line-height:1.4; }
+.std-card .sc-prog { display:flex; gap:6px; align-items:center; }
+.std-card .sc-bar { flex:1; height:6px; background:var(--border); border-radius:3px; overflow:hidden; }
+.std-card .sc-fill { height:100%; background:var(--green); border-radius:3px; transition:width .4s; }
+.std-card .sc-fill.partial { background:var(--yellow); }
+.std-card .sc-fill.none    { background:var(--border); }
+.std-card .sc-label { font-size:10px; color:var(--muted); white-space:nowrap; }
+.sc-badges { display:flex; gap:4px; margin-top:6px; flex-wrap:wrap; }
+.sc-badge { font-size:9px; font-weight:700; padding:2px 5px; border-radius:4px; }
+.sc-badge.dat   { background:var(--green)22; color:var(--green); }
+.sc-badge.kdat  { background:var(--red)22; color:var(--red); }
+.sc-badge.draft { background:var(--yellow)22; color:var(--yellow); }
+.sc-badge.none  { background:var(--border); color:var(--muted); }
+
+/* Report form */
+.form-section { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:20px 24px; margin-bottom:16px; }
+.form-section h3 { font-size:13px; font-weight:700; margin-bottom:14px; border-bottom:1px solid var(--border); padding-bottom:10px; }
+.form-row { margin-bottom:12px; }
+.form-row label { display:block; font-size:12px; color:var(--muted); font-weight:600; margin-bottom:5px; }
+.form-row input, .form-row textarea, .form-row select {
+  width:100%; padding:8px 10px; background:var(--bg); border:1px solid var(--border); border-radius:7px;
+  color:var(--text); font-size:13px; font-family:inherit; transition:border-color .15s;
+}
+.form-row textarea { resize:vertical; min-height:80px; line-height:1.5; }
+.form-row input:focus, .form-row textarea:focus { outline:none; border-color:var(--accent); }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.saved-hint { font-size:11px; color:var(--green); margin-top:6px; display:none; }
+
+/* Action bar */
+.action-bar { display:flex; gap:10px; align-items:center; margin-bottom:20px; flex-wrap:wrap; }
+.btn { padding:8px 16px; border-radius:8px; border:none; font-size:13px; font-weight:600; cursor:pointer; transition:all .15s; display:inline-flex; align-items:center; gap:6px; }
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { opacity:.85; }
+.btn-success { background:var(--green); color:#fff; }
+.btn-success:hover { opacity:.85; }
+.btn-danger  { background:var(--red); color:#fff; }
+.btn-danger:hover  { opacity:.85; }
+.btn-ghost   { background:var(--hover); color:var(--text); border:1px solid var(--border); }
+.btn-ghost:hover { background:var(--border); }
+
+/* Modal */
+.modal-backdrop { display:none; position:fixed; inset:0; background:#00000088; z-index:100; align-items:center; justify-content:center; }
+.modal-backdrop.open { display:flex; }
+.modal { background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:24px; width:460px; max-width:94vw; }
+.modal h2 { font-size:15px; font-weight:700; margin-bottom:16px; }
+.modal-footer { display:flex; gap:8px; justify-content:flex-end; margin-top:18px; }
+.empty-state { text-align:center; padding:60px 20px; color:var(--muted); font-size:13px; }
+
+/* Toast */
+.toast { position:fixed; bottom:24px; right:24px; padding:10px 16px; border-radius:8px; font-size:13px; font-weight:600; z-index:200; opacity:0; transform:translateY(8px); transition:all .25s; pointer-events:none; }
+.toast.show { opacity:1; transform:translateY(0); }
+.toast.success { background:var(--green); color:#fff; }
+.toast.error   { background:var(--red);   color:#fff; }
+.toast.info    { background:var(--accent); color:#fff; }
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <span class="brand">KĐCLGD · ĐH Kiến trúc Đà Nẵng</span>
+  <a class="nav-link" href="/">📂 Minh chứng</a>
+  <a class="nav-link" href="/module2.html">📋 Đánh giá TC</a>
+  <a class="nav-link" href="/module3.html">📊 KPI – Biểu 16</a>
+  <a class="nav-link" href="/module4.html">📅 Tiến độ TĐG</a>
+  <a class="nav-link" href="/module5.html">📝 Khảo sát</a>
+  <a class="nav-link active" href="/module6.html">📄 Báo cáo TĐG</a>
+</nav>
+
+<div class="layout">
+<!-- Sidebar -->
+<aside id="sidebar">
+  <div class="sidebar-header"><h2>Hồ sơ Báo cáo</h2></div>
+  <div class="report-list" id="report-list"></div>
+  <button class="btn-add" onclick="openNewModal()">＋ Tạo báo cáo mới</button>
+</aside>
+
+<!-- Main -->
+<main id="main">
+  <div id="dashboard-section"></div>
+  <div id="form-section" style="display:none"></div>
+</main>
+</div>
+
+<!-- New Report Modal -->
+<div class="modal-backdrop" id="modal-new">
+  <div class="modal">
+    <h2>📄 Tạo Báo cáo TĐG mới</h2>
+    <div class="form-row">
+      <label>Tiêu đề báo cáo *</label>
+      <input id="f-title" type="text" placeholder="VD: Báo cáo Tự đánh giá CSGD 2025-2026">
+    </div>
+    <div class="form-grid">
+      <div class="form-row">
+        <label>Chu kỳ kiểm định</label>
+        <input id="f-period" type="text" placeholder="VD: 2025-2026">
+      </div>
+      <div class="form-row">
+        <label>Người phụ trách</label>
+        <input id="f-author" type="text" placeholder="VD: PGS.TS Nguyễn Văn A">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal()">Huỷ</button>
+      <button class="btn btn-primary" onclick="createReport()">Tạo báo cáo</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+let reports = [];
+let reportData = null;
+let activeReportId = null;
+let saveTimer = null;
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+(async function init() {
+  await Promise.all([loadReports(), loadReportData()]);
+  renderDashboard();
+})();
+
+async function loadReports() {
+  reports = await fetch('/api/reports').then(r => r.json());
+  renderSidebar();
+}
+
+async function loadReportData() {
+  reportData = await fetch('/api/report/data').then(r => r.json());
+}
+
+// ── Sidebar ───────────────────────────────────────────────────────────────────
+function renderSidebar() {
+  document.getElementById('report-list').innerHTML = reports.length
+    ? reports.map(r => `
+      <div class="report-item ${r.id === activeReportId ? 'active' : ''}" onclick="selectReport(${r.id})">
+        <div class="r-title">${escHtml(r.title)}</div>
+        <div class="r-meta">${r.period || '–'} · ${r.author ? escHtml(r.author) : 'Chưa ghi'}</div>
+        <div class="r-meta" style="margin-top:2px">Cập nhật: ${r.updated_at}</div>
+      </div>`).join('')
+    : '<div style="padding:16px;font-size:12px;color:var(--muted);text-align:center">Chưa có báo cáo</div>';
+}
+
+// ── Dashboard ─────────────────────────────────────────────────────────────────
+function renderDashboard() {
+  const d = reportData;
+  if (!d) return;
+  const s = d.stats;
+  const chua  = 60 - s.assessed;
+  const draft = s.assessed - s.dat - s.khong_dat;
+
+  const datPct   = Math.round(s.dat / 60 * 100);
+  const kdatPct  = Math.round(s.khong_dat / 60 * 100);
+  const draftPct = Math.round(draft / 60 * 100);
+
+  const stdCards = d.standards.map(std => {
+    const total = std.criteria.length;
+    const pct   = total ? Math.round(std.assessed / total * 100) : 0;
+    const fillCls = pct === 100 ? '' : pct > 0 ? 'partial' : 'none';
+    const badges  = [
+      std.dat       ? `<span class="sc-badge dat">${std.dat} ĐẠT</span>`    : '',
+      std.khong_dat ? `<span class="sc-badge kdat">${std.khong_dat} KĐ</span>` : '',
+      (total - std.assessed) ? `<span class="sc-badge none">${total - std.assessed} chưa</span>` : '',
+    ].filter(Boolean).join('');
+
+    return `<div class="std-card">
+      <div class="sc-id">Tiêu chuẩn ${std.id}</div>
+      <div class="sc-name">${escHtml(std.name)}</div>
+      <div class="sc-prog">
+        <div class="sc-bar"><div class="sc-fill ${fillCls}" style="width:${pct}%"></div></div>
+        <div class="sc-label">${std.assessed}/${total}</div>
+      </div>
+      <div class="sc-badges">${badges}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('dashboard-section').innerHTML = `
+    <div class="dash-title">📊 Sẵn sàng Báo cáo TĐG</div>
+
+    <div class="readiness-bar-wrap">
+      <h3>Tiến độ đánh giá 60 tiêu chí</h3>
+      <div class="progress-track">
+        <div class="prog-dat"   style="flex:${s.dat}"       title="ĐẠT">${s.dat > 3 ? s.dat : ''}</div>
+        <div class="prog-kdat"  style="flex:${s.khong_dat}" title="KĐ">${s.khong_dat > 2 ? s.khong_dat : ''}</div>
+        <div class="prog-draft" style="flex:${draft}"       title="Nháp">${draft > 2 ? draft : ''}</div>
+        <div class="prog-none"  style="flex:${chua}"        title="Chưa"></div>
+      </div>
+      <div class="prog-legend">
+        <div class="prog-leg"><div class="prog-dot" style="background:var(--green)"></div>ĐẠT: ${s.dat} TC (${datPct}%)</div>
+        <div class="prog-leg"><div class="prog-dot" style="background:var(--red)"></div>Không ĐẠT: ${s.khong_dat} TC (${kdatPct}%)</div>
+        <div class="prog-leg"><div class="prog-dot" style="background:var(--yellow)"></div>Nháp: ${draft} TC (${draftPct}%)</div>
+        <div class="prog-leg"><div class="prog-dot" style="background:var(--border)"></div>Chưa đánh giá: ${chua} TC</div>
+        <div class="prog-leg"><div class="prog-dot" style="background:var(--accent)"></div>Minh chứng: ${s.total_evidence} tài liệu</div>
+      </div>
+    </div>
+
+    <div class="std-grid">${stdCards}</div>
+
+    <div class="empty-state" style="padding:20px 0">
+      <div style="margin-bottom:8px">Tạo hồ sơ báo cáo bên trái để bắt đầu soạn Báo cáo TĐG chính thức (Biểu 05).</div>
+    </div>
+  `;
+}
+
+// ── Select report ─────────────────────────────────────────────────────────────
+async function selectReport(id) {
+  activeReportId = id;
+  renderSidebar();
+  document.getElementById('dashboard-section').style.display = 'none';
+  document.getElementById('form-section').style.display = '';
+  const r = await fetch(`/api/reports/${id}`).then(x => x.json());
+  renderForm(r);
+}
+
+function renderForm(r) {
+  const s = reportData?.stats || {};
+  const assessed = s.assessed || 0;
+  const dat = s.dat || 0;
+  const pct = Math.round(assessed / 60 * 100);
+  const ready = assessed >= 30;
+
+  document.getElementById('form-section').innerHTML = `
+    <div class="action-bar">
+      <button class="btn btn-ghost" onclick="backToDash()">← Tổng quan</button>
+      <button class="btn btn-success" onclick="viewReport(${r.id})" ${ready ? '' : 'title="Cần đánh giá ít nhất 30/60 tiêu chí"'}>
+        👁 Xem & In Báo cáo
+      </button>
+      <button class="btn btn-ghost" onclick="viewReport(${r.id})">📄 Mở cửa sổ mới ↗</button>
+      <button class="btn btn-danger" onclick="deleteReport(${r.id},'${escHtml(r.title).replace(/'/g,"\\'")}')">Xoá</button>
+      <span style="font-size:12px;color:var(--muted);margin-left:8px">Đã đánh giá: <strong>${assessed}/60</strong> TC · <strong>${dat}</strong> ĐẠT · Tiến độ: <strong>${pct}%</strong></span>
+    </div>
+
+    <!-- Metadata -->
+    <div class="form-section">
+      <h3>📋 Thông tin Báo cáo</h3>
+      <div class="form-grid">
+        <div class="form-row">
+          <label>Tiêu đề *</label>
+          <input id="e-title" value="${escHtml(r.title)}" oninput="scheduleSave(${r.id})">
+        </div>
+        <div class="form-row">
+          <label>Chu kỳ kiểm định</label>
+          <input id="e-period" value="${escHtml(r.period||'')}" oninput="scheduleSave(${r.id})">
+        </div>
+        <div class="form-row">
+          <label>Người phụ trách / Chủ tịch HĐ TĐG</label>
+          <input id="e-author" value="${escHtml(r.author||'')}" oninput="scheduleSave(${r.id})">
+        </div>
+        <div class="form-row">
+          <label>Ngày hoàn thành</label>
+          <input id="e-date" type="date" value="${r.completion_date||''}" oninput="scheduleSave(${r.id})">
+        </div>
+      </div>
+    </div>
+
+    <!-- Part I: Introduction -->
+    <div class="form-section">
+      <h3>Phần I — Mở đầu</h3>
+      <div class="form-row">
+        <label>1.1 Cơ sở pháp lý</label>
+        <textarea id="e-phaplý" rows="4" oninput="scheduleSave(${r.id})">${escHtml(r.co_so_phap_ly||'')}</textarea>
+      </div>
+      <div class="form-row">
+        <label>1.2 Mô tả quá trình tự đánh giá</label>
+        <textarea id="e-qua-trinh" rows="4" oninput="scheduleSave(${r.id})">${escHtml(r.mo_ta_qua_trinh||'')}</textarea>
+      </div>
+      <div class="form-row">
+        <label>1.3 Tóm tắt thông tin về cơ sở đào tạo</label>
+        <textarea id="e-csdt" rows="5" oninput="scheduleSave(${r.id})">${escHtml(r.mo_ta_csdt||'')}</textarea>
+      </div>
+    </div>
+
+    <!-- Part III: Summary -->
+    <div class="form-section">
+      <h3>Phần III — Tổng hợp kết quả & Kế hoạch cải tiến</h3>
+      <div class="form-row">
+        <label>Tóm tắt kết quả tự đánh giá</label>
+        <textarea id="e-tomtat" rows="5" oninput="scheduleSave(${r.id})">${escHtml(r.tom_tat_ket_qua||'')}</textarea>
+      </div>
+      <div class="form-row">
+        <label>Kế hoạch cải tiến chất lượng sau TĐG</label>
+        <textarea id="e-kehoach" rows="5" oninput="scheduleSave(${r.id})">${escHtml(r.ke_hoach_cai_tien||'')}</textarea>
+      </div>
+    </div>
+    <div id="save-hint" class="saved-hint" style="display:none;text-align:right;margin-top:-8px;margin-bottom:12px">✅ Đã lưu tự động</div>
+  `;
+}
+
+// ── Auto-save ─────────────────────────────────────────────────────────────────
+function scheduleSave(id) {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => saveReport(id), 800);
+}
+
+async function saveReport(id) {
+  const data = {
+    title:           document.getElementById('e-title')?.value     || '',
+    period:          document.getElementById('e-period')?.value    || '',
+    author:          document.getElementById('e-author')?.value    || '',
+    completion_date: document.getElementById('e-date')?.value      || '',
+    co_so_phap_ly:   document.getElementById('e-phaplý')?.value    || '',
+    mo_ta_qua_trinh: document.getElementById('e-qua-trinh')?.value || '',
+    mo_ta_csdt:      document.getElementById('e-csdt')?.value      || '',
+    tom_tat_ket_qua: document.getElementById('e-tomtat')?.value    || '',
+    ke_hoach_cai_tien: document.getElementById('e-kehoach')?.value || '',
+  };
+  await fetch(`/api/reports/${id}`, {
+    method:'PUT', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(data),
+  });
+  const hint = document.getElementById('save-hint');
+  if (hint) { hint.style.display = ''; setTimeout(() => { if (hint) hint.style.display = 'none'; }, 2000); }
+  await loadReports(); // refresh sidebar dates
+}
+
+// ── Open report view ──────────────────────────────────────────────────────────
+function viewReport(id) {
+  // Save first, then open
+  saveReport(id).then(() => {
+    window.open(`/report-view.html?id=${id}`, '_blank');
+  });
+}
+
+function backToDash() {
+  activeReportId = null;
+  renderSidebar();
+  document.getElementById('dashboard-section').style.display = '';
+  document.getElementById('form-section').style.display = 'none';
+}
+
+// ── CRUD ──────────────────────────────────────────────────────────────────────
+function openNewModal() { document.getElementById('modal-new').classList.add('open'); }
+function closeModal()   { document.getElementById('modal-new').classList.remove('open'); }
+
+async function createReport() {
+  const title  = document.getElementById('f-title').value.trim();
+  const period = document.getElementById('f-period').value.trim();
+  const author = document.getElementById('f-author').value.trim();
+  if (!title) return showToast('error', '❌ Nhập tiêu đề báo cáo');
+  const res  = await fetch('/api/reports', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ title, period, author }),
+  });
+  const data = await res.json();
+  if (!res.ok) return showToast('error', `❌ ${data.error}`);
+  closeModal();
+  document.getElementById('f-title').value = document.getElementById('f-period').value = document.getElementById('f-author').value = '';
+  await loadReports();
+  await selectReport(data.id);
+  showToast('success', '✅ Đã tạo báo cáo');
+}
+
+async function deleteReport(id, name) {
+  if (!confirm(`Xoá báo cáo "${name}"?`)) return;
+  await fetch(`/api/reports/${id}`, { method:'DELETE' });
+  backToDash();
+  await loadReports();
+  showToast('success', '✅ Đã xoá');
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function showToast(type, msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.className = `toast ${type} show`;
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>

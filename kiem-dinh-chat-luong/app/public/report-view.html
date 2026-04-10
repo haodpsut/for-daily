@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Báo cáo Tự đánh giá CSGD</title>
+<style>
+/* ─── Screen chrome ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Times New Roman', Times, serif; background:#e8e8e8; color:#111; }
+
+.toolbar {
+  position:fixed; top:0; left:0; right:0; height:48px; background:#1a1d27; border-bottom:1px solid #2a2d3e;
+  display:flex; align-items:center; gap:10px; padding:0 20px; z-index:100;
+}
+.toolbar .brand { color:#4f8ef7; font-family:'Segoe UI',sans-serif; font-size:13px; font-weight:700; margin-right:auto; }
+.tb-btn { padding:7px 16px; border-radius:7px; border:none; font-size:13px; font-weight:600; cursor:pointer; font-family:'Segoe UI',sans-serif; }
+.tb-print { background:#4f8ef7; color:#fff; }
+.tb-print:hover { opacity:.85; }
+.tb-back { background:#22263a; color:#e2e8f0; }
+.tb-back:hover { background:#2a2d3e; }
+.tb-stat { font-size:12px; color:#94a3b8; font-family:'Segoe UI',sans-serif; }
+
+/* ─── A4 Pages ──────────────────────────────────────────────────────────────── */
+.pages { padding:68px 20px 40px; display:flex; flex-direction:column; align-items:center; gap:20px; }
+
+.page {
+  width:210mm; min-height:297mm; background:#fff;
+  padding:20mm 25mm 20mm 30mm;
+  box-shadow:0 2px 12px #0003;
+  position:relative; page-break-after:always;
+}
+
+/* ─── Typography ────────────────────────────────────────────────────────────── */
+h1 { font-size:16pt; text-align:center; margin-bottom:6pt; text-transform:uppercase; }
+h2 { font-size:13pt; margin:14pt 0 6pt; }
+h3 { font-size:12pt; margin:10pt 0 4pt; }
+h4 { font-size:11pt; margin:8pt 0 3pt; }
+p  { font-size:11pt; line-height:1.6; margin-bottom:6pt; text-align:justify; }
+.indent { text-indent:1.2cm; }
+
+/* ─── Cover page ────────────────────────────────────────────────────────────── */
+.cover { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:257mm; text-align:center; gap:10pt; }
+.cover .ministry   { font-size:11pt; font-weight:bold; text-transform:uppercase; }
+.cover .school     { font-size:13pt; font-weight:bold; text-transform:uppercase; margin-bottom:20pt; }
+.cover .hr         { width:80%; height:2px; background:#111; margin:8pt auto; }
+.cover .report-type{ font-size:11pt; margin-top:20pt; }
+.cover .title      { font-size:18pt; font-weight:bold; text-transform:uppercase; line-height:1.4; margin:10pt 0; }
+.cover .period     { font-size:12pt; margin-top:10pt; }
+.cover .author     { font-size:11pt; }
+.cover .date       { font-size:11pt; margin-top:30pt; }
+
+/* ─── TOC ───────────────────────────────────────────────────────────────────── */
+.toc-item { font-size:11pt; padding:3pt 0; display:flex; gap:4pt; }
+.toc-num  { min-width:1.6cm; font-weight:bold; }
+.toc-title{ flex:1; }
+.toc-dots { flex:1; border-bottom:1px dotted #888; margin:0 6pt 3pt; min-width:1cm; }
+.toc-page { min-width:1cm; text-align:right; }
+
+/* ─── Section headings ───────────────────────────────────────────────────────── */
+.section-part { font-size:13pt; font-weight:bold; text-transform:uppercase; margin:16pt 0 8pt; border-bottom:2px solid #111; padding-bottom:4pt; }
+.section-std  { font-size:12pt; font-weight:bold; margin:12pt 0 6pt; background:#f0f4ff; padding:6pt 10pt; border-left:4px solid #2563eb; }
+.section-tc   { margin:10pt 0 4pt; }
+.tc-header    { font-size:11pt; font-weight:bold; margin-bottom:6pt; }
+
+/* ─── Biểu 04 table ──────────────────────────────────────────────────────────── */
+.bieu04 { width:100%; border-collapse:collapse; margin:4pt 0 10pt; font-size:10.5pt; }
+.bieu04 th { background:#dbeafe; font-weight:bold; padding:5pt 7pt; border:1px solid #888; vertical-align:top; width:28%; }
+.bieu04 td { padding:5pt 7pt; border:1px solid #888; vertical-align:top; line-height:1.5; white-space:pre-wrap; }
+.bieu04 .ket-qua { font-weight:bold; font-size:11pt; }
+.ket-qua-DAT      { color:#166534; background:#dcfce7; }
+.ket-qua-KHONG_DAT{ color:#991b1b; background:#fee2e2; }
+.ket-qua-CHUA     { color:#7c2d12; background:#fff7ed; }
+.no-data          { font-style:italic; color:#666; font-size:10pt; }
+
+/* ─── Evidence list ──────────────────────────────────────────────────────────── */
+.ev-table { width:100%; border-collapse:collapse; font-size:10pt; margin:4pt 0 10pt; }
+.ev-table th { background:#f1f5f9; font-weight:bold; padding:4pt 6pt; border:1px solid #ccc; text-align:center; }
+.ev-table td { padding:3pt 6pt; border:1px solid #ccc; vertical-align:top; }
+.ev-table tr:nth-child(even) { background:#f8fafc; }
+
+/* ─── Summary table ──────────────────────────────────────────────────────────── */
+.sum-table { width:100%; border-collapse:collapse; font-size:10.5pt; margin:6pt 0; }
+.sum-table th { background:#1e3a5f; color:#fff; padding:5pt 8pt; border:1px solid #888; text-align:center; }
+.sum-table td { padding:4pt 8pt; border:1px solid #aaa; vertical-align:middle; }
+.sum-table tr:hover { background:#f0f4ff; }
+.sum-table .std-row { background:#dbeafe; font-weight:bold; }
+.badge-dat  { background:#dcfce7; color:#166534; padding:1pt 5pt; border-radius:3px; font-weight:bold; font-size:9.5pt; }
+.badge-kdat { background:#fee2e2; color:#991b1b; padding:1pt 5pt; border-radius:3px; font-weight:bold; font-size:9.5pt; }
+.badge-chua { background:#fff7ed; color:#7c2d12; padding:1pt 5pt; border-radius:3px; font-size:9.5pt; }
+
+/* ─── KPI mini table ─────────────────────────────────────────────────────────── */
+.kpi-table { width:100%; border-collapse:collapse; font-size:10pt; margin:4pt 0; }
+.kpi-table th { background:#f1f5f9; font-weight:bold; padding:4pt 6pt; border:1px solid #ccc; }
+.kpi-table td { padding:3pt 6pt; border:1px solid #ccc; }
+
+/* ─── Print media ────────────────────────────────────────────────────────────── */
+@media print {
+  body { background:#fff; }
+  .toolbar { display:none !important; }
+  .pages { padding:0; gap:0; }
+  .page { width:100%; min-height:0; margin:0; padding:15mm 20mm 15mm 25mm; box-shadow:none; page-break-after:always; }
+  .page:last-child { page-break-after:auto; }
+  .section-std { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .bieu04 th   { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .ket-qua-DAT, .ket-qua-KHONG_DAT, .ket-qua-CHUA { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}
+@page { size:A4; margin:0; }
+</style>
+</head>
+<body>
+
+<!-- Toolbar (hidden when printing) -->
+<div class="toolbar">
+  <span class="brand">📄 Báo cáo TĐG — Xem trước</span>
+  <span class="tb-stat" id="tb-stat">Đang tải...</span>
+  <button class="tb-btn tb-back" onclick="window.close()">✕ Đóng</button>
+  <button class="tb-btn tb-print" onclick="window.print()">🖨 In / Xuất PDF</button>
+</div>
+
+<div class="pages" id="pages">
+  <div class="page" style="display:flex;align-items:center;justify-content:center">
+    <div style="text-align:center;color:#666;font-family:sans-serif">Đang tạo báo cáo...</div>
+  </div>
+</div>
+
+<script>
+const reportId = new URLSearchParams(location.search).get('id');
+
+const STANDARDS = [
+  { id:1,  name:'Tầm nhìn, sứ mạng, văn hoá và quản trị',       n:6  },
+  { id:2,  name:'Lãnh đạo và chiến lược',                         n:5  },
+  { id:3,  name:'Nguồn nhân lực',                                 n:5  },
+  { id:4,  name:'Nguồn lực tài chính và vật chất',                n:5  },
+  { id:5,  name:'Mạng lưới và quan hệ đối ngoại',                 n:2  },
+  { id:6,  name:'Chính sách về đào tạo',                          n:7  },
+  { id:7,  name:'Chính sách về nghiên cứu khoa học',              n:5  },
+  { id:8,  name:'Chính sách kết nối và phục vụ cộng đồng',        n:3  },
+  { id:9,  name:'Hệ thống bảo đảm chất lượng',                    n:4  },
+  { id:10, name:'Hệ thống thông tin BĐCL bên trong',              n:2  },
+  { id:11, name:'Nâng cao chất lượng',                             n:2  },
+  { id:12, name:'Kết quả về đào tạo',                              n:4  },
+  { id:13, name:'Kết quả về nghiên cứu khoa học',                 n:4  },
+  { id:14, name:'Kết quả kết nối và phục vụ cộng đồng',           n:4  },
+  { id:15, name:'Kết quả về tài chính và thị trường',             n:2  },
+];
+
+(async function init() {
+  try {
+    const [report, data] = await Promise.all([
+      fetch(`/api/reports/${reportId}`).then(r => r.json()),
+      fetch('/api/report/data').then(r => r.json()),
+    ]);
+    renderReport(report, data);
+  } catch(e) {
+    document.getElementById('pages').innerHTML =
+      '<div class="page"><p style="color:red">Lỗi tải dữ liệu: ' + e.message + '</p></div>';
+  }
+})();
+
+function renderReport(report, data) {
+  const si = data.school_info || {};
+  const stats = data.stats || {};
+  const today = new Date().toLocaleDateString('vi-VN', { day:'2-digit', month:'2-digit', year:'numeric' });
+
+  document.getElementById('tb-stat').textContent =
+    `${stats.assessed || 0}/60 TC đã đánh giá · ${stats.dat || 0} ĐẠT · ${stats.total_evidence || 0} MC`;
+
+  const pages = [];
+
+  // ── Page 1: Cover ───────────────────────────────────────────────────────────
+  pages.push(`<div class="page">
+    <div class="cover">
+      <div class="ministry">BỘ GIÁO DỤC VÀ ĐÀO TẠO</div>
+      <div class="school">${h(si.ten_truong || 'Trường Đại học Kiến trúc Đà Nẵng')}</div>
+      <div class="hr"></div>
+      <div class="report-type">BÁO CÁO</div>
+      <div class="title">TỰ ĐÁNH GIÁ<br>CƠ SỞ GIÁO DỤC ĐẠI HỌC</div>
+      <div class="hr"></div>
+      <div class="period">${h(report.title || 'Báo cáo Tự đánh giá')}</div>
+      ${report.period ? `<div class="period">Chu kỳ kiểm định: ${h(report.period)}</div>` : ''}
+      ${report.author ? `<div class="author">Chủ tịch Hội đồng TĐG: ${h(report.author)}</div>` : ''}
+      <div class="date">Đà Nẵng, ${report.completion_date
+        ? new Date(report.completion_date).toLocaleDateString('vi-VN',{month:'long',year:'numeric'})
+        : today}</div>
+    </div>
+  </div>`);
+
+  // ── Page 2: TOC ─────────────────────────────────────────────────────────────
+  const tocItems = [
+    ['PHẦN I','Mở đầu'],
+    ['  1.1','Cơ sở pháp lý'],
+    ['  1.2','Mô tả quá trình tự đánh giá'],
+    ['  1.3','Thông tin về cơ sở đào tạo'],
+    ['PHẦN II','Tự đánh giá theo tiêu chuẩn'],
+    ...STANDARDS.map(s => [`  TC ${s.id}`, s.name]),
+    ['PHẦN III','Tổng hợp kết quả và kế hoạch cải tiến'],
+    ['  3.1','Tóm tắt kết quả tự đánh giá'],
+    ['  3.2','Kế hoạch cải tiến chất lượng'],
+    ['PHỤ LỤC 1','Bảng tổng hợp kết quả đánh giá tiêu chí'],
+    ['PHỤ LỤC 2','Danh mục minh chứng'],
+    ['PHỤ LỤC 3','Cơ sở dữ liệu KPI (Biểu 16)'],
+  ];
+
+  pages.push(`<div class="page">
+    <h1>MỤC LỤC</h1>
+    <div style="margin-top:14pt">
+      ${tocItems.map(([n,t]) => `
+        <div class="toc-item">
+          <span class="toc-num">${n}</span>
+          <span class="toc-title">${t}</span>
+          <span class="toc-dots"></span>
+        </div>`).join('')}
+    </div>
+  </div>`);
+
+  // ── Page 3: Part I ───────────────────────────────────────────────────────────
+  pages.push(`<div class="page">
+    <div class="section-part">Phần I: Mở đầu</div>
+
+    <h2>1.1 Cơ sở pháp lý</h2>
+    ${report.co_so_phap_ly
+      ? `<p class="indent">${h(report.co_so_phap_ly).replace(/\n/g,'</p><p class="indent">')}</p>`
+      : `<p class="indent">Căn cứ Thông tư số …/2026/TT-BGDĐT ngày … tháng … năm 2026 của Bộ Giáo dục và Đào tạo ban hành quy định về kiểm định chất lượng cơ sở giáo dục đại học.</p>
+         <p class="indent">Căn cứ Quyết định thành lập Hội đồng tự đánh giá số … ngày … của Hiệu trưởng Trường Đại học Kiến trúc Đà Nẵng.</p>`}
+
+    <h2>1.2 Mô tả quá trình tự đánh giá</h2>
+    ${report.mo_ta_qua_trinh
+      ? `<p class="indent">${h(report.mo_ta_qua_trinh).replace(/\n/g,'</p><p class="indent">')}</p>`
+      : `<p class="indent">Hội đồng Tự đánh giá được thành lập theo quyết định của Hiệu trưởng, gồm đại diện Ban Giám hiệu, trưởng các đơn vị chức năng và khoa/bộ môn. Quá trình tự đánh giá được thực hiện theo kế hoạch 24 tuần, tuân thủ Biểu 02 kèm theo Thông tư.</p>
+         <p class="indent">Các nhóm chuyên trách thu thập minh chứng, đánh giá từng tiêu chí theo Biểu 04, tổng hợp kết quả và hoàn thiện báo cáo trước khi trình Hội đồng thông qua.</p>`}
+
+    <h2>1.3 Tóm tắt thông tin về cơ sở đào tạo</h2>
+    ${report.mo_ta_csdt
+      ? `<p class="indent">${h(report.mo_ta_csdt).replace(/\n/g,'</p><p class="indent">')}</p>`
+      : buildSchoolInfoBlock(si)}
+  </div>`);
+
+  // ── Part II: Assessment by standard ─────────────────────────────────────────
+  // Each standard gets its own page-section
+  const assessMap = {};
+  for (const std of data.standards) {
+    for (const c of std.criteriaData) assessMap[c.key] = c;
+  }
+
+  let partIIHtml = `<div class="page"><div class="section-part">Phần II: Tự đánh giá theo từng Tiêu chuẩn</div>`;
+  let partIIChars = 0;
+  const PAGE_LIMIT = 6000; // approximate chars per page estimate
+
+  for (const std of data.standards) {
+    const stdBlock = buildStandardBlock(std);
+    partIIChars += stdBlock.length;
+    if (partIIChars > PAGE_LIMIT && partIIHtml.length > 200) {
+      partIIHtml += '</div>';
+      pages.push(partIIHtml);
+      partIIHtml = '<div class="page">';
+      partIIChars = stdBlock.length;
+    }
+    partIIHtml += stdBlock;
+  }
+  partIIHtml += '</div>';
+  pages.push(partIIHtml);
+
+  // ── Part III: Summary ─────────────────────────────────────────────────────
+  pages.push(`<div class="page">
+    <div class="section-part">Phần III: Tổng hợp kết quả và Kế hoạch cải tiến</div>
+
+    <h2>3.1 Tóm tắt kết quả tự đánh giá</h2>
+    ${report.tom_tat_ket_qua
+      ? `<p class="indent">${h(report.tom_tat_ket_qua).replace(/\n/g,'</p><p class="indent">')}</p>`
+      : buildSummaryParagraph(stats)}
+
+    <h2>3.2 Kế hoạch cải tiến chất lượng</h2>
+    ${report.ke_hoach_cai_tien
+      ? `<p class="indent">${h(report.ke_hoach_cai_tien).replace(/\n/g,'</p><p class="indent">')}</p>`
+      : `<p class="indent">Dựa trên kết quả tự đánh giá, nhà trường xây dựng kế hoạch hành động cụ thể để khắc phục các tồn tại và phát huy điểm mạnh, trình Hội đồng trường phê duyệt và triển khai thực hiện trong chu kỳ tiếp theo.</p>`}
+  </div>`);
+
+  // ── Appendix 1: Summary table ─────────────────────────────────────────────
+  pages.push(`<div class="page">
+    <div class="section-part">Phụ lục 1: Bảng tổng hợp kết quả đánh giá tiêu chí</div>
+    ${buildSummaryTable(data.standards)}
+  </div>`);
+
+  // ── Appendix 2: Evidence list ─────────────────────────────────────────────
+  pages.push(`<div class="page">
+    <div class="section-part">Phụ lục 2: Danh mục Minh chứng</div>
+    ${buildEvidenceAppendix(data.evidence)}
+  </div>`);
+
+  // ── Appendix 3: KPI ───────────────────────────────────────────────────────
+  if (data.kpi_data && data.kpi_data.length > 0) {
+    pages.push(`<div class="page">
+      <div class="section-part">Phụ lục 3: Cơ sở dữ liệu KPI (Biểu 16)</div>
+      ${buildKpiAppendix(data.kpi_data)}
+    </div>`);
+  }
+
+  document.getElementById('pages').innerHTML = pages.join('');
+  document.title = report.title || 'Báo cáo TĐG';
+}
+
+// ── Builder helpers ───────────────────────────────────────────────────────────
+function buildSchoolInfoBlock(si) {
+  if (!si || !Object.keys(si).length) return '<p class="no-data">Chưa nhập thông tin trường (xem Biểu 16 → Thông tin trường).</p>';
+  const rows = [
+    ['Tên trường', si.ten_truong], ['Mã trường', si.ma_truong],
+    ['Địa chỉ', si.dia_chi], ['Website', si.website],
+    ['Điện thoại', si.dien_thoai], ['Email', si.email],
+    ['Loại hình', si.loai_hinh], ['Năm thành lập', si.nam_thanh_lap],
+  ].filter(([,v]) => v);
+  if (!rows.length) return '<p class="no-data">Chưa nhập thông tin trường.</p>';
+  return `<table class="kpi-table" style="width:60%">
+    ${rows.map(([k,v]) => `<tr><th style="width:40%;text-align:left">${k}</th><td>${h(v)}</td></tr>`).join('')}
+  </table>`;
+}
+
+function buildStandardBlock(std) {
+  const assessed = std.assessed || 0;
+  const total    = std.criteria.length;
+  const dat      = std.dat || 0;
+  const khong    = std.khong_dat || 0;
+  const summary  = `Đã đánh giá ${assessed}/${total} tiêu chí · ${dat} ĐẠT · ${khong} Không ĐẠT`;
+
+  let html = `<div class="section-std">Tiêu chuẩn ${std.id}: ${h(std.name)}<br>
+    <small style="font-weight:normal;font-size:10pt">${summary}</small></div>`;
+
+  for (const c of std.criteriaData) {
+    const a = c.assess;
+    html += `<div class="section-tc">
+      <div class="tc-header">Tiêu chí ${c.key}: ${h(c.name)}</div>`;
+
+    if (a) {
+      const kqClass = a.ket_qua === 'DAT' ? 'ket-qua-DAT' : a.ket_qua === 'KHONG_DAT' ? 'ket-qua-KHONG_DAT' : 'ket-qua-CHUA';
+      const kqLabel = a.ket_qua === 'DAT' ? 'ĐẠT' : a.ket_qua === 'KHONG_DAT' ? 'KHÔNG ĐẠT' : 'Chưa xác định';
+      html += `<table class="bieu04">
+        <tr><th>Hiện trạng</th><td>${h(a.hien_trang || '–')}</td></tr>
+        <tr><th>Điểm mạnh</th><td>${h(a.diem_manh || '–')}</td></tr>
+        <tr><th>Tồn tại & Hạn chế</th><td>${h(a.ton_tai || '–')}</td></tr>
+        <tr><th>Kế hoạch hành động</th><td>${h(a.ke_hoach || '–')}</td></tr>
+        <tr><th>Kết quả đánh giá</th><td class="ket-qua ${kqClass}">${kqLabel}</td></tr>
+        ${c.evidence.length ? `<tr><th>Minh chứng liên quan</th><td>${c.evidence.map(e => `<code>${h(e.code)}</code> ${h(e.mo_ta)}`).join('<br>')}</td></tr>` : ''}
+      </table>`;
+    } else {
+      html += `<p class="no-data">Chưa có dữ liệu đánh giá cho tiêu chí này.</p>`;
+    }
+    html += '</div>';
+  }
+  return html;
+}
+
+function buildSummaryParagraph(stats) {
+  const assessed = stats.assessed || 0;
+  const dat      = stats.dat || 0;
+  const khong    = stats.khong_dat || 0;
+  const chua     = 60 - assessed;
+  const pct      = Math.round(dat / 60 * 100);
+  return `<p class="indent">Qua quá trình tự đánh giá, Hội đồng TĐG đã hoàn thành đánh giá ${assessed}/60 tiêu chí thuộc 15 tiêu chuẩn theo quy định của Thông tư. Trong đó, có <strong>${dat} tiêu chí ĐẠT</strong> (chiếm ${pct}% tổng số), <strong>${khong} tiêu chí Không ĐẠT</strong>${chua > 0 ? `, và ${chua} tiêu chí chưa hoàn thành đánh giá` : ''}.</p>
+  <p class="indent">Kết quả tự đánh giá phản ánh những nỗ lực liên tục của nhà trường trong việc nâng cao chất lượng đào tạo, nghiên cứu khoa học và phục vụ cộng đồng. Các tiêu chí chưa đạt yêu cầu đã được nhận diện và đề xuất kế hoạch cải tiến cụ thể.</p>`;
+}
+
+function buildSummaryTable(standards) {
+  const rows = [];
+  for (const std of standards) {
+    rows.push(`<tr class="std-row">
+      <td colspan="3" style="font-weight:bold">TC ${std.id}: ${h(std.name)}</td>
+      <td style="text-align:center">${std.dat}/${std.criteria.length} ĐẠT</td>
+    </tr>`);
+    for (const c of std.criteriaData) {
+      const a = c.assess;
+      const kq = a ? (a.ket_qua === 'DAT' ? '<span class="badge-dat">ĐẠT</span>' : a.ket_qua === 'KHONG_DAT' ? '<span class="badge-kdat">Không ĐẠT</span>' : '<span class="badge-chua">Chưa XĐ</span>') : '<span class="badge-chua">Chưa ĐG</span>';
+      rows.push(`<tr>
+        <td style="text-align:center">${c.key}</td>
+        <td>${h(c.name)}</td>
+        <td>${a ? h(a.nguoi_thuc_hien || '–') : '–'}</td>
+        <td style="text-align:center">${kq}</td>
+      </tr>`);
+    }
+  }
+  return `<table class="sum-table">
+    <thead><tr>
+      <th style="width:8%">Tiêu chí</th>
+      <th style="width:48%">Nội dung</th>
+      <th style="width:24%">Người thực hiện</th>
+      <th style="width:20%">Kết quả</th>
+    </tr></thead>
+    <tbody>${rows.join('')}</tbody>
+  </table>`;
+}
+
+function buildEvidenceAppendix(evidence) {
+  if (!evidence || !evidence.length)
+    return '<p class="no-data">Chưa có minh chứng nào được lưu trữ trong hệ thống.</p>';
+
+  // Group by standard
+  const byStd = {};
+  for (const e of evidence) {
+    const std = e.tieu_chuan || '?';
+    if (!byStd[std]) byStd[std] = [];
+    byStd[std].push(e);
+  }
+  let html = '';
+  for (const std of Object.keys(byStd).sort((a,b) => Number(a)-Number(b))) {
+    html += `<h3>Tiêu chuẩn ${std}</h3>
+    <table class="ev-table">
+      <thead><tr><th>Mã MC</th><th>Tiêu chí</th><th>Mô tả</th><th>Tên file</th><th>Ngày thêm</th></tr></thead>
+      <tbody>
+        ${byStd[std].map(e => `<tr>
+          <td><code>${h(e.code)}</code></td>
+          <td style="text-align:center">${h(e.tieu_chi)}</td>
+          <td>${h(e.mo_ta || '–')}</td>
+          <td>${h(e.file_name)}</td>
+          <td>${h(e.created_at)}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+  }
+  return html;
+}
+
+function buildKpiAppendix(kpiData) {
+  const sorted = [...kpiData].sort((a,b) => (b.nam_hoc||'').localeCompare(a.nam_hoc||''));
+  const fields = [
+    ['so_gv_co_huu','GV cơ hữu'], ['pct_gv_ts','% GV có TS (%)'],
+    ['so_nguoi_hoc_dh','SV ĐH'], ['pct_tot_nghiep','Tỉ lệ TN (%)'],
+    ['pct_viec_lam_12t','VL 12t (%)'], ['so_bao_isi_scopus','Bài ISI/Scopus'],
+    ['tong_dien_tich_dat','Diện tích đất (m²)'],
+  ];
+  return `<table class="kpi-table">
+    <thead>
+      <tr>
+        <th>Chỉ số</th>
+        ${sorted.map(r => `<th>${h(r.nam_hoc)}</th>`).join('')}
+      </tr>
+    </thead>
+    <tbody>
+      ${fields.map(([key, label]) => `<tr>
+        <td><strong>${label}</strong></td>
+        ${sorted.map(r => `<td style="text-align:center">${r[key] != null ? h(String(r[key])) : '–'}</td>`).join('')}
+      </tr>`).join('')}
+    </tbody>
+  </table>`;
+}
+
+function h(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+</script>
+</body>
+</html>
