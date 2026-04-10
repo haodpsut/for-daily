@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phiếu khảo sát – ĐH Kiến trúc Đà Nẵng</title>
+<style>
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --bg:     #0f1117;  --card:   #1a1d27;  --border: #2a2d3e;
+  --accent: #4f8ef7;  --green:  #2ea87e;  --red:    #e05a5a;
+  --yellow: #e0a847;  --text:   #e2e8f0;  --muted:  #64748b;
+}
+body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+/* Header */
+.site-header { background:var(--card); border-bottom:1px solid var(--border); padding:14px 20px; display:flex; align-items:center; gap:14px; }
+.site-logo { font-size:22px; }
+.site-info .school { font-size:13px; font-weight:800; color:var(--accent); }
+.site-info .sub { font-size:11px; color:var(--muted); }
+.badge-type { display:inline-block; font-size:11px; font-weight:700; padding:3px 8px; border-radius:5px; margin-left:8px; }
+.b08 { background:#4f8ef720; color:#4f8ef7; }
+.b09 { background:#2ea87e20; color:#2ea87e; }
+.b10 { background:#e0a84720; color:#e0a847; }
+.b11 { background:#7c5cbf20; color:#c084fc; }
+
+/* Container */
+.container { max-width:700px; margin:0 auto; padding:28px 16px 60px; }
+
+/* Survey card */
+.survey-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px 28px; margin-bottom:24px; }
+.survey-title { font-size:20px; font-weight:800; margin-bottom:8px; }
+.survey-meta { font-size:12px; color:var(--muted); display:flex; gap:12px; flex-wrap:wrap; margin-bottom:8px; }
+.survey-desc { font-size:13px; color:var(--muted); line-height:1.6; margin-top:10px; }
+.response-count { display:inline-flex; align-items:center; gap:6px; background:var(--accent)18; border:1px solid var(--accent)40; border-radius:20px; padding:4px 12px; font-size:12px; color:var(--accent); font-weight:600; margin-top:12px; }
+
+/* Scale legend */
+.scale-legend { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:14px 20px; margin-bottom:20px; }
+.scale-legend h3 { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; margin-bottom:10px; }
+.scale-items { display:flex; gap:8px; flex-wrap:wrap; }
+.scale-item { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text); }
+.scale-num { width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; }
+
+/* Question */
+.question-block { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:18px 22px; margin-bottom:12px; transition:border-color .2s; }
+.question-block.answered { border-color:var(--accent)60; }
+.q-num { font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; margin-bottom:6px; }
+.q-text { font-size:14px; font-weight:600; line-height:1.5; margin-bottom:16px; }
+.likert-row { display:flex; gap:8px; flex-wrap:wrap; }
+.likert-opt { flex:1; min-width:52px; }
+.likert-opt input { display:none; }
+.likert-opt label {
+  display:flex; flex-direction:column; align-items:center; gap:5px; padding:10px 6px;
+  border:2px solid var(--border); border-radius:8px; cursor:pointer; transition:all .15s;
+  font-size:11px; color:var(--muted); text-align:center; line-height:1.3;
+}
+.likert-opt label:hover { border-color:var(--accent); color:var(--text); }
+.likert-opt input:checked + label { border-color:var(--accent); background:var(--accent)20; color:var(--text); }
+.likert-num { font-size:18px; font-weight:800; }
+.scale-colors { --c1:#e05a5a; --c2:#e0a847; --c3:#94a3b8; --c4:#4f8ef7; --c5:#2ea87e; }
+.likert-opt:nth-child(1) input:checked + label { border-color:var(--c1); background:var(--c1)22; }
+.likert-opt:nth-child(1) .likert-num { color:var(--c1); }
+.likert-opt:nth-child(2) input:checked + label { border-color:var(--c2); background:var(--c2)22; }
+.likert-opt:nth-child(2) .likert-num { color:var(--c2); }
+.likert-opt:nth-child(3) .likert-num { color:var(--c3); }
+.likert-opt:nth-child(4) input:checked + label { border-color:var(--c4); background:var(--c4)22; }
+.likert-opt:nth-child(4) .likert-num { color:var(--c4); }
+.likert-opt:nth-child(5) input:checked + label { border-color:var(--c5); background:var(--c5)22; }
+.likert-opt:nth-child(5) .likert-num { color:var(--c5); }
+
+/* Comment */
+.comment-block { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:18px 22px; margin-bottom:20px; }
+.comment-block label { display:block; font-size:14px; font-weight:600; margin-bottom:10px; }
+.comment-block textarea { width:100%; padding:10px 12px; background:var(--bg); border:1px solid var(--border); border-radius:7px; color:var(--text); font-size:13px; font-family:inherit; resize:vertical; min-height:90px; line-height:1.5; }
+.comment-block textarea:focus { outline:none; border-color:var(--accent); }
+
+/* Submit */
+.submit-bar { text-align:center; }
+.btn-submit { padding:14px 40px; background:var(--accent); border:none; border-radius:10px; color:#fff; font-size:15px; font-weight:700; cursor:pointer; transition:all .2s; }
+.btn-submit:hover { opacity:.88; transform:translateY(-1px); }
+.btn-submit:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+.progress-hint { font-size:12px; color:var(--muted); margin-top:10px; }
+
+/* States */
+.state-screen { max-width:500px; margin:60px auto; text-align:center; padding:0 20px; }
+.state-icon { font-size:56px; margin-bottom:16px; }
+.state-title { font-size:22px; font-weight:800; margin-bottom:10px; }
+.state-sub { font-size:14px; color:var(--muted); line-height:1.6; }
+.loading-spinner { display:inline-block; width:36px; height:36px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .8s linear infinite; margin-bottom:16px; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+@media (max-width:520px) {
+  .survey-card { padding:16px; }
+  .question-block { padding:14px 16px; }
+  .likert-opt label { padding:8px 4px; font-size:10px; }
+  .likert-num { font-size:15px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-logo">🏛️</div>
+  <div class="site-info">
+    <div class="school">Trường ĐH Kiến trúc Đà Nẵng</div>
+    <div class="sub">Hệ thống Kiểm định Chất lượng Giáo dục</div>
+  </div>
+</header>
+
+<div class="container" id="app">
+  <div class="state-screen">
+    <div class="loading-spinner"></div>
+    <div class="state-sub">Đang tải phiếu khảo sát...</div>
+  </div>
+</div>
+
+<script>
+const token = new URLSearchParams(location.search).get('token');
+let surveyData = null;
+
+async function init() {
+  if (!token) {
+    renderError('Không tìm thấy mã khảo sát. Vui lòng dùng đường link được cung cấp.');
+    return;
+  }
+  try {
+    const res = await fetch(`/api/surveys/by-token/${token}`);
+    if (!res.ok) {
+      const d = await res.json();
+      renderError(d.error || 'Lỗi không xác định.');
+      return;
+    }
+    surveyData = await res.json();
+    renderSurvey();
+  } catch (e) {
+    renderError('Không thể kết nối đến máy chủ. Vui lòng thử lại sau.');
+  }
+}
+
+function renderError(msg) {
+  document.getElementById('app').innerHTML = `
+    <div class="state-screen">
+      <div class="state-icon">⚠️</div>
+      <div class="state-title">Không thể tải khảo sát</div>
+      <div class="state-sub">${msg}</div>
+    </div>`;
+}
+
+function renderSurvey() {
+  const s = surveyData;
+  const tpl = s.template || {};
+  const questions = tpl.questions || [];
+  const scale = tpl.scale || ['1','2','3','4','5'];
+  const typeMeta = {
+    bieu08:{ label:'Biểu 08', cls:'b08' },
+    bieu09:{ label:'Biểu 09', cls:'b09' },
+    bieu10:{ label:'Biểu 10', cls:'b10' },
+    bieu11:{ label:'Biểu 11', cls:'b11' },
+  };
+  const tm = typeMeta[s.type] || { label:s.type, cls:'' };
+  const scaleColors = ['#e05a5a','#e0a847','#94a3b8','#4f8ef7','#2ea87e'];
+
+  const scaleLegend = scale.map((l, i) => `
+    <div class="scale-item">
+      <div class="scale-num" style="background:${scaleColors[i]}30;color:${scaleColors[i]}">${i+1}</div>
+      ${l}
+    </div>`).join('');
+
+  const qBlocks = questions.map((q, i) => `
+    <div class="question-block scale-colors" id="qblock-${i+1}">
+      <div class="q-num">Câu ${i+1}</div>
+      <div class="q-text">${escHtml(q)}</div>
+      <div class="likert-row">
+        ${scale.map((l, vi) => `
+          <div class="likert-opt">
+            <input type="radio" name="q${i+1}" id="q${i+1}_v${vi+1}" value="${vi+1}" onchange="onAnswer(${i+1})">
+            <label for="q${i+1}_v${vi+1}">
+              <span class="likert-num">${vi+1}</span>
+              <span>${escHtml(l)}</span>
+            </label>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+
+  document.getElementById('app').innerHTML = `
+    <!-- Survey header -->
+    <div class="survey-card">
+      <div class="survey-title">
+        ${escHtml(s.title)}
+        <span class="badge-type ${tm.cls}">${tm.label}</span>
+      </div>
+      <div class="survey-meta">
+        <span>📋 ${escHtml(tpl.target || '')}</span>
+        <span>·</span>
+        <span>Tạo ngày ${s.created_at}</span>
+      </div>
+      ${s.description ? `<div class="survey-desc">${escHtml(s.description)}</div>` : ''}
+      <div class="response-count">👥 ${s.response_count} người đã tham gia</div>
+    </div>
+
+    <!-- Scale legend -->
+    <div class="scale-legend">
+      <h3>Thang đánh giá</h3>
+      <div class="scale-items">${scaleLegend}</div>
+    </div>
+
+    <!-- Questions -->
+    <form id="survey-form" onsubmit="submitSurvey(event)">
+      ${qBlocks}
+
+      <!-- Comment -->
+      <div class="comment-block">
+        <label>💬 Ý kiến bổ sung (không bắt buộc)</label>
+        <textarea id="comment-field" placeholder="Góp ý, đề xuất cải thiện chất lượng đào tạo..."></textarea>
+      </div>
+
+      <div class="submit-bar">
+        <button type="submit" class="btn-submit" id="btn-submit">
+          Gửi phiếu khảo sát
+        </button>
+        <div class="progress-hint" id="progress-hint">Đã trả lời: 0 / ${questions.length} câu hỏi</div>
+      </div>
+    </form>
+  `;
+}
+
+function onAnswer(qNum) {
+  document.getElementById(`qblock-${qNum}`)?.classList.add('answered');
+  updateProgress();
+}
+
+function updateProgress() {
+  const tpl = surveyData?.template || {};
+  const n = (tpl.questions || []).length;
+  let answered = 0;
+  for (let i = 1; i <= n; i++) {
+    if (document.querySelector(`input[name="q${i}"]:checked`)) answered++;
+  }
+  const hint = document.getElementById('progress-hint');
+  if (hint) hint.textContent = `Đã trả lời: ${answered} / ${n} câu hỏi`;
+  const btn = document.getElementById('btn-submit');
+  if (btn) btn.disabled = answered < n;
+}
+
+async function submitSurvey(e) {
+  e.preventDefault();
+  const tpl = surveyData?.template || {};
+  const n = (tpl.questions || []).length;
+  const answers = {};
+
+  for (let i = 1; i <= n; i++) {
+    const el = document.querySelector(`input[name="q${i}"]:checked`);
+    if (!el) { alert(`Vui lòng trả lời câu ${i}.`); return; }
+    answers[`q${i}`] = parseInt(el.value);
+  }
+  const comment = document.getElementById('comment-field')?.value?.trim();
+  if (comment) answers.comment = comment;
+
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.textContent = 'Đang gửi...';
+
+  try {
+    const res = await fetch(`/api/surveys/by-token/${token}/respond`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ answers }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      renderThankYou();
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Gửi phiếu khảo sát';
+      alert('Lỗi: ' + (data.error || 'Không thể gửi'));
+    }
+  } catch {
+    btn.disabled = false;
+    btn.textContent = 'Gửi phiếu khảo sát';
+    alert('Lỗi kết nối. Vui lòng thử lại.');
+  }
+}
+
+function renderThankYou() {
+  document.getElementById('app').innerHTML = `
+    <div class="state-screen">
+      <div class="state-icon">✅</div>
+      <div class="state-title">Cảm ơn bạn đã tham gia!</div>
+      <div class="state-sub">
+        Phản hồi của bạn đã được ghi nhận thành công.<br><br>
+        Ý kiến của bạn rất có giá trị giúp nhà trường cải thiện chất lượng đào tạo và đáp ứng tốt hơn nhu cầu của người học và xã hội.<br><br>
+        <strong>Trường ĐH Kiến trúc Đà Nẵng</strong>
+      </div>
+    </div>`;
+}
+
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Disable submit until all questions answered
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('btn-submit');
+  if (btn) btn.disabled = true;
+});
+
+init();
+</script>
+</body>
+</html>

@@ -21,9 +21,12 @@ function loadDB() {
   if (!db.kpi_data)     db.kpi_data     = [];
   if (!db.school_info)  db.school_info  = {};
   if (!db.nextKpiId)    db.nextKpiId    = 1;
-  if (!db.tdg_plans)    db.tdg_plans    = [];
-  if (!db.nextTdgId)    db.nextTdgId    = 1;
-  if (!db.nextTaskId)   db.nextTaskId   = 1;
+  if (!db.tdg_plans)       db.tdg_plans       = [];
+  if (!db.nextTdgId)       db.nextTdgId       = 1;
+  if (!db.nextTaskId)      db.nextTaskId      = 1;
+  if (!db.surveys)         db.surveys         = [];
+  if (!db.nextSurveyId)    db.nextSurveyId    = 1;
+  if (!db.nextResponseId)  db.nextResponseId  = 1;
   return db;
 }
 
@@ -434,6 +437,190 @@ app.delete('/api/tdg/:id/tasks/:taskId', (req, res) => {
   plan.tasks = plan.tasks.filter(t => t.id !== parseInt(req.params.taskId));
   saveDB(db);
   res.json({ message: 'Đã xóa task' });
+});
+
+// ─── Survey Templates (Biểu 08–11) ───────────────────────────────────────────
+const SURVEY_TEMPLATES = {
+  bieu08: {
+    label: 'Biểu 08', target: 'Cán bộ / Giảng viên',
+    scale: ['Rất không đồng ý','Không đồng ý','Trung lập','Đồng ý','Rất đồng ý'],
+    questions: [
+      'Tầm nhìn, sứ mạng nhà trường được truyền đạt rõ ràng đến CB/GV',
+      'Hệ thống quản trị nhà trường hoạt động hiệu quả, minh bạch',
+      'Quy trình tuyển dụng, đánh giá GV thực hiện đúng quy định',
+      'CB/GV được tạo điều kiện phát triển chuyên môn, nghiệp vụ',
+      'Chính sách lương, thưởng, phúc lợi phù hợp với đóng góp',
+      'Cơ sở vật chất phục vụ giảng dạy đầy đủ, hiện đại',
+      'Chương trình đào tạo được rà soát, cập nhật thường xuyên',
+      'Hoạt động NCKH được nhà trường khuyến khích và hỗ trợ',
+      'Hệ thống đảm bảo chất lượng bên trong vận hành hiệu quả',
+      'Nhìn chung, tôi hài lòng với môi trường làm việc tại trường',
+    ],
+  },
+  bieu09: {
+    label: 'Biểu 09', target: 'Người học (Sinh viên / Học viên)',
+    scale: ['Rất không đồng ý','Không đồng ý','Trung lập','Đồng ý','Rất đồng ý'],
+    questions: [
+      'Mục tiêu và chuẩn đầu ra của CTĐT được thông báo rõ ràng',
+      'Nội dung chương trình học đáp ứng yêu cầu và cập nhật xu hướng',
+      'Phương pháp giảng dạy phát huy tính chủ động của người học',
+      'Giảng viên có kiến thức chuyên sâu và nhiệt tình hướng dẫn',
+      'Cơ sở vật chất (phòng học, lab, thư viện) đáp ứng nhu cầu học tập',
+      'Hệ thống CNTT (cổng thông tin, LMS) hỗ trợ tốt việc học',
+      'Nhà trường có chính sách hỗ trợ người học (học bổng, tư vấn)',
+      'Hoạt động thực tập, thực tế bổ sung được kỹ năng nghề nghiệp',
+      'Thủ tục hành chính và dịch vụ hỗ trợ sinh viên thuận tiện',
+      'Nhìn chung, tôi hài lòng với chất lượng đào tạo của nhà trường',
+    ],
+  },
+  bieu10: {
+    label: 'Biểu 10', target: 'Nhà tuyển dụng / Doanh nghiệp',
+    scale: ['Rất kém','Kém','Trung bình','Tốt','Xuất sắc'],
+    questions: [
+      'Kiến thức chuyên môn của SV tốt nghiệp đáp ứng yêu cầu công việc',
+      'Kỹ năng thực hành và khả năng ứng dụng vào thực tiễn',
+      'Kỹ năng làm việc nhóm và phối hợp với đồng nghiệp',
+      'Kỹ năng giao tiếp, trình bày và thuyết trình',
+      'Khả năng tự học và tiếp thu kiến thức, kỹ năng mới',
+      'Thái độ làm việc: chuyên nghiệp, có trách nhiệm, chăm chỉ',
+      'Kỹ năng ngoại ngữ (tiếng Anh) trong môi trường công việc',
+      'Kỹ năng ứng dụng CNTT phục vụ công việc',
+      'Khả năng tư duy phân tích và giải quyết vấn đề',
+      'Nhìn chung, đơn vị hài lòng với SV tốt nghiệp từ trường',
+    ],
+  },
+  bieu11: {
+    label: 'Biểu 11', target: 'Cựu sinh viên (Alumni)',
+    scale: ['Rất không đồng ý','Không đồng ý','Trung lập','Đồng ý','Rất đồng ý'],
+    questions: [
+      'Kiến thức được đào tạo áp dụng hiệu quả trong công việc hiện tại',
+      'Kỹ năng thực hành học được tại trường đáp ứng yêu cầu công việc',
+      'Chương trình đào tạo phù hợp với thực tiễn nghề nghiệp',
+      'Kỹ năng mềm (giao tiếp, làm việc nhóm, tư duy) được phát triển tốt',
+      'Môi trường học tập hình thành thái độ làm việc chuyên nghiệp',
+      'Tôi tìm được việc làm trong vòng 12 tháng sau khi tốt nghiệp',
+      'Công việc hiện tại phù hợp với ngành học tại trường',
+      'Mức thu nhập hiện tại đáp ứng được nhu cầu cuộc sống',
+      'Tôi sẵn sàng giới thiệu trường cho người thân và bạn bè',
+      'Nhìn chung, tôi hài lòng với chất lượng đào tạo của nhà trường',
+    ],
+  },
+};
+
+// ─── API: Surveys (admin) ─────────────────────────────────────────────────────
+app.get('/api/surveys', (req, res) => {
+  const db = loadDB();
+  res.json(db.surveys.map(s => ({
+    id: s.id, type: s.type, title: s.title, description: s.description,
+    token: s.token, active: s.active, created_at: s.created_at,
+    response_count: s.responses.length,
+  })));
+});
+
+// IMPORTANT: by-token route must come BEFORE /:id
+app.get('/api/surveys/by-token/:token', (req, res) => {
+  const db = loadDB();
+  const s = db.surveys.find(x => x.token === req.params.token);
+  if (!s) return res.status(404).json({ error: 'Khảo sát không tồn tại' });
+  if (!s.active) return res.status(403).json({ error: 'Khảo sát đã đóng' });
+  const tpl = SURVEY_TEMPLATES[s.type] || {};
+  res.json({
+    id: s.id, type: s.type, title: s.title, description: s.description,
+    token: s.token, created_at: s.created_at,
+    response_count: s.responses.length,
+    template: tpl,
+  });
+});
+
+app.post('/api/surveys/by-token/:token/respond', (req, res) => {
+  const db = loadDB();
+  const s = db.surveys.find(x => x.token === req.params.token);
+  if (!s) return res.status(404).json({ error: 'Không tìm thấy' });
+  if (!s.active) return res.status(403).json({ error: 'Khảo sát đã đóng' });
+  const response = {
+    id: db.nextResponseId++,
+    submitted_at: new Date().toLocaleString('vi-VN'),
+    answers: req.body.answers || {},
+  };
+  s.responses.push(response);
+  saveDB(db);
+  res.json({ message: 'Đã gửi khảo sát thành công' });
+});
+
+app.get('/api/surveys/:id', (req, res) => {
+  const db = loadDB();
+  const s = db.surveys.find(x => x.id === parseInt(req.params.id));
+  if (!s) return res.status(404).json({ error: 'Không tìm thấy' });
+  res.json({ ...s, template: SURVEY_TEMPLATES[s.type] || {} });
+});
+
+app.post('/api/surveys', (req, res) => {
+  const db = loadDB();
+  const { type, title, description } = req.body;
+  if (!type || !title) return res.status(400).json({ error: 'Thiếu loại hoặc tiêu đề' });
+  if (!SURVEY_TEMPLATES[type]) return res.status(400).json({ error: 'Loại khảo sát không hợp lệ' });
+  const token = Math.random().toString(36).substring(2, 10).toUpperCase();
+  const survey = {
+    id: db.nextSurveyId++, type, title, description: description || '',
+    token, active: true, created_at: new Date().toLocaleString('vi-VN'), responses: [],
+  };
+  db.surveys.push(survey);
+  saveDB(db);
+  res.json({ id: survey.id, token: survey.token, message: 'Đã tạo khảo sát' });
+});
+
+app.put('/api/surveys/:id', (req, res) => {
+  const db = loadDB();
+  const s = db.surveys.find(x => x.id === parseInt(req.params.id));
+  if (!s) return res.status(404).json({ error: 'Không tìm thấy' });
+  const { title, description, active } = req.body;
+  if (title       !== undefined) s.title       = title;
+  if (description !== undefined) s.description = description;
+  if (active      !== undefined) s.active      = active;
+  saveDB(db);
+  res.json({ message: 'Đã cập nhật' });
+});
+
+app.delete('/api/surveys/:id', (req, res) => {
+  const db = loadDB();
+  const idx = db.surveys.findIndex(x => x.id === parseInt(req.params.id));
+  if (idx === -1) return res.status(404).json({ error: 'Không tìm thấy' });
+  db.surveys.splice(idx, 1);
+  saveDB(db);
+  res.json({ message: 'Đã xóa' });
+});
+
+app.get('/api/surveys/:id/stats', (req, res) => {
+  const db = loadDB();
+  const s = db.surveys.find(x => x.id === parseInt(req.params.id));
+  if (!s) return res.status(404).json({ error: 'Không tìm thấy' });
+  const n = s.responses.length;
+  if (n === 0) return res.json({ count: 0, averages: [], overall: 0, distribution: [], comments: [] });
+
+  const tpl = SURVEY_TEMPLATES[s.type] || {};
+  const nQ = (tpl.questions || []).length;
+  const sums = new Array(nQ).fill(0);
+  const counts = new Array(nQ).fill(0);
+  // distribution[q][v-1] = count of responses with value v
+  const dist = Array.from({ length: nQ }, () => [0, 0, 0, 0, 0]);
+  const comments = [];
+
+  for (const r of s.responses) {
+    const a = r.answers || {};
+    for (let i = 0; i < nQ; i++) {
+      const v = a[`q${i + 1}`];
+      if (typeof v === 'number' && v >= 1 && v <= 5) {
+        sums[i] += v;
+        counts[i]++;
+        dist[i][v - 1]++;
+      }
+    }
+    if (a.comment && a.comment.trim()) comments.push(a.comment.trim());
+  }
+
+  const averages = sums.map((s, i) => counts[i] ? Math.round(s / counts[i] * 10) / 10 : 0);
+  const overall  = averages.length ? Math.round(averages.reduce((a, b) => a + b, 0) / averages.length * 10) / 10 : 0;
+  res.json({ count: n, averages, overall, distribution: dist, comments: comments.slice(-30) });
 });
 
 // ─── Start ────────────────────────────────────────────────────────────────────
