@@ -1,0 +1,140 @@
+B GIÁO DC VÀ ÀO TO TRNG I HC KIN TRÚC À NNG
+
+CNG HÒA XÃ HI CH NGHA VIT NAM c lp - T do - Hnh phúc
+
+CHUN U RA CHNG TRÌNH ÀO TO TRÌNH  I HC
+H chính quy theo h thng tín ch ngành Công ngh thông tin (Ban hành kèm theo Quyt nh s 346/Q-HKTN ngày 25 tháng 06 nm 2024
+ca Hiu trng Trng i hc Kin trúc à Nng)
+(PROGRAM LEARNING OUTCOMES)
+Ngành (Program): Công ngh thông tin
+Mã ngành (Program Code): 7480201
+Chuyên ngành (Major): Công ngh thông tin
+1. Gii thiu chng trình ào to (Program Information) 1.1. Tên chng trình ào to (Program Title)
+- Ting Vit: CÔNG NGH THÔNG TIN
+- Ting Anh: INFORMATION TECHNOLOGY 1.2. Trình  ào to (Program Level): i hc
+388fa816-253e-4b44-8f67-4d8537de8527
+1.4. Thi gian ào to (Training Duration): nm
+2. Mc tiêu ào to (Program Objectives) PO1: ào to ngun nhân lc có phm cht chính tr, o c xã hi, sc khe áp ng yêu cu phát trin kinh t - xã hi trong lnh vc chuyên môn; có trách nhim ngh nghip, ý thc phc v cng ng; bo m quc phòng - an ninh và hi nhp quc t. PO2: ào to con ngi có kh nng sáng to và thích nghi vi môi trng làm vic trong thi k "K nguyên s và Trí tu nhân to", có kh nng t ào to  phát trin chuyên môn ngh nghip và hc tp sut i. PO3: Nhn din và mô t các kin thc c bn, kin thc c s ngành và chuyên ngành Công ngh thông tin; áp dng và phân tích các phng pháp lun khoa hc trong nghiên cu ngành Công ngh thông tin PO4: Phân tích và ánh giá các vn  thc tin trong các lnh vc nh Công ngh phn mm, Mng và truyn thông, H thng thông tin; thit k và phát trin các gii pháp phù hp vi yêu cu ca th trng lao ng. PO5: Thit k, phát trin, và qun lý các h thng thông tin và phn mm máy tính, thc hành k nng ngh nghip hiu qu. PO6: Th hin ý thc t chc k lut, tác phong làm vic khoa hc, nghiêm túc; duy trì o c ngh nghip v bo v thông tin và bn quyn. 3. Chun u ra chng trình ào to (Program Learning Outcomes)
+
+1
+
+PLOs PLO1 PI1.1 PI1.2
+
+Mô t (Description)
+
+Mc tiêu (PO) 123456
+
+Áp dng các kin thc c bn v khoa hc xã hi, kinh t và pháp lut cho vic hc tp, nghiên cu X X và làm vic trong lnh vc chuyên môn
+
+Vn dng các kin thc nn tng v lý lun chính tr  gii quyt các vn  có liên quan n chuyên môn
+
+Áp dng kin thc kinh t và pháp lut phc v cho vic hc tp và làm vic trong lnh vc chuyên ngành.
+
+PLO2 Tng tác hiu qu trong công vic.
+
+X
+
+Phi hp hiu qu các hot ng trong mt nhóm mà các thành viên cùng PI2.1
+nhau hp tác, lãnh o, to ra môi trng hp tác và hòa nhp.
+
+PI2.2 K nng giao tip và thuyt trình hiu qu vi nhiu i tng.
+
+T duy phn bin, sáng to và khi nghip trong PLO3 thi k "K nguyên s và Trí tu nhân to" và iu X
+kin môi trng thay i.
+
+PI3.1 Phn bin c các ý kin ca ngi khác nêu ra mt cách thuyt phc.
+
+PI3.2  xut c các gii pháp mi trong chuyên môn.
+
+PI3.3 Hình thành ý tng và lp k hoch cho các d án khi nghip.
+
+PLO4 PI4.1 PI4.2 PLO5 PI5.1 PI5.2 PI5.3 PI5.4 PLO6
+
+Thc hin trách nhim ngh nghip, t ch tip thu X
+và áp dng kin thc mi khi cn thit.
+
+Thc hin trách nhim ngh nghip trong x lý công vic có xét n c s li ích cng ng, xã hi và môi trng.
+
+Ch ng tip thu và áp dng kin thc mi trong hc tp và trong công vic sau khi tt nghip.
+
+t chun Ngoi ng, công ngh thông tin c bn, giáo dc quc phòng và an ninh, giáo dc th cht X theo quy nh hin hành.
+
+t chun ngoi ng bc 3/6 theo khung nng lc ngoi ng Vit Nam hoc tng ng theo Thông t s 01/2014/TT-BGDT ca B Giáo dc và ào to ngày 24/01/2014.
+
+t chun k nng công ngh thông tin c bn do B Thông tin Truyn thông ban hành ti Thông t s 03/2014/TT - BTTTT ngày 11/3/2014 hoc tng ng theo Quyt nh s 443/Q-HKTN ngày 28/8/2023.
+
+t chun giáo dc Quc phòng và an ninh theo Thông t 05/2020/TTBGDT ca B Giáo dc và ào to ngày 18/3/2020.
+
+t chun v giáo dc th cht theo Thông t 25/2015/TT-BGDT ca B Giáo dc và ào to ngày 14/10/2015.
+
+Hiu bit và vn dng kin thc v h thng phn mm, phn cng, mng máy tính và truyn thông, cng nh vai trò và ng dng ca CNTT trong k nguyên s.
+
+XX
+
+PI6.1 Hiu bit c bn v chc nng ca phn mm và phn cng.
+
+2
+
+PI6.2 Vn dng kin thc v mng máy tính và truyn thông trong k nguyên s.
+
+PI6.3 PLO7 PI7.1 PI7.2 PI7.3 PLO8 PI8.1
+
+Áp dng công ngh thông tin  gii quyt các vn  trong thc tin.
+
+Thành tho k nng lp trình máy tính, thu thp,
+
+phân tích và tng hp yêu cu t ngi s dng 
+
+X
+
+thit k và qun lý các d án phn mm.
+
+S dng thành tho ít nht mt ngôn ng lp trình  phát trin phn mm.
+
+Thu thp và phân tích yêu cu t ngi s dng  thit k h thng phn mm.
+
+Qun lý d án phn mm t giai on khi u n khi hoàn thành.
+
+ánh giá và m bo cht lng phn mm, kim
+
+th, bo trì và xây dng tài liu k thut, hng
+
+X
+
+dn s dng h thng hiu qu.
+
+Thc hin kim th phn mm  m bo cht lng.
+
+PI8.2 PI8.3
+PLO9
+PI9.1 PI9.2 PI9.3
+
+Bo trì, cp nht và nâng cp phn mm theo yêu cu ngi dùng.
+
+Xây dng tài liu k thut và hng dn s dng h thng phn mm mt
+
+cách rõ ràng và chi tit.
+
+Áp dng kin thc c s, chuyên ngành và qun lý d án  gii quyt các vn  k thut trong xây dng và phát trin phn mm máy tính.
+
+XXX
+
+Vn dng các kin thc v khoa hc k thut, chú trng v Toán chuyên
+
+ngành công ngh thông tin trong vic phát trin phn mm.
+
+ng dng các phng pháp và công c trong vic phát trin phn mm.
+
+ánh giá và phân tích, gii quyt các vn  k thut trong quá trình phát trin phn mm.
+
+4. V trí làm vic - Kh nng hc tp ca ngi hc sau khi tt nghip (Job Opportunities and Postgraduate Study Opportunities)
+
+4.1. V trí vic làm (Job Opportunities)
+
+4.2. Kh nng hc tp, nâng cao trình  (Postgraduate Study Opportunities) 5. Chun u ra tham kho (References)
+
+HIU TRNG President
+
+PHM ANH TUN 3
+
+

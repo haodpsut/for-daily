@@ -1,0 +1,1548 @@
+BN THO
+
+MC LC Table of Contents
+1. Mc tiêu ào to ......................................................................................................... 2 2. Chun u ra chng trình ào to ............................................................................ 2 3. V trí làm vic - Kh nng hc tp ca ngi hc sau khi tt nghip ........................ 4
+3.1. V trí vic làm ..................................................................................................... 4 3.2. Kh nng hc tp, nâng cao trình  .................................................................. 4 4. Thi gian ào to ........................................................................................................4 5. Cu trúc và ni dung chng trình ào to ................................................................ 4 6. Chun u vào ca chng trình ào to ................................................................... 8 7. Quy trình ào to, iu kin tt nghip ...................................................................... 8 8. Phng pháp ging dy và ánh giá kt qu hc tp ................................................. 8 9. Thang im .................................................................................................................8 10. K hoch ging dy (d kin) ................................................................................ 10 11. Hng dn thc hin chng trình ........................................................................ 17 12. Duyt chng trình ................................................................................................ 17
+1
+
+B GIÁO DC VÀ ÀO TO TRNG I HC KIN TRÚC À NNG
+
+CNG HÒA XÃ HI CH NGHA VIT NAM c lp - T do - Hnh phúc
+
+CHNG TRÌNH ÀO TO
+(PROGRAM)
+(Ban hành kèm theo Quyt nh s 346/Q-HKTN ngày 25 tháng 06 nm 2024 ca Hiu trng Trng i hc Kin trúc à Nng)
+
+Tên chng trình (Program Title)
+- Ting Vit: CÔNG NGH THÔNG TIN - Ting Anh: INFORMATION TECHNOLOGY Trình  ào to (Program Level): i hc Ngành ào to (Program)
+- Ting Vit: CÔNG NGH THÔNG TIN - Ting Anh: INFORMATION TECHNOLOGY Mã ngành (Program Code): 7480201 Loi hình ào to (Mode of Study): Chính quy
+
+BN THO
+
+1. Mc tiêu ào to (Program Objectives - POs)
+PO1: ào to ngun nhân lc có phm cht chính tr, o c xã hi, sc khe áp ng yêu cu phát trin kinh t - xã hi trong lnh vc chuyên môn; có trách nhim ngh nghip, ý thc phc v cng ng; bo m quc phòng - an ninh và hi nhp quc t. PO2: ào to con ngi có kh nng sáng to và thích nghi vi môi trng làm vic trong thi k "K nguyên s và Trí tu nhân to", có kh nng t ào to  phát trin chuyên môn ngh nghip và hc tp sut i. PO3: Nhn din và mô t các kin thc c bn, kin thc c s ngành và chuyên ngành Công ngh thông tin; áp dng và phân tích các phng pháp lun khoa hc trong nghiên cu ngành Công ngh thông tin PO4: Phân tích và ánh giá các vn  thc tin trong các lnh vc nh Công ngh phn mm, Mng và truyn thông, H thng thông tin; thit k và phát trin các gii pháp phù hp vi yêu cu ca th trng lao ng. PO5: Thit k, phát trin, và qun lý các h thng thông tin và phn mm máy tính, thc hành k nng ngh nghip hiu qu. PO6: Th hin ý thc t chc k lut, tác phong làm vic khoa hc, nghiêm túc; duy trì o c ngh nghip v bo v thông tin và bn quyn.
+
+2. Chun u ra chng trình ào to (Program Learning Outcomes)
+
+PLOs
+
+Mô t (Description)
+
+Mc tiêu (PO) 123456
+
+2
+
+PLO1 PI1.1 PI1.2
+
+Áp dng các kin thc c bn v khoa hc xã hi, kinh t và pháp lut cho vic hc tp, nghiên cu X X và làm vic trong lnh vc chuyên môn Vn dng các kin thc nn tng v lý lun chính tr  gii quyt các vn  có liên quan n chuyên môn Áp dng kin thc kinh t và pháp lut phc v cho vic hc tp và làm vic trong lnh vc chuyên ngành.
+
+PLO2 Tng tác hiu qu trong công vic.
+
+X
+
+Phi hp hiu qu các hot ng trong mt nhóm mà các thành viên cùng PI2.1
+nhau hp tác, lãnh o, to ra môi trng hp tác và hòa nhp.
+
+PI2.2 PLO3
+
+K nng giao tip và thuyt trình hiu qu vi nhiu i tng.
+T duy phn bin, sáng to và khi nghip trong thi k "K nguyên s và Trí tu nhân to" và iu X kin môi trng thay i.
+
+PI3.1 Phn bin c các ý kin ca ngi khác nêu ra mt cách thuyt phc.
+
+PI3.2  xut c các gii pháp mi trong chuyên môn.
+
+PI3.3 PLO4 PI4.1 PI4.2 PLO5
+PI5.1
+PI5.2 PI5.3 PI5.4
+PLO6 PI6.1
+
+Hình thành ý tng và lp k hoch cho các d án khi nghip.
+
+BN THO
+
+Thc hin trách nhim ngh nghip, t ch tip thu X
+và áp dng kin thc mi khi cn thit. Thc hin trách nhim ngh nghip trong x lý công vic có xét n c s li ích cng ng, xã hi và môi trng.
+
+Ch ng tip thu và áp dng kin thc mi trong hc tp và trong công
+
+vic sau khi tt nghip.
+
+t chun Ngoi ng, công ngh thông tin c bn,
+
+giáo dc quc phòng và an ninh, giáo dc th cht X theo quy nh hin hành.
+
+t chun ngoi ng bc 3/6 theo khung nng lc ngoi ng Vit Nam hoc tng ng theo Thông t s 01/2014/TT-BGDT ca B Giáo dc và ào to ngày 24/01/2014.
+
+t chun k nng công ngh thông tin c bn do B Thông tin Truyn
+
+thông ban hành ti Thông t s 03/2014/TT - BTTTT ngày 11/3/2014 hoc
+
+tng ng theo Quyt nh s 443/Q-HKTN ngày 28/8/2023.
+
+t chun giáo dc Quc phòng và an ninh theo Thông t 05/2020/TTBGDT ca B Giáo dc và ào to ngày 18/3/2020.
+
+t chun v giáo dc th cht theo Thông t 25/2015/TT-BGDT ca B
+
+Giáo dc và ào to ngày 14/10/2015.
+
+Hiu bit và vn dng kin thc v h thng phn
+
+mm, phn cng, mng máy tính và truyn thông, cng nh vai trò và ng dng ca CNTT trong k nguyên s.
+
+XX
+
+Hiu bit c bn v chc nng ca phn mm và phn cng.
+
+PI6.2 Vn dng kin thc v mng máy tính và truyn thông trong k nguyên s.
+
+PI6.3 Áp dng công ngh thông tin  gii quyt các vn  trong thc tin.
+
+3
+
+PLO7 PI7.1 PI7.2 PI7.3 PLO8 PI8.1
+
+Thành tho k nng lp trình máy tính, thu thp,
+
+phân tích và tng hp yêu cu t ngi s dng 
+
+X
+
+thit k và qun lý các d án phn mm.
+
+S dng thành tho ít nht mt ngôn ng lp trình  phát trin phn mm.
+
+Thu thp và phân tích yêu cu t ngi s dng  thit k h thng phn mm.
+
+Qun lý d án phn mm t giai on khi u n khi hoàn thành.
+
+ánh giá và m bo cht lng phn mm, kim
+
+th, bo trì và xây dng tài liu k thut, hng
+
+X
+
+dn s dng h thng hiu qu.
+
+Thc hin kim th phn mm  m bo cht lng.
+
+PI8.2 PI8.3
+PLO9
+PI9.1 PI9.2 PI9.3
+
+Bo trì, cp nht và nâng cp phn mm theo yêu cu ngi dùng.
+
+Xây dng tài liu k thut và hng dn s dng h thng phn mm mt cách rõ ràng và chi tit.
+
+Áp dng kin thc c s, chuyên ngành và qun lý
+
+d án  gii quyt các vn  k thut trong xây
+
+XXX
+
+dng và phát trin phn mm máy tính.
+
+Vn dng các kin thc v khoa hc k thut, chú trng v Toán chuyên ngành công ngh thông tin trong vic phát trin phn mm.
+
+ng dng các phng pháp và công c trong vic phát trin phn mm.
+
+ánh giá và phân tích, gii quyt các vn  k thut trong quá trình phát trin phn mm.
+
+3. V trí làm vic - Kh nng hc tp ca ngi hc sau khi tt nghip (Job Opportunities and Postgraduate Study Opportunities)
+
+3.1. V trí vic làm (Job Opportunities)
+
+BN THO
+
+3.2. Kh nng hc tp, nâng cao trình  (Postgraduate Study Opportunities)
+
+4. Thi gian ào to (Training Duration): nm
+5. Cu trúc và ni dung chng trình ào to (Structure and Content of the Training Program)
+Tng s tín ch (TC) phi tích ly ti thiu là: 158 TC (không tính ni dung v Giáo dc Th cht và Giáo dc Quc phòng - An Ninh) Trong ó:
+- Tng s TC bt buc: 131 TC - Tng s TC t chn: 27 TC
+Bng 1: Khung chng trình ào to Table 1: Program Structure
+
+TT Mã HP
+Ordinal Course's Code
+
+Tên hc phn Course's Name
+
+Ting Vit Vietnamese
+
+Ting Anh English
+
+S Ghi chú
+TC Annotations
+Credits
+
+4
+
+1. Kin thc giáo dc i cng
+
+1 PHI101 Trit hc Mác - Lênin Kinh t chính tr Mác -
+2 PEM101 Lênin
+
+Philosophy of Marxism and
+
+Leninism
+
+3.0
+
+Political Economic of 2.0
+Marxism and Leninism
+
+3 HCM101 T tng H Chí Minh Ho Chi Minh Ideology
+
+2.0
+
+Lch s ng Cng sn 4 HCP101
+Vit Nam
+
+History of the Communist 2.0
+Party of Vietnam
+
+5 SSC101 Ch ngha xã hi khoa hc Scientific socialism
+
+2.0
+
+6 LAW101 Pháp lut i cng
+
+Introduction to Laws
+
+2.0
+
+Study and Research Skills
+
+Phng pháp hc i hc
+
+7 SRU104
+
+for Undergraduate
+
+2.0
+
+và Nghiên cu khoa hc
+
+Students
+
+Communication skills-
+
+K nng giao tip - vn hóa
+
+8 CMB105
+
+Media and Behaviour
+
+2.0
+
+ng x và truyn thông
+
+culture
+
+9 ETR312 Khi nghip
+
+Entrepreneurship
+
+2.0
+
+10 MTA103 Gii tích
+
+Mathematical Analysis
+
+3.0
+
+11 AGR101 i s
+
+Algebra
+
+2.0
+
+BN THO
+
+12 DGE101 Kinh t s
+
+Digital Economy
+
+2.0
+
+13 PMS102 Xác sut thng kê
+
+Probability and 2.0
+Mathematical Statistics
+
+14 BIN101 Tin hc c bn
+
+Basic Informatics
+
+2.0
+
+15 BCB101 Blockchain c bn
+
+Blockchain Basics
+
+2.0
+
+Giáo dc Quc phòng ­ An ninh
+
+Giáo dc quc phòng 1
+
+Education of National
+
+16 EDS101 (ng li quân s ca Defence and Security 1
+
+3.0
+
+ng)
+
+Giáo dc quc phòng 2
+
+Education of National
+
+17 EDS102 (Công tác quc phòng, an
+
+2.0
+
+Defence and Security 2
+
+ninh)
+
+Giáo dc quc phòng 3 Education of National
+
+18 EDS103 (Quân s chung)
+
+Defence and Security 3
+
+1.0
+
+Giáo dc quc phòng 4 (K
+
+Education of National
+
+19 EDS105 thut chin u b binh và
+
+2.0
+
+Defence and Security 4
+
+chin thut)
+
+Giáo dc th cht
+
+20 PHE101 Giáo dc th cht 1
+
+Physical Practice 1
+
+1.0
+
+21 PHE102 Giáo dc th cht 2
+
+Physical Practice 1
+
+1.0
+
+22 PHE103 Giáo dc th cht 3
+
+Physical Practice 3
+
+1.0
+
+23 PHE106 Giáo dc th cht 4
+
+Physical Practice 4
+
+1.0
+
+Ngoi ng c bn
+
+Ting Anh
+
+24 BAE101 Ting Anh c bn 1
+
+Basic English 1
+
+2.0
+
+25 BAE102 Ting Anh c bn 2
+
+Basic English 2
+
+2.0
+
+5
+
+26 BAE103 Ting Anh c bn 3
+
+Basic English 3
+
+2.0
+
+27 BAE104 Ting Anh c bn 4
+
+Basic English 4
+
+2.0
+
+Ting Anh chuyên ngành English for Information
+
+28 EIT301 công ngh thông tin 1
+
+Technology 1
+
+2.0
+
+Ting Anh chuyên ngành English for Information
+
+29 EIT302
+
+2.0
+
+công ngh thông tin 2
+
+Technology 2
+
+Ting Nht
+
+30 BAJ101 Ting Nht c bn 1
+
+Basic Japanese 1
+
+2.0
+
+31 BAJ102 Ting Nht c bn 2
+
+Basic Japanese 2
+
+2.0
+
+32 BAJ103 Ting Nht c bn 3
+
+Basic Japanese 3
+
+2.0
+
+33 BAJ104 Ting Nht c bn 4
+
+Basic Japanese 4
+
+2.0
+
+34 INJ201 Ting Nht nâng cao 1 Intermediate Japanese 1 2.0
+
+35 INJ202 Ting Nht nâng cao 2 Intermediate Japanese 2 2.0
+
+Ting Hàn
+
+36 BAK101 Ting Hàn c bn 1
+
+Basic Korean 1
+
+2.0
+
+37 BAK102 Ting Hàn c bn 2
+
+Basic Korean 2
+
+2.0
+
+38 BAK103 Ting Hàn c bn 3
+
+Basic Korean 3
+
+2.0
+
+BN THO
+
+39 BAK104 Ting Hàn c bn 4
+
+Basic Korean 4
+
+2.0
+
+40 INK301 Ting Hàn nâng cao 1
+
+Intermediate Korean 1
+
+2.0
+
+41 INK302 Ting Hàn nâng cao 2
+
+Intermediate Korean 2
+
+2.0
+
+2. Kin thc giáo dc chuyên nghip
+
+2.1. Kin thc c s
+
+Introduction to
+
+42 ITP101 Nhp môn lp trình
+
+4.0
+
+Programming
+
+43 DCM201 Toán ri rc
+
+Discrete Mathematics
+
+3.0
+
+Cu trúc d liu và gii Data structures and
+
+44 DSA201
+
+3.0
+
+thut
+
+algorithms
+
+45 DBS201 C s d liu
+
+DataBase Systems
+
+3.0
+
+46 DMS201 H qun tr c s d liu Kin trúc máy tính và
+47 CAO201 nguyên lý h iu hành
+
+DataBase Management
+
+Systems
+
+3.0
+
+Computer Architecture and
+
+Operating System
+
+3.0
+
+Principles
+
+Object-Oriented
+
+48 OOP201 Lp trình hng i tng
+
+3.0
+
+Programming
+
+49 SWE201 Công ngh phn mm
+
+Software Engineering
+
+3.0
+
+50 BJP201 Lp trình JAVA c bn Basic Java Programming 4.0
+
+Advanced Java
+
+51 AJP201 Lp trình Java nâng cao
+
+3.0
+
+Programming
+
+52 CPN201 Mng máy tính
+
+Computer Network
+
+3.0
+
+Phân tích và thit k h System Analysis and
+
+53 SAD201 thng
+
+Design
+
+3.0
+
+54 AFI201 Trí tu nhân to
+
+Artificial Intelligence
+
+3.0
+
+6
+
+IoT Application
+
+55 IAD201 Phát trin ng dng IoT Development
+
+3.0
+
+56 WEB201 Lp trình Web
+
+Web Programming
+
+3.0
+
+57 WEB202 Công ngh WEB
+
+Web Technologies
+
+3.0
+
+Algorithm and
+
+58 AAD202  án gii thut và lp trình
+
+2.0
+
+Programming Project
+
+Artificial Intelligence
+
+59 AIP202  án trí tu nhân to
+
+2.0
+
+Project
+
+ án phân tích và thit k System Design and
+
+60 ISD202
+
+2.0
+
+h thng thông tin
+
+Analysis Project
+
+61 PPG201 Lp trình Python
+
+Python Programming
+
+3.0
+
+T chn
+
+62 PRW201 Lp trình trong Windows Programming in Windows 3.0
+
+63 MOB201 Lp trình di ng
+
+Mobile Programming
+
+3.0
+
+64 MIP201 Vi x lý
+
+Microprocessing
+
+3.0
+
+Lp trình trò chi trên máy
+
+65 GAP201 tính
+
+Game Programming
+
+3.0
+
+66 IMP201 X lý nh
+
+Image Processing
+
+3.0
+
+BN THO
+
+67 NEM301 Qun tr mng
+
+Network Management
+
+3.0
+
+An toàn và bo mt thông Information Security and
+
+68 ISS301
+
+3.0
+
+tin
+
+Safety
+
+Kho d liu và khai phá d DataWare House and
+
+69 DWH301
+
+3.0
+
+liu
+
+Datamining
+
+2.2. Kin thc chuyên ngành
+
+70 ABC301 Blockchain nâng cao
+
+Advanced Blockchain
+
+3.0
+
+Robotic Process
+
+71 RPA301 T ng hóa quy trình
+
+3.0
+
+Automation
+
+72 SOT301 Kim th phn mm
+
+Software Testing
+
+3.0
+
+New Technology
+
+73 NTO301 Chuyên  công ngh mi Orientation
+
+3.0
+
+74 PRM301 Qun lý d án
+
+Project Management
+
+3.0
+
+Linux & phn mm ngun
+
+75 LIO301
+
+Linux & OpenSource
+
+3.0
+
+m
+
+ án chuyên ngành công
+
+76 SOP301
+
+Software Project
+
+2.0
+
+ngh phn mm
+
+T chn
+
+77 HCI301 Tng tác ngi- máy
+
+Human-Computer Interface 3.0
+Technology
+
+Distributed DataBase
+
+78 DDS301 H c s d liu phân tán Systems
+
+3.0
+
+79 ECO301 Thng mi in t
+
+E-Commerce
+
+3.0
+
+80 NEP301 Lp trình mng
+
+Network Project
+
+3.0
+
+81 CLC301 in toán ám mây
+
+Cloud computing
+
+3.0
+
+82 DSY301 H phân tán
+
+Distributed Systems.
+
+3.0
+
+7
+
+2.3. Thc tp 83 INT202 Thc tp nhn thc 84 PRT401 Thc tp ngh nghip 85 INT402 Thc tp tt nghip 2.4. Tt nghip 86 FIP402  án tt nghip
+
+Internship
+
+2.0
+
+Pratice
+
+2.0
+
+Graduation Internship
+
+4.0
+
+Final Project
+
+12.0
+
+6. Chun u vào ca chng trình ào to (Program Learning Incomes)
+
+7. Quy trình ào to, iu kin tt nghip (Training Process- Graduation Conditions)
+
+BN THO
+
+8. Phng pháp ging dy và ánh giá kt qu hc tp (Teaching Methods and Assessment of Learning Results)
+a) Phng pháp ging dy: Trong ging dy, kt hp gia phng pháp ging dy truyn thng và nhng phng pháp mi nh: Phng pháp nghiên cu tài liu; Phng pháp kt hp hc i ôi vi hành; Phng pháp t chc nhóm hc tp; Phng pháp t chc nhn xét, ánh giá  phát huy c tính ch ng, tích cc và sáng to ca sinh viên trong quá trình dy - hc nhm nâng cao cht lng ào to ca nhà trng. b) ánh giá kt qu hc tp Thc hin theo "Quy ch ào to trình  i hc", ban hành kèm theo Thông t s 08/2021/TT-BGDT ngày 18/3/2021 ca B trng B Giáo dc và ào to và "Quy ch ào to trình  i hc" ca Trng i hc Kin trúc à Nng, ban hành kèm theo Quyt nh s 347/Q-HKTN ngày11/8/2021 ca Hiu trng.
+
+9. Thang im (Grade Scale) S dng thang im 10, ly n mt ch s sau du phy, chuyn sang thang im ch A, B, C, D, F và thang im 4.
+Bng 2: Thang im ánh giá Table 2: Grade Scale
+
+STT Xp loi (Ordinal) (Ranking)
+1
+
+im theo thang 10 (10-point Grading Scale)
+T 9,5 n 10,0
+
+im ch
+
+im theo
+
+(Letter Grading thang 4
+
+Scale) (10-point Grading
+
+Scale)
+
+A+
+
+4,0
+
+2
+
+T 8,5 n di 9,5
+
+A
+
+4,0
+
+3
+
+T 8,0 n di 8,5
+
+B+
+
+3,5
+
+4
+
+T 7,0 n di 8,0
+
+B
+
+3,0
+
+t
+
+5
+
+T 6,5 n di 7,0
+
+C+
+
+2,5
+
+6
+
+T 5,5 n di 6,5
+
+C
+
+2,0
+
+7
+
+T 5,0 n di 5,5
+
+D+
+
+1,5
+
+8
+
+T 4,0 n di 5,0
+
+D
+
+1,0
+
+8
+
+STT Xp loi (Ordinal) (Ranking)
+9 Không t
+
+im theo thang 10 (10-point Grading Scale)
+T 0,0 n di 4,0
+
+im ch
+
+im theo
+
+(Letter Grading thang 4
+
+Scale) (10-point Grading
+
+Scale)
+
+F
+
+0
+
+BN THO
+
+9
+
+10. K hoch ging dy (d kin) (Teaching Program)
+
+Bng 3: K hoch ging dy d kin Table 3: Teaching Program (tentative)
+
+TT Mã HP
+Ordinal Course's Code
+
+HC PHN
+Course's Name
+
+S TÍN CH
+Credits
+LT TH 
+
+PHÂN B HC PHN THEO HC K GHI CHÚ
+
+Course's Distribution of Semesters
+
+Annotations
+
+1 2 3 4 5 6 7 8 9 10
+
+1. Kin thc giáo dc i cng
+
+Trit hc Mác - Lênin
+
+1 PHI101
+
+3.0
+
+Philosophy of Marxism and Leninism
+
+Kinh t chính tr Mác - Lênin
+
+2 PEM101
+
+2.0
+
+Political Economic of Marxism and Leninism
+
+T tng H Chí Minh
+
+3 HCM101
+
+2.0
+
+Ho Chi Minh Ideology
+
+Lch s ng Cng sn Vit Nam
+
+4 HCP101
+
+2.0
+
+History of the Communist Party of Vietnam
+
+Ch ngha xã hi khoa hc
+
+5 SSC101
+
+2.0
+
+Scientific socialism
+
+Pháp lut i cng
+
+6 LAW101
+
+2.0
+
+Introduction to Laws
+
+Phng pháp hc i hc và Nghiên cu khoa
+
+hc
+
+7 SRU104
+
+2.0
+
+Study and Research Skills for Undergraduate
+
+Students
+
+K nng giao tip - vn hóa ng x và truyn
+
+thông
+
+8 CMB105
+
+2.0
+
+Communication skills- Media and Behaviour
+
+culture
+
+Khi nghip
+
+9 ETR312
+
+2.0
+
+Entrepreneurship
+
+Gii tích
+
+10 MTA103
+
+3.0
+
+Mathematical Analysis
+
+10
+
+BN THO
+
+56 3.0 2.0 2.0 2.0 2.0 2.0 2.0
+
+3.0 2.0 2.0 2.0 2.0
+
+2.0 2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+3.0 3.0
+
+i s 11 AGR101
+Algebra Kinh t s 12 DGE101 Digital Economy Xác sut thng kê 13 PMS102 Probability and Mathematical Statistics Tin hc c bn 14 BIN101 Basic Informatics Blockchain c bn 15 BCB101 Blockchain Basics Giáo dc Quc phòng ­ An ninh
+Giáo dc quc phòng 1 (ng li quân s ca 16 EDS101 ng)
+Education of National Defence and Security 1 Giáo dc quc phòng 2 (Công tác quc phòng, 17 EDS102 an ninh) Education of National Defence and Security 2 Giáo dc quc phòng 3 (Quân s chung) 18 EDS103 Education of National Defence and Security 3 Giáo dc quc phòng 4 (K thut chin u b 19 EDS105 binh và chin thut) Education of National Defence and Security 4 Giáo dc th cht
+Giáo dc th cht 1 20 PHE101
+Physical Practice 1 Giáo dc th cht 2 21 PHE102 Physical Practice 1 Giáo dc th cht 3 22 PHE103 Physical Practice 3 Giáo dc th cht 4 23 PHE106 Physical Practice 4
+
+BN THO
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+1.0 1.0 2.0 2.0
+
+2.0
+
+2.0
+
+2.0
+
+8
+
+3.0
+
+3.0 3.0
+
+2.0
+
+2.0 2.0
+
+1.0
+
+1.0 1.0
+
+2.0 2.0 2.0
+
+4 1.0 1.0 1.0
+
+1.0 1.0
+
+1.0
+
+1.0 1.0
+
+1.0
+
+1.0 1.0
+
+1.0
+
+11
+
+Ngoi ng c bn
+
+Ting Anh
+
+Ting Anh c bn 1
+
+24 BAE101
+
+2.0
+
+Basic English 1
+
+Ting Anh c bn 2
+
+25 BAE102
+
+2.0
+
+Basic English 2
+
+Ting Anh c bn 3
+
+26 BAE103
+
+2.0
+
+Basic English 3
+
+Ting Anh c bn 4
+
+27 BAE104
+
+2.0
+
+Basic English 4
+
+Ting Anh chuyên ngành công ngh thông tin 1
+
+28 EIT301
+
+2.0
+
+English for Information Technology 1
+
+Ting Anh chuyên ngành công ngh thông tin 2
+
+29 EIT302
+
+2.0
+
+English for Information Technology 2
+
+Ting Nht
+
+Ting Nht c bn 1
+
+30 BAJ101
+
+2.0
+
+Basic Japanese 1
+
+Ting Nht c bn 2
+
+31 BAJ102
+
+2.0
+
+Basic Japanese 2
+
+Ting Nht c bn 3
+
+32 BAJ103
+
+2.0
+
+Basic Japanese 3
+
+Ting Nht c bn 4
+
+33 BAJ104
+
+2.0
+
+Basic Japanese 4
+
+Ting Nht nâng cao 1
+
+34 INJ201
+
+2.0
+
+Intermediate Japanese 1
+
+Ting Nht nâng cao 2
+
+35 INJ202
+
+2.0
+
+Intermediate Japanese 2
+
+Ting Hàn
+
+Ting Hàn c bn 1
+
+36 BAK101
+
+2.0
+
+Basic Korean 1
+
+12
+
+BN THO
+
+12 12 2.0 2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0 2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0 2.0
+
+Ting Hàn c bn 2 37 BAK102
+Basic Korean 2 Ting Hàn c bn 3 38 BAK103 Basic Korean 3 Ting Hàn c bn 4 39 BAK104 Basic Korean 4 Ting Hàn nâng cao 1 40 INK301 Intermediate Korean 1 Ting Hàn nâng cao 2 41 INK302 Intermediate Korean 2 2. Kin thc giáo dc chuyên nghip
+2.1. Kin thc c s Nhp môn lp trình
+42 ITP101 Introduction to Programming Toán ri rc
+43 DCM201 Discrete Mathematics Cu trúc d liu và gii thut
+44 DSA201 Data structures and algorithms C s d liu
+45 DBS201 DataBase Systems H qun tr c s d liu
+46 DMS201 DataBase Management Systems Kin trúc máy tính và nguyên lý h iu hành
+47 CAO201 Computer Architecture and Operating System Principles Lp trình hng i tng
+48 OOP201 Object-Oriented Programming Công ngh phn mm
+49 SWE201 Software Engineering Lp trình JAVA c bn
+50 BJP201 Basic Java Programming
+
+BN THO
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+2.0
+
+114 68
+
+3.0 1.0 4.0 4.0
+
+3.0
+
+3.0
+
+3.0
+
+2.0 1.0 3.0
+
+3.0
+
+3.0
+
+3.0
+
+3.0
+
+2.0 1.0 3.0
+
+3.0
+
+3.0
+
+3.0
+
+3.0
+
+2.0 1.0 3.0 2.0 1.0 3.0 3.0 1.0 4.0
+
+3.0 3.0
+4.0
+
+13
+
+51 AJP201 52 CPN201 53 SAD201 54 AFI201 55 IAD201 56 WEB201 57 WEB202 58 AAD202 59 AIP202 60 ISD202 61 PPG201 T chn 62 PRW201 63 MOB201 64 MIP201 65 GAP201
+
+Lp trình Java nâng cao Advanced Java Programming Mng máy tính Computer Network Phân tích và thit k h thng System Analysis and Design Trí tu nhân to Artificial Intelligence Phát trin ng dng IoT IoT Application Development Lp trình Web Web Programming Công ngh WEB Web Technologies  án gii thut và lp trình Algorithm and Programming Project  án trí tu nhân to Artificial Intelligence Project  án phân tích và thit k h thng thông tin System Design and Analysis Project Lp trình Python Python Programming
+Lp trình trong Windows Programming in Windows Lp trình di ng Mobile Programming Vi x lý Microprocessing Lp trình trò chi trên máy tính Game Programming
+
+BN THO
+
+2.0 1.0 3.0
+
+2.0 1.0 3.0
+
+3.0
+
+3.0
+
+3.0
+
+3.0
+
+2.0 1.0 3.0
+
+2.0 1.0 3.0
+
+3.0
+
+3.0
+
+2.0 2.0
+
+2.0 2.0
+
+2.0 2.0
+
+1.0 2.0 3.0 9
+2.0 1.0 3.0
+
+2.0 1.0 3.0
+
+2.0 1.0 3.0
+
+2.0 1.0 3.0
+
+14
+
+3.0 3.0
+3.0 3.0
+3.0 3.0
+3.0 2.0
+2.0 2.0 3.0
+3.0 3.0
+3.0 3.0
+
+X lý nh 66 IMP201
+Image Processing Qun tr mng 67 NEM301 Network Management An toàn và bo mt thông tin 68 ISS301 Information Security and Safety Kho d liu và khai phá d liu 69 DWH301 DataWare House and Datamining 2.2. Kin thc chuyên ngành Blockchain nâng cao 70 ABC301 Advanced Blockchain T ng hóa quy trình 71 RPA301 Robotic Process Automation Kim th phn mm 72 SOT301 Software Testing Chuyên  công ngh mi 73 NTO301 New Technology Orientation Qun lý d án 74 PRM301 Project Management Linux & phn mm ngun m 75 LIO301 Linux & OpenSource  án chuyên ngành công ngh phn mm 76 SOP301 Software Project T chn Tng tác ngi- máy 77 HCI301 Human-Computer Interface Technology H c s d liu phân tán 78 DDS301 Distributed DataBase Systems Thng mi in t 79 ECO301 E-Commerce Lp trình mng 80 NEP301 Network Project
+
+BN THO
+
+2.0 1.0 3.0
+
+2.0 1.0 3.0
+
+3.0
+
+3.0
+
+2.0 1.0 3.0
+
+26
+
+3.0
+
+3.0
+
+3.0
+
+3.0
+
+3.0
+
+3.0
+
+2.0 1.0 3.0
+
+3.0
+
+3.0
+
+2.0 1.0 3.0
+
+2.0 2.0 6
+2.0 1.0 3.0
+
+3.0
+
+3.0
+
+3.0
+
+3.0
+
+2.0 1.0 3.0 15
+
+3.0 3.0
+3.0 3.0
+3.0 3.0
+3.0 3.0
+3.0 3.0
+2.0
+3.0 3.0 3.0 3.0
+
+81 CLC301 82 DSY301 2.3. Thc tp 83 INT202 84 PRT401 85 INT402 2.4. Tt nghip 86 FIP402
+
+in toán ám mây Cloud computing H phân tán Distributed Systems.
+Thc tp nhn thc Internship Thc tp ngh nghip Pratice Thc tp tt nghip Graduation Internship
+ án tt nghip Final Project
+Tng cng (Sum of Credits)
+
+TNG CNG
+(Sum of Credits)
+
+Không bao gm GDTC và GDQP-AN
+Not Including Physical Practice and Education of National Defence and Security Courses
+Giáo dc th cht
+Physical Practice Courses
+
+Giáo dc Quc phòng - An ninh
+Education of National Defence and Security Courses
+
+TNG S HC PHN
+(Total of Courses)
+
+BN THO
+
+2.0 1.0 3.0
+
+3.0
+
+2.0 1.0 3.0 8
+2.0 2.0
+
+3.0 2.0
+
+2.0 2.0
+
+2.0
+
+4.0 4.0
+
+4.0
+
+12
+
+12.
+
+12.0 12.0
+
+0
+
+162 16 20 22 19 19 17 13 9 12 0
+
+158 15 19 21 18 19 17 13 9 12 0
+
+4 1111000000 8 8000000000
+
+7998775310
+
+16
+
+11. Hng dn thc hin chng trình (Guide to Information)
+
+12. Duyt chng trình (Endorsement)
+Thông qua Trng Khoa Công ngh Thông tin Dean
+
+à Nng, ngày.......tháng 06 nm 2024 Danang, June......, 2024
+Trng B môn Công ngh Thông tin Head of Department
+
+Trn Mnh Huy
+
+Nguyn Tt Phú Cng
+
+Duyt ban hành
+
+Chng trình ào to này  thc hin
+
+Approval issued this training program to perform
+
+à Nng, ngày 25 tháng 06 nm 2024
+
+Danang, June 25, 2024
+
+HIU TRNG President
+
+(ã ký) (Signed)
+
+TS.KTS PHM ANH TUN
+
+BN THO
+
+17
+
+
