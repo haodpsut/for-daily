@@ -684,6 +684,235 @@ Môn thực hành 100% lab. Trang bị "bộ công cụ" mà mọi lập trình 
 
 ---
 
+### 11.6 Deep Learning & Neural Networks (Track A — AI & Data Science)
+**Mã môn đề xuất:** DPL601 | **Số TC:** 3 | **Học kỳ:** HK6 | **Tiên quyết:** Machine Learning (MLA501)
+
+**Mục tiêu:**  
+Xây dựng, huấn luyện và triển khai mô hình Deep Learning cho các bài toán thực tế: phân loại ảnh, nhận diện văn bản, chuỗi thời gian, và sinh nội dung. Framework chính: **PyTorch** (chuyển sang TensorFlow ở phần triển khai). Tỉ lệ thực hành/lý thuyết: **70/30**.
+
+**Chuẩn đầu ra (CLOs):**
+| CLO | Mô tả | Bloom |
+|-----|-------|-------|
+| CLO1 | Giải thích cơ chế hoạt động của neural network (forward pass, backpropagation, gradient descent) | Hiểu (L2) |
+| CLO2 | Thiết kế và huấn luyện CNN cho bài toán Computer Vision | Áp dụng (L3) |
+| CLO3 | Thiết kế và huấn luyện RNN/Transformer cho dữ liệu chuỗi (text, time-series) | Áp dụng (L3) |
+| CLO4 | Sử dụng Transfer Learning và Fine-tuning pre-trained models (ResNet, BERT, GPT) | Phân tích (L4) |
+| CLO5 | Đánh giá, debug và tối ưu mô hình DL (overfitting, learning rate, regularization) | Đánh giá (L5) |
+| CLO6 | Triển khai mô hình DL qua REST API hoặc ứng dụng demo | Sáng tạo (L6) |
+
+**PLO mapping:** PLO7 (lập trình Python), PLO9 (toán ứng dụng), **PLO10** (AI & Data — chính)
+
+**Nội dung chi tiết theo tuần:**
+
+| Tuần | Chủ đề lý thuyết | Lab thực hành (Jupyter/Colab) |
+|------|-------------------|-------------------------------|
+| 1 | Neural Network cơ bản: Perceptron, Activation functions (ReLU, Sigmoid, Softmax), Loss functions | **Lab 1:** Xây dựng NN từ đầu với NumPy (không dùng framework) — XOR problem |
+| 2 | Backpropagation chi tiết: Chain rule, Computational graph, Gradient flow | **Lab 2:** Implement backprop thủ công, so sánh với PyTorch autograd |
+| 3 | PyTorch Fundamentals: Tensor, autograd, nn.Module, DataLoader, transforms | **Lab 3:** Phân loại MNIST (98%+ accuracy) — first full PyTorch pipeline |
+| 4 | CNN phần 1: Convolution, Pooling, Feature maps, Receptive field | **Lab 4:** CNN cho CIFAR-10 — thiết kế kiến trúc từ đầu |
+| 5 | CNN phần 2: Kiến trúc kinh điển (LeNet → AlexNet → VGG → ResNet). Batch Normalization, Dropout | **Lab 5:** So sánh VGG vs ResNet trên dataset thực (hoa, động vật VN) |
+| 6 | Transfer Learning & Fine-tuning: Pre-trained models (ImageNet), Feature extraction vs fine-tuning | **Lab 6:** Fine-tune ResNet50 cho phân loại bệnh lá cây (Plant Disease dataset) |
+| 7 | Object Detection giới thiệu: YOLO concept, bounding box, IoU, mAP | **Lab 7:** Sử dụng YOLOv8 (Ultralytics) để detect vật thể trong ảnh/video |
+| 8 | **GIỮA KỲ — Mini Project (nhóm 2):** Xây dựng hệ thống CV hoàn chỉnh. Đề tài gợi ý: nhận diện biển số xe VN, phân loại rác thải, nhận diện khuôn mặt có/không khẩu trang | **Demo 10 phút/nhóm + Jupyter notebook + báo cáo 3 trang** |
+| 9 | RNN & LSTM: Sequence modeling, Vanishing gradient, Gates mechanism | **Lab 8:** Dự đoán giá cổ phiếu VN-Index bằng LSTM |
+| 10 | Attention Mechanism & Transformer: Self-attention, Multi-head attention, Positional encoding | **Lab 9:** Sentiment analysis tiếng Việt với Transformer encoder (từ đầu) |
+| 11 | NLP với Pre-trained Models: BERT, GPT, Hugging Face ecosystem | **Lab 10:** Fine-tune PhoBERT cho phân loại tin tức tiếng Việt |
+| 12 | Generative Models: VAE, GAN cơ bản, Diffusion model concept | **Lab 11:** Train DCGAN sinh ảnh chữ số viết tay |
+| 13 | LLM Application Development: Prompt engineering, RAG, LangChain/LlamaIndex cơ bản | **Lab 12:** Xây dựng chatbot hỏi đáp tài liệu (PDF Q&A) với RAG |
+| 14 | Model Deployment: ONNX export, TorchServe, FastAPI + Docker, GPU vs CPU inference | **Lab 13:** Deploy model CV lên FastAPI + Dockerize, test với Postman |
+| 15 | **CUỐI KỲ — Thi thực hành (cá nhân, 3 giờ):** Nhận dataset mới, xây dựng full DL pipeline (EDA → Model → Training → Evaluation → Inference script). Được dùng tài liệu và internet | **Nộp: Jupyter notebook + trained model + inference demo** |
+
+**Phương pháp giảng dạy:**
+- Flipped classroom: SV xem video bài giảng trước (3Blue1Brown, Andrej Karpathy), lên lớp thực hành
+- Google Colab (T4 GPU miễn phí) — không cần GPU server của trường
+- Mỗi lab có starter code template, SV hoàn thiện phần TODO
+- Code review đồng đẳng mỗi 2 tuần (SV review notebook của bạn)
+
+**Đánh giá:**
+
+| Thành phần | Tỉ lệ | Chi tiết |
+|-----------|-------|---------|
+| Lab hàng tuần (13 labs) | 25% | GitHub commits, notebook chạy được, kết quả hợp lý |
+| Mini Project giữa kỳ | 30% | Demo + code quality + báo cáo + accuracy/F1 |
+| Thi thực hành cuối kỳ | 35% | Pipeline hoàn chỉnh, metric đạt threshold |
+| Tham gia & code review | 10% | Điểm danh, review peer notebook |
+
+**Tài liệu chính:**
+1. Ian Goodfellow et al. — *Deep Learning* (MIT Press) — lý thuyết
+2. Aurélien Géron — *Hands-On ML with scikit-learn, Keras & TensorFlow* 3rd ed. — thực hành
+3. fast.ai "Practical Deep Learning for Coders" — course structure reference
+4. Andrej Karpathy — "Neural Networks: Zero to Hero" (YouTube series)
+5. Hugging Face Course — NLP & Transformers (free)
+
+**Tài liệu phụ:**
+- 3Blue1Brown "Neural Networks" series
+- MIT 6.S191 "Introduction to Deep Learning"
+- Papers with Code (paperswithcode.com) — benchmark & implementations
+
+**Yêu cầu hạ tầng:**
+- Google Colab (miễn phí T4 GPU) — đủ cho 90% bài lab
+- Nếu có: 1 GPU server (RTX 3090/4090) cho đồ án lớn cuối kỳ
+- GitHub Classroom cho quản lý bài nộp
+
+---
+
+### 11.7 Node.js & Express — Backend Development (Track B — Web & Mobile)
+**Mã môn đề xuất:** NJS601 | **Số TC:** 3 | **Học kỳ:** HK6 | **Tiên quyết:** JavaScript nâng cao & TypeScript (JST501)
+
+**Mục tiêu:**  
+Xây dựng RESTful API và backend hoàn chỉnh với Node.js + Express. SV có thể phát triển server-side cho ứng dụng web/mobile thực tế, kết nối database, xác thực người dùng, và deploy lên cloud. Tỉ lệ thực hành/lý thuyết: **80/20**.
+
+**Chuẩn đầu ra (CLOs):**
+| CLO | Mô tả | Bloom |
+|-----|-------|-------|
+| CLO1 | Giải thích cơ chế hoạt động của Node.js (Event Loop, Non-blocking I/O, V8 engine) | Hiểu (L2) |
+| CLO2 | Xây dựng RESTful API với Express: routing, middleware, error handling, validation | Áp dụng (L3) |
+| CLO3 | Kết nối và thao tác với PostgreSQL (Prisma ORM) và MongoDB (Mongoose) | Áp dụng (L3) |
+| CLO4 | Triển khai Authentication/Authorization (JWT, OAuth 2.0, session) | Phân tích (L4) |
+| CLO5 | Viết unit test và integration test cho API (Jest + Supertest) | Đánh giá (L5) |
+| CLO6 | Thiết kế và triển khai hệ thống backend hoàn chỉnh cho ứng dụng thực tế | Sáng tạo (L6) |
+
+**PLO mapping:** PLO7 (lập trình), PLO8 (triển khai sản phẩm), **PLO11** (Web & Mobile — chính)
+
+**Nội dung chi tiết theo tuần:**
+
+| Tuần | Chủ đề lý thuyết | Lab thực hành |
+|------|-------------------|--------------|
+| 1 | Node.js Fundamentals: V8, Event Loop, Modules (CommonJS vs ESM), npm/pnpm | **Lab 1:** CLI tool đọc file CSV → phân tích → xuất JSON. Dùng `fs`, `path`, `process.argv` |
+| 2 | HTTP từ gốc: `http.createServer`, request/response cycle, status codes, headers | **Lab 2:** HTTP server thuần (không Express) — serve static files + handle POST |
+| 3 | Express cơ bản: App, Router, Middleware chain, `req.params/query/body`, `res.json/send` | **Lab 3:** API CRUD cho "Quản lý sinh viên" — in-memory array, test bằng Thunder Client/Postman |
+| 4 | Middleware deep dive: Custom middleware (logger, auth check), error handler, `express.static`, CORS | **Lab 4:** Thêm logging, rate limiting, CORS, error handling vào API tuần 3 |
+| 5 | Input Validation (Zod/Joi), File upload (Multer), Environment variables (dotenv) | **Lab 5:** API upload avatar + validate form data, `.env` config |
+| 6 | PostgreSQL + Prisma ORM: Schema design, migrations, CRUD operations, relations (1:N, M:N) | **Lab 6:** Refactor "Quản lý SV" sang PostgreSQL — schema: students, courses, enrollments |
+| 7 | MongoDB + Mongoose: Document model, Schema/Model, populate, aggregation pipeline | **Lab 7:** API "Blog" với MongoDB — posts, comments, tags, text search |
+| 8 | **GIỮA KỲ — Mini Project (nhóm 2):** API hoàn chỉnh cho 1 trong 3 đề tài: Quản lý thư viện / E-commerce nhỏ / Quản lý task (Trello clone backend) | **Demo API bằng Postman collection + database seeded + README** |
+| 9 | Authentication phần 1: Password hashing (bcrypt), JWT (access + refresh token), middleware `protect` | **Lab 8:** Thêm register/login/logout + protected routes vào project giữa kỳ |
+| 10 | Authentication phần 2: OAuth 2.0 (Google login), Role-based access (admin/user), Session vs Token | **Lab 9:** Google OAuth login + role-based middleware (admin quản lý, user xem) |
+| 11 | Real-time: WebSocket với Socket.io — events, rooms, namespaces | **Lab 10:** Chat room real-time (join room, send message, typing indicator, online users) |
+| 12 | Testing: Unit test (Jest), Integration test (Supertest), Test database, Mocking | **Lab 11:** Viết test suite cho API giữa kỳ — coverage ≥ 70% |
+| 13 | Performance & Security: Helmet, rate limiting, SQL injection prevention, caching (Redis cơ bản), pagination, compression | **Lab 12:** Audit & hardening API — thêm helmet, rate limit, pagination, gzip |
+| 14 | Deployment: Dockerize Node.js app, docker-compose (app + postgres + redis), Deploy lên Railway/Render, Environment management | **Lab 13:** Dockerize + deploy project giữa kỳ lên Railway (free tier) |
+| 15 | **CUỐI KỲ — Thi thực hành (cá nhân, 3 giờ):** Nhận đề bài API mới (5-6 endpoints + auth + database), xây dựng từ đầu, deploy lên cloud | **Nộp: GitHub repo + Postman collection + live URL** |
+
+**Phương pháp giảng dạy:**
+- Live coding: GV code trước lớp, SV code theo và mở rộng
+- Mỗi lab có starter template trên GitHub Classroom
+- Code review: SV review PR của nhau mỗi 2 tuần (tập thói quen industry)
+- Guest lecture tuần 13 hoặc 14: Mời developer từ công ty Đà Nẵng (FPT Software, Axon Active...) chia sẻ về backend thực tế
+
+**Đánh giá:**
+
+| Thành phần | Tỉ lệ | Chi tiết |
+|-----------|-------|---------|
+| Lab hàng tuần (13 labs) | 25% | GitHub commits, API hoạt động, code clean |
+| Mini Project giữa kỳ | 30% | API design + database schema + demo + README |
+| Thi thực hành cuối kỳ | 35% | API hoàn chỉnh, deploy thành công, test pass |
+| Code review & tham gia | 10% | Review chất lượng, điểm danh |
+
+**Tài liệu chính:**
+1. Node.js Official Docs (nodejs.org/docs)
+2. Express.js Guide (expressjs.com/guide)
+3. Prisma Documentation (prisma.io/docs)
+4. *Node.js Design Patterns* — Mario Casciaro & Luciano Mammino (3rd ed.)
+
+**Tài liệu phụ:**
+- The Odin Project — NodeJS Path (free)
+- Fireship.io — Node.js & Express tutorials
+- Hussein Nasser — "Fundamentals of Backend Engineering" (YouTube)
+
+**Yêu cầu hạ tầng:**
+- Node.js 20 LTS + VS Code + Thunder Client/Postman
+- PostgreSQL 16 (local hoặc Neon.tech free tier)
+- MongoDB Atlas (free tier 512MB)
+- Railway/Render account (free tier cho deploy)
+
+---
+
+### 11.8 IoT Nâng cao — Cloud IoT & Edge Computing (Track C — Network & IoT)
+**Mã môn đề xuất:** IOT601 | **Số TC:** 3 | **Học kỳ:** HK6 | **Tiên quyết:** Lập trình nhúng (EMB501), Mạng máy tính (CPN201)
+
+**Mục tiêu:**  
+Phát triển hệ thống IoT hoàn chỉnh từ cảm biến (edge) đến cloud platform: thu thập dữ liệu, truyền dẫn qua giao thức IoT, lưu trữ time-series, xử lý real-time, và hiển thị dashboard. Tích hợp kiến thức viễn thông (truyền thông không dây) + embedded (firmware) + cloud (backend). Tỉ lệ thực hành/lý thuyết: **70/30**.
+
+**Chuẩn đầu ra (CLOs):**
+| CLO | Mô tả | Bloom |
+|-----|-------|-------|
+| CLO1 | Phân tích kiến trúc hệ thống IoT 3 tầng (Edge → Network → Cloud) và chọn giải pháp phù hợp | Phân tích (L4) |
+| CLO2 | Cấu hình và sử dụng giao thức MQTT, CoAP, HTTP cho truyền dữ liệu IoT | Áp dụng (L3) |
+| CLO3 | Thiết kế và triển khai IoT Gateway (Raspberry Pi / ESP32 gateway) | Áp dụng (L3) |
+| CLO4 | Lưu trữ dữ liệu cảm biến với Time-Series Database (InfluxDB) và trực quan hóa (Grafana) | Áp dụng (L3) |
+| CLO5 | Phát triển ứng dụng IoT trên Cloud Platform (AWS IoT Core hoặc ThingsBoard) | Đánh giá (L5) |
+| CLO6 | Xây dựng hệ thống IoT end-to-end hoàn chỉnh cho bài toán thực tế | Sáng tạo (L6) |
+
+**PLO mapping:** PLO6 (nền tảng kỹ thuật số), PLO8 (triển khai), **PLO12** (Network & IoT — chính)
+
+**Nội dung chi tiết theo tuần:**
+
+| Tuần | Chủ đề lý thuyết | Lab thực hành (phần cứng + phần mềm) |
+|------|-------------------|--------------------------------------|
+| 1 | Tổng quan IoT 2025: Kiến trúc 3 tầng (Edge–Fog–Cloud), IoT Protocols stack, Thị trường IoT VN (smart city Đà Nẵng, nông nghiệp 4.0) | **Lab 1:** Vẽ kiến trúc hệ thống IoT cho đề tài tự chọn (smart farm / smart home / air quality). Cài đặt môi trường: Mosquitto, Node-RED, InfluxDB |
+| 2 | MQTT Deep Dive: Broker (Mosquitto/HiveMQ), Topic hierarchy, QoS (0/1/2), Retain, Last Will, Wildcard (+/#) | **Lab 2:** ESP32 publish nhiệt độ/độ ẩm (DHT22) lên Mosquitto broker. Subscriber trên PC hiển thị real-time. Test QoS 0 vs 1 vs 2 (đo packet loss) |
+| 3 | CoAP & HTTP cho IoT: So sánh MQTT vs CoAP vs HTTP. Khi nào dùng giao thức nào? Payload format: JSON vs CBOR vs Protobuf | **Lab 3:** Cùng 1 ESP32 gửi data qua 3 giao thức khác nhau. Đo latency, bandwidth, battery consumption. Viết báo cáo so sánh |
+| 4 | IoT Gateway: Raspberry Pi / ESP32 Gateway. Edge processing: lọc dữ liệu, aggregation, local alerting trước khi gửi cloud. Protocol bridging (BLE → MQTT) | **Lab 4:** Raspberry Pi làm gateway — nhận BLE data từ 2-3 ESP32 sensor nodes → aggregate → publish MQTT lên cloud |
+| 5 | Node-RED: Visual programming cho IoT. Flow-based processing: MQTT in → function → database → dashboard → alert | **Lab 5:** Xây dựng flow Node-RED: nhận data MQTT → lưu InfluxDB → trigger email alert khi nhiệt độ > 35°C → hiển thị dashboard |
+| 6 | Time-Series Database: InfluxDB (concepts: measurement, tags, fields, retention policy). Query language (Flux/InfluxQL). So sánh InfluxDB vs TimescaleDB | **Lab 6:** Thiết kế schema InfluxDB cho hệ thống giám sát 10 phòng (temp, humidity, CO2, light). Query aggregation (hourly avg, daily max). Retention policy 30 ngày |
+| 7 | Data Visualization: Grafana dashboard — panels, variables, alerts, annotations. Dashboard design principles cho IoT monitoring | **Lab 7:** Tạo Grafana dashboard hoàn chỉnh: 4 panels (gauge, time-series, heatmap, alert list) cho dữ liệu phòng lab |
+| 8 | **GIỮA KỲ — Mini Project (nhóm 2-3):** Hệ thống IoT monitoring 3 tầng hoàn chỉnh: ESP32 sensors → Gateway (RPi/ESP32) → MQTT broker → InfluxDB → Grafana dashboard. Đề tài: giám sát phòng server / nhà kính / chất lượng không khí | **Demo live: sensor hoạt động → data hiển thị real-time trên Grafana. Nộp: code + kiến trúc + báo cáo** |
+| 9 | Cloud IoT Platform: AWS IoT Core (Thing, Certificate, Policy, Shadow, Rules Engine) hoặc ThingsBoard (open-source). Device provisioning, OTA update concept | **Lab 8:** Kết nối ESP32 với AWS IoT Core (TLS certificate). Device Shadow — điều khiển LED từ cloud. Rules Engine → lưu DynamoDB |
+| 10 | Xử lý dữ liệu IoT: Stream processing (AWS IoT Rules → Lambda / Node-RED). Anomaly detection đơn giản (Z-score, moving average). Predictive maintenance concept | **Lab 9:** Lambda function phát hiện anomaly (nhiệt độ bất thường) → gửi SNS notification. Dashboard cập nhật trạng thái |
+| 11 | IoT Security: TLS/DTLS, X.509 certificates, Device authentication, Firmware signing, Common vulnerabilities (OWASP IoT Top 10) | **Lab 10:** Audit bảo mật hệ thống IoT đã xây: enable TLS cho MQTT, certificate pinning trên ESP32, scan vulnerability với nmap |
+| 12 | LoRaWAN & LPWAN: Long-range IoT (LoRa modulation, LoRaWAN architecture: End device → Gateway → Network Server → App Server). So sánh LoRa vs NB-IoT vs Sigfox | **Lab 11:** ESP32 + LoRa SX1278 — gửi data điểm-điểm 500m. Nếu có gateway LoRaWAN: kết nối The Things Network (TTN) |
+| 13 | Digital Twin & IoT Analytics: Mô hình hóa thiết bị ảo, historical analysis, capacity planning. Giới thiệu Azure Digital Twins / open-source alternative | **Lab 12:** Xây dựng Digital Twin đơn giản: Node.js app nhận MQTT data → mô phỏng trạng thái thiết bị trên web dashboard (3D hoặc 2D floorplan) |
+| 14 | Edge AI cho IoT: TensorFlow Lite Micro / Edge Impulse. Chạy inference trên ESP32/RPi — nhận diện âm thanh, phát hiện chuyển động bất thường | **Lab 13:** Deploy model classification (âm thanh: tiếng vỗ tay / tiếng nói / tiếng chuông) lên ESP32 bằng Edge Impulse. Khi detect event → gửi MQTT alert |
+| 15 | **CUỐI KỲ — Thi thực hành (nhóm 2, 4 giờ):** Nhận đề bài IoT system mới (phần cứng được cung cấp sẵn). Thiết kế kiến trúc → firmware → gateway logic → cloud storage → dashboard → alert. Toàn bộ phải chạy live | **Nộp: demo live + kiến trúc diagram + code (GitHub) + video 3 phút** |
+
+**Phương pháp giảng dạy:**
+- Mỗi SV/nhóm được cấp **IoT Kit** đầu khóa (trả lại cuối kỳ): 2× ESP32 DevKit, 1× DHT22, 1× BME280, 1× OLED 0.96", 1× relay module, breadboard, jumper wires
+- Raspberry Pi 4 dùng chung trong lab (5 bộ / lớp 30 SV)
+- LoRa module SX1278 dùng chung (tuần 12)
+- Cloud: AWS Educate account (free credits) hoặc ThingsBoard Community Edition (self-hosted)
+- GV demo → SV làm theo → SV mở rộng thêm tính năng
+
+**Đánh giá:**
+
+| Thành phần | Tỉ lệ | Chi tiết |
+|-----------|-------|---------|
+| Lab hàng tuần (13 labs) | 25% | Firmware hoạt động, data đúng, code trên GitHub |
+| Mini Project giữa kỳ | 30% | System chạy live, kiến trúc rõ ràng, dashboard đẹp |
+| Thi thực hành cuối kỳ | 35% | Hệ thống end-to-end hoàn chỉnh, demo live thành công |
+| Báo cáo kỹ thuật & review | 10% | Tài liệu kiến trúc, peer review |
+
+**Tài liệu chính:**
+1. *Hands-On Internet of Things with MQTT* — Tim Pulver
+2. *Designing the Internet of Things* — Adrian McEwen & Hakim Cassimally
+3. ESP-IDF Programming Guide (docs.espressif.com)
+4. AWS IoT Documentation (docs.aws.amazon.com/iot)
+5. InfluxDB University (university.influxdata.com — free courses)
+
+**Tài liệu phụ:**
+- HiveMQ MQTT Essentials (hivemq.com/mqtt-essentials)
+- Node-RED Cookbook (cookbook.nodered.org)
+- Edge Impulse Documentation (docs.edgeimpulse.com)
+- Andreas Spiess YouTube channel — "The Guy with the Swiss Accent" (IoT practical)
+
+**Yêu cầu hạ tầng:**
+- IoT Kit cho mỗi nhóm (chi phí ~500k VNĐ/kit, tái sử dụng nhiều khóa)
+- Raspberry Pi 4 (5 bộ/lớp): ~2.5 triệu VNĐ/bộ
+- Mosquitto broker (chạy trên server khoa hoặc cloud VM miễn phí)
+- InfluxDB + Grafana (Docker trên server khoa hoặc InfluxDB Cloud free tier)
+- AWS IoT: AWS Educate account (miễn phí cho giáo dục)
+
+**Chi phí ước tính cho 1 lớp 30 SV:**
+| Hạng mục | Số lượng | Đơn giá | Thành tiền |
+|----------|---------|---------|-----------|
+| IoT Kit (ESP32 + sensors) | 15 bộ (nhóm 2) | 500k | 7.5 triệu |
+| Raspberry Pi 4 (4GB) | 5 bộ | 2.5 triệu | 12.5 triệu |
+| LoRa module SX1278 | 10 cái | 150k | 1.5 triệu |
+| Breadboard, dây, linh kiện phụ | — | — | 3 triệu |
+| **Tổng (tái sử dụng 3–4 khóa)** | | | **~24.5 triệu** |
+
+---
+
 ## 12. KẾ HOẠCH GIẢNG DẠY THEO HỌC KỲ (Đề xuất)
 
 ```
@@ -743,5 +972,8 @@ HK8 (Năm 4):
 
 ---
 
-*Cập nhật: 2026-04-10 — Phiên bản 2.0: Đã bổ sung PLO mới, ma trận course-PLO, 5 đề cương môn mới, kế hoạch giảng dạy theo học kỳ, và so sánh với các chương trình tham chiếu.*  
-*Phiên bản tiếp theo: Đề cương chi tiết cho Deep Learning, Node.js, IoT nâng cao + bộ câu hỏi đánh giá năng lực GV.*
+*Cập nhật: 2026-04-10 — Phiên bản 3.0*  
+*v1.0: Phân tích CTDT 2024, đề xuất 3 track, lộ trình triển khai*  
+*v2.0: PLO mới (12 PLO), ma trận course-PLO, 5 đề cương (CT, ML, React, Embedded, DevTools)*  
+*v3.0: 3 đề cương nâng cao — Deep Learning (DPL601), Node.js/Express (NJS601), IoT nâng cao (IOT601)*  
+*Tổng: 8 đề cương chi tiết cho 8 môn mới. Tiếp theo: bộ câu hỏi đánh giá năng lực GV + mapping PLO theo mẫu MOET.*
