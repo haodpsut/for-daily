@@ -1,0 +1,87 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{hyperref}
+
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+% Định dạng tiêu đề
+\titleformat{\section}{\color{blue!70!black}\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+
+\title{\textbf{ĐỀ XUẤT KỸ THUẬT: HỆ THỐNG TỐI ƯU HÓA AGRO-LOGISTICS THÔNG MINH (SALOS)}}
+\author{Nhóm nghiên cứu DUT \\ \textit{Dành cho Nagoya Seika Co., Ltd.}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Phân tích bài toán (Problem Diagnosis)}
+Hệ thống logistics hiện tại của Nagoya Seika đang chịu tổn thất 3.5\% biên lợi nhuận do các điểm nghẽn hệ thống. Chúng tôi xác định đây là một "Hiệu ứng Domino":
+\begin{itemize}
+    \item \textbf{Sai lệch dữ liệu đầu vào:} Việc làm mịn dữ liệu thời tiết theo tháng đã triệt tiêu các tín hiệu sinh học quan trọng (sốc nhiệt, sương giá), dẫn đến dự báo kích thước quả sai lệch.
+    \item \textbf{Logistics thụ động:} Việc không dự báo được kích thước quả (Size mix) khiến kế hoạch đóng gói bị động, gây ra hiện tượng "chở không khí" (lãng phí không gian xe tải).
+    \item \textbf{Chi phí vận hành:} Việc thiếu kế hoạch đóng gói chính xác buộc doanh nghiệp phải thuê xe gấp (spot rates) với giá cao.
+\end{itemize}
+
+\section{Mô hình hóa hệ thống (System Modeling)}
+Chúng tôi mô hình hóa bài toán dưới dạng \textbf{Game Markov đa tác tử (Multi-Agent Markov Game)}, bao gồm:
+\begin{enumerate}
+    \item \textbf{Tác tử Siêu thị (Platform):} Điều phối giá cả và đơn hàng.
+    \item \textbf{Tác tử Nông dân (Supplier):} Quyết định thu hoạch và phân loại sản phẩm.
+    \item \textbf{Tác tử Người mua (Consumer):} Mô phỏng hành vi tiêu dùng dựa trên giá và tính mùa vụ.
+\end{enumerate}
+
+\section{Lộ trình triển khai kỹ thuật}
+
+\subsection{Giai đoạn 1: Chuẩn hóa dữ liệu (Data Engineering)}
+\begin{itemize}
+    \item Chuyển đổi dữ liệu từ tháng sang \textbf{Daily Granularity} (Dữ liệu ngày).
+    \item Xây dựng chỉ số sinh học (\textbf{Bio-Index}): Tính toán GDD (Growing Degree Days) để AI hiểu được vòng đời cây trồng.
+\end{itemize}
+
+\subsection{Giai đoạn 2: Xây dựng môi trường giả lập (Digital Twin)}
+Xây dựng một "Thị trường ảo" (Market Simulator) nơi các tác tử tương tác với nhau. Môi trường này sẽ phản hồi lại các quyết định giá cả và cung ứng, cho phép AI học từ sai lầm trong môi trường giả lập trước khi vận hành thực tế.
+
+\subsection{Giai đoạn 3: Hệ thống MARL (Multi-Agent RL)}
+Sử dụng kiến trúc \textbf{CTDE (Centralized Training, Decentralized Execution)}:
+\begin{itemize}
+    \item \textbf{Huấn luyện tập trung:} Một Critic toàn cục sẽ nhìn thấy toàn bộ trạng thái thị trường để tối ưu hóa phối hợp.
+    \item \textbf{Thực thi phi tập trung:} Các xe tải và siêu thị chỉ sử dụng dữ liệu cục bộ để đưa ra quyết định nhanh trong thời gian thực.
+    \item \textbf{Thuật toán:} Sử dụng \textbf{QMIX} hoặc \textbf{MAPPO} để xử lý sự biến động của thị trường.
+\end{itemize}
+
+\subsection{Giai đoạn 4: Tối ưu hóa Logictics (3D Bin Packing)}
+Tích hợp thuật toán \textbf{3D-BPP} để:
+\begin{itemize}
+    \item Tự động lên kế hoạch xếp hàng dựa trên dự báo kích thước quả.
+    \item Tăng tỷ lệ lấp đầy xe (Sekisai Kouritsu), trực tiếp giải quyết vấn đề "2024 Logistics Cliff".
+\end{itemize}
+
+\section{Hàm mục tiêu (Reward Functions)}
+Chúng tôi thiết kế Reward để cân bằng lợi nhuận và sự ổn định:
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Tác tử} & \textbf{Hàm mục tiêu} \\
+\midrule
+Siêu thị & Lợi nhuận + Giảm Food Loss - Phạt biến động giá \\
+Nông dân & Doanh thu bán hàng - Phí lưu kho \\
+Người mua & Mức độ hài lòng (Giá, Độ tươi) - Rủi ro bỏ lỡ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Kết luận}
+Bằng cách chuyển đổi từ dự báo thống kê đơn thuần sang hệ thống **AI tự hành dựa trên dữ liệu sinh học hàng ngày**, chúng tôi cam kết thu hẹp khoảng cách lợi nhuận từ 4.5\% lên 8.0\%. Đây là bước đi chiến lược để biến Nagoya Seika thành doanh nghiệp dẫn đầu về công nghệ Agro-Logistics tại Nhật Bản.
+
+\end{document}

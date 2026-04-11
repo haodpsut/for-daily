@@ -1,0 +1,75 @@
+Đây là bản thiết kế hệ thống chi tiết cho dự án **SALOS** (Smart Agro-Logistics Optimization System). Bản thảo này được trình bày bằng tiếng Việt, tập trung vào tư duy giải quyết vấn đề (Problem-Solving) và lộ trình thực thi kỹ thuật.
+
+Bạn có thể dùng cấu trúc này để xây dựng file LaTeX hoàn chỉnh.
+
+---
+
+# TÀI LIỆU THIẾT KẾ HỆ THỐNG: HỆ THỐNG TỐI ƯU HÓA AGRO-LOGISTICS THÔNG MINH (SALOS)
+
+## 1. Phân tích bài toán (Problem Diagnosis)
+Hệ thống không chỉ gặp khó khăn ở khâu vận chuyển, mà là một **"Hiệu ứng Domino"** từ dữ liệu đầu vào.
+*   **Vấn đề cốt lõi:** Sai lệch trong dự báo sinh học (kích thước trái cây) dẫn đến lập kế hoạch đóng gói sai, từ đó gây lãng phí không gian xe tải ("chở không khí").
+*   **Sự thiếu hụt dữ liệu:** Việc làm mịn (smoothing) dữ liệu thời tiết theo tháng đã xóa sổ các tín hiệu sinh học quan trọng (sốc nhiệt, sương giá), làm mất đi độ chính xác trong dự báo kích thước quả (Size 8H vs 22H).
+
+## 2. Lộ trình triển khai kỹ thuật (Step-by-Step Implementation)
+
+Để giải quyết bài toán này bằng MARL, chúng ta cần triển khai 4 giai đoạn chính:
+
+### Giai đoạn 1: Chuẩn hóa dữ liệu và Feature Engineering
+Đây là nền tảng để AI có thể "hiểu" được sinh học của cây trồng.
+*   **Bước 1.1: Chuyển đổi dữ liệu chuỗi thời gian (Time-series):** Chuyển từ dữ liệu tháng sang **Daily Granularity** (Dữ liệu ngày).
+*   **Bước 1.2: Xây dựng chỉ số Bio-Index:** Tính toán **GDD (Growing Degree Days - Nhiệt độ tích lũy)** và **Accumulated Solar Radiation**. Đây là "đầu vào sinh học" để mô hình hiểu tại sao trái cây lại lớn hoặc nhỏ trong năm nay.
+*   **Bước 1.3: Mã hóa tiêu chuẩn đóng gói (Packaging Constraints):** Xây dựng bộ quy tắc kích thước thùng (Box dimensions) theo tiêu chuẩn JA Zennoh.
+
+### Giai đoạn 2: Xây dựng Hệ thống Môi trường Giả lập (Digital Twin)
+Trước khi áp dụng thuật toán, ta cần một "sân chơi" để Agent học:
+*   **Mô phỏng động lực học:** Xây dựng môi trường giả lập (Market Simulator) phản hồi lại các quyết định giá cả và số lượng cung ứng.
+*   **Mô hình hóa khách hàng (Customer Model):** Dùng dữ liệu lịch sử để tạo ra các Agent người mua. Nếu giá cao quá hoặc hàng quá cũ, Agent này sẽ "không mua" (tạo ra Reward âm cho siêu thị).
+
+### Giai đoạn 3: Phát triển MARL với kiến trúc CTDE
+Đây là "bộ não" của hệ thống, cho phép các bên phối hợp với nhau:
+*   **Centralized Training (Huấn luyện tập trung):** Cho phép Agent siêu thị nhìn thấy "tổng thể" (nhu cầu dự báo + tồn kho của nông dân) để đưa ra chiến lược giá tối ưu.
+*   **Decentralized Execution (Thực thi phi tập trung):** Mỗi Agent (xe tải, siêu thị) chỉ dựa vào dữ liệu cục bộ để ra quyết định nhanh trong thời gian thực.
+*   **Thuật toán:** Sử dụng **QMIX** hoặc **MAPPO** để đảm bảo sự ổn định của hệ thống khi nhiều bên cùng tham gia điều chỉnh giá và cung ứng.
+
+### Giai đoạn 4: Tối ưu hóa Logictics (3D Bin Packing)
+Kết nối dự báo với hành động thực tế:
+*   **Thuật toán 3D-BPP:** Sử dụng các thuật toán xếp hàng hóa 3D để tính toán chính xác số lượng thùng hàng có thể xếp vừa lên một xe tải.
+*   **Tích hợp:** Nếu dự báo cho thấy ngày mai thu hoạch nhiều trái lớn (Size 8H), hệ thống tự động đặt lệnh chuẩn bị thùng size tương ứng và lập lộ trình gom hàng để tối ưu hóa tải trọng (Sekisai Kouritsu).
+
+---
+
+## 3. Hàm mục tiêu (Reward Engineering) - Chi tiết hóa
+Để đảm bảo tính nhân văn và hiệu quả kinh tế kiểu Nhật, ta định nghĩa:
+
+1.  **Reward cho Nông dân:**
+    *   `+ (Giá bán - Chi phí sản xuất)`
+    *   `- (Chi phí tồn kho nếu không bán được)`
+2.  **Reward cho Siêu thị:**
+    *   `+ (Lợi nhuận gộp từ bán lẻ)`
+    *   `- (Penalty cho hàng hết hạn - Food Loss)`
+    *   `- (Penalty cho sự biến động giá đột ngột - ổn định thị trường)`
+3.  **Reward cho Người mua:**
+    *   `+ (Mức độ hài lòng: Giá hợp lý + Độ tươi ngon)`
+    *   `- (Penalty nếu hàng hóa không đạt chuẩn hoặc giá quá cao so với thu nhập trung bình)`
+
+---
+
+## 4. Bảng mô tả công việc (Task Description)
+
+| Giai đoạn | Nhiệm vụ chính | Output kỳ vọng |
+| :--- | :--- | :--- |
+| **Data Audit** | Kiểm tra file POS và dữ liệu JMA | Tìm ra các điểm mù (gaps) trong dữ liệu lịch sử |
+| **Simulation** | Xây dựng môi trường Gym-Env | Công cụ mô phỏng thị trường Nagoya Seika |
+| **Training** | Huấn luyện Agent (PPO/QMIX) | Mô hình đạt MAPE (độ chính xác) < 15% |
+| **Validation** | Chạy kiểm thử trên dữ liệu 2024 | Chứng minh khắc phục được lỗi 532% cũ |
+| **Deployment** | Tích hợp vào dashboard quản trị | Công cụ hỗ trợ ra quyết định cho logistics |
+
+---
+
+### Lời khuyên cho bạn khi triển khai LaTeX:
+Để bản đề xuất "đánh gục" đối tác, bạn nên thêm một phần **"Visualization"** (Hình vẽ). Trong LaTeX, hãy dùng gói `TikZ` hoặc `PGFPlots` để vẽ biểu đồ so sánh:
+*   **Biểu đồ 1:** Sự lệch pha giữa "dự báo hiện tại" (đường tháng) và "thực tế" (đường ngày).
+*   **Biểu đồ 2:** Hiệu ứng Domino (từ sai số dự báo $\to$ xếp hàng sai $\to$ tăng phí vận chuyển $\to$ giảm lợi nhuận).
+
+**Bạn muốn tôi viết code mẫu cho "Môi trường giả lập" (Gym Environment) hay tập trung vào việc tạo các biểu đồ TikZ cho file LaTeX này trước?**
