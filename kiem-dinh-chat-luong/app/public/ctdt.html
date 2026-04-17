@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CTĐT — Tổng quan</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0f1117; --panel: #1a1d27; --border: #2a2d3e; --accent: #4f8ef7;
+  --accent2: #7c5cbf; --green: #2ea87e; --red: #e05a5a; --yellow: #e0a847;
+  --text: #e2e8f0; --muted: #64748b; --hover: #22263a;
+}
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg); color: var(--text); display: flex;
+  flex-direction: column; min-height: 100vh; font-size: 14px;
+}
+.topnav {
+  background: var(--panel); border-bottom: 1px solid var(--border);
+  padding: 0 20px; display: flex; align-items: center; height: 44px; flex-shrink: 0;
+}
+.topnav .brand { font-size: 13px; font-weight: 800; color: var(--accent); margin-right: 24px; white-space: nowrap; }
+.nav-link {
+  display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px;
+  font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none;
+  border-bottom: 2px solid transparent; transition: all .15s; white-space: nowrap;
+}
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.main { padding: 24px; max-width: 1100px; margin: 0 auto; width: 100%; }
+.hero { margin-bottom: 24px; }
+.hero h1 { font-size: 22px; margin-bottom: 6px; }
+.hero p { color: var(--muted); font-size: 13px; }
+.hero .meta { margin-top: 12px; display: flex; gap: 12px; flex-wrap: wrap; }
+.hero .meta span {
+  background: var(--panel); border: 1px solid var(--border);
+  padding: 4px 10px; border-radius: 4px; font-size: 12px;
+}
+.hero .meta .law { color: var(--accent2); font-weight: 600; }
+
+.section { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+.section h2 { font-size: 14px; color: var(--accent); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+
+.roadmap { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 12px; }
+.card {
+  background: #22263a; border: 1px solid var(--border); border-radius: 6px; padding: 14px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.card .icon { font-size: 22px; }
+.card .name { font-weight: 700; font-size: 14px; }
+.card .desc { font-size: 12px; color: var(--muted); line-height: 1.5; flex: 1; }
+.card .badge {
+  display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 6px;
+  border-radius: 3px; text-transform: uppercase;
+}
+.badge-soon { background: var(--yellow); color: #0f1117; }
+.badge-ready { background: var(--green); color: #fff; }
+
+.standards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px; }
+.std-row {
+  background: #22263a; border: 1px solid var(--border); border-radius: 4px;
+  padding: 10px 12px; display: flex; gap: 10px; align-items: flex-start;
+}
+.std-row .num {
+  background: var(--accent2); color: #fff; min-width: 28px; height: 24px;
+  border-radius: 4px; font-size: 12px; font-weight: 700; display: flex;
+  align-items: center; justify-content: center; flex-shrink: 0;
+}
+.std-row .text { flex: 1; }
+.std-row .text .name { font-size: 13px; font-weight: 600; line-height: 1.3; }
+.std-row .text .count { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+.callout {
+  background: #2a2d3e; border-left: 3px solid var(--accent);
+  padding: 10px 14px; border-radius: 4px; font-size: 12px; line-height: 1.6;
+}
+</style>
+<script src="/workspace-switcher.js" defer></script>
+</head>
+<body>
+<nav class="topnav">
+  <span class="brand">KĐCLGD · ĐH Kiến trúc Đà Nẵng</span>
+</nav>
+
+<div class="main">
+  <div class="hero">
+    <h1>🎓 Tổng quan kiểm định Chương trình Đào tạo</h1>
+    <p>Workspace dành cho 1 đợt kiểm định 1 chương trình đào tạo cụ thể, theo Thông tư 04/2025/TT-BGDĐT.</p>
+    <div class="meta">
+      <span class="law">📜 TT04/2025 BGDĐT</span>
+      <span>📋 8 tiêu chuẩn / 52 tiêu chí</span>
+      <span>⚠️ 10 TC điều kiện tiên quyết</span>
+      <span>🎯 Tiếp cận OBE — đo lường mức độ đạt CĐR</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📐 Khung 8 tiêu chuẩn TT04/2025</h2>
+    <div class="standards-grid">
+      <div class="std-row"><div class="num">1</div><div class="text"><div class="name">Mục tiêu và Chuẩn đầu ra</div><div class="count">6 tiêu chí · TC 1.3, 1.6 là tiên quyết</div></div></div>
+      <div class="std-row"><div class="num">2</div><div class="text"><div class="name">Cấu trúc và nội dung CTĐT</div><div class="count">7 tiêu chí · TC 2.1, 2.4 là tiên quyết</div></div></div>
+      <div class="std-row"><div class="num">3</div><div class="text"><div class="name">Hoạt động dạy và học</div><div class="count">5 tiêu chí · TC 3.2 là tiên quyết</div></div></div>
+      <div class="std-row"><div class="num">4</div><div class="text"><div class="name">Đánh giá kết quả học tập</div><div class="count">7 tiêu chí · TC 4.5 là tiên quyết</div></div></div>
+      <div class="std-row"><div class="num">5</div><div class="text"><div class="name">Đội ngũ giảng viên & NCV</div><div class="count">8 tiêu chí · TC 5.2 là tiên quyết</div></div></div>
+      <div class="std-row"><div class="num">6</div><div class="text"><div class="name">Các dịch vụ hỗ trợ người học</div><div class="count">5 tiêu chí · TC 6.1 là tiên quyết</div></div></div>
+      <div class="std-row"><div class="num">7</div><div class="text"><div class="name">Cơ sở vật chất</div><div class="count">6 tiêu chí · TC 7.3 là tiên quyết</div></div></div>
+      <div class="std-row"><div class="num">8</div><div class="text"><div class="name">Đầu ra và Kết quả đầu ra</div><div class="count">8 tiêu chí · TC 8.2 là tiên quyết</div></div></div>
+    </div>
+    <p style="font-size: 11px; color: var(--muted); margin-top: 10px;">
+      Logic: Cấp tiêu chí <em>Đạt/Không đạt</em> → Cấp tiêu chuẩn (≤ 02 TC tiên quyết không đạt) → Cấp CTĐT (mọi tiêu chuẩn Đạt).
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>🛣 Lộ trình triển khai module CTĐT</h2>
+    <div class="roadmap">
+      <div class="card">
+        <div class="icon">🧭</div>
+        <div class="name">M8 — Khung CĐR</div>
+        <div class="desc">Quản lý PEO / PLO / CLO; ánh xạ Course × PLO, CLO × PI (ABET) hoặc PLO trực tiếp (AUN-QA).</div>
+        <span class="badge badge-soon">Inc4</span>
+      </div>
+      <div class="card">
+        <div class="icon">📐</div>
+        <div class="name">M9 — Rubric Builder</div>
+        <div class="desc">Form 4 dòng chuẩn: Mức độ • Đạt CĐR • Trọng số % • Mô tả năng lực. Library tái dùng.</div>
+        <span class="badge badge-soon">Inc5</span>
+      </div>
+      <div class="card">
+        <div class="icon">🧪</div>
+        <div class="name">M10 — Đo CLO</div>
+        <div class="desc">Kế hoạch đo CLO mỗi học phần × kỳ. Nhập điểm SV × bài đánh giá. Tự tính % Đạt theo 4 mức.</div>
+        <span class="badge badge-soon">Inc6</span>
+      </div>
+      <div class="card">
+        <div class="icon">📊</div>
+        <div class="name">M11 — Tổng hợp PLO</div>
+        <div class="desc">Pipeline CLO → PI → PLO. Heatmap Course × PLO, so sánh khoá. Triangulation direct + indirect.</div>
+        <span class="badge badge-soon">Inc7</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🔗 Module dùng chung (đã có)</h2>
+    <div class="roadmap">
+      <div class="card">
+        <div class="icon">📂</div>
+        <div class="name">Quản lý minh chứng</div>
+        <div class="desc">Upload + auto-code Hn.ab.cd.ef. Áp dụng cho cả CSGD và CTĐT (tách workspace).</div>
+        <span class="badge badge-ready">Sẵn sàng</span>
+      </div>
+      <div class="card">
+        <div class="icon">📝</div>
+        <div class="name">Khảo sát</div>
+        <div class="desc">Engine Likert + token public. Inc7 sẽ thêm template Exit / Alumni / Employer cho PLO.</div>
+        <span class="badge badge-ready">Sẵn sàng</span>
+      </div>
+      <div class="card">
+        <div class="icon">📄</div>
+        <div class="name">Báo cáo</div>
+        <div class="desc">Khung báo cáo cơ bản. Sẽ mở rộng template TĐG-CTĐT theo TT04 ở Inc cuối.</div>
+        <span class="badge badge-ready">Sẵn sàng</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>💡 Nguyên tắc đo lường (rút ra từ tài liệu IUH + ABET + AUN-QA)</h2>
+    <div class="callout">
+      <strong>Constructive Alignment</strong> — Động từ Bloom của CLO == cấp Bloom của Teaching == cấp Bloom của Exam.<br>
+      <strong>Ngưỡng "Đạt"</strong> — ≥ 75% sinh viên đạt mức điểm chuẩn của bài đánh giá.<br>
+      <strong>4 mức AUN-QA</strong> — Fully achieved (75–100%) / Achieved (50–75%) / Not achieved (25–50%) / Fully not (&lt;25%).<br>
+      <strong>Triangulation</strong> — Direct (CLO bài thi) + Indirect (Exit, Alumni, Employer survey).<br>
+      <strong>Tránh CLO inflation</strong> — Không quá 4–6 CLO/học phần. Không map 1 HP vào quá nhiều PLO.
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M10 — Chi tiết kế hoạch đo CLO</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0f1117; --panel: #1a1d27; --border: #2a2d3e; --accent: #4f8ef7;
+  --accent2: #7c5cbf; --green: #2ea87e; --red: #e05a5a; --yellow: #e0a847;
+  --text: #e2e8f0; --muted: #64748b; --hover: #22263a;
+}
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; font-size: 14px; }
+.topnav { background: var(--panel); border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; align-items: center; height: 44px; flex-shrink: 0; }
+.topnav .brand { font-size: 13px; font-weight: 800; color: var(--accent); margin-right: 24px; white-space: nowrap; }
+.nav-link { display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px; font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; transition: all .15s; white-space: nowrap; }
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.main { padding: 20px; max-width: 1300px; margin: 0 auto; width: 100%; }
+
+.crumbs { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.crumbs a { color: var(--accent); text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+.plan-head {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px 18px; margin-bottom: 12px;
+}
+.plan-head .row1 { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.plan-head h1 { font-size: 18px; }
+.plan-head .course-code { color: var(--accent); font-weight: 700; }
+.plan-head .meta { display: flex; gap: 14px; font-size: 12px; color: var(--muted); margin-top: 6px; flex-wrap: wrap; }
+.plan-head .meta b { color: var(--text); }
+.status-pill { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; letter-spacing: .3px; }
+.status-pill.draft  { background: #2a2d3e; color: var(--muted); }
+.status-pill.active { background: #1a3a26; color: var(--green); }
+.status-pill.closed { background: #4a3318; color: var(--yellow); }
+
+.tabs { display: flex; gap: 4px; margin-bottom: 12px; border-bottom: 1px solid var(--border); }
+.tab { background: transparent; color: var(--muted); border: none; padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer; border-bottom: 2px solid transparent; }
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab .soon { font-size: 9px; background: var(--yellow); color: #0f1117; padding: 1px 4px; border-radius: 3px; margin-left: 4px; font-weight: 700; }
+
+.btn { background: var(--accent); color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.btn:hover { filter: brightness(1.1); }
+.btn.ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+.btn.ghost:hover { color: var(--text); border-color: var(--accent); }
+.btn.danger { background: var(--red); }
+.btn.small { padding: 3px 8px; font-size: 11px; }
+
+.empty { text-align: center; color: var(--muted); padding: 40px 16px; border: 1px dashed var(--border); border-radius: 6px; font-size: 12px; background: var(--panel); }
+.empty a { color: var(--accent); text-decoration: underline; }
+
+.section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.section-head h2 { font-size: 14px; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+.section-head p { font-size: 12px; color: var(--muted); }
+
+.items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 12px; }
+.item-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+  padding: 14px; display: flex; flex-direction: column; gap: 8px;
+}
+.item-card .head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.item-card h3 { font-size: 14px; color: var(--text); }
+.item-card .meta { display: flex; gap: 6px; flex-wrap: wrap; }
+.item-card .meta .tag {
+  font-size: 10px; padding: 2px 6px; border-radius: 3px; font-weight: 600; text-transform: uppercase;
+  background: #2a2d3e; color: var(--muted);
+}
+.item-card .meta .tag.test     { background: #1f3a5c; color: #8db5e8; }
+.item-card .meta .tag.rubric   { background: #1f3a26; color: #74cb98; }
+.item-card .meta .tag.project  { background: #3a2a1f; color: #f0b27a; }
+.item-card .meta .tag.observation { background: #3a1f3a; color: #c188e8; }
+.item-card .desc { font-size: 12px; color: var(--muted); line-height: 1.4; min-height: 16px; }
+
+.targets-list { background: #22263a; border-radius: 4px; padding: 8px 10px; }
+.targets-list .row { display: flex; justify-content: space-between; padding: 3px 0; font-size: 12px; }
+.targets-list .row .clo-code { color: var(--accent); font-weight: 700; min-width: 60px; }
+.targets-list .row .clo-content { flex: 1; color: var(--muted); margin-left: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.targets-list .row .w { color: var(--green); font-weight: 700; min-width: 60px; text-align: right; }
+.targets-list .none { font-size: 11px; color: var(--yellow); padding: 4px 0; }
+.targets-list .sum { border-top: 1px solid var(--border); margin-top: 4px; padding-top: 4px; font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; }
+.targets-list .sum.warn { color: var(--yellow); }
+
+.item-card .actions { display: flex; gap: 6px; margin-top: auto; }
+
+/* Modal */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; z-index: 9999; }
+.modal { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 20px; width: min(620px, 96vw); max-height: 92vh; overflow-y: auto; color: var(--text); }
+.modal h3 { margin-bottom: 12px; font-size: 14px; color: var(--accent); }
+.modal label { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; margin: 10px 0 4px; letter-spacing: .3px; }
+.modal input, .modal select, .modal textarea { width: 100%; background: #22263a; color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 6px 8px; font-size: 13px; font-family: inherit; }
+.modal textarea { min-height: 50px; resize: vertical; }
+.modal .row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; }
+
+/* CLO target editor in modal */
+.clo-editor { border: 1px solid var(--border); border-radius: 4px; padding: 8px; background: #22263a; }
+.clo-editor .row-target { display: grid; grid-template-columns: 1fr 110px 30px; gap: 6px; align-items: center; padding: 4px 0; }
+.clo-editor .row-target select, .clo-editor .row-target input { padding: 4px 6px; font-size: 12px; }
+.clo-editor .row-target button { background: transparent; color: var(--red); border: 1px solid var(--border); border-radius: 3px; padding: 4px 6px; font-size: 11px; cursor: pointer; }
+.clo-editor .add { margin-top: 6px; background: transparent; color: var(--accent); border: 1px dashed var(--accent); border-radius: 4px; padding: 4px 8px; font-size: 11px; cursor: pointer; width: 100%; }
+.clo-editor .sum-line { margin-top: 6px; font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; }
+.clo-editor .sum-line.warn { color: var(--yellow); }
+.clo-editor .sum-line.ok { color: var(--green); }
+
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+
+/* Students table */
+.stu-table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; font-size: 13px; }
+.stu-table th, .stu-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); text-align: left; }
+.stu-table th { font-size: 11px; text-transform: uppercase; color: var(--muted); letter-spacing: .5px; font-weight: 700; background: #22263a; }
+.stu-table tbody tr:hover { background: var(--hover); }
+.stu-table .code { color: var(--accent); font-weight: 700; font-family: 'Cascadia Mono', monospace; }
+.stu-table .actions-cell { display: flex; gap: 4px; justify-content: flex-end; }
+
+/* Score grid */
+.grid-wrap { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; overflow: auto; max-height: 70vh; }
+.grid { border-collapse: separate; border-spacing: 0; font-size: 12px; }
+.grid th, .grid td { border: 1px solid var(--border); padding: 0; min-width: 80px; height: 32px; vertical-align: middle; background: var(--panel); }
+.grid thead th { position: sticky; top: 0; z-index: 2; background: #22263a; padding: 6px 8px; min-width: 100px; text-align: center; }
+.grid thead th.corner { left: 0; z-index: 3; min-width: 200px; max-width: 200px; text-align: left; }
+.grid thead th .item-name { font-weight: 700; color: var(--text); }
+.grid thead th .item-meta { font-size: 10px; color: var(--muted); margin-top: 2px; font-weight: 400; }
+.grid tbody th { position: sticky; left: 0; z-index: 1; background: #22263a; text-align: left; padding: 4px 10px; min-width: 200px; max-width: 200px; }
+.grid tbody th .stu-code { color: var(--accent); font-weight: 700; font-size: 12px; font-family: 'Cascadia Mono', monospace; }
+.grid tbody th .stu-name { font-size: 11px; color: var(--muted); display: block; }
+.grid td.cell { padding: 1px; text-align: center; cursor: text; }
+.grid td.cell input { width: 100%; height: 100%; min-height: 28px; background: transparent; color: var(--text); border: none; text-align: center; font-size: 12px; font-weight: 600; font-family: inherit; outline: none; }
+.grid td.cell.has { background: rgba(46, 168, 126, .12); }
+.grid td.cell input:focus { background: rgba(79, 142, 247, .2); }
+.grid td.cell.fail { background: rgba(224, 90, 90, .15); }
+
+.grid-empty { padding: 30px 20px; text-align: center; color: var(--muted); font-size: 12px; }
+
+.bulk-modal textarea { min-height: 200px; font-family: 'Cascadia Mono', monospace; font-size: 12px; }
+.bulk-modal .hint { font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+
+/* CLO summary columns in grid (computed read-only) */
+.grid thead th.clo-col { background: #1f2a3a; min-width: 70px; border-left: 2px solid var(--accent); }
+.grid thead th.clo-col .item-name { color: var(--accent); }
+.grid td.clo-col { padding: 4px 6px; text-align: center; font-weight: 700; font-size: 12px; border-left: 2px solid var(--accent); }
+.grid td.clo-col.fully_achieved   { background: rgba(46, 168, 126, .25); color: var(--green); }
+.grid td.clo-col.achieved         { background: rgba(79, 142, 247, .18); color: #8db5e8; }
+.grid td.clo-col.not_achieved     { background: rgba(224, 168, 71, .18); color: var(--yellow); }
+.grid td.clo-col.fully_not_achieved { background: rgba(224, 90, 90, .18); color: var(--red); }
+.grid td.clo-col.no_data { color: var(--muted); font-weight: 400; font-style: italic; }
+.grid tfoot th, .grid tfoot td {
+  background: #161922; font-weight: 700; padding: 6px 8px; border-top: 2px solid var(--accent);
+}
+.grid tfoot th { position: sticky; left: 0; z-index: 1; }
+.grid tfoot td.clo-col { font-size: 11px; }
+
+/* Results page */
+.results-summary {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 14px;
+}
+.results-summary .card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 6px;
+  padding: 12px 14px; font-size: 12px; color: var(--muted);
+}
+.results-summary .card .v { color: var(--text); font-weight: 700; font-size: 18px; display: block; margin-bottom: 2px; }
+.results-summary .card.green .v { color: var(--green); }
+.results-summary .card.yellow .v { color: var(--yellow); }
+.results-summary .card.red .v { color: var(--red); }
+
+.aunqa-legend {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 6px;
+  padding: 10px 14px; font-size: 12px; margin-bottom: 12px; display: flex; gap: 16px; flex-wrap: wrap;
+}
+.aunqa-legend .item { display: flex; align-items: center; gap: 6px; }
+.aunqa-legend .swatch { width: 14px; height: 14px; border-radius: 3px; }
+.aunqa-legend .swatch.fully_achieved { background: var(--green); }
+.aunqa-legend .swatch.achieved { background: var(--accent); }
+.aunqa-legend .swatch.not_achieved { background: var(--yellow); }
+.aunqa-legend .swatch.fully_not_achieved { background: var(--red); }
+
+.clo-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
+.clo-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px; display: flex; flex-direction: column; gap: 8px;
+}
+.clo-card.fully_achieved   { border-left: 4px solid var(--green); }
+.clo-card.achieved         { border-left: 4px solid var(--accent); }
+.clo-card.not_achieved     { border-left: 4px solid var(--yellow); }
+.clo-card.fully_not_achieved { border-left: 4px solid var(--red); }
+.clo-card.no_data          { border-left: 4px solid var(--muted); }
+.clo-card .head { display: flex; align-items: baseline; justify-content: space-between; }
+.clo-card .code { color: var(--accent); font-weight: 700; font-size: 14px; }
+.clo-card .binary {
+  font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; text-transform: uppercase;
+}
+.clo-card .binary.DAT { background: rgba(46, 168, 126, .25); color: var(--green); }
+.clo-card .binary.KHONG_DAT { background: rgba(224, 90, 90, .25); color: var(--red); }
+.clo-card .content { font-size: 12px; color: var(--text); line-height: 1.4; }
+.clo-card .pct {
+  font-size: 28px; font-weight: 700; line-height: 1;
+}
+.clo-card.fully_achieved .pct   { color: var(--green); }
+.clo-card.achieved .pct         { color: var(--accent); }
+.clo-card.not_achieved .pct     { color: var(--yellow); }
+.clo-card.fully_not_achieved .pct { color: var(--red); }
+.clo-card.no_data .pct          { color: var(--muted); }
+.clo-card .level-label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .5px; font-weight: 700; margin-top: -4px;
+}
+.clo-card .level-label.fully_achieved   { color: var(--green); }
+.clo-card .level-label.achieved         { color: var(--accent); }
+.clo-card .level-label.not_achieved     { color: var(--yellow); }
+.clo-card .level-label.fully_not_achieved { color: var(--red); }
+.clo-card .level-label.no_data          { color: var(--muted); }
+.clo-card .stats { font-size: 11px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 6px; }
+.clo-card .stats span { color: var(--text); font-weight: 700; }
+.clo-card .progress { background: #22263a; height: 8px; border-radius: 4px; overflow: hidden; }
+.clo-card .progress .fill { height: 100%; transition: width .3s; }
+.clo-card .progress .fill.fully_achieved { background: var(--green); }
+.clo-card .progress .fill.achieved       { background: var(--accent); }
+.clo-card .progress .fill.not_achieved   { background: var(--yellow); }
+.clo-card .progress .fill.fully_not_achieved { background: var(--red); }
+
+.toast { position: fixed; bottom: 20px; right: 20px; padding: 10px 16px; border-radius: 6px; font-size: 12px; font-weight: 600; z-index: 10000; opacity: 0; transform: translateY(8px); transition: all .2s; pointer-events: none; }
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.success { background: var(--green); color: #fff; }
+.toast.error   { background: var(--red);   color: #fff; }
+</style>
+<script src="/workspace-switcher.js" defer></script>
+</head>
+<body>
+<nav class="topnav">
+  <span class="brand">KĐCLGD · ĐH Kiến trúc Đà Nẵng</span>
+</nav>
+
+<div class="main">
+  <div class="crumbs"><a href="/ctdt-m10.html">← Đo CLO</a> / <span id="crumb-name">Chi tiết</span></div>
+
+  <div class="plan-head" id="plan-head">— đang tải —</div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="items" onclick="switchTab('items')">📝 Bài đánh giá</button>
+    <button class="tab" data-tab="students" onclick="switchTab('students')">👥 Sinh viên</button>
+    <button class="tab" data-tab="grid" onclick="switchTab('grid')">📊 Bảng điểm</button>
+    <button class="tab" data-tab="results" onclick="switchTab('results')">📈 Kết quả CLO</button>
+  </div>
+
+  <div id="content"></div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const STATUS_LABEL = { draft: 'Nháp', active: 'Đang đo', closed: 'Đã đóng' };
+const ITEM_TYPE_LABEL = { test: 'Đề thi', rubric: 'Rubric', project: 'Dự án', observation: 'Quan sát' };
+
+const PLAN_ID = parseInt(new URLSearchParams(location.search).get('id'));
+let PLAN = null, COURSE_CLOS = [];
+let CURRENT_TAB = 'items';
+
+function toast(msg, kind = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = `toast ${kind} show`;
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+function escapeHtml(s = '') {
+  return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
+async function loadPlan() {
+  if (!PLAN_ID) {
+    document.getElementById('plan-head').innerHTML = `<div style="color:var(--red);">Thiếu ?id= trong URL</div>`;
+    return;
+  }
+  const r = await fetch(`/api/assessment-plans/${PLAN_ID}`);
+  if (!r.ok) {
+    document.getElementById('plan-head').innerHTML = `<div style="color:var(--red);">Không tìm thấy plan ${PLAN_ID}</div>`;
+    return;
+  }
+  PLAN = await r.json();
+  document.getElementById('crumb-name').textContent = PLAN.name;
+  document.title = `M10 — ${PLAN.name}`;
+  COURSE_CLOS = await fetch(`/api/clos?course_id=${PLAN.course_id}`).then(r => r.json());
+  renderHead();
+  switchTab('items');
+}
+
+function switchTab(tab) {
+  CURRENT_TAB = tab;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  if (tab === 'items')    loadItems();
+  else if (tab === 'students') loadStudents();
+  else if (tab === 'grid')     loadGrid();
+  else if (tab === 'results')  loadResults();
+}
+
+function renderHead() {
+  document.getElementById('plan-head').innerHTML = `
+    <div class="row1">
+      <span class="course-code">${escapeHtml(PLAN.course_code)}</span>
+      <h1>${escapeHtml(PLAN.name)}</h1>
+      <span class="status-pill ${PLAN.status}">${STATUS_LABEL[PLAN.status] || PLAN.status}</span>
+    </div>
+    <div class="meta">
+      <span><b>Học phần:</b> ${escapeHtml(PLAN.course_name)}</span>
+      <span><b>Năm học:</b> ${escapeHtml(PLAN.school_year)}</span>
+      <span><b>Học kỳ:</b> HK${PLAN.semester}</span>
+      <span><b>Ngưỡng SV đạt CLO:</b> ≥ ${PLAN.pass_score_pct}%</span>
+      <span><b>Ngưỡng CLO Đạt:</b> ≥ ${PLAN.threshold_pct}% SV</span>
+      <span><b>CLO của HP:</b> ${COURSE_CLOS.length}</span>
+    </div>
+  `;
+}
+
+// ── Items ────────────────────────────────────────────────────
+async function loadItems() {
+  const items = await fetch(`/api/assessment-items?plan_id=${PLAN_ID}`).then(r => r.json());
+  const host = document.getElementById('content');
+
+  if (COURSE_CLOS.length === 0) {
+    host.innerHTML = `<div class="empty">Học phần này chưa có CLO nào. Vào <a href="/ctdt-m8.html">Khung CĐR</a> tạo CLO trước.</div>`;
+    return;
+  }
+
+  const cloById = Object.fromEntries(COURSE_CLOS.map(cl => [cl.id, cl]));
+
+  host.innerHTML = `
+    <div class="section-head">
+      <div>
+        <h2>📝 Bài đánh giá (${items.length})</h2>
+        <p>Mỗi bài có thể đóng góp vào nhiều CLO với trọng số %.</p>
+      </div>
+      <button class="btn" onclick="openItemModal()">+ Thêm bài đánh giá</button>
+    </div>
+    ${items.length === 0
+      ? `<div class="empty">Chưa có bài đánh giá. Bấm "+ Thêm bài đánh giá" để bắt đầu.</div>`
+      : `<div class="items-grid">${items.map(it => itemCardHtml(it, cloById)).join('')}</div>`
+    }
+  `;
+}
+
+function itemCardHtml(it, cloById) {
+  const targets = it.clo_targets || [];
+  const sum = targets.reduce((s, t) => s + (Number(t.weight) || 0), 0);
+  const sumWarn = sum > 100;
+  const targetRows = targets.length === 0
+    ? `<div class="none">⚠ Chưa gắn CLO nào — bài này sẽ KHÔNG được tính vào điểm CLO ở Inc6d</div>`
+    : targets.map(t => {
+        const cl = cloById[t.clo_id];
+        return `<div class="row">
+          <span class="clo-code">${escapeHtml(cl?.code || `CLO#${t.clo_id}`)}</span>
+          <span class="clo-content">${escapeHtml(cl?.content || '(CLO đã xóa)')}</span>
+          <span class="w">${t.weight}%</span>
+        </div>`;
+      }).join('') + `<div class="sum ${sumWarn ? 'warn' : ''}">Σ weight = ${sum}%${sumWarn ? ' (>100%!)' : ''}</div>`;
+  return `
+    <div class="item-card">
+      <div class="head">
+        <h3>${escapeHtml(it.name)}</h3>
+        <span style="font-size:12px;color:var(--muted);">Max ${it.max_score}</span>
+      </div>
+      <div class="meta">
+        <span class="tag ${it.type}">${ITEM_TYPE_LABEL[it.type] || it.type}</span>
+        <span class="tag">${(it.clo_targets || []).length} CLO</span>
+      </div>
+      ${it.description ? `<div class="desc">${escapeHtml(it.description)}</div>` : ''}
+      <div class="targets-list">${targetRows}</div>
+      <div class="actions">
+        <button class="btn ghost small" onclick='openItemModal(${JSON.stringify(it)})'>Sửa</button>
+        <button class="btn danger small" onclick="delItem(${it.id})">Xóa</button>
+      </div>
+    </div>`;
+}
+
+let MODAL_TARGETS = []; // local edit state for current modal
+
+function openItemModal(it = null) {
+  if (COURSE_CLOS.length === 0) { toast('HP chưa có CLO', 'error'); return; }
+  const isEdit = !!it;
+  MODAL_TARGETS = isEdit ? JSON.parse(JSON.stringify(it.clo_targets || [])) : [];
+
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal">
+      <h3>${isEdit ? 'Sửa' : 'Thêm'} bài đánh giá</h3>
+      <div class="row">
+        <div>
+          <label>Tên bài đánh giá</label>
+          <input id="m-name" placeholder="Mid-term / Final / Project / Lab 1..." value="${isEdit ? escapeHtml(it.name) : ''}">
+        </div>
+        <div>
+          <label>Loại</label>
+          <select id="m-type">
+            ${Object.entries(ITEM_TYPE_LABEL).map(([k, v]) => `<option value="${k}" ${isEdit && it.type === k ? 'selected' : ''}>${v}</option>`).join('')}
+          </select>
+        </div>
+        <div>
+          <label>Max score</label>
+          <input id="m-max" type="number" min="0.01" step="0.5" value="${isEdit ? it.max_score : 10}">
+        </div>
+      </div>
+      <label>Mô tả (tuỳ chọn)</label>
+      <textarea id="m-desc" placeholder="Ghi chú nội dung, hướng dẫn chấm...">${isEdit ? escapeHtml(it.description || '') : ''}</textarea>
+
+      <label>CLO targets — bài này đóng góp vào CLO nào?</label>
+      <div class="clo-editor" id="clo-editor"></div>
+
+      <div class="modal-actions">
+        <button class="btn ghost" id="m-cancel">Hủy</button>
+        <button class="btn" id="m-save">Lưu</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+  overlay.querySelector('#m-cancel').onclick = () => overlay.remove();
+  overlay.querySelector('#m-save').onclick = async () => {
+    const body = {
+      plan_id:     PLAN_ID,
+      name:        overlay.querySelector('#m-name').value.trim(),
+      type:        overlay.querySelector('#m-type').value,
+      max_score:   Number(overlay.querySelector('#m-max').value),
+      description: overlay.querySelector('#m-desc').value.trim(),
+      clo_targets: MODAL_TARGETS,
+    };
+    if (!body.name) { toast('Cần tên bài đánh giá', 'error'); return; }
+    const url = isEdit ? `/api/assessment-items/${it.id}` : '/api/assessment-items';
+    const method = isEdit ? 'PUT' : 'POST';
+    const r = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await r.json();
+    if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+    overlay.remove();
+    if (data.warning) toast(data.warning, 'error'); else toast(isEdit ? 'Đã cập nhật' : 'Đã thêm bài đánh giá');
+    loadItems();
+  };
+
+  renderTargets();
+}
+
+function renderTargets() {
+  const host = document.getElementById('clo-editor');
+  const sum = MODAL_TARGETS.reduce((s, t) => s + (Number(t.weight) || 0), 0);
+  const sumCls = sum === 100 ? 'ok' : (sum > 100 ? 'warn' : '');
+  host.innerHTML = `
+    ${MODAL_TARGETS.length === 0 ? '<div style="font-size:11px;color:var(--muted);text-align:center;padding:6px;">Chưa có CLO target. Bấm + bên dưới.</div>' : ''}
+    ${MODAL_TARGETS.map((t, i) => {
+      const cl = COURSE_CLOS.find(c => c.id === t.clo_id);
+      return `
+        <div class="row-target">
+          <select data-i="${i}" data-k="clo_id">
+            ${COURSE_CLOS.map(c => `<option value="${c.id}" ${c.id === t.clo_id ? 'selected' : ''}>${escapeHtml(c.code)} — ${escapeHtml(c.content.slice(0, 40))}</option>`).join('')}
+          </select>
+          <input type="number" min="0" max="100" step="1" placeholder="weight %" value="${t.weight}" data-i="${i}" data-k="weight">
+          <button data-i="${i}" data-act="rm">×</button>
+        </div>`;
+    }).join('')}
+    <button class="add" id="add-target">+ Thêm CLO target</button>
+    <div class="sum-line ${sumCls}"><span>Σ weight</span><span>${sum}%${sum === 100 ? ' ✓' : (sum > 100 ? ' ⚠ vượt 100%' : '')}</span></div>
+  `;
+
+  host.querySelectorAll('select, input').forEach(el => {
+    el.addEventListener('change', () => {
+      const i = parseInt(el.dataset.i), k = el.dataset.k;
+      if (k === 'clo_id') MODAL_TARGETS[i].clo_id = parseInt(el.value);
+      else if (k === 'weight') {
+        MODAL_TARGETS[i].weight = Number(el.value) || 0;
+        renderTargets();
+      }
+    });
+  });
+  host.querySelectorAll('button[data-act="rm"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = parseInt(btn.dataset.i);
+      MODAL_TARGETS.splice(i, 1);
+      renderTargets();
+    });
+  });
+  document.getElementById('add-target').onclick = () => {
+    // Default: first CLO not yet selected, weight 0
+    const used = new Set(MODAL_TARGETS.map(t => t.clo_id));
+    const next = COURSE_CLOS.find(c => !used.has(c.id)) || COURSE_CLOS[0];
+    MODAL_TARGETS.push({ clo_id: next.id, weight: 0 });
+    renderTargets();
+  };
+}
+
+async function delItem(id) {
+  if (!confirm('Xóa bài đánh giá này? Mọi điểm SV trên bài cũng sẽ bị xóa.')) return;
+  const r = await fetch(`/api/assessment-items/${id}`, { method: 'DELETE' });
+  const data = await r.json();
+  if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+  toast(`Đã xóa (${data.scores_removed || 0} điểm bị xóa)`);
+  loadItems();
+}
+
+// ── Students ─────────────────────────────────────────────────
+async function loadStudents() {
+  const list = await fetch(`/api/plan-students?plan_id=${PLAN_ID}`).then(r => r.json());
+  const host = document.getElementById('content');
+  host.innerHTML = `
+    <div class="section-head">
+      <div>
+        <h2>👥 Sinh viên (${list.length})</h2>
+        <p>Danh sách SV trong plan. MSSV unique trong plan.</p>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn ghost" onclick="openBulkModal()">📋 Dán hàng loạt</button>
+        <button class="btn" onclick="openStuModal()">+ Thêm SV</button>
+      </div>
+    </div>
+    ${list.length === 0
+      ? `<div class="empty">Chưa có SV. Bấm "+ Thêm SV" hoặc "Dán hàng loạt" (paste từ Excel/CSV).</div>`
+      : `<table class="stu-table">
+          <thead><tr><th style="width:140px;">MSSV</th><th>Họ và tên</th><th style="width:120px;text-align:right;">Hành động</th></tr></thead>
+          <tbody>${list.map(s => `
+            <tr>
+              <td><span class="code">${escapeHtml(s.code)}</span></td>
+              <td>${escapeHtml(s.full_name)}</td>
+              <td class="actions-cell">
+                <button class="btn ghost small" onclick='openStuModal(${JSON.stringify(s)})'>Sửa</button>
+                <button class="btn danger small" onclick="delStu(${s.id})">Xóa</button>
+              </td>
+            </tr>`).join('')}
+          </tbody>
+        </table>`
+    }
+  `;
+}
+
+function openStuModal(s = null) {
+  const isEdit = !!s;
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal">
+      <h3>${isEdit ? 'Sửa' : 'Thêm'} sinh viên</h3>
+      <label>MSSV</label>
+      <input id="m-code" placeholder="20211234" value="${isEdit ? escapeHtml(s.code) : ''}">
+      <label>Họ và tên</label>
+      <input id="m-name" placeholder="Nguyễn Văn A" value="${isEdit ? escapeHtml(s.full_name) : ''}">
+      <div class="modal-actions">
+        <button class="btn ghost" id="m-cancel">Hủy</button>
+        <button class="btn" id="m-save">Lưu</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+  overlay.querySelector('#m-cancel').onclick = () => overlay.remove();
+  overlay.querySelector('#m-save').onclick = async () => {
+    const body = {
+      plan_id:   PLAN_ID,
+      code:      overlay.querySelector('#m-code').value.trim(),
+      full_name: overlay.querySelector('#m-name').value.trim(),
+    };
+    if (!body.code || !body.full_name) { toast('Cần MSSV và họ tên', 'error'); return; }
+    const url = isEdit ? `/api/plan-students/${s.id}` : '/api/plan-students';
+    const method = isEdit ? 'PUT' : 'POST';
+    const r = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await r.json();
+    if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+    overlay.remove(); toast(isEdit ? 'Đã cập nhật' : 'Đã thêm SV'); loadStudents();
+  };
+}
+
+function openBulkModal() {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal bulk-modal">
+      <h3>📋 Dán danh sách SV hàng loạt</h3>
+      <p style="font-size:12px;color:var(--muted);">Mỗi dòng = 1 SV. Phân tách bằng <b>tab</b>, <b>dấu phẩy</b>, hoặc <b>≥ 2 spaces</b>. SV trùng MSSV sẽ bỏ qua.</p>
+      <label>Dữ liệu</label>
+      <textarea id="m-raw" placeholder="20211234	Nguyễn Văn A
+20211235	Trần Thị B
+20211236	Lê Văn C"></textarea>
+      <div class="hint">Định dạng: <code>MSSV</code> [tab/, /  ] <code>Họ và tên</code></div>
+      <div class="modal-actions">
+        <button class="btn ghost" id="m-cancel">Hủy</button>
+        <button class="btn" id="m-save">Thêm</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+  overlay.querySelector('#m-cancel').onclick = () => overlay.remove();
+  overlay.querySelector('#m-save').onclick = async () => {
+    const raw = overlay.querySelector('#m-raw').value;
+    if (!raw.trim()) { toast('Chưa có dữ liệu', 'error'); return; }
+    const r = await fetch('/api/plan-students/bulk', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan_id: PLAN_ID, raw }),
+    });
+    const data = await r.json();
+    if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+    overlay.remove();
+    toast(`✓ ${data.added} thêm, ${data.skipped} trùng, ${data.invalid} sai định dạng`);
+    loadStudents();
+  };
+}
+
+async function delStu(id) {
+  if (!confirm('Xóa SV này? Mọi điểm của SV cũng sẽ bị xóa.')) return;
+  const r = await fetch(`/api/plan-students/${id}`, { method: 'DELETE' });
+  const data = await r.json();
+  if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+  toast(`Đã xóa (${data.scores_removed || 0} điểm bị xóa)`);
+  loadStudents();
+}
+
+// ── Score Grid ───────────────────────────────────────────────
+async function loadGrid() {
+  const data = await fetch(`/api/assessment-plans/${PLAN_ID}/results`).then(r => r.json());
+  const { items, students, clos, per_student_clo, per_clo_summary } = data;
+  const host = document.getElementById('content');
+  if (items.length === 0 || students.length === 0) {
+    host.innerHTML = `
+      <div class="section-head">
+        <div><h2>📊 Bảng điểm</h2><p>Cần có ≥ 1 bài đánh giá và ≥ 1 SV để nhập điểm.</p></div>
+      </div>
+      <div class="grid-empty">
+        ${items.length === 0    ? '⚠ Chưa có bài đánh giá. ' : ''}
+        ${students.length === 0 ? '⚠ Chưa có sinh viên. ' : ''}
+      </div>`;
+    return;
+  }
+
+  // Score index from items embedded → fetch separately for grid input values
+  const scores = await fetch(`/api/scores?plan_id=${PLAN_ID}`).then(r => r.json());
+  const idx = {};
+  for (const s of scores) idx[`${s.item_id}-${s.plan_student_id}`] = s.score;
+
+  const passPct = PLAN.pass_score_pct || 50;
+
+  const head = `
+    <thead>
+      <tr>
+        <th class="corner">SV \\ Bài đánh giá</th>
+        ${items.map(it => {
+          const cloLabels = (it.clo_targets || []).map(t => {
+            const cl = clos.find(c => c.id === t.clo_id);
+            return (cl?.code || `#${t.clo_id}`) + ` ${t.weight}%`;
+          }).join(' · ');
+          return `
+            <th>
+              <div class="item-name">${escapeHtml(it.name)}</div>
+              <div class="item-meta">Max ${it.max_score} · ${cloLabels || '⚠ no CLO'}</div>
+            </th>`;
+        }).join('')}
+        ${clos.map(cl => `<th class="clo-col"><div class="item-name">${escapeHtml(cl.code)}</div><div class="item-meta">% đạt CLO</div></th>`).join('')}
+      </tr>
+    </thead>`;
+
+  const body = students.map(s => `
+    <tr>
+      <th><span class="stu-code">${escapeHtml(s.code)}</span><span class="stu-name">${escapeHtml(s.full_name)}</span></th>
+      ${items.map(it => {
+        const v = idx[`${it.id}-${s.id}`];
+        const has = (v !== undefined);
+        const isFail = has && (v / it.max_score * 100 < passPct);
+        return `<td class="cell ${has ? (isFail ? 'fail' : 'has') : ''}"><input type="number" min="0" max="${it.max_score}" step="0.1" data-i="${it.id}" data-s="${s.id}" data-max="${it.max_score}" value="${has ? v : ''}"></td>`;
+      }).join('')}
+      ${clos.map(cl => {
+        const r = per_student_clo[`${s.id}-${cl.id}`];
+        if (!r || r.score_pct === null) return `<td class="clo-col no_data">—</td>`;
+        const lvl = classifyAunQa(r.score_pct);
+        return `<td class="clo-col ${lvl}" title="${r.items_with_data}/${r.items_count} items">${r.score_pct}%</td>`;
+      }).join('')}
+    </tr>`).join('');
+
+  // Footer: summary row showing % SV passed per CLO
+  const foot = `
+    <tfoot>
+      <tr>
+        <th>% SV đạt CLO</th>
+        ${items.map(() => '<td></td>').join('')}
+        ${clos.map(cl => {
+          const sum = per_clo_summary.find(x => x.clo_id === cl.id);
+          if (!sum || sum.pct_pass === null) return `<td class="clo-col no_data">—</td>`;
+          return `<td class="clo-col ${sum.level}" title="${sum.students_passed}/${sum.students_with_data} SV đạt">${sum.pct_pass}%</td>`;
+        }).join('')}
+      </tr>
+    </tfoot>`;
+
+  host.innerHTML = `
+    <div class="section-head">
+      <div>
+        <h2>📊 Bảng điểm (${students.length} SV × ${items.length} bài × ${clos.length} CLO)</h2>
+        <p>Ô xanh = SV đạt ≥ ${passPct}% trên bài. Cột CLO bên phải = % đạt CLO của SV đó (auto-tính). Hàng cuối = % SV đạt mỗi CLO.</p>
+      </div>
+    </div>
+    <div class="grid-wrap"><table class="grid">${head}<tbody>${body}</tbody>${foot}</table></div>
+  `;
+
+  // Bind inputs
+  host.querySelectorAll('.cell input').forEach(inp => {
+    let last = inp.value;
+    inp.addEventListener('blur', async () => {
+      if (inp.value === last) return;
+      const ok = await saveCell(inp);
+      if (ok) {
+        last = inp.value;
+        // Reload grid to update CLO columns + footer
+        loadGrid();
+      } else { inp.value = last; }
+    });
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); inp.blur(); }
+    });
+  });
+}
+
+function classifyAunQa(pct) {
+  if (pct >= 75) return 'fully_achieved';
+  if (pct >= 50) return 'achieved';
+  if (pct >= 25) return 'not_achieved';
+  return 'fully_not_achieved';
+}
+
+// ── Results page ─────────────────────────────────────────────
+const LEVEL_LABEL = {
+  fully_achieved: 'Fully achieved (75–100%)',
+  achieved: 'Achieved (50–75%)',
+  not_achieved: 'Not achieved (25–50%)',
+  fully_not_achieved: 'Fully not achieved (<25%)',
+  no_data: 'Chưa có dữ liệu',
+};
+
+async function loadResults() {
+  const data = await fetch(`/api/assessment-plans/${PLAN_ID}/results`).then(r => r.json());
+  const { plan, counts, per_clo_summary, clos } = data;
+  const host = document.getElementById('content');
+
+  if (clos.length === 0) {
+    host.innerHTML = `<div class="empty">Học phần chưa có CLO. <a href="/ctdt-m8.html">Tạo CLO ở M8</a> trước.</div>`;
+    return;
+  }
+
+  // Aggregate counts by level
+  const levelCount = { fully_achieved: 0, achieved: 0, not_achieved: 0, fully_not_achieved: 0, no_data: 0 };
+  for (const s of per_clo_summary) levelCount[s.level || 'no_data']++;
+  const datCount = per_clo_summary.filter(s => s.binary === 'DAT').length;
+  const kdCount  = per_clo_summary.filter(s => s.binary === 'KHONG_DAT').length;
+
+  host.innerHTML = `
+    <div class="section-head">
+      <div>
+        <h2>📈 Kết quả đo CLO theo 4 mức AUN-QA</h2>
+        <p>Ngưỡng SV đạt CLO ≥ ${plan.pass_score_pct}% · CLO "Đạt" khi ≥ ${plan.threshold_pct}% SV đạt</p>
+      </div>
+    </div>
+
+    <div class="results-summary">
+      <div class="card"><span class="v">${counts.clos}</span>CLO của HP</div>
+      <div class="card"><span class="v">${counts.students}</span>SV trong plan</div>
+      <div class="card"><span class="v">${counts.items}</span>Bài đánh giá</div>
+      <div class="card"><span class="v">${counts.scores}</span>Điểm đã nhập</div>
+      <div class="card green"><span class="v">${datCount}</span>CLO Đạt (≥${plan.threshold_pct}%)</div>
+      <div class="card red"><span class="v">${kdCount}</span>CLO Không đạt</div>
+    </div>
+
+    <div class="aunqa-legend">
+      <span style="color:var(--muted);font-weight:700;">4 mức AUN-QA:</span>
+      <div class="item"><span class="swatch fully_achieved"></span>Fully achieved (75–100%) <b style="color:var(--green);">×${levelCount.fully_achieved}</b></div>
+      <div class="item"><span class="swatch achieved"></span>Achieved (50–75%) <b style="color:var(--accent);">×${levelCount.achieved}</b></div>
+      <div class="item"><span class="swatch not_achieved"></span>Not achieved (25–50%) <b style="color:var(--yellow);">×${levelCount.not_achieved}</b></div>
+      <div class="item"><span class="swatch fully_not_achieved"></span>Fully not (&lt;25%) <b style="color:var(--red);">×${levelCount.fully_not_achieved}</b></div>
+      ${levelCount.no_data > 0 ? `<div class="item"><span class="swatch" style="background:var(--muted);"></span>Chưa có dữ liệu <b>×${levelCount.no_data}</b></div>` : ''}
+    </div>
+
+    <div class="clo-cards">
+      ${per_clo_summary.map(s => {
+        const lvl = s.level || 'no_data';
+        const pctText = s.pct_pass === null ? '—' : `${s.pct_pass}%`;
+        const fillW = s.pct_pass === null ? 0 : s.pct_pass;
+        return `
+          <div class="clo-card ${lvl}">
+            <div class="head">
+              <span class="code">${escapeHtml(s.code)}</span>
+              ${s.binary ? `<span class="binary ${s.binary}">${s.binary === 'DAT' ? 'Đạt' : 'Không đạt'}</span>` : `<span class="binary" style="background:#2a2d3e;color:var(--muted);">N/A</span>`}
+            </div>
+            <div class="content">${escapeHtml(s.content)}</div>
+            <div style="display:flex;align-items:baseline;gap:10px;">
+              <div class="pct">${pctText}</div>
+              <div class="level-label ${lvl}">${LEVEL_LABEL[lvl]}</div>
+            </div>
+            <div class="progress"><div class="fill ${lvl}" style="width:${fillW}%;"></div></div>
+            <div class="stats">
+              <span>${s.students_passed || 0}</span>/<span>${s.students_with_data || 0}</span> SV đạt &nbsp;·&nbsp;
+              <span>${s.items_count || 0}</span> bài đánh giá target CLO này
+              ${s.students_with_data === 0 ? ' &nbsp;·&nbsp; <span style="color:var(--yellow);">⚠ chưa có điểm nào</span>' : ''}
+            </div>
+          </div>`;
+      }).join('')}
+    </div>
+  `;
+}
+
+async function saveCell(inp) {
+  const v = inp.value.trim();
+  const body = {
+    item_id:         parseInt(inp.dataset.i),
+    plan_student_id: parseInt(inp.dataset.s),
+    score:           v === '' ? null : Number(v),
+  };
+  const r = await fetch('/api/scores', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const data = await r.json();
+  if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return false; }
+  // Update visual
+  const td = inp.parentElement;
+  td.classList.remove('has', 'fail');
+  if (v !== '') {
+    const passPct = PLAN.pass_score_pct || 50;
+    const max = Number(inp.dataset.max);
+    const isFail = (Number(v) / max * 100 < passPct);
+    td.classList.add(isFail ? 'fail' : 'has');
+  }
+  return true;
+}
+
+loadPlan();
+</script>
+</body>
+</html>

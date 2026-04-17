@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M9 — Rubric Builder</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0f1117; --panel: #1a1d27; --border: #2a2d3e; --accent: #4f8ef7;
+  --accent2: #7c5cbf; --green: #2ea87e; --red: #e05a5a; --yellow: #e0a847;
+  --text: #e2e8f0; --muted: #64748b; --hover: #22263a;
+}
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg); color: var(--text); display: flex;
+  flex-direction: column; min-height: 100vh; font-size: 14px;
+}
+.topnav {
+  background: var(--panel); border-bottom: 1px solid var(--border);
+  padding: 0 20px; display: flex; align-items: center; height: 44px; flex-shrink: 0;
+}
+.topnav .brand { font-size: 13px; font-weight: 800; color: var(--accent); margin-right: 24px; white-space: nowrap; }
+.nav-link {
+  display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px;
+  font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none;
+  border-bottom: 2px solid transparent; transition: all .15s; white-space: nowrap;
+}
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.main { padding: 20px; max-width: 1300px; margin: 0 auto; width: 100%; }
+.title-bar { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
+.title-bar h1 { font-size: 18px; }
+.title-bar p { font-size: 12px; color: var(--muted); }
+
+.btn { background: var(--accent); color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.btn:hover { filter: brightness(1.1); }
+.btn.ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+.btn.ghost:hover { color: var(--text); border-color: var(--accent); }
+.btn.danger { background: var(--red); }
+.btn.small { padding: 3px 8px; font-size: 11px; }
+
+.empty { text-align: center; color: var(--muted); padding: 40px 16px; border: 1px dashed var(--border); border-radius: 6px; font-size: 12px; }
+
+.lib-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px;
+}
+.rubric-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+  padding: 14px; display: flex; flex-direction: column; gap: 8px; cursor: pointer;
+  transition: border-color .15s;
+}
+.rubric-card:hover { border-color: var(--accent); }
+.rubric-card .head { display: flex; justify-content: space-between; align-items: center; }
+.rubric-card h3 { font-size: 14px; color: var(--text); }
+.rubric-card .desc { font-size: 12px; color: var(--muted); line-height: 1.4; min-height: 32px; }
+.rubric-card .meta { display: flex; gap: 6px; flex-wrap: wrap; font-size: 10px; }
+.rubric-card .meta .pill { background: #2a2d3e; padding: 2px 6px; border-radius: 3px; color: var(--muted); font-weight: 600; text-transform: uppercase; }
+.rubric-card .meta .pill.warn { background: #4a3318; color: var(--yellow); }
+.rubric-card .meta .pill.ok   { background: #1a3a26; color: var(--green); }
+.rubric-card .actions { display: flex; gap: 6px; margin-top: auto; }
+
+/* Editor */
+.editor-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; z-index: 9999; }
+.editor {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+  padding: 20px; width: min(1100px, 96vw); max-height: 92vh; overflow-y: auto; color: var(--text);
+}
+.editor h3 { color: var(--accent); margin-bottom: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+.editor label { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; margin: 10px 0 4px; letter-spacing: .3px; }
+.editor input, .editor select, .editor textarea {
+  background: #22263a; color: var(--text); border: 1px solid var(--border);
+  border-radius: 4px; padding: 6px 8px; font-size: 13px; font-family: inherit; width: 100%;
+}
+.editor textarea { resize: vertical; min-height: 50px; }
+.editor .row-inline { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px; }
+
+/* Rubric matrix in editor */
+.r-matrix-wrap { overflow-x: auto; margin-top: 10px; border: 1px solid var(--border); border-radius: 6px; }
+.r-matrix { width: 100%; border-collapse: collapse; font-size: 12px; }
+.r-matrix th, .r-matrix td { border: 1px solid var(--border); padding: 8px; vertical-align: top; }
+.r-matrix th.label { background: #22263a; text-align: left; min-width: 130px; max-width: 130px; font-weight: 700; color: var(--accent); font-size: 11px; text-transform: uppercase; letter-spacing: .5px; }
+.r-matrix th.lvl { background: #1a1f2e; color: var(--text); min-width: 160px; }
+.r-matrix th.lvl input { background: transparent; border: none; color: var(--text); font-size: 13px; font-weight: 700; text-align: center; outline: none; }
+.r-matrix th.lvl input:focus { border-bottom: 1px solid var(--accent); }
+.r-matrix td.cell { background: var(--panel); }
+.r-matrix td input[type="number"] { text-align: center; }
+.r-matrix td textarea { min-height: 60px; font-size: 12px; }
+.r-matrix td.pass-cell { text-align: center; }
+.r-matrix td.pass-cell input { width: 18px; height: 18px; }
+.r-matrix td.pass-cell.is-pass { background: rgba(46, 168, 126, .15); }
+.r-matrix .col-actions { padding: 4px; text-align: center; background: #1a1f2e; }
+.r-matrix .col-actions button { background: transparent; color: var(--red); border: 1px solid var(--border); border-radius: 3px; padding: 2px 8px; font-size: 11px; cursor: pointer; }
+
+.editor-actions { display: flex; gap: 8px; justify-content: space-between; align-items: center; margin-top: 16px; }
+.editor-actions .left { display: flex; gap: 8px; }
+.editor-actions .right { display: flex; gap: 8px; }
+.weight-status { font-size: 12px; color: var(--muted); padding: 4px 10px; border-radius: 4px; background: #22263a; }
+.weight-status.ok   { color: var(--green); border: 1px solid #1a3a26; }
+.weight-status.warn { color: var(--yellow); border: 1px solid #4a3318; }
+
+.toast { position: fixed; bottom: 20px; right: 20px; padding: 10px 16px; border-radius: 6px; font-size: 12px; font-weight: 600; z-index: 10001; opacity: 0; transform: translateY(8px); transition: all .2s; pointer-events: none; }
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.success { background: var(--green); color: #fff; }
+.toast.error   { background: var(--red);   color: #fff; }
+</style>
+<script src="/workspace-switcher.js" defer></script>
+</head>
+<body>
+<nav class="topnav">
+  <span class="brand">KĐCLGD · ĐH Kiến trúc Đà Nẵng</span>
+</nav>
+
+<div class="main">
+  <div class="title-bar">
+    <div>
+      <h1>📐 Rubric Library (M9)</h1>
+      <p>Thang đo theo doc05: 4 dòng — Mức độ / Đạt CĐR / Trọng số % / Mô tả năng lực. Thư viện tái dùng cho nhiều CLO.</p>
+    </div>
+    <button class="btn" onclick="openEditor()">+ Tạo Rubric mới</button>
+  </div>
+
+  <div id="lib"></div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+let RUBRICS = [], PRESETS = {};
+
+function toast(msg, kind = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = `toast ${kind} show`;
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+function escapeHtml(s = '') {
+  return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
+async function loadAll() {
+  const [list, presets] = await Promise.all([
+    fetch('/api/rubrics').then(r => r.json()),
+    fetch('/api/rubric-presets').then(r => r.json()),
+  ]);
+  RUBRICS = list; PRESETS = presets;
+  renderLib();
+}
+
+function renderLib() {
+  const host = document.getElementById('lib');
+  if (RUBRICS.length === 0) {
+    host.innerHTML = `<div class="empty">Chưa có rubric. Bấm "+ Tạo Rubric mới" để bắt đầu (có 3 preset sẵn).</div>`;
+    return;
+  }
+  host.innerHTML = `<div class="lib-grid">${RUBRICS.map(cardHtml).join('')}</div>`;
+  host.querySelectorAll('.rubric-card').forEach(c => {
+    c.addEventListener('click', e => {
+      if (e.target.closest('button')) return;
+      openEditor(parseInt(c.dataset.id));
+    });
+  });
+}
+
+function cardHtml(r) {
+  const wOk = Math.abs((r.weight_sum || 0) - 100) < 0.5;
+  return `
+    <div class="rubric-card" data-id="${r.id}">
+      <div class="head">
+        <h3>${escapeHtml(r.name)}</h3>
+      </div>
+      <div class="desc">${escapeHtml(r.description || '—')}</div>
+      <div class="meta">
+        <span class="pill">${r.level_count} mức</span>
+        <span class="pill ok">${r.pass_count} mức đạt CĐR</span>
+        <span class="pill ${wOk ? 'ok' : 'warn'}">Σ W = ${r.weight_sum}%</span>
+        <span class="pill">${escapeHtml(r.scale_type)}</span>
+        <span class="pill ${r.clo_count > 0 ? 'ok' : ''}">${r.clo_count} CLO dùng</span>
+      </div>
+      <div class="actions">
+        <button class="btn ghost small" onclick="openEditor(${r.id})">Sửa</button>
+        <button class="btn danger small" onclick="delRubric(${r.id})">Xóa</button>
+      </div>
+    </div>`;
+}
+
+async function delRubric(id) {
+  if (!confirm('Xóa rubric này? Các CLO đang dùng rubric sẽ bị tách liên kết.')) return;
+  const r = await fetch(`/api/rubrics/${id}`, { method: 'DELETE' });
+  const data = await r.json();
+  if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+  toast(`Đã xóa${data.clos_detached ? ` (${data.clos_detached} CLO bị tách)` : ''}`);
+  loadAll();
+}
+
+// ── Editor ───────────────────────────────────────────────────
+let EDIT_LEVELS = [];
+
+async function openEditor(id = null) {
+  let rubric = null;
+  if (id) {
+    rubric = await fetch(`/api/rubrics/${id}`).then(r => r.json());
+    EDIT_LEVELS = JSON.parse(JSON.stringify(rubric.levels || []));
+  } else {
+    EDIT_LEVELS = defaultLevels('A_D');
+  }
+
+  const overlay = document.createElement('div');
+  overlay.className = 'editor-overlay';
+  overlay.innerHTML = `
+    <div class="editor">
+      <h3>${id ? 'Sửa' : 'Tạo'} Rubric</h3>
+      <div class="row-inline">
+        <div>
+          <label>Tên rubric</label>
+          <input id="r-name" value="${rubric ? escapeHtml(rubric.name) : ''}" placeholder="VD: Rubric đánh giá báo cáo dự án">
+        </div>
+        <div>
+          <label>Loại thang (preset)</label>
+          <select id="r-scale">
+            ${Object.entries(PRESETS).map(([k, v]) => `<option value="${k}" ${rubric && rubric.scale_type === k ? 'selected' : ''}>${escapeHtml(v.name)}</option>`).join('')}
+            <option value="CUSTOM" ${rubric && rubric.scale_type === 'CUSTOM' ? 'selected' : ''}>Tuỳ chỉnh</option>
+          </select>
+        </div>
+        <div>
+          <label>Áp preset (ghi đè)</label>
+          <button class="btn ghost" id="r-apply-preset" type="button">Áp preset hiện tại</button>
+        </div>
+      </div>
+      <label>Mô tả ngắn (tuỳ chọn)</label>
+      <textarea id="r-desc" placeholder="Khi nào dùng rubric này, áp dụng cho CLO loại nào...">${rubric ? escapeHtml(rubric.description || '') : ''}</textarea>
+
+      <div class="r-matrix-wrap">
+        <table class="r-matrix" id="r-matrix"></table>
+      </div>
+
+      <div class="editor-actions">
+        <div class="left">
+          <button class="btn ghost" id="r-add-lvl" type="button">+ Thêm mức</button>
+          <button class="btn ghost" id="r-balance" type="button">⚖ Cân W = 100% đều</button>
+          <span id="r-weight-status" class="weight-status">Σ W = ?</span>
+        </div>
+        <div class="right">
+          <button class="btn ghost" id="r-cancel" type="button">Hủy</button>
+          <button class="btn" id="r-save" type="button">Lưu</button>
+        </div>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+  overlay.querySelector('#r-cancel').onclick = () => overlay.remove();
+  overlay.querySelector('#r-add-lvl').onclick = () => {
+    EDIT_LEVELS.push({ name: `Mức ${EDIT_LEVELS.length + 1}`, is_pass: false, weight: 0, description: '' });
+    renderMatrix();
+  };
+  overlay.querySelector('#r-balance').onclick = () => {
+    const n = EDIT_LEVELS.length;
+    if (n === 0) return;
+    const w = Math.round(10000 / n) / 100;
+    let total = 0;
+    EDIT_LEVELS.forEach((l, i) => {
+      l.weight = (i === n - 1) ? Math.round((100 - total) * 100) / 100 : w;
+      total += l.weight;
+    });
+    renderMatrix();
+  };
+  overlay.querySelector('#r-apply-preset').onclick = () => {
+    const sel = overlay.querySelector('#r-scale').value;
+    if (sel === 'CUSTOM') { toast('Chọn 1 preset cụ thể trước', 'error'); return; }
+    EDIT_LEVELS = defaultLevels(sel);
+    renderMatrix();
+  };
+  overlay.querySelector('#r-save').onclick = async () => {
+    const name = overlay.querySelector('#r-name').value.trim();
+    if (!name) { toast('Cần tên rubric', 'error'); return; }
+    const body = {
+      name,
+      description: overlay.querySelector('#r-desc').value.trim(),
+      scale_type:  overlay.querySelector('#r-scale').value,
+      levels:      EDIT_LEVELS,
+    };
+    const url = id ? `/api/rubrics/${id}` : '/api/rubrics';
+    const method = id ? 'PUT' : 'POST';
+    const r = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await r.json();
+    if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+    overlay.remove(); toast(id ? 'Đã cập nhật' : 'Đã tạo'); loadAll();
+  };
+
+  renderMatrix();
+}
+
+function defaultLevels(presetKey) {
+  const preset = PRESETS[presetKey];
+  if (!preset) return [];
+  const n = preset.levels.length;
+  const w = Math.round(10000 / n) / 100;
+  return preset.levels.map((nm, i) => ({
+    name: nm, is_pass: i >= Math.floor(n / 2), weight: w, description: '',
+  }));
+}
+
+function renderMatrix() {
+  const t = document.getElementById('r-matrix');
+  if (!t) return;
+  const n = EDIT_LEVELS.length;
+  const head = `
+    <thead>
+      <tr>
+        <th class="label">Thuộc tính \\ Mức</th>
+        ${EDIT_LEVELS.map((_, i) => `<th class="lvl">Mức ${i + 1}</th>`).join('')}
+      </tr>
+    </thead>`;
+
+  const rows = `
+    <tbody>
+      <tr>
+        <th class="label">1. Tên mức</th>
+        ${EDIT_LEVELS.map((l, i) => `<td class="cell"><input type="text" data-i="${i}" data-k="name" value="${escapeHtml(l.name)}"></td>`).join('')}
+      </tr>
+      <tr>
+        <th class="label">2. Đạt CĐR?</th>
+        ${EDIT_LEVELS.map((l, i) => `<td class="cell pass-cell ${l.is_pass ? 'is-pass' : ''}"><input type="checkbox" data-i="${i}" data-k="is_pass" ${l.is_pass ? 'checked' : ''}></td>`).join('')}
+      </tr>
+      <tr>
+        <th class="label">3. Trọng số W (%)</th>
+        ${EDIT_LEVELS.map((l, i) => `<td class="cell"><input type="number" min="0" step="0.1" data-i="${i}" data-k="weight" value="${l.weight}"></td>`).join('')}
+      </tr>
+      <tr>
+        <th class="label">4. Mô tả năng lực</th>
+        ${EDIT_LEVELS.map((l, i) => `<td class="cell"><textarea data-i="${i}" data-k="description" placeholder="Mô tả người học ở mức này thể hiện năng lực gì cụ thể">${escapeHtml(l.description || '')}</textarea></td>`).join('')}
+      </tr>
+      <tr>
+        <th class="label"></th>
+        ${EDIT_LEVELS.map((_, i) => `<td class="col-actions"><button data-i="${i}" data-act="rm" type="button" title="Xóa mức">🗑</button></td>`).join('')}
+      </tr>
+    </tbody>`;
+
+  t.innerHTML = head + rows;
+
+  // Bind inputs
+  t.querySelectorAll('input, textarea').forEach(el => {
+    el.addEventListener('input', () => {
+      const i = parseInt(el.dataset.i), k = el.dataset.k;
+      if (Number.isNaN(i) || !k) return;
+      if (k === 'is_pass') {
+        EDIT_LEVELS[i][k] = el.checked;
+        // Update visual
+        el.parentElement.classList.toggle('is-pass', el.checked);
+      } else if (k === 'weight') {
+        EDIT_LEVELS[i][k] = Number(el.value) || 0;
+        updateWeightStatus();
+      } else {
+        EDIT_LEVELS[i][k] = el.value;
+      }
+    });
+  });
+  t.querySelectorAll('button[data-act="rm"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = parseInt(btn.dataset.i);
+      EDIT_LEVELS.splice(i, 1);
+      renderMatrix();
+    });
+  });
+  updateWeightStatus();
+}
+
+function updateWeightStatus() {
+  const sum = EDIT_LEVELS.reduce((s, l) => s + (Number(l.weight) || 0), 0);
+  const r = Math.round(sum * 100) / 100;
+  const el = document.getElementById('r-weight-status');
+  if (!el) return;
+  const ok = Math.abs(r - 100) < 0.5;
+  el.textContent = `Σ W = ${r}%`;
+  el.className = 'weight-status ' + (ok ? 'ok' : 'warn');
+  el.title = ok ? 'Tổng trọng số = 100% ✓' : 'Lưu ý: tổng nên = 100% (bấm "Cân W")';
+}
+
+loadAll();
+</script>
+</body>
+</html>

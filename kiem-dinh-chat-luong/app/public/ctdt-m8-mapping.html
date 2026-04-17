@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M8 — Ma trận ánh xạ</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0f1117; --panel: #1a1d27; --border: #2a2d3e; --accent: #4f8ef7;
+  --accent2: #7c5cbf; --green: #2ea87e; --red: #e05a5a; --yellow: #e0a847;
+  --text: #e2e8f0; --muted: #64748b; --hover: #22263a;
+}
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg); color: var(--text); display: flex;
+  flex-direction: column; min-height: 100vh; font-size: 14px;
+}
+.topnav {
+  background: var(--panel); border-bottom: 1px solid var(--border);
+  padding: 0 20px; display: flex; align-items: center; height: 44px; flex-shrink: 0;
+}
+.topnav .brand { font-size: 13px; font-weight: 800; color: var(--accent); margin-right: 24px; white-space: nowrap; }
+.nav-link {
+  display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px;
+  font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none;
+  border-bottom: 2px solid transparent; transition: all .15s; white-space: nowrap;
+}
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.main { padding: 20px; max-width: 1400px; margin: 0 auto; width: 100%; }
+.title-bar { margin-bottom: 12px; }
+.title-bar h1 { font-size: 18px; }
+.title-bar p { font-size: 12px; color: var(--muted); }
+
+.tabs { display: flex; gap: 4px; margin-bottom: 12px; border-bottom: 1px solid var(--border); }
+.tab {
+  background: transparent; color: var(--muted); border: none; padding: 8px 14px;
+  font-size: 13px; font-weight: 600; cursor: pointer; border-bottom: 2px solid transparent;
+}
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.legend {
+  display: flex; gap: 14px; flex-wrap: wrap; align-items: center;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 6px;
+  padding: 8px 12px; font-size: 12px; margin-bottom: 12px;
+}
+.legend .item { display: flex; align-items: center; gap: 6px; }
+.legend .swatch {
+  width: 24px; height: 22px; border-radius: 3px; display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 11px; color: #fff;
+}
+.legend .swatch.I { background: #2c5fa3; }
+.legend .swatch.R { background: #2e7a52; }
+.legend .swatch.M { background: #a3672c; }
+
+.matrix-wrap {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+  overflow: auto; max-height: 70vh;
+}
+.matrix {
+  border-collapse: separate; border-spacing: 0; font-size: 12px;
+}
+.matrix th, .matrix td {
+  border: 1px solid var(--border); padding: 0; min-width: 56px; height: 34px;
+  text-align: center; vertical-align: middle; background: var(--panel);
+}
+.matrix thead th {
+  position: sticky; top: 0; z-index: 2; background: #22263a; color: var(--text);
+  font-weight: 700; padding: 4px 8px; min-width: 70px;
+}
+.matrix thead th.corner { left: 0; z-index: 3; min-width: 240px; max-width: 240px; }
+.matrix tbody th {
+  position: sticky; left: 0; z-index: 1; background: #22263a; text-align: left;
+  padding: 4px 10px; min-width: 240px; max-width: 240px;
+}
+.matrix tbody th .code { color: var(--accent); font-weight: 700; }
+.matrix tbody th .name { color: var(--muted); font-size: 11px; margin-left: 6px; }
+
+.matrix .cell {
+  cursor: pointer; user-select: none; transition: background .12s;
+  font-weight: 700; color: #fff;
+}
+.matrix .cell:hover { filter: brightness(1.15); }
+.matrix .cell.empty { color: #34384a; }
+.matrix .cell.empty::after { content: '·'; }
+.matrix .cell.I { background: #2c5fa3; }
+.matrix .cell.R { background: #2e7a52; }
+.matrix .cell.M { background: #a3672c; }
+
+/* CLO×PLO weight cells */
+.matrix .wcell {
+  cursor: text; padding: 2px;
+}
+.matrix .wcell input {
+  width: 100%; height: 100%; min-height: 30px; background: transparent; color: var(--text);
+  border: none; text-align: center; font-size: 12px; font-weight: 600; font-family: inherit;
+  outline: none;
+}
+.matrix .wcell.has { background: rgba(46, 168, 126, .25); }
+.matrix .wcell input:focus { background: rgba(79, 142, 247, .15); }
+
+.empty-msg {
+  background: var(--panel); border: 1px dashed var(--border); border-radius: 8px;
+  padding: 40px 20px; text-align: center; color: var(--muted); font-size: 13px;
+}
+.empty-msg a { color: var(--accent); text-decoration: underline; }
+
+.summary-row {
+  display: flex; gap: 12px; margin-bottom: 10px; flex-wrap: wrap;
+}
+.summary-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 6px;
+  padding: 10px 14px; font-size: 12px; color: var(--muted);
+}
+.summary-card .v { color: var(--text); font-weight: 700; font-size: 16px; margin-right: 6px; }
+
+.toast {
+  position: fixed; bottom: 20px; right: 20px; padding: 10px 16px; border-radius: 6px;
+  font-size: 12px; font-weight: 600; z-index: 10000; opacity: 0; transform: translateY(8px);
+  transition: all .2s; pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.success { background: var(--green); color: #fff; }
+.toast.error   { background: var(--red);   color: #fff; }
+</style>
+<script src="/workspace-switcher.js" defer></script>
+</head>
+<body>
+<nav class="topnav">
+  <span class="brand">KĐCLGD · ĐH Kiến trúc Đà Nẵng</span>
+</nav>
+
+<div class="main">
+  <div class="title-bar">
+    <h1>🗺 Ma trận ánh xạ — Khung CĐR</h1>
+    <p>Xác định học phần/CLO nào đóng góp vào PLO nào. Click cell để toggle.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="cp" onclick="switchTab('cp')">📚 Course × PLO  <span style="font-size:10px;color:var(--muted);">(I/R/M)</span></button>
+    <button class="tab" data-tab="clp" onclick="switchTab('clp')">🧪 CLO × PLO  <span style="font-size:10px;color:var(--muted);">(weight)</span></button>
+  </div>
+
+  <div id="content"></div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+let PLOS = [], COURSES = [], CLOS = [], CP_MAP = [], CLP_MAP = [];
+let CURRENT_TAB = 'cp';
+
+function toast(msg, kind = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = `toast ${kind} show`;
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+function escapeHtml(s = '') {
+  return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
+async function loadAll() {
+  const [pp, cc, cl, cp, clp] = await Promise.all([
+    fetch('/api/plos').then(r => r.json()),
+    fetch('/api/courses').then(r => r.json()),
+    fetch('/api/clos').then(r => r.json()),
+    fetch('/api/course-plo-map').then(r => r.json()),
+    fetch('/api/clo-plo-map').then(r => r.json()),
+  ]);
+  PLOS = pp; COURSES = cc; CLOS = cl; CP_MAP = cp; CLP_MAP = clp;
+  render();
+}
+
+function switchTab(tab) {
+  CURRENT_TAB = tab;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  render();
+}
+
+function render() {
+  const host = document.getElementById('content');
+  if (PLOS.length === 0) {
+    host.innerHTML = `<div class="empty-msg">Chưa có PLO nào. Vào <a href="/ctdt-m8.html">Khung CĐR</a> tạo PLO trước.</div>`;
+    return;
+  }
+  if (CURRENT_TAB === 'cp') renderCoursePlo(host);
+  else renderCloPlo(host);
+}
+
+// ── Course × PLO ─────────────────────────────────────────────
+function renderCoursePlo(host) {
+  if (COURSES.length === 0) {
+    host.innerHTML = `<div class="empty-msg">Chưa có học phần nào. Vào <a href="/ctdt-m8.html">Khung CĐR</a> tạo học phần trước.</div>`;
+    return;
+  }
+
+  // Build lookup: { "courseId-ploId": level }
+  const idx = {};
+  for (const m of CP_MAP) idx[`${m.course_id}-${m.plo_id}`] = m.level;
+
+  // Coverage per PLO
+  const coverByPlo = {};
+  for (const m of CP_MAP) coverByPlo[m.plo_id] = (coverByPlo[m.plo_id] || 0) + 1;
+  const uncovered = PLOS.filter(p => !coverByPlo[p.id]).length;
+  const totalCells = COURSES.length * PLOS.length;
+  const filled = CP_MAP.length;
+
+  const summary = `
+    <div class="summary-row">
+      <div class="summary-card"><span class="v">${COURSES.length}</span> học phần</div>
+      <div class="summary-card"><span class="v">${PLOS.length}</span> PLO</div>
+      <div class="summary-card"><span class="v">${filled}</span>/${totalCells} cell đã gán</div>
+      <div class="summary-card" style="color:${uncovered ? 'var(--yellow)' : 'var(--green)'}">${uncovered ? `⚠ ${uncovered} PLO chưa có HP đóng góp` : '✓ Mọi PLO đều có HP đóng góp'}</div>
+    </div>
+    <div class="legend">
+      <span style="color:var(--muted);">Click để cycle: trống → I → R → M → trống</span>
+      <div class="item"><div class="swatch I">I</div><span>Introduce — giới thiệu</span></div>
+      <div class="item"><div class="swatch R">R</div><span>Reinforce — củng cố</span></div>
+      <div class="item"><div class="swatch M">M</div><span>Master — thành thạo</span></div>
+    </div>
+  `;
+
+  const head = `
+    <thead><tr>
+      <th class="corner">Học phần \\ PLO</th>
+      ${PLOS.map(p => `<th title="${escapeHtml(p.content)}">${escapeHtml(p.code)}</th>`).join('')}
+    </tr></thead>`;
+
+  const body = COURSES.map(c => `
+    <tr>
+      <th><span class="code">${escapeHtml(c.code)}</span><span class="name">${escapeHtml(c.name)}</span></th>
+      ${PLOS.map(p => {
+        const lv = idx[`${c.id}-${p.id}`] || '';
+        return `<td class="cell ${lv || 'empty'}" data-c="${c.id}" data-p="${p.id}" data-lv="${lv}">${lv}</td>`;
+      }).join('')}
+    </tr>`).join('');
+
+  host.innerHTML = summary + `<div class="matrix-wrap"><table class="matrix">${head}<tbody>${body}</tbody></table></div>`;
+
+  host.querySelectorAll('.cell').forEach(td => {
+    td.addEventListener('click', () => cycleCp(td));
+  });
+}
+
+const NEXT_LV = { '': 'I', 'I': 'R', 'R': 'M', 'M': '' };
+async function cycleCp(td) {
+  const cur = td.dataset.lv || '';
+  const next = NEXT_LV[cur];
+  const r = await fetch('/api/course-plo-map', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ course_id: parseInt(td.dataset.c), plo_id: parseInt(td.dataset.p), level: next || null }),
+  });
+  const data = await r.json();
+  if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+  td.dataset.lv = next;
+  td.className = 'cell ' + (next || 'empty');
+  td.textContent = next;
+  // Refresh CP_MAP for summary recalc
+  if (next) {
+    const exist = CP_MAP.find(m => m.course_id == td.dataset.c && m.plo_id == td.dataset.p);
+    if (exist) exist.level = next;
+    else CP_MAP.push({ course_id: parseInt(td.dataset.c), plo_id: parseInt(td.dataset.p), level: next });
+  } else {
+    CP_MAP = CP_MAP.filter(m => !(m.course_id == td.dataset.c && m.plo_id == td.dataset.p));
+  }
+  // Re-render summary only (cheap full re-render)
+  renderCoursePlo(document.getElementById('content'));
+}
+
+// ── CLO × PLO ────────────────────────────────────────────────
+function renderCloPlo(host) {
+  if (CLOS.length === 0) {
+    host.innerHTML = `<div class="empty-msg">Chưa có CLO nào. Vào <a href="/ctdt-m8.html">Khung CĐR</a> tạo HP và CLO trước.</div>`;
+    return;
+  }
+
+  // Lookup
+  const idx = {};
+  for (const m of CLP_MAP) idx[`${m.clo_id}-${m.plo_id}`] = m.weight;
+
+  // Group CLOs by course for visual structure
+  const courseById = {}; for (const c of COURSES) courseById[c.id] = c;
+  const groups = {}; // course_id → [clos]
+  for (const cl of CLOS) {
+    (groups[cl.course_id] = groups[cl.course_id] || []).push(cl);
+  }
+  for (const k in groups) groups[k].sort((a, b) => (a.code || '').localeCompare(b.code || ''));
+  const courseIds = Object.keys(groups).sort((a, b) => {
+    const ca = courseById[a], cb = courseById[b];
+    return (ca?.semester || 0) - (cb?.semester || 0) || (ca?.code || '').localeCompare(cb?.code || '');
+  });
+
+  const filled = CLP_MAP.length;
+  const totalCells = CLOS.length * PLOS.length;
+
+  const summary = `
+    <div class="summary-row">
+      <div class="summary-card"><span class="v">${CLOS.length}</span> CLO</div>
+      <div class="summary-card"><span class="v">${PLOS.length}</span> PLO</div>
+      <div class="summary-card"><span class="v">${filled}</span>/${totalCells} cell có weight</div>
+      <div class="summary-card" style="color:var(--muted);">Inc7 sẽ dùng weight để tính điểm PLO từ điểm CLO</div>
+    </div>
+    <div class="legend">
+      <span style="color:var(--muted);">Nhập số (ví dụ 1.0). Để trống = không liên kết. Tab/Enter để lưu.</span>
+    </div>
+  `;
+
+  const head = `
+    <thead><tr>
+      <th class="corner">CLO \\ PLO</th>
+      ${PLOS.map(p => `<th title="${escapeHtml(p.content)}">${escapeHtml(p.code)}</th>`).join('')}
+    </tr></thead>`;
+
+  const body = courseIds.map(cid => {
+    const course = courseById[cid];
+    const courseTitle = course ? `${escapeHtml(course.code)} — ${escapeHtml(course.name)}` : 'HP đã xóa';
+    const sep = `<tr><th colspan="${1 + PLOS.length}" style="background:#1a1f2e;color:var(--accent);font-size:11px;padding:6px 10px;text-transform:uppercase;letter-spacing:.5px;">${courseTitle}</th></tr>`;
+    const rows = groups[cid].map(cl => `
+      <tr>
+        <th><span class="code">${escapeHtml(cl.code)}</span><span class="name">${escapeHtml(cl.content.slice(0, 60))}</span></th>
+        ${PLOS.map(p => {
+          const w = idx[`${cl.id}-${p.id}`];
+          const has = (w !== undefined);
+          return `<td class="wcell ${has ? 'has' : ''}"><input type="number" min="0" step="0.1" data-cl="${cl.id}" data-p="${p.id}" value="${has ? w : ''}" placeholder=""></td>`;
+        }).join('')}
+      </tr>`).join('');
+    return sep + rows;
+  }).join('');
+
+  host.innerHTML = summary + `<div class="matrix-wrap"><table class="matrix">${head}<tbody>${body}</tbody></table></div>`;
+
+  host.querySelectorAll('.wcell input').forEach(inp => {
+    let last = inp.value;
+    inp.addEventListener('blur', () => {
+      if (inp.value === last) return;
+      saveClpWeight(inp);
+      last = inp.value;
+    });
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); inp.blur(); }
+    });
+  });
+}
+
+async function saveClpWeight(inp) {
+  const clo_id = parseInt(inp.dataset.cl), plo_id = parseInt(inp.dataset.p);
+  const v = inp.value.trim();
+  const body = { clo_id, plo_id, weight: v === '' ? null : Number(v) };
+  const r = await fetch('/api/clo-plo-map', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+  });
+  const data = await r.json();
+  if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+  inp.parentElement.classList.toggle('has', v !== '');
+  // Sync local cache
+  CLP_MAP = CLP_MAP.filter(m => !(m.clo_id === clo_id && m.plo_id === plo_id));
+  if (v !== '') CLP_MAP.push({ clo_id, plo_id, weight: Number(v) });
+  // Update summary card numbers without full re-render flicker
+  const sum = document.querySelector('.summary-row .summary-card:nth-child(3)');
+  if (sum) sum.innerHTML = `<span class="v">${CLP_MAP.length}</span>/${CLOS.length * PLOS.length} cell có weight`;
+}
+
+loadAll();
+</script>
+</body>
+</html>

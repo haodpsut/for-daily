@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M11 — Tổng hợp PLO</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0f1117; --panel: #1a1d27; --border: #2a2d3e; --accent: #4f8ef7;
+  --accent2: #7c5cbf; --green: #2ea87e; --red: #e05a5a; --yellow: #e0a847;
+  --text: #e2e8f0; --muted: #64748b; --hover: #22263a;
+}
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; font-size: 14px; }
+.topnav { background: var(--panel); border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; align-items: center; height: 44px; flex-shrink: 0; }
+.topnav .brand { font-size: 13px; font-weight: 800; color: var(--accent); margin-right: 24px; white-space: nowrap; }
+.nav-link { display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px; font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; transition: all .15s; white-space: nowrap; }
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.main { padding: 20px; max-width: 1400px; margin: 0 auto; width: 100%; }
+.title-bar { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
+.title-bar h1 { font-size: 18px; }
+.title-bar p { font-size: 12px; color: var(--muted); }
+
+.controls {
+  display: flex; gap: 10px; align-items: center; padding: 10px 14px;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 12px; flex-wrap: wrap;
+}
+.controls label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; font-weight: 700; }
+.controls select, .controls input[type=checkbox] { background: #22263a; color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 5px 8px; font-size: 13px; }
+.controls .check { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+
+.summary {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 14px;
+}
+.summary .card { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: var(--muted); }
+.summary .card .v { color: var(--text); font-weight: 700; font-size: 18px; display: block; margin-bottom: 2px; }
+.summary .card.green .v { color: var(--green); }
+.summary .card.red .v { color: var(--red); }
+
+.aunqa-legend {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 6px;
+  padding: 10px 14px; font-size: 12px; margin-bottom: 12px; display: flex; gap: 16px; flex-wrap: wrap;
+}
+.aunqa-legend .item { display: flex; align-items: center; gap: 6px; }
+.aunqa-legend .swatch { width: 14px; height: 14px; border-radius: 3px; }
+.aunqa-legend .swatch.fully_achieved { background: var(--green); }
+.aunqa-legend .swatch.achieved { background: var(--accent); }
+.aunqa-legend .swatch.not_achieved { background: var(--yellow); }
+.aunqa-legend .swatch.fully_not_achieved { background: var(--red); }
+.aunqa-legend .swatch.no_data { background: var(--muted); }
+
+.section { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 14px; }
+.section h2 { font-size: 14px; color: var(--accent); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+
+/* PLO cards */
+.plo-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 12px; }
+.plo-card { background: #22263a; border: 1px solid var(--border); border-radius: 6px; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+.plo-card.fully_achieved   { border-left: 4px solid var(--green); }
+.plo-card.achieved         { border-left: 4px solid var(--accent); }
+.plo-card.not_achieved     { border-left: 4px solid var(--yellow); }
+.plo-card.fully_not_achieved { border-left: 4px solid var(--red); }
+.plo-card.no_data          { border-left: 4px solid var(--muted); }
+.plo-card .head { display: flex; align-items: baseline; justify-content: space-between; }
+.plo-card .code { color: var(--accent); font-weight: 700; font-size: 14px; }
+.plo-card .meta { font-size: 11px; color: var(--muted); }
+.plo-card .content { font-size: 12px; color: var(--text); line-height: 1.4; }
+.plo-card .pct { font-size: 28px; font-weight: 700; line-height: 1; }
+.plo-card.fully_achieved .pct   { color: var(--green); }
+.plo-card.achieved .pct         { color: var(--accent); }
+.plo-card.not_achieved .pct     { color: var(--yellow); }
+.plo-card.fully_not_achieved .pct { color: var(--red); }
+.plo-card.no_data .pct          { color: var(--muted); }
+.plo-card .level-label { font-size: 11px; text-transform: uppercase; letter-spacing: .5px; font-weight: 700; }
+.plo-card .level-label.fully_achieved   { color: var(--green); }
+.plo-card .level-label.achieved         { color: var(--accent); }
+.plo-card .level-label.not_achieved     { color: var(--yellow); }
+.plo-card .level-label.fully_not_achieved { color: var(--red); }
+.plo-card .level-label.no_data          { color: var(--muted); }
+.plo-card .progress { background: #1a1d27; height: 8px; border-radius: 4px; overflow: hidden; }
+.plo-card .progress .fill { height: 100%; transition: width .3s; }
+.plo-card .progress .fill.fully_achieved { background: var(--green); }
+.plo-card .progress .fill.achieved       { background: var(--accent); }
+.plo-card .progress .fill.not_achieved   { background: var(--yellow); }
+.plo-card .progress .fill.fully_not_achieved { background: var(--red); }
+
+.contrib-list { background: #1a1d27; border-radius: 4px; padding: 8px 10px; font-size: 11px; }
+.contrib-list .row { display: grid; grid-template-columns: 60px 80px 1fr 60px 60px; gap: 6px; padding: 3px 0; align-items: center; }
+.contrib-list .row .clo-code { color: var(--accent); font-weight: 700; }
+.contrib-list .row .course-code { color: var(--accent2); font-weight: 700; }
+.contrib-list .row .pct { color: var(--green); font-weight: 700; text-align: right; font-size: 11px; }
+.contrib-list .row .pct.no { color: var(--muted); font-weight: 400; font-style: italic; }
+.contrib-list .row .w { text-align: right; color: var(--muted); }
+.contrib-list .head { color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 4px; margin-bottom: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; font-size: 10px; }
+.contrib-list .none { color: var(--yellow); font-size: 11px; padding: 4px 0; }
+
+/* Heatmap */
+.heatmap-wrap { overflow-x: auto; }
+.heatmap { border-collapse: separate; border-spacing: 0; font-size: 12px; }
+.heatmap th, .heatmap td { border: 1px solid var(--border); padding: 0; min-width: 70px; height: 50px; text-align: center; vertical-align: middle; background: var(--panel); }
+.heatmap thead th { background: #22263a; padding: 6px; font-weight: 700; }
+.heatmap thead th.corner { left: 0; min-width: 240px; max-width: 240px; text-align: left; padding: 6px 10px; }
+.heatmap tbody th { text-align: left; padding: 6px 10px; min-width: 240px; max-width: 240px; background: #22263a; }
+.heatmap tbody th .code { color: var(--accent); font-weight: 700; }
+.heatmap tbody th .name { color: var(--muted); font-size: 11px; margin-left: 6px; }
+
+.heatmap td.cell { padding: 4px; cursor: default; }
+.heatmap td.cell .pct-line { font-weight: 700; font-size: 13px; line-height: 1.2; }
+.heatmap td.cell .map-line { font-size: 9px; color: var(--muted); margin-top: 2px; font-weight: 700; letter-spacing: .5px; }
+.heatmap td.cell.fully_achieved   { background: rgba(46, 168, 126, .25); color: var(--green); }
+.heatmap td.cell.achieved         { background: rgba(79, 142, 247, .18); color: #8db5e8; }
+.heatmap td.cell.not_achieved     { background: rgba(224, 168, 71, .18); color: var(--yellow); }
+.heatmap td.cell.fully_not_achieved { background: rgba(224, 90, 90, .18); color: var(--red); }
+.heatmap td.cell.no_pct.has_map { background: rgba(124, 92, 191, .1); color: var(--muted); }
+.heatmap td.cell.no_pct.no_map  { color: #34384a; }
+.heatmap td.cell.no_pct.no_map::after { content: '·'; }
+
+.empty-msg { background: var(--panel); border: 1px dashed var(--border); border-radius: 8px; padding: 30px 20px; text-align: center; color: var(--muted); font-size: 13px; }
+.empty-msg a { color: var(--accent); text-decoration: underline; }
+</style>
+<script src="/workspace-switcher.js" defer></script>
+</head>
+<body>
+<nav class="topnav">
+  <span class="brand">KĐCLGD · ĐH Kiến trúc Đà Nẵng</span>
+</nav>
+
+<div class="main">
+  <div class="title-bar">
+    <div>
+      <h1>📊 Tổng hợp PLO (M11)</h1>
+      <p>Pipeline cuối: điểm CLO (M10) × ánh xạ CLO×PLO (M8) → mức đạt PLO toàn CTĐT, phân loại 4 mức AUN-QA.</p>
+    </div>
+  </div>
+
+  <div class="controls">
+    <label>Năm học:</label>
+    <select id="year-filter" onchange="loadAll()">
+      <option value="">— Tất cả —</option>
+    </select>
+    <label class="check">
+      <input type="checkbox" id="include-draft" onchange="loadAll()"> Tính cả plan nháp
+    </label>
+    <span style="color:var(--muted);font-size:11px;margin-left:auto;">Mặc định bỏ qua plan status=draft.</span>
+  </div>
+
+  <div id="content"></div>
+</div>
+
+<script>
+const LEVEL_LABEL = {
+  fully_achieved: 'Fully achieved (75–100%)',
+  achieved: 'Achieved (50–75%)',
+  not_achieved: 'Not achieved (25–50%)',
+  fully_not_achieved: 'Fully not achieved (<25%)',
+  no_data: 'Chưa có dữ liệu',
+};
+
+function escapeHtml(s = '') {
+  return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
+async function loadYears() {
+  const plans = await fetch('/api/assessment-plans').then(r => r.json());
+  const years = [...new Set(plans.map(p => p.school_year).filter(Boolean))].sort().reverse();
+  const sel = document.getElementById('year-filter');
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">— Tất cả —</option>' + years.map(y => `<option value="${y}" ${y === cur ? 'selected' : ''}>${y}</option>`).join('');
+}
+
+async function loadAll() {
+  const year = document.getElementById('year-filter').value;
+  const includeDraft = document.getElementById('include-draft').checked;
+  const params = new URLSearchParams();
+  if (year) params.set('school_year', year);
+  if (includeDraft) params.set('include_draft', '1');
+  const data = await fetch(`/api/plo-rollup?${params.toString()}`).then(r => r.json());
+  render(data);
+}
+
+function render(data) {
+  const host = document.getElementById('content');
+  const { counts, plos, heatmap } = data;
+
+  if (counts.plos === 0) {
+    host.innerHTML = `<div class="empty-msg">Chưa có PLO. Vào <a href="/ctdt-m8.html">Khung CĐR</a> tạo PLO trước.</div>`;
+    return;
+  }
+
+  // Summary
+  const datCount = plos.filter(p => p.level === 'fully_achieved' || p.level === 'achieved').length;
+  const undCount = plos.filter(p => p.level === 'not_achieved' || p.level === 'fully_not_achieved').length;
+  const ndCount  = plos.filter(p => p.level === null).length;
+
+  // Level counts
+  const lc = { fully_achieved: 0, achieved: 0, not_achieved: 0, fully_not_achieved: 0, no_data: 0 };
+  for (const p of plos) lc[p.level || 'no_data']++;
+
+  let html = `
+    <div class="summary">
+      <div class="card"><span class="v">${counts.plos}</span>PLO</div>
+      <div class="card"><span class="v">${counts.clos}</span>CLO</div>
+      <div class="card"><span class="v">${counts.courses}</span>HP</div>
+      <div class="card"><span class="v">${counts.plans_considered}</span>Plan đo</div>
+      <div class="card"><span class="v">${counts.mappings_clo_plo}</span>Mapping CLO×PLO</div>
+      <div class="card green"><span class="v">${datCount}</span>PLO ≥ Achieved (50%)</div>
+      <div class="card red"><span class="v">${undCount}</span>PLO &lt; 50%</div>
+    </div>
+
+    <div class="aunqa-legend">
+      <span style="color:var(--muted);font-weight:700;">4 mức AUN-QA:</span>
+      <div class="item"><span class="swatch fully_achieved"></span>Fully (75–100%) <b style="color:var(--green);">×${lc.fully_achieved}</b></div>
+      <div class="item"><span class="swatch achieved"></span>Achieved (50–75%) <b style="color:var(--accent);">×${lc.achieved}</b></div>
+      <div class="item"><span class="swatch not_achieved"></span>Not (25–50%) <b style="color:var(--yellow);">×${lc.not_achieved}</b></div>
+      <div class="item"><span class="swatch fully_not_achieved"></span>Fully not (&lt;25%) <b style="color:var(--red);">×${lc.fully_not_achieved}</b></div>
+      ${lc.no_data > 0 ? `<div class="item"><span class="swatch no_data"></span>Chưa có dữ liệu <b>×${lc.no_data}</b></div>` : ''}
+    </div>
+
+    <div class="section">
+      <h2>🎯 Mức đạt từng PLO (theo 4 mức AUN-QA)</h2>
+      <div class="plo-cards">
+        ${plos.map(p => ploCardHtml(p)).join('')}
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>🗺 Heatmap Course × PLO — % đạt thực tế (vs ánh xạ I/R/M)</h2>
+      ${counts.courses === 0 ? '<div class="empty-msg">Chưa có học phần.</div>' : heatmapHtml(heatmap)}
+    </div>
+  `;
+  host.innerHTML = html;
+}
+
+function ploCardHtml(p) {
+  const lvl = p.level || 'no_data';
+  const pctText = p.pct === null ? '—' : `${p.pct}%`;
+  const fillW = p.pct === null ? 0 : p.pct;
+  const contribHtml = p.contributing_clos.length === 0
+    ? `<div class="none">⚠ Chưa map CLO nào lên PLO này (vào <a href="/ctdt-m8-mapping.html" style="color:var(--accent);">Ma trận ánh xạ</a> để gán)</div>`
+    : `<div class="head row"><span>HP</span><span>CLO</span><span></span><span>W</span><span>%</span></div>` +
+      p.contributing_clos.map(c => `
+        <div class="row">
+          <span class="course-code">${escapeHtml(c.course_code || '?')}</span>
+          <span class="clo-code">${escapeHtml(c.clo_code || '?')}</span>
+          <span style="color:var(--muted);">${c.plans_count} plan</span>
+          <span class="w">${c.weight}</span>
+          <span class="pct ${c.avg_pct_pass === null ? 'no' : ''}">${c.avg_pct_pass === null ? '—' : c.avg_pct_pass + '%'}</span>
+        </div>`).join('');
+  return `
+    <div class="plo-card ${lvl}">
+      <div class="head">
+        <span class="code">${escapeHtml(p.code)}</span>
+        <span class="meta">${p.clo_with_data}/${p.clo_total} CLO có dữ liệu</span>
+      </div>
+      <div class="content">${escapeHtml(p.content)}</div>
+      <div style="display:flex;align-items:baseline;gap:10px;">
+        <div class="pct">${pctText}</div>
+        <div class="level-label ${lvl}">${LEVEL_LABEL[lvl]}</div>
+      </div>
+      <div class="progress"><div class="fill ${lvl}" style="width:${fillW}%;"></div></div>
+      <div class="contrib-list">${contribHtml}</div>
+    </div>`;
+}
+
+function classifyAunQa(pct) {
+  if (pct >= 75) return 'fully_achieved';
+  if (pct >= 50) return 'achieved';
+  if (pct >= 25) return 'not_achieved';
+  return 'fully_not_achieved';
+}
+
+function heatmapHtml(heatmap) {
+  // Pivot: courses × plos
+  const courseIds = [...new Set(heatmap.map(h => h.course_id))];
+  const ploIds = [...new Set(heatmap.map(h => h.plo_id))];
+  const cMap = {}; for (const h of heatmap) cMap[`${h.course_id}-${h.plo_id}`] = h;
+  const courseNames = {}, ploCodes = {};
+  for (const h of heatmap) { courseNames[h.course_id] = { code: h.course_code, name: h.course_name }; ploCodes[h.plo_id] = h.plo_code; }
+
+  return `
+    <div class="heatmap-wrap">
+      <table class="heatmap">
+        <thead><tr>
+          <th class="corner">Học phần \\ PLO</th>
+          ${ploIds.map(pid => `<th>${escapeHtml(ploCodes[pid] || '?')}</th>`).join('')}
+        </tr></thead>
+        <tbody>
+        ${courseIds.map(cid => `
+          <tr>
+            <th><span class="code">${escapeHtml(courseNames[cid]?.code || '?')}</span><span class="name">${escapeHtml(courseNames[cid]?.name || '')}</span></th>
+            ${ploIds.map(pid => {
+              const h = cMap[`${cid}-${pid}`];
+              if (!h) return `<td></td>`;
+              if (h.pct === null) {
+                return `<td class="cell no_pct ${h.map_level ? 'has_map' : 'no_map'}">${h.map_level ? `<div class="map-line">${h.map_level}</div>` : ''}</td>`;
+              }
+              const lvl = classifyAunQa(h.pct);
+              return `<td class="cell ${lvl}"><div class="pct-line">${h.pct}%</div>${h.map_level ? `<div class="map-line">${h.map_level}</div>` : ''}</td>`;
+            }).join('')}
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-top:8px;">
+      Số lớn = % đạt thực tế (4 mức AUN-QA). Chữ nhỏ I/R/M = mức ánh xạ trong CTĐT (Introduce/Reinforce/Master, từ Inc4c).
+      Tím nhạt = có mapping nhưng chưa có dữ liệu đo.
+    </p>
+  `;
+}
+
+(async () => { await loadYears(); loadAll(); })();
+</script>
+</body>
+</html>

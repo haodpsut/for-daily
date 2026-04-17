@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M8 — Khung CĐR (PEO + PLO)</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0f1117; --panel: #1a1d27; --border: #2a2d3e; --accent: #4f8ef7;
+  --accent2: #7c5cbf; --green: #2ea87e; --red: #e05a5a; --yellow: #e0a847;
+  --text: #e2e8f0; --muted: #64748b; --hover: #22263a;
+}
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg); color: var(--text); display: flex;
+  flex-direction: column; min-height: 100vh; font-size: 14px;
+}
+.topnav {
+  background: var(--panel); border-bottom: 1px solid var(--border);
+  padding: 0 20px; display: flex; align-items: center; height: 44px; flex-shrink: 0;
+}
+.topnav .brand { font-size: 13px; font-weight: 800; color: var(--accent); margin-right: 24px; white-space: nowrap; }
+.nav-link {
+  display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px;
+  font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none;
+  border-bottom: 2px solid transparent; transition: all .15s; white-space: nowrap;
+}
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.main { padding: 20px; max-width: 1300px; margin: 0 auto; width: 100%; }
+.title-bar { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
+.title-bar h1 { font-size: 18px; }
+.title-bar p { font-size: 12px; color: var(--muted); }
+
+.cols { display: grid; grid-template-columns: 1fr 1.2fr; gap: 16px; margin-bottom: 16px; }
+@media (max-width: 900px) { .cols { grid-template-columns: 1fr; } }
+.cols-2 { display: grid; grid-template-columns: 1.1fr 1.4fr; gap: 16px; }
+@media (max-width: 900px) { .cols-2 { grid-template-columns: 1fr; } }
+
+/* Courses table */
+.courses-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.courses-table th, .courses-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+.courses-table th { font-size: 11px; text-transform: uppercase; color: var(--muted); letter-spacing: .5px; font-weight: 700; }
+.courses-table tbody tr { cursor: pointer; transition: background .12s; }
+.courses-table tbody tr:hover { background: var(--hover); }
+.courses-table tbody tr.selected { background: rgba(79, 142, 247, .15); border-left: 3px solid var(--accent); }
+.courses-table .course-code { font-weight: 700; color: var(--accent); white-space: nowrap; }
+.courses-table .clo-pill {
+  display: inline-block; min-width: 22px; padding: 2px 6px; border-radius: 10px;
+  background: #2a2d3e; color: var(--muted); font-size: 11px; font-weight: 700; text-align: center;
+}
+.courses-table .clo-pill.has { background: var(--green); color: #fff; }
+.courses-table .clo-pill.warn { background: var(--yellow); color: #0f1117; }
+.courses-table .type-tag {
+  font-size: 10px; padding: 1px 6px; border-radius: 3px; font-weight: 600; text-transform: uppercase;
+}
+.courses-table .type-tag.core     { background: #1f3a5c; color: #8db5e8; }
+.courses-table .type-tag.elective { background: #3a2a1f; color: #f0b27a; }
+.courses-table .type-tag.general  { background: #2a2d3e; color: var(--muted); }
+.courses-table .actions-cell { display: flex; gap: 4px; justify-content: flex-end; }
+
+.clo-section { display: flex; flex-direction: column; }
+.clo-prompt {
+  padding: 30px 20px; text-align: center; color: var(--muted); font-size: 12px;
+  border: 1px dashed var(--border); border-radius: 6px;
+}
+.clo-prompt strong { color: var(--text); display: block; font-size: 14px; margin-bottom: 6px; }
+
+.col {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px; min-height: 400px;
+}
+.col-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.col-head h2 { font-size: 14px; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+.col-head p { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.btn {
+  background: var(--accent); color: #fff; border: none; padding: 6px 14px;
+  border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;
+}
+.btn:hover { filter: brightness(1.1); }
+.btn.ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+.btn.ghost:hover { color: var(--text); border-color: var(--accent); }
+.btn.danger { background: var(--red); }
+.btn.small { padding: 3px 8px; font-size: 11px; }
+
+.empty {
+  text-align: center; color: var(--muted); padding: 40px 16px;
+  border: 1px dashed var(--border); border-radius: 6px; font-size: 12px;
+}
+
+.card {
+  background: #22263a; border: 1px solid var(--border); border-radius: 6px;
+  padding: 12px; margin-bottom: 8px; display: flex; gap: 10px; align-items: flex-start;
+}
+.card .badge {
+  background: var(--accent2); color: #fff; min-width: 44px; height: 22px;
+  border-radius: 4px; font-size: 11px; font-weight: 700; display: flex;
+  align-items: center; justify-content: center; padding: 0 6px;
+}
+.card .body { flex: 1; min-width: 0; }
+.card .body .text { font-size: 13px; line-height: 1.4; white-space: pre-wrap; word-break: break-word; }
+.card .body .meta { display: flex; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
+.card .body .meta .tag {
+  font-size: 10px; padding: 1px 6px; border-radius: 3px; font-weight: 600;
+  background: #2a2d3e; color: var(--muted); text-transform: uppercase;
+}
+.card .body .meta .tag.bloom { background: #1f3a5c; color: #8db5e8; }
+.card .body .meta .tag.knowledge { background: #1f3a26; color: #74cb98; }
+.card .body .meta .tag.skill     { background: #3a2a1f; color: #f0b27a; }
+.card .body .meta .tag.attitude  { background: #3a1f3a; color: #c188e8; }
+.card .actions { display: flex; gap: 4px; flex-shrink: 0; }
+
+/* Modal */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.6); display: flex;
+  align-items: center; justify-content: center; z-index: 9999;
+}
+.modal {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+  padding: 20px; min-width: 480px; max-width: 96vw; color: var(--text);
+}
+.modal h3 { margin-bottom: 12px; font-size: 14px; color: var(--accent); }
+.modal label { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; margin: 10px 0 4px; letter-spacing: .3px; }
+.modal input, .modal select, .modal textarea {
+  width: 100%; background: #22263a; color: var(--text); border: 1px solid var(--border);
+  border-radius: 4px; padding: 6px 8px; font-size: 13px; font-family: inherit;
+}
+.modal textarea { resize: vertical; min-height: 80px; }
+.modal .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+
+.toast {
+  position: fixed; bottom: 20px; right: 20px; padding: 10px 16px; border-radius: 6px;
+  font-size: 12px; font-weight: 600; z-index: 10000; opacity: 0; transform: translateY(8px);
+  transition: all .2s; pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.success { background: var(--green); color: #fff; }
+.toast.error   { background: var(--red);   color: #fff; }
+</style>
+<script src="/workspace-switcher.js" defer></script>
+</head>
+<body>
+<nav class="topnav">
+  <span class="brand">KĐCLGD · ĐH Kiến trúc Đà Nẵng</span>
+</nav>
+
+<div class="main">
+  <div class="title-bar">
+    <div>
+      <h1>🧭 Khung Chuẩn Đầu Ra (M8)</h1>
+      <p>Định nghĩa PEO (Mục tiêu giáo dục) và PLO (Chuẩn đầu ra CTĐT). Các Inc tiếp theo sẽ thêm Course/CLO + ánh xạ.</p>
+    </div>
+  </div>
+
+  <div class="cols">
+    <!-- ── PEOs ─────────────────────────────────── -->
+    <div class="col">
+      <div class="col-head">
+        <div>
+          <h2>📍 PEO — Mục tiêu giáo dục</h2>
+          <p>3–5 mục tiêu mô tả người học sau 3–5 năm tốt nghiệp</p>
+        </div>
+        <button class="btn" onclick="openPeoModal()">+ Thêm PEO</button>
+      </div>
+      <div id="peo-list"></div>
+    </div>
+
+    <!-- ── PLOs ─────────────────────────────────── -->
+    <div class="col">
+      <div class="col-head">
+        <div>
+          <h2>🎯 PLO — Chuẩn đầu ra CTĐT</h2>
+          <p>6–10 PLO mô tả năng lực sinh viên đạt khi tốt nghiệp</p>
+        </div>
+        <button class="btn" onclick="openPloModal()">+ Thêm PLO</button>
+      </div>
+      <div id="plo-list"></div>
+    </div>
+  </div>
+
+  <!-- ── Courses + CLOs ──────────────────────────────────────── -->
+  <div class="cols-2">
+    <div class="col">
+      <div class="col-head">
+        <div>
+          <h2>📚 Học phần (Courses)</h2>
+          <p>Bấm vào hàng để xem/thêm CLO của học phần đó</p>
+        </div>
+        <button class="btn" onclick="openCourseModal()">+ Thêm HP</button>
+      </div>
+      <div id="course-list"></div>
+    </div>
+    <div class="col clo-section">
+      <div class="col-head">
+        <div>
+          <h2>🧪 CLO — <span id="clo-course-label">chọn 1 học phần</span></h2>
+          <p>Khuyến nghị 4–6 CLO/HP. Cảnh báo CLO inflation nếu &gt; 6.</p>
+        </div>
+        <button class="btn" id="add-clo-btn" disabled onclick="openCloModal()">+ Thêm CLO</button>
+      </div>
+      <div id="clo-list"></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const BLOOM_LABEL = {
+  remember: 'Nhớ', understand: 'Hiểu', apply: 'Vận dụng',
+  analyze: 'Phân tích', evaluate: 'Đánh giá', create: 'Sáng tạo',
+};
+const TYPE_LABEL = { knowledge: 'Kiến thức', skill: 'Kỹ năng', attitude: 'Thái độ' };
+
+function toast(msg, kind = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = `toast ${kind} show`;
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function escapeHtml(s = '') {
+  return s.replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
+// ── PEO ──────────────────────────────────────────────────────
+async function loadPeos() {
+  const r = await fetch('/api/peos');
+  const list = await r.json();
+  const host = document.getElementById('peo-list');
+  if (list.length === 0) {
+    host.innerHTML = `<div class="empty">Chưa có PEO. Bấm "+ Thêm PEO" để bắt đầu.</div>`;
+    return;
+  }
+  host.innerHTML = list.map(p => `
+    <div class="card">
+      <div class="badge">${escapeHtml(p.code)}</div>
+      <div class="body"><div class="text">${escapeHtml(p.content)}</div></div>
+      <div class="actions">
+        <button class="btn ghost small" onclick='openPeoModal(${JSON.stringify(p)})'>Sửa</button>
+        <button class="btn danger small" onclick="delPeo(${p.id})">Xóa</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openPeoModal(p = null) {
+  const isEdit = !!p;
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal">
+      <h3>${isEdit ? 'Sửa' : 'Thêm'} PEO</h3>
+      <label>Mã PEO</label>
+      <input id="m-code" placeholder="PEO1" value="${isEdit ? escapeHtml(p.code) : ''}">
+      <label>Nội dung</label>
+      <textarea id="m-content" placeholder="Người tốt nghiệp sẽ vận dụng kiến thức ... vào ...">${isEdit ? escapeHtml(p.content) : ''}</textarea>
+      <div class="modal-actions">
+        <button class="btn ghost" id="m-cancel">Hủy</button>
+        <button class="btn" id="m-save">Lưu</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+  overlay.querySelector('#m-cancel').onclick = () => overlay.remove();
+  overlay.querySelector('#m-save').onclick = async () => {
+    const code    = overlay.querySelector('#m-code').value.trim();
+    const content = overlay.querySelector('#m-content').value.trim();
+    if (!code || !content) { toast('Cần mã và nội dung', 'error'); return; }
+    const url = isEdit ? `/api/peos/${p.id}` : '/api/peos';
+    const method = isEdit ? 'PUT' : 'POST';
+    const r = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code, content }) });
+    const data = await r.json();
+    if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+    overlay.remove(); toast(isEdit ? 'Đã cập nhật PEO' : 'Đã thêm PEO'); loadPeos();
+  };
+}
+
+async function delPeo(id) {
+  if (!confirm('Xóa PEO này?')) return;
+  const r = await fetch(`/api/peos/${id}`, { method: 'DELETE' });
+  const data = await r.json();
+  if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+  toast('Đã xóa'); loadPeos();
+}
+
+// ── PLO ──────────────────────────────────────────────────────
+async function loadPlos() {
+  const r = await fetch('/api/plos');
+  const list = await r.json();
+  const host = document.getElementById('plo-list');
+  if (list.length === 0) {
+    host.innerHTML = `<div class="empty">Chưa có PLO. Bấm "+ Thêm PLO" để bắt đầu.</div>`;
+    return;
+  }
+  host.innerHTML = list.map(p => `
+    <div class="card">
+      <div class="badge">${escapeHtml(p.code)}</div>
+      <div class="body">
+        <div class="text">${escapeHtml(p.content)}</div>
+        <div class="meta">
+          <span class="tag bloom">${BLOOM_LABEL[p.bloom_level] || p.bloom_level}</span>
+          <span class="tag ${p.type}">${TYPE_LABEL[p.type] || p.type}</span>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn ghost small" onclick='openPloModal(${JSON.stringify(p)})'>Sửa</button>
+        <button class="btn danger small" onclick="delPlo(${p.id})">Xóa</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openPloModal(p = null) {
+  const isEdit = !!p;
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal">
+      <h3>${isEdit ? 'Sửa' : 'Thêm'} PLO</h3>
+      <label>Mã PLO</label>
+      <input id="m-code" placeholder="PLO1" value="${isEdit ? escapeHtml(p.code) : ''}">
+      <label>Nội dung</label>
+      <textarea id="m-content" placeholder="Sinh viên có khả năng ... ">${isEdit ? escapeHtml(p.content) : ''}</textarea>
+      <div class="row">
+        <div>
+          <label>Cấp Bloom</label>
+          <select id="m-bloom">
+            ${Object.entries(BLOOM_LABEL).map(([k, v]) => `<option value="${k}" ${isEdit && p.bloom_level === k ? 'selected' : ''}>${v} (${k})</option>`).join('')}
+          </select>
+        </div>
+        <div>
+          <label>Loại</label>
+          <select id="m-type">
+            ${Object.entries(TYPE_LABEL).map(([k, v]) => `<option value="${k}" ${isEdit && p.type === k ? 'selected' : ''}>${v}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn ghost" id="m-cancel">Hủy</button>
+        <button class="btn" id="m-save">Lưu</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+  overlay.querySelector('#m-cancel').onclick = () => overlay.remove();
+  overlay.querySelector('#m-save').onclick = async () => {
+    const code        = overlay.querySelector('#m-code').value.trim();
+    const content     = overlay.querySelector('#m-content').value.trim();
+    const bloom_level = overlay.querySelector('#m-bloom').value;
+    const type        = overlay.querySelector('#m-type').value;
+    if (!code || !content) { toast('Cần mã và nội dung', 'error'); return; }
+    const url = isEdit ? `/api/plos/${p.id}` : '/api/plos';
+    const method = isEdit ? 'PUT' : 'POST';
+    const r = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code, content, bloom_level, type }) });
+    const data = await r.json();
+    if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+    overlay.remove(); toast(isEdit ? 'Đã cập nhật PLO' : 'Đã thêm PLO'); loadPlos();
+  };
+}
+
+async function delPlo(id) {
+  if (!confirm('Xóa PLO này?')) return;
+  const r = await fetch(`/api/plos/${id}`, { method: 'DELETE' });
+  const data = await r.json();
+  if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+  toast('Đã xóa'); loadPlos();
+}
+
+// ── Course ───────────────────────────────────────────────────
+const COURSE_TYPE_LABEL = { core: 'Bắt buộc', elective: 'Tự chọn', general: 'Đại cương' };
+let SELECTED_COURSE = null; // currently selected course object
+let RUBRICS_CACHE = [];     // for CLO modal dropdown
+
+async function loadRubricsCache() {
+  try {
+    RUBRICS_CACHE = await fetch('/api/rubrics').then(r => r.json());
+  } catch { RUBRICS_CACHE = []; }
+}
+
+async function loadCourses() {
+  const r = await fetch('/api/courses');
+  const list = await r.json();
+  const host = document.getElementById('course-list');
+  if (list.length === 0) {
+    host.innerHTML = `<div class="empty">Chưa có học phần. Bấm "+ Thêm HP".</div>`;
+    return;
+  }
+  host.innerHTML = `
+    <table class="courses-table">
+      <thead><tr>
+        <th>Mã</th><th>Tên</th><th>TC</th><th>HK</th><th>Loại</th><th>CLO</th><th></th>
+      </tr></thead>
+      <tbody>
+      ${list.map(c => {
+        const pillCls = c.clo_count === 0 ? '' : (c.clo_count > 6 ? 'warn' : 'has');
+        const isSel = SELECTED_COURSE && SELECTED_COURSE.id === c.id;
+        return `
+          <tr class="${isSel ? 'selected' : ''}" data-id="${c.id}">
+            <td class="course-code">${escapeHtml(c.code)}</td>
+            <td>${escapeHtml(c.name)}</td>
+            <td>${c.credits || ''}</td>
+            <td>${c.semester || ''}</td>
+            <td><span class="type-tag ${c.type}">${COURSE_TYPE_LABEL[c.type] || c.type}</span></td>
+            <td><span class="clo-pill ${pillCls}">${c.clo_count}</span></td>
+            <td class="actions-cell" onclick="event.stopPropagation()">
+              <button class="btn ghost small" onclick='openCourseModal(${JSON.stringify(c)})'>Sửa</button>
+              <button class="btn danger small" onclick="delCourse(${c.id})">Xóa</button>
+            </td>
+          </tr>`;
+      }).join('')}
+      </tbody>
+    </table>
+  `;
+  // Row click to select
+  host.querySelectorAll('tbody tr').forEach(tr => {
+    tr.addEventListener('click', () => {
+      const id = parseInt(tr.dataset.id);
+      const c = list.find(x => x.id === id);
+      selectCourse(c);
+    });
+  });
+  // Re-apply selection if previous course still exists
+  if (SELECTED_COURSE) {
+    const still = list.find(x => x.id === SELECTED_COURSE.id);
+    if (still) SELECTED_COURSE = still; else { SELECTED_COURSE = null; renderCloEmpty(); }
+  }
+}
+
+function selectCourse(c) {
+  SELECTED_COURSE = c;
+  document.getElementById('clo-course-label').textContent = `${c.code} ${c.name}`;
+  document.getElementById('add-clo-btn').disabled = false;
+  // Re-render course table to show selection highlight
+  loadCourses();
+  loadClos();
+}
+
+function renderCloEmpty() {
+  document.getElementById('clo-list').innerHTML = `
+    <div class="clo-prompt">
+      <strong>Chưa chọn học phần</strong>
+      Bấm vào 1 hàng học phần bên trái để xem và thêm CLO.
+    </div>`;
+}
+
+function openCourseModal(c = null) {
+  const isEdit = !!c;
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal">
+      <h3>${isEdit ? 'Sửa' : 'Thêm'} học phần</h3>
+      <div class="row">
+        <div>
+          <label>Mã HP</label>
+          <input id="m-code" placeholder="CS101" value="${isEdit ? escapeHtml(c.code) : ''}">
+        </div>
+        <div>
+          <label>Số tín chỉ</label>
+          <input id="m-credits" type="number" min="0" max="20" value="${isEdit ? (c.credits || 0) : 3}">
+        </div>
+      </div>
+      <label>Tên HP</label>
+      <input id="m-name" placeholder="Nhập môn lập trình" value="${isEdit ? escapeHtml(c.name) : ''}">
+      <div class="row">
+        <div>
+          <label>Học kỳ</label>
+          <input id="m-semester" type="number" min="0" max="12" value="${isEdit ? (c.semester || 1) : 1}">
+        </div>
+        <div>
+          <label>Loại</label>
+          <select id="m-type">
+            ${Object.entries(COURSE_TYPE_LABEL).map(([k, v]) => `<option value="${k}" ${isEdit && c.type === k ? 'selected' : ''}>${v}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn ghost" id="m-cancel">Hủy</button>
+        <button class="btn" id="m-save">Lưu</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+  overlay.querySelector('#m-cancel').onclick = () => overlay.remove();
+  overlay.querySelector('#m-save').onclick = async () => {
+    const body = {
+      code:     overlay.querySelector('#m-code').value.trim(),
+      name:     overlay.querySelector('#m-name').value.trim(),
+      credits:  Number(overlay.querySelector('#m-credits').value),
+      semester: Number(overlay.querySelector('#m-semester').value),
+      type:     overlay.querySelector('#m-type').value,
+    };
+    if (!body.code || !body.name) { toast('Cần mã và tên', 'error'); return; }
+    const url = isEdit ? `/api/courses/${c.id}` : '/api/courses';
+    const method = isEdit ? 'PUT' : 'POST';
+    const r = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await r.json();
+    if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+    overlay.remove(); toast(isEdit ? 'Đã cập nhật HP' : 'Đã thêm HP'); loadCourses();
+  };
+}
+
+async function delCourse(id) {
+  if (!confirm('Xóa học phần này? Tất cả CLO của HP cũng sẽ bị xóa.')) return;
+  const r = await fetch(`/api/courses/${id}`, { method: 'DELETE' });
+  const data = await r.json();
+  if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+  toast(`Đã xóa (${data.clos_removed || 0} CLO cũng bị xóa)`);
+  if (SELECTED_COURSE && SELECTED_COURSE.id === id) {
+    SELECTED_COURSE = null;
+    document.getElementById('clo-course-label').textContent = 'chọn 1 học phần';
+    document.getElementById('add-clo-btn').disabled = true;
+    renderCloEmpty();
+  }
+  loadCourses();
+}
+
+// ── CLO ──────────────────────────────────────────────────────
+async function loadClos() {
+  if (!SELECTED_COURSE) { renderCloEmpty(); return; }
+  const r = await fetch(`/api/clos?course_id=${SELECTED_COURSE.id}`);
+  const list = await r.json();
+  const host = document.getElementById('clo-list');
+  if (list.length === 0) {
+    host.innerHTML = `<div class="empty">Chưa có CLO cho học phần này. Bấm "+ Thêm CLO".</div>`;
+    return;
+  }
+  host.innerHTML = list.map(cl => {
+    const rubric = cl.rubric_id ? RUBRICS_CACHE.find(r => r.id === cl.rubric_id) : null;
+    const rubricTag = rubric
+      ? `<span class="tag" style="background:#1f3a5c;color:#8db5e8;">📐 ${escapeHtml(rubric.name)}</span>`
+      : `<span class="tag" style="background:#3a2a1f;color:#f0b27a;">⚠ chưa có rubric</span>`;
+    return `
+      <div class="card">
+        <div class="badge">${escapeHtml(cl.code)}</div>
+        <div class="body">
+          <div class="text">${escapeHtml(cl.content)}</div>
+          <div class="meta">
+            <span class="tag bloom">${BLOOM_LABEL[cl.bloom_level] || cl.bloom_level}</span>
+            <span class="tag ${cl.type}">${TYPE_LABEL[cl.type] || cl.type}</span>
+            ${rubricTag}
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn ghost small" onclick='openCloModal(${JSON.stringify(cl)})'>Sửa</button>
+          <button class="btn danger small" onclick="delClo(${cl.id})">Xóa</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openCloModal(cl = null) {
+  if (!SELECTED_COURSE) { toast('Chọn học phần trước', 'error'); return; }
+  const isEdit = !!cl;
+  const rubricOpts = RUBRICS_CACHE.length === 0
+    ? `<option value="">— Chưa có rubric nào (tạo ở M9 Rubric Library) —</option>`
+    : `<option value="">— Không gán rubric —</option>` +
+      RUBRICS_CACHE.map(r => `<option value="${r.id}" ${isEdit && cl.rubric_id === r.id ? 'selected' : ''}>${escapeHtml(r.name)} (${r.level_count} mức)</option>`).join('');
+
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal">
+      <h3>${isEdit ? 'Sửa' : 'Thêm'} CLO — ${escapeHtml(SELECTED_COURSE.code)}</h3>
+      <label>Mã CLO</label>
+      <input id="m-code" placeholder="CLO1" value="${isEdit ? escapeHtml(cl.code) : ''}">
+      <label>Nội dung (động từ Bloom + đối tượng + bối cảnh)</label>
+      <textarea id="m-content" placeholder="Phân tích yêu cầu phần mềm và đề xuất giải pháp...">${isEdit ? escapeHtml(cl.content) : ''}</textarea>
+      <div class="row">
+        <div>
+          <label>Cấp Bloom</label>
+          <select id="m-bloom">
+            ${Object.entries(BLOOM_LABEL).map(([k, v]) => `<option value="${k}" ${isEdit && cl.bloom_level === k ? 'selected' : ''}>${v} (${k})</option>`).join('')}
+          </select>
+        </div>
+        <div>
+          <label>Loại (Knowledge → đề thi M10; Skill/Attitude → rubric)</label>
+          <select id="m-type">
+            ${Object.entries(TYPE_LABEL).map(([k, v]) => `<option value="${k}" ${isEdit && cl.type === k ? 'selected' : ''}>${v}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <label>Rubric đo lường (tùy chọn)</label>
+      <select id="m-rubric">${rubricOpts}</select>
+      <div class="modal-actions">
+        <button class="btn ghost" id="m-cancel">Hủy</button>
+        <button class="btn" id="m-save">Lưu</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+  overlay.querySelector('#m-cancel').onclick = () => overlay.remove();
+  overlay.querySelector('#m-save').onclick = async () => {
+    const ridSel = overlay.querySelector('#m-rubric').value;
+    const body = {
+      course_id:   SELECTED_COURSE.id,
+      code:        overlay.querySelector('#m-code').value.trim(),
+      content:     overlay.querySelector('#m-content').value.trim(),
+      bloom_level: overlay.querySelector('#m-bloom').value,
+      type:        overlay.querySelector('#m-type').value,
+      rubric_id:   ridSel === '' ? null : parseInt(ridSel),
+    };
+    if (!body.code || !body.content) { toast('Cần mã và nội dung', 'error'); return; }
+    const url = isEdit ? `/api/clos/${cl.id}` : '/api/clos';
+    const method = isEdit ? 'PUT' : 'POST';
+    const r = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await r.json();
+    if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+    overlay.remove();
+    if (data.warning) toast(data.warning, 'error'); else toast(isEdit ? 'Đã cập nhật CLO' : 'Đã thêm CLO');
+    loadClos(); loadCourses();
+  };
+}
+
+async function delClo(id) {
+  if (!confirm('Xóa CLO này?')) return;
+  const r = await fetch(`/api/clos/${id}`, { method: 'DELETE' });
+  const data = await r.json();
+  if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+  toast('Đã xóa'); loadClos(); loadCourses();
+}
+
+// ── Init ─────────────────────────────────────────────────────
+renderCloEmpty();
+(async () => {
+  await loadRubricsCache();
+  loadPeos(); loadPlos(); loadCourses();
+})();
+</script>
+</body>
+</html>

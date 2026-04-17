@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M10 — Đo lường CLO</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0f1117; --panel: #1a1d27; --border: #2a2d3e; --accent: #4f8ef7;
+  --accent2: #7c5cbf; --green: #2ea87e; --red: #e05a5a; --yellow: #e0a847;
+  --text: #e2e8f0; --muted: #64748b; --hover: #22263a;
+}
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; font-size: 14px; }
+.topnav { background: var(--panel); border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; align-items: center; height: 44px; flex-shrink: 0; }
+.topnav .brand { font-size: 13px; font-weight: 800; color: var(--accent); margin-right: 24px; white-space: nowrap; }
+.nav-link { display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px; font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; transition: all .15s; white-space: nowrap; }
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.main { padding: 20px; max-width: 1300px; margin: 0 auto; width: 100%; }
+.title-bar { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
+.title-bar h1 { font-size: 18px; }
+.title-bar p { font-size: 12px; color: var(--muted); }
+
+.btn { background: var(--accent); color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.btn:hover { filter: brightness(1.1); }
+.btn.ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+.btn.ghost:hover { color: var(--text); border-color: var(--accent); }
+.btn.danger { background: var(--red); }
+.btn.small { padding: 3px 8px; font-size: 11px; }
+
+.filter-bar { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; padding: 10px 14px; background: var(--panel); border: 1px solid var(--border); border-radius: 6px; }
+.filter-bar label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; font-weight: 700; }
+.filter-bar select { background: #22263a; color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 5px 8px; font-size: 13px; min-width: 200px; }
+
+.empty { text-align: center; color: var(--muted); padding: 40px 16px; border: 1px dashed var(--border); border-radius: 6px; font-size: 12px; background: var(--panel); }
+.empty a { color: var(--accent); text-decoration: underline; }
+
+.plans-table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; font-size: 13px; }
+.plans-table th, .plans-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; }
+.plans-table th { font-size: 11px; text-transform: uppercase; color: var(--muted); letter-spacing: .5px; font-weight: 700; background: #22263a; }
+.plans-table tbody tr { cursor: pointer; transition: background .12s; }
+.plans-table tbody tr:hover { background: var(--hover); }
+.plans-table tbody tr:hover .course-code { text-decoration: underline; }
+.plans-table .course-code { color: var(--accent); font-weight: 700; }
+.plans-table .actions-cell { display: flex; gap: 4px; justify-content: flex-end; }
+
+.status-pill { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; letter-spacing: .3px; }
+.status-pill.draft  { background: #2a2d3e; color: var(--muted); }
+.status-pill.active { background: #1a3a26; color: var(--green); }
+.status-pill.closed { background: #4a3318; color: var(--yellow); }
+
+.count-pill { display: inline-block; min-width: 28px; padding: 2px 8px; border-radius: 10px; background: #2a2d3e; color: var(--muted); font-size: 11px; font-weight: 700; text-align: center; }
+.count-pill.has { background: var(--accent); color: #fff; }
+
+/* Modal */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; z-index: 9999; }
+.modal { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 20px; min-width: 480px; max-width: 96vw; color: var(--text); }
+.modal h3 { margin-bottom: 12px; font-size: 14px; color: var(--accent); }
+.modal label { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; margin: 10px 0 4px; letter-spacing: .3px; }
+.modal input, .modal select, .modal textarea { width: 100%; background: #22263a; color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 6px 8px; font-size: 13px; font-family: inherit; }
+.modal .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.modal .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.modal .hint { font-size: 11px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+
+.toast { position: fixed; bottom: 20px; right: 20px; padding: 10px 16px; border-radius: 6px; font-size: 12px; font-weight: 600; z-index: 10000; opacity: 0; transform: translateY(8px); transition: all .2s; pointer-events: none; }
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.success { background: var(--green); color: #fff; }
+.toast.error   { background: var(--red);   color: #fff; }
+</style>
+<script src="/workspace-switcher.js" defer></script>
+</head>
+<body>
+<nav class="topnav">
+  <span class="brand">KĐCLGD · ĐH Kiến trúc Đà Nẵng</span>
+</nav>
+
+<div class="main">
+  <div class="title-bar">
+    <div>
+      <h1>🧪 Đo lường CLO (M10)</h1>
+      <p>Kế hoạch đo CLO cho mỗi học phần × kỳ học. Inc6b sẽ thêm bài đánh giá; Inc6c thêm SV + điểm; Inc6d sẽ tính 4 mức AUN-QA.</p>
+    </div>
+    <button class="btn" onclick="openPlanModal()">+ Tạo kế hoạch đo</button>
+  </div>
+
+  <div class="filter-bar">
+    <label>Lọc HP:</label>
+    <select id="course-filter" onchange="loadPlans()">
+      <option value="">— Tất cả học phần —</option>
+    </select>
+  </div>
+
+  <div id="plans-host"></div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+let COURSES = [];
+
+const STATUS_LABEL = { draft: 'Nháp', active: 'Đang đo', closed: 'Đã đóng' };
+
+function toast(msg, kind = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = `toast ${kind} show`;
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+function escapeHtml(s = '') {
+  return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
+async function loadCourses() {
+  COURSES = await fetch('/api/courses').then(r => r.json());
+  const sel = document.getElementById('course-filter');
+  sel.innerHTML = '<option value="">— Tất cả học phần —</option>' +
+    COURSES.map(c => `<option value="${c.id}">${escapeHtml(c.code)} — ${escapeHtml(c.name)}</option>`).join('');
+}
+
+async function loadPlans() {
+  const cid = document.getElementById('course-filter').value;
+  const url = cid ? `/api/assessment-plans?course_id=${cid}` : '/api/assessment-plans';
+  const list = await fetch(url).then(r => r.json());
+  const host = document.getElementById('plans-host');
+  if (list.length === 0) {
+    if (COURSES.length === 0) {
+      host.innerHTML = `<div class="empty">Chưa có học phần. Vào <a href="/ctdt-m8.html">Khung CĐR</a> tạo HP trước.</div>`;
+    } else {
+      host.innerHTML = `<div class="empty">Chưa có kế hoạch đo. Bấm "+ Tạo kế hoạch đo" để bắt đầu.</div>`;
+    }
+    return;
+  }
+  host.innerHTML = `
+    <table class="plans-table">
+      <thead><tr>
+        <th>Học phần</th><th>Tên kế hoạch</th><th>Năm học</th><th>HK</th>
+        <th>Bài ĐG</th><th>SV</th><th>Ngưỡng đạt</th><th>Trạng thái</th><th></th>
+      </tr></thead>
+      <tbody>
+      ${list.map(p => `
+        <tr onclick="openDetail(${p.id})" title="Bấm để mở chi tiết kế hoạch">
+          <td><span class="course-code">${escapeHtml(p.course_code || '?')}</span><br><span style="font-size:11px;color:var(--muted);">${escapeHtml(p.course_name || '')}</span></td>
+          <td>${escapeHtml(p.name)}</td>
+          <td>${escapeHtml(p.school_year)}</td>
+          <td>HK${p.semester}</td>
+          <td><span class="count-pill ${p.item_count > 0 ? 'has' : ''}">${p.item_count}</span></td>
+          <td><span class="count-pill ${p.student_count > 0 ? 'has' : ''}">${p.student_count}</span></td>
+          <td>SV ≥ ${p.pass_score_pct}% &amp; Lớp ≥ ${p.threshold_pct}%</td>
+          <td><span class="status-pill ${p.status}">${STATUS_LABEL[p.status] || p.status}</span></td>
+          <td class="actions-cell" onclick="event.stopPropagation()">
+            <button class="btn ghost small" onclick='openPlanModal(${JSON.stringify(p)})'>Sửa</button>
+            <button class="btn danger small" onclick="delPlan(${p.id})">Xóa</button>
+          </td>
+        </tr>
+      `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function openPlanModal(p = null) {
+  if (COURSES.length === 0) { toast('Chưa có học phần — vào M8 tạo HP trước', 'error'); return; }
+  const isEdit = !!p;
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal">
+      <h3>${isEdit ? 'Sửa' : 'Tạo'} kế hoạch đo CLO</h3>
+      <label>Học phần</label>
+      <select id="m-course" ${isEdit ? 'disabled' : ''}>
+        ${COURSES.map(c => `<option value="${c.id}" ${isEdit && p.course_id === c.id ? 'selected' : ''}>${escapeHtml(c.code)} — ${escapeHtml(c.name)}</option>`).join('')}
+      </select>
+      <label>Tên kế hoạch (để trống = tự sinh)</label>
+      <input id="m-name" placeholder="VD: CS101 — HK1 2025-2026" value="${isEdit ? escapeHtml(p.name) : ''}">
+      <div class="row">
+        <div>
+          <label>Năm học</label>
+          <input id="m-year" placeholder="2025-2026" value="${isEdit ? escapeHtml(p.school_year) : '2025-2026'}">
+        </div>
+        <div>
+          <label>Học kỳ</label>
+          <select id="m-sem">
+            ${[1,2,3].map(s => `<option value="${s}" ${isEdit && p.semester === s ? 'selected' : ''}>HK${s}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="row3">
+        <div>
+          <label>SV đạt CLO khi điểm ≥ (%)</label>
+          <input id="m-pass" type="number" min="0" max="100" step="1" value="${isEdit ? p.pass_score_pct : 50}">
+          <div class="hint">Mức tối thiểu 1 SV phải đạt</div>
+        </div>
+        <div>
+          <label>CLO "Đạt" khi % SV ≥ (%)</label>
+          <input id="m-thr" type="number" min="0" max="100" step="1" value="${isEdit ? p.threshold_pct : 75}">
+          <div class="hint">Tỉ lệ SV cả lớp đạt (ABET 75%)</div>
+        </div>
+        <div>
+          <label>Trạng thái</label>
+          <select id="m-status">
+            ${['draft','active','closed'].map(s => `<option value="${s}" ${isEdit && p.status === s ? 'selected' : ''}>${STATUS_LABEL[s]}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn ghost" id="m-cancel">Hủy</button>
+        <button class="btn" id="m-save">Lưu</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+  overlay.querySelector('#m-cancel').onclick = () => overlay.remove();
+  overlay.querySelector('#m-save').onclick = async () => {
+    const body = {
+      course_id:      parseInt(overlay.querySelector('#m-course').value),
+      name:           overlay.querySelector('#m-name').value.trim(),
+      school_year:    overlay.querySelector('#m-year').value.trim(),
+      semester:       parseInt(overlay.querySelector('#m-sem').value),
+      pass_score_pct: Number(overlay.querySelector('#m-pass').value),
+      threshold_pct:  Number(overlay.querySelector('#m-thr').value),
+      status:         overlay.querySelector('#m-status').value,
+    };
+    if (!body.school_year) { toast('Cần nhập năm học', 'error'); return; }
+    const url = isEdit ? `/api/assessment-plans/${p.id}` : '/api/assessment-plans';
+    const method = isEdit ? 'PUT' : 'POST';
+    const r = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await r.json();
+    if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+    overlay.remove(); toast(isEdit ? 'Đã cập nhật' : 'Đã tạo'); loadPlans();
+  };
+}
+
+async function delPlan(id) {
+  if (!confirm('Xóa kế hoạch này? Mọi bài ĐG, SV, điểm thuộc kế hoạch sẽ bị xóa.')) return;
+  const r = await fetch(`/api/assessment-plans/${id}`, { method: 'DELETE' });
+  const data = await r.json();
+  if (!r.ok) { toast(data.error || 'Lỗi', 'error'); return; }
+  toast(`Đã xóa (${data.items_removed||0} bài, ${data.students_removed||0} SV, ${data.scores_removed||0} điểm)`);
+  loadPlans();
+}
+
+function openDetail(id) { location.href = `/ctdt-m10-detail.html?id=${id}`; }
+
+(async () => { await loadCourses(); loadPlans(); })();
+</script>
+</body>
+</html>
