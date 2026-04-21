@@ -1,0 +1,1209 @@
+% =============================================================
+%  Company Playbook — Đề án thành lập công ty
+%  Tài liệu nền để 3 đồng sáng lập đối thoại và đồng thuận
+%  Đà Nẵng, 2026 — Internal draft
+%  Biên dịch: xelatex company-playbook.tex
+% =============================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.2cm,top=2cm,bottom=2.2cm]{geometry}
+\usepackage{fontspec}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+\usetikzlibrary{positioning, shapes.geometric, shapes.misc, arrows.meta,
+                fit, calc, decorations.pathreplacing, backgrounds}
+
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+
+% ---------- colors ----------
+\definecolor{ink}{HTML}{14213d}
+\definecolor{accent}{HTML}{fca311}
+\definecolor{mid}{HTML}{8d99ae}
+\definecolor{hao}{HTML}{b08968}       % Thổ
+\definecolor{phu}{HTML}{6c757d}       % Kim
+\definecolor{hoang}{HTML}{2a9d8f}     % Mộc
+\definecolor{warm}{HTML}{c44536}
+\definecolor{soft}{HTML}{f4f1de}
+\definecolor{leaf}{HTML}{3d5a80}
+
+\hypersetup{colorlinks=true, linkcolor=ink, urlcolor=leaf}
+
+% ---------- section styles ----------
+\titleformat{\section}{\sffamily\bfseries\LARGE\color{ink}}{Chương \thesection.}{0.5em}{}
+\titleformat{\subsection}{\sffamily\bfseries\large\color{ink}}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\sffamily\bfseries\normalsize\color{ink}}{}{0em}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.6em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.3em}
+\titlespacing*{\subsubsection}{0pt}{0.6em}{0.2em}
+
+\setlist{nosep, leftmargin=1.3em, topsep=3pt, itemsep=2pt}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\onehalfspacing
+
+% ---------- header/footer ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\sffamily\footnotesize\color{mid} Company Playbook}
+\fancyhead[R]{\sffamily\footnotesize\color{mid} Internal draft \textbullet{} 2026}
+\fancyfoot[C]{\sffamily\footnotesize\color{mid}\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+% ---------- boxes ----------
+\newtcolorbox{keybox}[1][]{
+  enhanced, colback=soft, colframe=accent, boxrule=0.5pt,
+  left=8pt, right=8pt, top=5pt, bottom=5pt, arc=1pt,
+  fonttitle=\sffamily\bfseries\color{ink},
+  #1
+}
+\newtcolorbox{warnbox}[1][]{
+  enhanced, colback=warm!8, colframe=warm, boxrule=0.5pt,
+  left=8pt, right=8pt, top=5pt, bottom=5pt, arc=1pt,
+  fonttitle=\sffamily\bfseries\color{warm},
+  #1
+}
+\newtcolorbox{quotebox}[1][]{
+  enhanced, colback=white, colframe=ink!30, boxrule=0pt,
+  borderline west={2pt}{0pt}{ink},
+  left=10pt, right=8pt, top=4pt, bottom=4pt, arc=0pt,
+  #1
+}
+
+\begin{document}
+
+% =============================================================
+% TITLE PAGE
+% =============================================================
+\thispagestyle{empty}
+\vspace*{3cm}
+\begin{center}
+{\sffamily\bfseries\fontsize{28}{34}\selectfont\color{ink} Company Playbook}\\[0.5em]
+{\sffamily\Large\color{mid} Đề án thành lập công ty — Bản nền để 3 người đồng thuận}\\[3em]
+
+\begin{tikzpicture}[font=\sffamily]
+  \node[circle, draw=ink, thick, fill=hao!30, minimum size=22mm] (h) at (0,0) {\textbf{Hảo}};
+  \node[circle, draw=ink, thick, fill=phu!40, minimum size=22mm] (p) at (4,0) {\textbf{Phú}};
+  \node[circle, draw=ink, thick, fill=hoang!30, minimum size=22mm] (ho) at (8,0) {\textbf{Hoàng}};
+  \node[below=2mm of h, font=\footnotesize] {Strategy};
+  \node[below=2mm of p, font=\footnotesize] {Platform};
+  \node[below=2mm of ho, font=\footnotesize] {GTM};
+  \draw[-{Latex[length=2.5mm]}, thick, hao] (h) -- node[above, font=\scriptsize, hao]{nuôi} (p);
+  \draw[-{Latex[length=2.5mm]}, thick, hoang] (ho) to[bend left=40] node[above, font=\scriptsize, hoang]{lan toả} (h);
+  \draw[-{Latex[length=2.5mm]}, thick, warm, densely dashed] (p) to[bend right=30] node[below, font=\scriptsize, warm]{cân} (ho);
+\end{tikzpicture}
+
+\vspace{3em}
+{\large\color{ink}\sffamily
+Đỗ Phúc Hảo \textbullet{} Lê Hữu Phú \textbullet{} Nguyễn Ngọc Hoàng
+}\\[1em]
+{\sffamily\color{mid} Đà Nẵng, tháng 4 năm 2026}
+\end{center}
+\vfill
+\begin{center}
+{\footnotesize\itshape\color{mid}
+Tài liệu này là bản nháp nội bộ. Mục đích: làm nền để 3 người đối thoại, thống nhất tầm\\
+nhìn, vai trò, lộ trình và các ranh giới — trước khi chính thức pháp lý hoá công ty.}
+\end{center}
+\clearpage
+
+% =============================================================
+% TABLE OF CONTENTS
+% =============================================================
+\tableofcontents
+\clearpage
+
+% =============================================================
+% EXECUTIVE SUMMARY
+% =============================================================
+\section*{Tóm tắt điều hành}
+\addcontentsline{toc}{section}{Tóm tắt điều hành}
+
+\begin{keybox}[title=Một câu duy nhất mô tả công ty]
+Chúng tôi xây \textbf{hệ thống AI Agent tự vận hành, có kiểm soát}, cho các
+workflow tri thức, bắt đầu từ giáo dục đại học Việt Nam, với mục tiêu trở thành
+công ty dẫn đầu Đông Nam Á về \textit{Agent Systems cho các ngành dịch vụ tri thức}
+trong vòng 5 năm.
+\end{keybox}
+
+\textbf{Đích đến.} Trong 5 năm: một công ty 30--50 người, doanh thu dương, phục vụ
+50--100 khách hàng giáo dục và dịch vụ tại Việt Nam \& Đông Nam Á, với một lõi
+framework được tái sử dụng qua mọi dự án.
+
+\textbf{Hành trình 3 năm:}
+\begin{itemize}
+\item \textbf{Năm 1 — Chứng minh.} 1 vertical (giáo dục), 2 use case (Admissions +
+Internal Knowledge), 2--3 design partner trả phí, MVP chạy thật trong trường thật.
+\item \textbf{Năm 2 — Nhân rộng.} 10--15 khách hàng giáo dục, solution đã được
+chuẩn hóa, framework ổn định, bắt đầu thử vertical 2 (du lịch / dịch vụ).
+\item \textbf{Năm 3 — Platform hóa.} Subscription model khi workflow đã lặp lại,
+mở rộng địa bàn, bắt đầu tuyển thêm người.
+\end{itemize}
+
+\textbf{Con người.} Ba đồng sáng lập bổ sung nhau về kỹ năng lẫn tính cách:
+Hảo (chiến lược, network học thuật), Phú (kỹ thuật, học trò cũ của Hảo), Hoàng
+(kinh nghiệm thương mại, mạng lưới doanh nghiệp). Phân vai rõ ràng, có cơ chế
+ra quyết định chung, có vesting 4 năm.
+
+\textbf{Nguyên tắc cốt lõi.}
+\begin{itemize}
+\item \textbf{Solution ngoài, framework trong.} Thị trường trả tiền cho kết quả, không trả cho kiến trúc.
+\item \textbf{Đơn giản trước, phức tạp sau.} Single agent tốt $>$ multi-agent không cần thiết.
+\item \textbf{Khách trước, code sau.} Không xây thứ chưa có người trả tiền.
+\item \textbf{Ba chữ ký cho mọi cam kết.} Không ai đơn phương hứa hẹn hay xây dựng.
+\end{itemize}
+\clearpage
+
+% =============================================================
+% CHAPTER I — BỐI CẢNH & CƠ HỘI
+% =============================================================
+\section{Bối cảnh \& Cơ hội}
+
+\subsection{Thế giới đang ở đâu với Agentic AI (2025--2026)}
+
+Ba năm từ 2023 đến 2026 là giai đoạn chuyển pha của AI doanh nghiệp. Giai đoạn
+\textit{chatbot} (2023) đã qua. Giai đoạn \textit{copilot} (2024) đang bão hòa.
+Giai đoạn hiện tại là \textbf{agentic} — tức là AI không chỉ gợi ý mà \textbf{tự vận
+hành một phần workflow}, có công cụ, có quyền hành động, có đánh giá, có escalation.
+
+Các tín hiệu quan trọng:
+\begin{itemize}
+\item \textbf{OpenAI \& Anthropic} đều công khai khuyến nghị: bắt đầu từ workflow
+rõ ràng và guardrails rõ ràng, chỉ leo lên multi-agent khi thật sự cần.
+\item \textbf{McKinsey (2025)} ước tính giá trị kinh tế từ agentic AI trên 4.400 tỷ
+USD/năm toàn cầu, nhưng nhấn mạnh: giá trị đến từ tái thiết kế workflow, không phải
+từ việc ``dán AI lên quy trình cũ''.
+\item \textbf{Deloitte (2025)} xác định 5 vùng tác động cao nhất: customer support,
+knowledge management, R\&D, supply chain, cybersecurity — \textbf{tất cả đều là
+workflow tri thức}.
+\item \textbf{Chi phí inference giảm 10--50$\times$} mỗi năm (Claude, GPT, Gemini,
+và các model open-source). Rào cản kinh tế gần như không còn.
+\end{itemize}
+
+\begin{keybox}[title=Hàm ý cho chúng ta]
+Cửa sổ thời gian cho công ty \textit{mới} xây solution vertical-specific
+trong ngành tri thức đang mở. Nhưng cửa sổ này có thể đóng trong 2--3 năm khi
+các big tech tung ra giải pháp vertical, và các công ty ``first movers'' đã
+chiếm được design partner then chốt.
+\end{keybox}
+
+\subsection{Việt Nam: một thị trường ``dưới ngưỡng''}
+
+Việt Nam có đặc điểm: doanh nghiệp và tổ chức giáo dục \textbf{đang dùng rất ít
+AI thực sự}, dù họ đọc và nghe rất nhiều về AI. Lý do chính không phải kỹ thuật,
+mà là:
+
+\begin{itemize}
+\item \textbf{Thiếu người Việt hiểu đồng thời} vừa sâu về công nghệ AI, vừa đủ
+kinh nghiệm quy trình nghiệp vụ trong ngành.
+\item \textbf{Các công ty công nghệ lớn} (FPT, VNG, CMC) tập trung vào tập đoàn
+lớn, bỏ qua phân khúc doanh nghiệp vừa \& nhỏ và các tổ chức giáo dục tầm trung.
+\item \textbf{Các startup AI Việt} đa số đuổi theo chatbot tiếng Việt, ít ai
+hiểu sâu về agent systems.
+\item \textbf{Nhà trường, công ty du lịch, tổ chức dịch vụ tri thức} có nhiều
+quy trình lặp đi lặp lại, tài liệu rải rác, nhưng không có ai \textbf{đến gõ
+cửa và hiểu họ}.
+\end{itemize}
+
+Đây là một thị trường ``dưới ngưỡng'' — nhu cầu có, chi trả được, nhưng
+\textbf{chưa có ai đứng đúng chỗ để phục vụ}.
+
+\subsection{Đà Nẵng: vị trí địa lý có chủ ý}
+
+Đặt công ty tại Đà Nẵng không phải ngẫu nhiên. Đà Nẵng 2026:
+\begin{itemize}
+\item \textbf{Hệ sinh thái công nghệ} trưởng thành (Đà Nẵng IT Park, FPT Đà Nẵng,
+Axon, Sun*, Enclave, nhiều outsourcing).
+\item \textbf{Mạng lưới đại học} dày: ĐH Bách khoa, ĐH Kinh tế, ĐH Kiến trúc, ĐH
+Duy Tân, ĐH FPT, ĐH Sư phạm, ĐH Ngoại ngữ.
+\item \textbf{Ngành du lịch} lớn thứ 3 Việt Nam, với nhiều doanh nghiệp vừa đủ
+lớn để cần tự động hóa.
+\item \textbf{Chi phí vận hành} thấp hơn TP.HCM/Hà Nội 40--50\%, cho phép công ty
+sống được với doanh thu thấp trong năm đầu.
+\item \textbf{Không cạnh tranh trực tiếp} với hàng trăm startup AI ở Hà Nội/TP.HCM.
+\end{itemize}
+
+\subsection{Tại sao là lúc này (Why now)}
+
+\begin{enumerate}
+\item \textbf{Công nghệ đủ chín} — model inference rẻ, context window lớn, tool use ổn định.
+\item \textbf{Khách hàng đủ chín} — đã qua giai đoạn ``AI là đồ chơi'', bắt đầu hỏi ``AI giúp tôi việc gì cụ thể?''.
+\item \textbf{Chi phí vào nghề còn rẻ} — 2--3 năm nữa sẽ cần vốn lớn hơn nhiều để xây được vị thế.
+\item \textbf{Cửa sổ vertical còn mở} — chưa có \textit{``Shopify cho admissions''}, \textit{``Zendesk cho nhà trường''}.
+\item \textbf{Đủ kinh nghiệm cá nhân} — cả 3 người đều đã qua giai đoạn học việc, có đủ vốn kiến thức và quan hệ để bước vào vai trò founder.
+\end{enumerate}
+
+\subsection{Tại sao là 3 người chúng ta (Why us)}
+
+\begin{itemize}
+\item \textbf{Tổ hợp kỹ năng hiếm ở Việt Nam:}
+\begin{itemize}
+  \item \emph{Nghiên cứu \& định hướng} (Hảo — PhD Telecoms, giảng viên)
+  \item \emph{Kỹ thuật AI \& phát triển} (Phú — học trò Hảo, đã có quá trình cộng tác)
+  \item \emph{Kinh doanh \& thị trường} (Hoàng — doanh nhân có kinh nghiệm)
+\end{itemize}
+\item \textbf{Đã có lịch sử làm việc chung} (ít nhất giữa Hảo--Phú).
+\item \textbf{Không trùng vai, không giẫm chân} — phân vai tự nhiên, không ép buộc.
+\item \textbf{Có lợi thế network} ở cả phía nhà trường lẫn doanh nghiệp.
+\item \textbf{Giai đoạn cuộc sống phù hợp} — đủ chín để nghiêm túc, chưa quá già để liều.
+\end{itemize}
+
+\clearpage
+
+% =============================================================
+% CHAPTER II — TẦM NHÌN & ĐÍCH ĐẾN
+% =============================================================
+\section{Tầm nhìn \& Đích đến}
+
+\subsection{Tầm nhìn 10 năm}
+
+\begin{quotebox}
+\textit{Trong 10 năm, chúng tôi muốn trở thành công ty được các tổ chức tri thức
+ở Đông Nam Á tin cậy nhất trong việc xây dựng hệ thống AI tự vận hành — nơi mà
+khi một trường đại học, một hãng du lịch hay một tổ chức dịch vụ muốn ``agentify''
+quy trình của họ, tên chúng tôi là tên đầu tiên họ nghĩ đến.}
+\end{quotebox}
+
+Đây là tầm nhìn ``công ty phục vụ'' chứ không phải ``công ty công nghệ khoe tech''.
+Trọng tâm là \textit{tin cậy}, không phải \textit{ấn tượng}.
+
+\subsection{Sứ mệnh}
+
+\textbf{Giúp các tổ chức tri thức tại Việt Nam và Đông Nam Á tự động hóa những
+việc lặp đi lặp lại một cách an toàn, minh bạch và có kiểm soát — để con người
+của họ được giải phóng để làm việc con người nên làm.}
+
+Chú ý: sứ mệnh không phải ``xây AI tốt nhất'', cũng không phải ``thay thế con người''.
+Sứ mệnh là \textbf{giải phóng con người khỏi công việc máy nên làm}.
+
+\subsection{Giá trị cốt lõi (5 giá trị)}
+
+\begin{enumerate}
+\item \textbf{Clarity over cleverness.} Rõ ràng hơn là khôn lỏi. Trong cả sản phẩm
+lẫn giao tiếp. Một use case đơn giản chạy tốt $>$ một kiến trúc tuyệt vời nhưng
+không ai hiểu.
+
+\item \textbf{Operate, don't demo.} Làm cho chạy thật, không làm để trình diễn.
+Mỗi dòng code phải có khách hàng thật đứng đằng sau nó.
+
+\item \textbf{Trust is infrastructure.} Độ tin cậy là hạ tầng, không phải tính năng.
+Evals, logs, audit trail, human-in-the-loop — không phải thứ làm sau.
+
+\item \textbf{Long over loud.} Thà bền lâu hơn ồn ào. Chúng tôi chọn 10 năm phục vụ
+trên 100 khách còn hơn 1 năm gọi vốn rầm rộ.
+
+\item \textbf{Team before individual.} Không có ngôi sao. Ba người đồng sáng lập là
+một đơn vị, không phải ba cá nhân đứng cạnh nhau.
+\end{enumerate}
+
+\subsection{Định vị thương hiệu}
+
+\textbf{Định vị chính thức (outside-in):}\\
+\textit{``AI Agent Systems for Knowledge-Intensive Workflows — built in Vietnam,
+for Vietnam and Southeast Asia.''}
+
+\textbf{Cách nói với khách hàng giáo dục:}\\
+\textit{``Chúng tôi xây hệ thống AI giúp trường bạn tự xử lý hàng ngàn câu hỏi
+và hàng trăm quy trình lặp lại mỗi tháng, mà vẫn giữ được chất lượng và
+minh bạch.''}
+
+\textbf{Cách nói với khách hàng du lịch / dịch vụ:}\\
+\textit{``Chúng tôi xây hệ thống AI vận hành các quy trình tư vấn và dịch vụ
+của bạn 24/7, có kiểm soát và có thể handoff cho người thật khi cần.''}
+
+\textbf{Cái chúng tôi \underline{không} nói:}
+\begin{itemize}
+\item Không dùng từ ``framework'' khi nói với khách.
+\item Không dùng ``multi-agent'' nếu không cần.
+\item Không hứa ``thay thế con người''.
+\item Không dùng buzzword (``revolutionary'', ``cutting-edge'', ``next-gen'') trong tài liệu chính thức.
+\end{itemize}
+
+\subsection{Mục tiêu định lượng: 1 năm / 3 năm / 5 năm}
+
+\begin{tabularx}{\linewidth}{@{}p{1.8cm} X X X@{}}
+\toprule
+ & \textbf{Năm 1} (2026) & \textbf{Năm 3} (2028) & \textbf{Năm 5} (2030) \\
+\midrule
+\textbf{Khách hàng} & 2--3 design partner & 10--15 khách giáo dục & 50--100 khách (đa vertical) \\
+\textbf{Doanh thu} & 500M--1B VND & 5--8B VND & 30--50B VND \\
+\textbf{Nhân sự} & 3 founder + 1--2 hỗ trợ & 10--12 người & 30--50 người \\
+\textbf{Sản phẩm} & 2 use case chạy thật & 5--6 solution packaged & Platform + subscription \\
+\textbf{Vertical} & Giáo dục & Giáo dục + Du lịch thử & Đa vertical + địa bàn ĐNA \\
+\textbf{Framework} & 6 khối cơ bản & Ổn định, có connector SDK & Được tái sử dụng 80\% dự án \\
+\textbf{Thương hiệu} & Được biết trong giới giáo dục ĐN & Top-3 VN về agent systems & Top-3 ĐNA về agent systems \\
+\bottomrule
+\end{tabularx}
+
+\begin{warnbox}[title=Cảnh báo]
+Các con số trên là \textbf{ambition plausible}, không phải cam kết. Dùng để định
+hướng quyết định, không phải để đánh giá thành công/thất bại. Sau 6 tháng
+vận hành thực tế, các con số này \textbf{cần được hiệu chỉnh} dựa trên dữ liệu thật.
+\end{warnbox}
+
+\clearpage
+
+% =============================================================
+% CHAPTER III — CHIẾN LƯỢC SẢN PHẨM
+% =============================================================
+\section{Chiến lược sản phẩm}
+
+\subsection{Triết lý ``Solution ngoài, Framework trong''}
+
+Đây là nguyên tắc sản phẩm quan trọng nhất của công ty.
+
+\textbf{Lớp ngoài (cái khách hàng mua):} Solution theo use case cụ thể, có ROI
+đo được, có tên gọi dễ hiểu — ``Admissions Agent'', ``Student Services Agent'',
+``Internal Knowledge Agent''.
+
+\textbf{Lớp trong (tài sản của công ty):} Framework 6 khối, không bán rời, không
+public, không đặt tên thương hiệu trong 12--18 tháng đầu.
+
+\begin{center}
+\begin{tikzpicture}[
+  font=\sffamily,
+  sol/.style={draw=ink, fill=accent!25, rounded corners=2pt,
+              minimum width=36mm, minimum height=10mm, align=center, inner sep=2pt,
+              font=\footnotesize\sffamily},
+  solfut/.style={draw=ink!70, fill=accent!5, dashed, rounded corners=2pt,
+              minimum width=36mm, minimum height=10mm, align=center, inner sep=2pt,
+              font=\footnotesize\sffamily\itshape},
+  fwk/.style={draw=ink, fill=mid!30, rounded corners=2pt,
+              minimum width=26mm, minimum height=14mm, align=center, inner sep=2pt,
+              font=\footnotesize\sffamily},
+  arr/.style={-{Latex[length=3mm]}, thick, ink!75}
+]
+  % Layer A
+  \node[sol] (a1) at (0,0) {Admissions\\Agent};
+  \node[sol, right=3mm of a1] (a2) {Student Services\\Agent};
+  \node[sol, right=3mm of a2] (a3) {Internal Knowledge\\Agent};
+  \node[solfut, right=3mm of a3] (a4) {Service / Travel\\Agent (Year 2+)};
+
+  \node[font=\footnotesize\sffamily\itshape, ink, above=1mm of a1.north west, anchor=south west]
+    {LỚP A — Solutions bán ra thị trường (theo vertical + use case)};
+
+  % Layer B
+  \node[fwk, below=16mm of a1.south west, anchor=north west, text width=24mm] (b1)
+    {\textbf{Knowledge}\\\scriptsize Ingest, metadata, versioning, citation};
+  \node[fwk, right=2mm of b1, text width=24mm] (b2)
+    {\textbf{Workflow}\\\scriptsize Intake, routing, state, approval};
+  \node[fwk, right=2mm of b2, text width=24mm] (b3)
+    {\textbf{Tools}\\\scriptsize Email, CRM, LMS, Drive, chat};
+  \node[fwk, right=2mm of b3, text width=24mm] (b4)
+    {\textbf{Reasoning}\\\scriptsize Single-agent, specialist, supervisor};
+  \node[fwk, below=2mm of b2, text width=24mm] (b5)
+    {\textbf{Evals}\\\scriptsize Logs, test set, confidence, feedback};
+  \node[fwk, right=2mm of b5, text width=24mm] (b6)
+    {\textbf{Governance}\\\scriptsize Access, audit, policy, approval};
+
+  \node[font=\footnotesize\sffamily\itshape, ink, above=1mm of b1.north west, anchor=south west]
+    {LỚP B — Core Framework (tài sản nội bộ, KHÔNG bán trực tiếp, KHÔNG đặt tên thương hiệu)};
+
+  % Arrow B -> A
+  \draw[arr] ($(b2.east)!0.5!(b3.west)$) ++(0,18mm) -- ++(0,4mm)
+      node[right, font=\scriptsize\sffamily\itshape, ink!80]{\;đóng gói thành solution};
+\end{tikzpicture}
+\end{center}
+
+\subsubsection*{Vì sao làm như vậy?}
+
+\begin{itemize}
+\item \textbf{Khách hàng không mua ``framework''} — họ mua kết quả. Nếu ta bán
+framework, ta sẽ trở thành công ty tools cạnh tranh với LangChain, CrewAI,
+AutoGen — cuộc chơi đó đã có quá nhiều người chơi.
+
+\item \textbf{Framework nội bộ giúp ta nhanh hơn outsourcing agency} — mỗi khách
+mới chỉ cần lắp 20--30\% phần custom, 70--80\% dùng lại. Đây là cách \textit{kinh
+tế quy mô của chúng ta} được tạo ra.
+
+\item \textbf{Framework là IP của công ty} — không phải bán ngay, mà là cái tạo ra
+barrier to entry khi đối thủ muốn vào.
+\end{itemize}
+
+\subsection{Kiến trúc framework 6 khối}
+
+Mỗi khối trả lời một câu hỏi cụ thể của agent system:
+
+\begin{enumerate}
+\item \textbf{Knowledge} — Agent biết gì? \textit{Ingest tài liệu, metadata,
+versioning, citation, role-based access. Khách hàng cần trust rằng agent chỉ trả
+lời từ dữ liệu chính thức của họ, không bịa.}
+
+\item \textbf{Workflow} — Agent làm theo quy trình nào? \textit{Intake $\to$
+routing $\to$ task state $\to$ escalation $\to$ approval. Đây là phần thay thế
+\textbf{nghiệp vụ thủ công}, không phải phần AI.}
+
+\item \textbf{Tools} — Agent dùng gì để làm việc? \textit{Email, form, CRM,
+website, Drive, LMS/SIS, chat channels. Mỗi tool là một connector, phải có
+standard interface.}
+
+\item \textbf{Reasoning} — Agent suy nghĩ thế nào? \textit{Single-agent trước,
+specialist agents sau, supervisor agent chỉ thêm khi thực sự cần. Đa số use case
+giáo dục KHÔNG cần multi-agent.}
+
+\item \textbf{Evaluation \& Observability} — Agent chạy có tốt không? \textit{
+Log, test set, confidence threshold, human feedback, failure analysis. Đây là
+thứ phân biệt sản phẩm thật với demo.}
+
+\item \textbf{Governance} — Ai được làm gì, ai chịu trách nhiệm? \textit{Quyền
+truy cập, audit trail, approval step, policy constraints. Đặc biệt quan trọng
+với giáo dục và dịch vụ công.}
+\end{enumerate}
+
+\subsection{Chiến lược vertical: Giáo dục trước, Du lịch sau}
+
+\subsubsection*{Vì sao giáo dục trước}
+
+\begin{itemize}
+\item Hảo có quyền truy cập và network tự nhiên trong ngành.
+\item Quy trình tương đối chuẩn hóa (admissions, student services, academic knowledge).
+\item Khách hàng có đủ budget và đủ nhu cầu, nhưng chưa có nhà cung cấp tốt.
+\item Chu kỳ bán hàng không quá dài (3--6 tháng, không phải 12--18 tháng như tập đoàn).
+\item ROI đo được (số câu hỏi tự động hóa, thời gian phản hồi, tỉ lệ escalation).
+\end{itemize}
+
+\subsubsection*{2 use case đầu trong giáo dục}
+
+\textbf{Use case 1 — Admissions Agent.}
+\begin{itemize}
+\item \textit{Pain:} Phòng Tuyển sinh trả lời hàng ngàn câu hỏi lặp lại mùa cao điểm,
+tư vấn ngành, hồ sơ, học phí, học bổng, chuyển ngành, chuyển trường.
+\item \textit{Giải pháp:} Agent trả lời 24/7, truy vấn quy chế \& tài liệu chính
+thức, escalate cho người thật khi cần, ghi log và đưa vào CRM.
+\item \textit{ROI:} Giảm 60--80\% câu hỏi routine về phòng tuyển sinh, tăng tốc
+độ phản hồi từ ngày xuống phút.
+\end{itemize}
+
+\textbf{Use case 2 — Internal Knowledge Agent.}
+\begin{itemize}
+\item \textit{Pain:} Giảng viên, cán bộ phải tìm kiếm quy định, văn bản, SOP,
+thông báo rải rác ở nhiều nơi.
+\item \textit{Giải pháp:} Agent trả lời nội bộ, có citation, truy cập theo vai
+trò, có audit trail.
+\item \textit{ROI:} Giảm 30--50\% thời gian tìm kiếm thông tin, tăng tuân thủ SOP.
+\end{itemize}
+
+\subsubsection*{Vì sao chưa đụng vertical khác}
+
+\begin{itemize}
+\item \textbf{Du lịch} — cần thêm knowledge về chính sách visa, tour, địa điểm;
+chu kỳ bán hàng khác; KPI khác. \textit{Chờ đến Q3--Q4 năm đầu.}
+\item \textbf{Y tế} — có pháp lý phức tạp. \textit{Không đụng trong 3 năm đầu.}
+\item \textbf{Tài chính / ngân hàng} — compliance rất cao. \textit{Không đụng cho đến khi có người trong team hiểu sâu.}
+\item \textbf{Chính phủ / khối nhà nước} — chu kỳ bán hàng quá dài, không phù hợp startup. \textit{Chỉ đụng khi có đối tác lớn.}
+\end{itemize}
+
+\subsection{Mô hình kinh doanh 3 giai đoạn}
+
+\subsubsection*{Giai đoạn 1 (M1--M9): Design partner + pilot trả phí}
+
+\begin{itemize}
+\item Bán cái gì: Discovery workshop + workflow design + pilot + managed operations.
+\item Giá: 50--200 triệu VND/pilot (tuỳ scope). Không miễn phí. Không dưới 20\% giá thật.
+\item Số lượng: 2--3 design partner.
+\item Mục tiêu: Có case study thật, có KPI thật, có reference thật.
+\end{itemize}
+
+\subsubsection*{Giai đoạn 2 (M10--M24): Solution packaging}
+
+\begin{itemize}
+\item Bán cái gì: 3 solution chuẩn (Admissions / Student Services / Internal Knowledge) + custom onboarding.
+\item Giá: 200--500 triệu VND/trường/năm (license + support), hoặc mô hình hybrid.
+\item Số lượng: 10--15 khách.
+\item Mục tiêu: Doanh thu lặp lại, giảm thời gian triển khai xuống 4--6 tuần/khách.
+\end{itemize}
+
+\subsubsection*{Giai đoạn 3 (M25--M36+): Subscription / platformization}
+
+\begin{itemize}
+\item Bán cái gì: SaaS subscription cho các module chuẩn, + dịch vụ custom cho deployment lớn.
+\item Giá: Theo tier (Starter / Pro / Enterprise), 100--800 triệu/năm.
+\item Số lượng: 30--50+ khách.
+\item Mục tiêu: Doanh thu bán buôn, biên lợi nhuận 40--60\%.
+\end{itemize}
+
+\begin{warnbox}[title=Không leo giai đoạn quá sớm]
+Mỗi giai đoạn chỉ được bắt đầu khi giai đoạn trước có đủ \textbf{bằng chứng vận hành thật}:
+\begin{itemize}
+\item Không packaging khi chưa có 2--3 design partner chạy thật.
+\item Không subscription khi chưa có 5+ khách dùng cùng solution ổn định.
+\item Nếu ép giai đoạn, công ty sẽ bị biến thành agency mặc áo platform.
+\end{itemize}
+\end{warnbox}
+
+\clearpage
+
+% =============================================================
+% CHAPTER IV — LỘ TRÌNH 36 THÁNG
+% =============================================================
+\section{Lộ trình 36 tháng}
+
+\begin{center}
+\begin{tikzpicture}[
+  font=\sffamily, scale=1, every node/.style={font=\footnotesize\sffamily},
+  phase/.style={rectangle, draw=ink, rounded corners=3pt, minimum height=12mm, align=center, inner sep=4pt},
+  ms/.style={circle, draw=ink, fill=accent, minimum size=4mm, inner sep=0pt}
+]
+  % Timeline
+  \draw[ink!60, very thick] (0,0) -- (15.5,0);
+  \foreach \x/\m in {0/M1, 5/M12, 10/M24, 15/M36} {
+    \draw[ink!60, thick] (\x,0.2) -- (\x,-0.2);
+    \node[below=1mm] at (\x,-0.2) {\m};
+  }
+
+  % Year 1
+  \node[phase, fill=hao!20, minimum width=48mm] at (2.5,1.4) {\textbf{Năm 1 — CHỨNG MINH}\\\tiny 1 vertical, 2 use case, 2--3 design partner};
+  \node[ms] at (1,0) {}; \node[above=1mm, font=\tiny] at (1,0) {Prototype};
+  \node[ms] at (2.5,0) {}; \node[above=1mm, font=\tiny] at (2.5,0) {1st paid};
+  \node[ms] at (4,0) {}; \node[above=1mm, font=\tiny] at (4,0) {3 pilots};
+
+  % Year 2
+  \node[phase, fill=phu!20, minimum width=48mm] at (7.5,1.4) {\textbf{Năm 2 — NHÂN RỘNG}\\\tiny Packaging, 10--15 khách, bắt đầu thử du lịch};
+  \node[ms] at (6,0) {}; \node[above=1mm, font=\tiny] at (6,0) {5 khách};
+  \node[ms] at (8,0) {}; \node[above=1mm, font=\tiny] at (8,0) {Hire \#4};
+  \node[ms] at (9.5,0) {}; \node[above=1mm, font=\tiny] at (9.5,0) {10 khách};
+
+  % Year 3
+  \node[phase, fill=hoang!20, minimum width=48mm] at (12.5,1.4) {\textbf{Năm 3 — PLATFORM}\\\tiny Subscription, đa vertical, ĐNA};
+  \node[ms] at (11,0) {}; \node[above=1mm, font=\tiny] at (11,0) {Sub v1};
+  \node[ms] at (13,0) {}; \node[above=1mm, font=\tiny] at (13,0) {25 khách};
+  \node[ms] at (15,0) {}; \node[above=1mm, font=\tiny] at (15,0) {50 khách};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Năm 1 (2026) — CHỨNG MINH}
+
+\textbf{Câu hỏi lớn:} Có khách hàng nào trả tiền thật cho chúng ta không, và
+chúng ta có vận hành được không?
+
+\begin{tabularx}{\linewidth}{@{}p{1.2cm} X X@{}}
+\toprule
+\textbf{Quý} & \textbf{Mục tiêu} & \textbf{Deliverable} \\
+\midrule
+Q1 & Pháp lý, framework v0, prototype & Cty thành lập; prototype Admissions Agent chạy trên 1 trường thật (pilot nội bộ); 10 discovery call. \\
+Q2 & Design partner đầu tiên & 1 khách ký hợp đồng pilot trả phí; framework 6 khối v0.5; case study v1. \\
+Q3 & Mở rộng design partner & 2--3 khách chạy pilot; framework v1.0 ổn định; bắt đầu viết ``playbook delivery'' chuẩn. \\
+Q4 & Hoàn thiện solution \#1 \& \#2 & Admissions Agent \& Internal Knowledge Agent đã được packaging đủ để bán cho khách \#4. \\
+\bottomrule
+\end{tabularx}
+
+\textbf{KPI năm 1:}
+\begin{itemize}
+\item $\geq$ 2 khách trả phí (tối thiểu 50M/khách).
+\item $\geq$ 10 discovery call có ghi chép.
+\item Framework 6 khối: có v1.0.
+\item Doanh thu: 500M--1B VND.
+\item Không chết tiền mặt (burn rate không vượt quá thu nhập riêng của 3 founder đóng góp).
+\end{itemize}
+
+\subsection{Năm 2 (2027) — NHÂN RỘNG}
+
+\textbf{Câu hỏi lớn:} Chúng ta có thể làm được 10--15 khách mà không bị quá tải?
+
+\begin{itemize}
+\item \textbf{Q1--Q2:} Tuyển 1--2 người (kỹ sư \#2, customer success). Packaging
+3 solution chuẩn. Thời gian triển khai mỗi khách mới xuống 6--8 tuần.
+\item \textbf{Q3--Q4:} Bắt đầu thử vertical 2 (du lịch / dịch vụ) với 1 khách pilot.
+Không đầu tư lớn. Dùng framework sẵn có để kiểm chứng tính tổng quát.
+\end{itemize}
+
+\textbf{KPI năm 2:}
+\begin{itemize}
+\item 10--15 khách giáo dục trả phí.
+\item Doanh thu 3--5B VND.
+\item Nhân sự: 8--12 người.
+\item Biên lợi nhuận gộp: 30--40\%.
+\item Framework đã được dùng trên 100\% dự án mới.
+\end{itemize}
+
+\subsection{Năm 3 (2028) — PLATFORM HÓA}
+
+\textbf{Câu hỏi lớn:} Chúng ta có thể chuyển từ dịch vụ sang subscription mà không mất khách?
+
+\begin{itemize}
+\item \textbf{Q1--Q2:} Ra mắt subscription v1 cho Admissions Agent \& Internal Knowledge Agent. Chuyển 30--50\% khách hiện tại sang subscription.
+\item \textbf{Q3--Q4:} Mở rộng sang Đông Nam Á (1 khách Philippines / Indonesia / Thailand). Thử nghiệm reseller model ở ĐNA.
+\end{itemize}
+
+\textbf{KPI năm 3:}
+\begin{itemize}
+\item 30--50 khách tổng.
+\item Doanh thu 15--25B VND.
+\item Nhân sự: 20--30 người.
+\item $\geq$ 40\% doanh thu từ subscription.
+\item 1 khách ngoài Việt Nam.
+\end{itemize}
+
+\subsection{Decision gates — 4 mốc quyết định lớn}
+
+\begin{tabularx}{\linewidth}{@{}p{1.5cm} p{3cm} X X@{}}
+\toprule
+\textbf{Mốc} & \textbf{Thời điểm} & \textbf{Câu hỏi} & \textbf{Nếu KHÔNG đạt thì làm gì} \\
+\midrule
+\textbf{Gate 1} & M6 & Có 1 khách trả phí chưa? & Giảm quy mô, Hảo \& Hoàng giữ công việc cũ thêm 6 tháng, Phú về part-time. \\
+\textbf{Gate 2} & M12 & Có 3 khách và framework v1.0 chưa? & Dừng thử thêm vertical. Tập trung hoàn thiện solution \#1 trong 6 tháng nữa. \\
+\textbf{Gate 3} & M24 & Có 10+ khách và biên lợi nhuận 30\%+ chưa? & Dừng mở vertical mới. Không tuyển thêm. Tập trung profitability. \\
+\textbf{Gate 4} & M36 & Có subscription chạy và 40\% khách chuyển đổi chưa? & Lùi kế hoạch ĐNA. Tiếp tục là công ty dịch vụ \& solution tại VN. \\
+\bottomrule
+\end{tabularx}
+
+\begin{warnbox}[title=Nguyên tắc decision gate]
+Tại mỗi gate, 3 người ngồi lại, nhìn dữ liệu, và quyết định dựa trên thực tế.
+\textbf{Không được bỏ qua gate.} Không được tự động leo giai đoạn tiếp theo vì
+\textit{``cảm thấy ổn''}.
+\end{warnbox}
+
+\clearpage
+
+% =============================================================
+% CHAPTER V — CON NGƯỜI
+% =============================================================
+\section{Con người}
+
+Đây là chương quan trọng nhất của playbook. Chiến lược có thể sai rồi sửa.
+Sản phẩm có thể đi sai hướng rồi điều chỉnh. Nhưng nếu \textbf{3 người không
+đồng thuận về vai trò, quyền, trách nhiệm, và cách cư xử với nhau}, công ty
+sẽ vỡ trước khi sản phẩm kịp chín.
+
+\subsection{Triết lý đội ngũ: ``Ba con người, một đơn vị''}
+
+\begin{quotebox}
+Chúng tôi không phải 3 cá nhân hợp tác. Chúng tôi là \textbf{một đơn vị 3 đầu}.
+Quyết định của công ty không phải ``đa số 2/3 thắng'', mà là \textbf{sự đồng thuận
+có nguyên tắc}, trong đó mỗi người có vùng quyết định chính của riêng mình, và
+có nghĩa vụ tôn trọng vùng của người khác.
+\end{quotebox}
+
+Điều này có nghĩa:
+\begin{itemize}
+\item Không có \textit{``CEO độc tài''} — dù Hảo là người ký giấy tờ chính thức.
+\item Không có \textit{``kỹ sư làm theo lệnh''} — dù Phú nhận trách nhiệm delivery.
+\item Không có \textit{``sales nói gì cũng đúng''} — dù Hoàng tiếp xúc khách hàng.
+\end{itemize}
+
+\subsection{Đỗ Phúc Hảo — CEO / Strategy \& Direction}
+
+\subsubsection*{Background}
+PhD Telecoms (Russia), hiện giảng dạy tại ĐH Kiến trúc Đà Nẵng. Có nền tảng
+nghiên cứu sâu, kinh nghiệm giảng dạy, và mạng lưới học thuật rộng. Đã và đang
+tham gia các đề án nghiên cứu, viết báo khoa học, cũng như các dự án phần mềm
+giáo dục (KĐCLGD, CTĐT redesign).
+
+\subsubsection*{Ngũ hành \& tính cách}
+Canh Ngọ --- Lộ Bàng Thổ --- giờ Dậu. Đất ven đường --- điểm đi lại, nền móng,
+kết nối các phía. Thổ sinh Kim (hỗ trợ Phú tự nhiên). Vai trò trục --- giữ cho
+công ty không lệch hướng.
+
+\subsubsection*{Trách nhiệm chính}
+\begin{enumerate}
+\item \textbf{Chọn vertical \& chọn use case.} Quyết định cuối cùng về công ty
+đi vào ngành nào, làm use case nào.
+\item \textbf{Giữ roadmap sản phẩm.} Nói KHÔNG với những thứ không nằm trong
+roadmap, kể cả khi Hoàng có khách muốn mua.
+\item \textbf{Gỡ xung đột kỹ thuật--sales.} Khi Phú và Hoàng không đồng ý, Hảo
+là người chốt.
+\item \textbf{Đại diện công ty trong giới học thuật.} Paper, hội thảo, đề án
+nghiên cứu chung với trường.
+\item \textbf{Hiring \& văn hóa.} Phỏng vấn lần cuối mọi vị trí, giữ chuẩn
+chất lượng người.
+\item \textbf{Gây vốn (nếu cần).} Đàm phán với nhà đầu tư, đối tác chiến lược.
+\end{enumerate}
+
+\subsubsection*{Quyền quyết định (decision rights)}
+\begin{itemize}
+\item \textbf{Solo:} Hiring cuối cùng; đi hay không đi hội thảo/sự kiện; hợp tác với trường/viện.
+\item \textbf{Shared với Phú:} Roadmap kỹ thuật (3 tháng, 6 tháng).
+\item \textbf{Shared với Hoàng:} Chọn ngành tiếp theo; chính sách giá.
+\item \textbf{Cần 3 chữ ký:} Ngân sách $>$100 triệu; đổi định vị công ty; thêm đồng sáng lập.
+\end{itemize}
+
+\subsubsection*{KPI (năm 1)}
+\begin{itemize}
+\item Vertical đã chọn có $\geq$ 2 design partner trả phí.
+\item $\geq$ 60\% code framework được dùng lại qua $\geq$ 2 dự án.
+\item $\geq$ 1 bài viết / talk công khai xây thương hiệu học thuật công ty.
+\item 100\% decision gate được đánh giá đúng hạn, có số liệu.
+\end{itemize}
+
+\subsubsection*{Những thứ Hảo KHÔNG làm}
+\begin{itemize}
+\item Không viết code production (có thể prototype, không commit vào main repo).
+\item Không trực tiếp đi sales lạnh (có thể giới thiệu warm intro).
+\item Không làm delivery PM (có thể review, không own timeline).
+\item Không quyết định kiến trúc kỹ thuật (Phú quyết, Hảo có quyền chất vấn).
+\end{itemize}
+
+\subsubsection*{Growth path 3 năm}
+Từ CEO-founder $\to$ CEO có CTO \& COO dưới quyền. Vai trò dần chuyển về
+strategic partnership, đại diện công ty ở ngoài, và hướng dẫn R\&D dài hạn.
+
+\subsection{Lê Hữu Phú — Platform Lead / Head of Engineering}
+
+\subsubsection*{Background}
+Học trò của Hảo, đã từng làm việc cùng Hảo trong các dự án. Có nền tảng kỹ
+thuật, được đào tạo dưới sự dẫn dắt của Hảo --- đây là \textbf{lợi thế rất lớn}
+của công ty: kỹ sư chính đã có tiếng nói chung với người định hướng.
+
+\subsubsection*{Ngũ hành \& tính cách}
+Canh Thìn --- Bạch Lạp Kim --- giờ Ngọ. ``Kim sáp'' --- linh hoạt, có khả năng
+định hình, được Hảo (Thổ) hỗ trợ tự nhiên. Hỏa của giờ Ngọ tạo độ bứt phá,
+nhưng cũng cần tránh ``tiêu kim'' --- tức là làm nhiều thứ cùng lúc quá mức.
+
+\subsubsection*{Trách nhiệm chính}
+\begin{enumerate}
+\item \textbf{Xây core framework.} Đây là di sản lớn nhất của Phú trong công ty.
+6 khối framework phải ra hình sau năm 1.
+\item \textbf{Giữ chất lượng kiến trúc.} Chống lại xu hướng ``patch nhanh cho
+khách này'' mà làm hỏng framework.
+\item \textbf{Chuẩn hóa quy trình delivery.} Để khi có kỹ sư \#2, \#3, họ onboard
+được trong 2--3 tuần.
+\item \textbf{Giữ tốc độ MVP.} Mỗi use case mới: prototype trong 2 tuần, pilot
+trong 8 tuần.
+\item \textbf{Chi phí vận hành hệ thống.} Giữ cost/khách ở mức bền vững.
+\item \textbf{Evals \& observability.} Đây không phải ``tính năng phụ'' --- đây
+là phần khiến khách hàng tin công ty.
+\end{enumerate}
+
+\subsubsection*{Quyền quyết định}
+\begin{itemize}
+\item \textbf{Solo:} Tech stack; coding standards; kiến trúc module; tool \& CI/CD.
+\item \textbf{Shared với Hảo:} Roadmap kỹ thuật; hire kỹ sư.
+\item \textbf{Shared với Hoàng:} Thời gian delivery của mỗi dự án (không tự cam kết với khách).
+\item \textbf{Cần 3 chữ ký:} Đổi foundation model chính; rewrite kiến trúc lớn; tích hợp với bên thứ 3 có pháp lý.
+\end{itemize}
+
+\subsubsection*{KPI (năm 1)}
+\begin{itemize}
+\item Framework 6 khối có v1.0 sau 9 tháng.
+\item Prototype 1 use case trong 2 tuần.
+\item Pilot 1 use case trong 8 tuần.
+\item Uptime các pilot $\geq$ 99\%.
+\item Zero data leak / security incident.
+\item $\geq$ 60\% module tái sử dụng giữa dự án \#1 và dự án \#3.
+\end{itemize}
+
+\subsubsection*{Những thứ Phú KHÔNG làm}
+\begin{itemize}
+\item Không trực tiếp bán hàng với khách (có thể tham gia kỹ thuật meeting).
+\item Không hứa tính năng với khách khi Hoàng không có mặt.
+\item Không mở rộng scope dự án mà không có 3 chữ ký.
+\item Không từ chối use case với lý do kỹ thuật mà không cho lựa chọn thay thế.
+\end{itemize}
+
+\subsubsection*{Growth path 3 năm}
+Từ sole engineer $\to$ Head of Engineering của team 6--10 người $\to$ CTO với
+nhóm research, nhóm platform, nhóm delivery. Ngày Phú có kỹ sư \#2 là ngày
+Phú phải học kỹ năng mới quan trọng nhất: \textbf{mentoring và code review}.
+
+\begin{warnbox}[title=Rủi ro lớn nhất của Phú]
+Làm một mình quá lâu. Nếu đến M6 mà chưa có kỹ sư \#2 giúp đỡ ít nhất part-time,
+Phú sẽ \textbf{burnout}. Đây là rủi ro lớn nhất của công ty, không phải rủi ro kỹ
+thuật hay rủi ro khách hàng. \textbf{Hảo và Hoàng có trách nhiệm theo dõi energy
+của Phú và không để việc này xảy ra.}
+\end{warnbox}
+
+\subsection{Nguyễn Ngọc Hoàng — GTM Lead / Head of Business}
+
+\subsubsection*{Background}
+Doanh nhân có nhiều năm kinh nghiệm. Hiểu quy trình bán hàng B2B, có mạng
+lưới doanh nghiệp tại Đà Nẵng và miền Trung. Khác với Hảo và Phú
+(dân kỹ thuật/học thuật), Hoàng mang đến \textbf{góc nhìn thị trường thực dụng}
+--- cái mà công ty nào thuần kỹ thuật cũng thiếu.
+
+\subsubsection*{Ngũ hành \& tính cách}
+Kỷ Tỵ --- Đại Lâm Mộc --- giờ Dần/Mão. Rừng lớn, cây cổ thụ --- bao quát, có tán
+rộng, giỏi xây mạng lưới. Mộc vượng khi gặp Mộc giờ. Tính cách: cần không gian
+để thở, không hợp với micromanage chi tiết.
+
+\subsubsection*{Trách nhiệm chính}
+\begin{enumerate}
+\item \textbf{Tìm pain point thật.} Không phải ``khách hàng bảo họ muốn gì'' --- mà
+là ``khách hàng thật sự đang khổ vì gì''.
+\item \textbf{Xác định ICP (Ideal Customer Profile).} Ai là trường sẵn sàng trả
+tiền? Bao nhiêu sinh viên? Ngân sách bao nhiêu? Ai là người ra quyết định?
+\item \textbf{Chốt design partner.} Chuyển từ ``quan tâm'' sang ``trả tiền''.
+\item \textbf{Dẫn discovery workshop.} Hoàng đưa Phú vào cuộc, không làm một mình.
+\item \textbf{Pricing \& đàm phán hợp đồng.} Không giảm giá dưới 20\% base rate mà không có 3 chữ ký.
+\item \textbf{Customer success sau ký hợp đồng.} Giữ khách, upsell khi phù hợp.
+\item \textbf{Insight thị trường.} Đều đặn cập nhật 3 người về xu hướng ngành.
+\end{enumerate}
+
+\subsubsection*{Quyền quyết định}
+\begin{itemize}
+\item \textbf{Solo:} Kỹ thuật discovery; chiến thuật tiếp cận khách; scheduling sales.
+\item \textbf{Shared với Hảo:} Chọn ngành tiếp theo; chính sách giá chung.
+\item \textbf{Shared với Phú:} Scope cụ thể của mỗi hợp đồng (Phú xác nhận làm được).
+\item \textbf{Cần 3 chữ ký:} Ký hợp đồng $>$300 triệu; thử vertical mới; đối tác reseller.
+\end{itemize}
+
+\subsubsection*{KPI (năm 1)}
+\begin{itemize}
+\item $\geq$ 10 discovery call có ghi chép đầy đủ.
+\item $\geq$ 2 khách ký pilot trả phí.
+\item ICP rõ ràng sau M4.
+\item Pipeline $\geq$ 10 qualified leads sau M9.
+\item Tỷ lệ use case $\to$ proposal $\geq$ 30\%.
+\end{itemize}
+
+\subsubsection*{Những thứ Hoàng KHÔNG làm}
+\begin{itemize}
+\item Không hứa tính năng chưa có 3 chữ ký.
+\item Không giảm giá dưới 20\% base rate không có Hảo đồng ý.
+\item Không nhận dự án ngoài vertical đã chọn (không có 3 chữ ký).
+\item Không tự quyết scope kỹ thuật (phải có Phú xác nhận).
+\item Không tiếp cận khách mà không có material chuẩn (không đi ``tay không'').
+\end{itemize}
+
+\subsubsection*{Growth path 3 năm}
+Từ sole business lead $\to$ Head of Business với team sales + customer success
+(4--6 người) $\to$ COO / Chief Revenue Officer. Kỹ năng cần học: từ ``bán hàng''
+sang ``xây team bán hàng''.
+
+\subsection{Ngũ hành: sự bổ sung có chủ ý}
+
+\begin{center}
+\begin{tikzpicture}[
+  font=\sffamily,
+  role/.style={circle, draw=ink, thick, minimum size=22mm, align=center, font=\footnotesize\sffamily\bfseries},
+  arrgood/.style={-{Latex[length=3mm]}, thick},
+  arrwarn/.style={-{Latex[length=3mm]}, thick, densely dashed}
+]
+  \node[role, fill=hao!30] (h) at (0,0) {Hảo\\Thổ\\\scriptsize Strategy};
+  \node[role, fill=phu!40] (p) at (5,0) {Phú\\Kim\\\scriptsize Platform};
+  \node[role, fill=hoang!30] (ho) at (10,0) {Hoàng\\Mộc\\\scriptsize GTM};
+
+  \draw[arrgood, hao]   (h)  to[bend left=18]  node[above, font=\scriptsize, hao]{Thổ sinh Kim --- nuôi dưỡng tự nhiên} (p);
+  \draw[arrwarn, warm]  (p)  to[bend left=18]  node[above, font=\scriptsize, warm]{Kim khắc Mộc --- cần Hảo làm trọng tài} (ho);
+  \draw[arrgood, hoang] (ho) to[bend left=30]  node[below, font=\scriptsize, hoang]{Mộc hút Thổ --- Hoàng leverage network của Hảo} (h);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Diễn giải cho nội bộ:}
+
+\begin{itemize}
+\item \textbf{Quan hệ thuận --- Hảo $\to$ Phú.} Đây là trục sản phẩm tự nhiên:
+Hảo định hướng, Phú kết tinh thành sản phẩm. Không cần cơ chế đặc biệt, chỉ cần
+tôn trọng lẫn nhau.
+
+\item \textbf{Quan hệ ngang --- Hoàng $\to$ Hảo.} Hoàng tận dụng network học
+thuật và uy tín của Hảo để mở cửa khách hàng đầu. Đổi lại, Hoàng bảo vệ Hảo
+khỏi các yêu cầu không hợp lý từ khách hàng.
+
+\item \textbf{Điểm cần chú ý --- Phú vs Hoàng.} Kỹ thuật và sales luôn có mâu
+thuẫn tiềm năng: sales muốn cam kết nhiều, kỹ thuật muốn làm ít--chắc. Đây là
+lý do \textbf{cơ chế 3 chữ ký} tồn tại. Hảo là người trung gian bắt buộc.
+\end{itemize}
+
+\subsection{Cơ chế ra quyết định}
+
+\subsubsection*{3 tầng quyết định}
+
+\begin{tabularx}{\linewidth}{@{}p{2.2cm} X X@{}}
+\toprule
+\textbf{Tầng} & \textbf{Ai quyết} & \textbf{Ví dụ} \\
+\midrule
+\textbf{Vận hành hằng ngày} & Mỗi người trong vùng của mình & Phú chọn library; Hoàng chọn thời gian gặp khách; Hảo duyệt bài đăng LinkedIn. \\
+\textbf{Quyết định vừa} & 2 người liên quan + thông báo người thứ 3 & Pricing 1 hợp đồng (Hoàng + Hảo); scope dự án (Phú + Hoàng); roadmap quý (Hảo + Phú). \\
+\textbf{Quyết định lớn --- ``3 chữ ký''} & Phải có đồng thuận 3 người, bằng văn bản & Ngân sách $>$100M; đổi vertical; đổi định vị; hire/fire; reshape cổ phần; vay nợ; thuê nhà. \\
+\bottomrule
+\end{tabularx}
+
+\subsubsection*{Khi 3 người không đồng ý}
+
+\begin{enumerate}
+\item \textbf{Dừng lại 48h.} Không quyết định nóng.
+\item \textbf{Viết quan điểm.} Mỗi người viết 1 trang: tôi đề xuất gì, vì sao, và nếu sai thì hậu quả gì.
+\item \textbf{Ngồi lại.} Đọc của nhau trước. Nói sau.
+\item \textbf{Nếu vẫn không đồng ý:} Thử pilot với scope nhỏ, timebox 4--8 tuần, đánh giá bằng dữ liệu.
+\item \textbf{Nếu không thể timebox:} Xếp lại quyết định sau 1--2 tháng, quay lại khi có thêm thông tin.
+\end{enumerate}
+
+\begin{warnbox}[title=Luật không thành văn]
+Không ai được dùng ``tôi là cổ đông lớn hơn'' hoặc ``tôi là CEO'' làm argument
+cuối cùng. Nếu phải dùng đến chức danh để thắng, \textbf{quyết định đó đã sai rồi}.
+\end{warnbox}
+
+\subsection{Cổ phần, vốn, và vesting (đề xuất để thảo luận)}
+
+Đây là đề xuất \textbf{khung để đối thoại}, không phải quyết định. 3 người cần
+ngồi lại riêng một buổi để chốt.
+
+\subsubsection*{Đề xuất cổ phần khởi đầu}
+
+\textbf{Option A --- Chia đều 33 / 33 / 33 (khuyến nghị).}
+\begin{itemize}
+\item Ưu: thông điệp rõ ``một đơn vị'', không ai làm chủ ai.
+\item Nhược: không phản ánh khác biệt về đóng góp giá trị (role criticality, kinh nghiệm, vốn).
+\item \textbf{Nên chọn nếu:} cả 3 người đều full-time, không ai góp vốn lớn hơn hẳn người khác, và tin nhau cơ bản.
+\end{itemize}
+
+\textbf{Option B --- Chia theo trọng số.}
+\begin{itemize}
+\item Ví dụ 40 / 30 / 30 nếu Hảo là người dẫn dắt định hướng và đóng vai trò thu hút 2 người còn lại.
+\item Ví dụ 35 / 35 / 30 nếu Hoàng tham gia part-time trong 6 tháng đầu.
+\item \textbf{Nên chọn nếu:} có khác biệt thật về cam kết thời gian hoặc vốn góp.
+\end{itemize}
+
+\subsubsection*{Vesting schedule (khuyến nghị)}
+
+\begin{itemize}
+\item \textbf{4 năm vesting, 1 năm cliff.} Nghĩa là: nếu bất kỳ ai bỏ cuộc trong
+năm đầu, họ \textbf{không được giữ cổ phần}. Sau năm 1, cổ phần được vest dần
+hàng quý.
+\item Đây không phải lời dọa --- đây là \textbf{bảo hiểm cho 2 người ở lại}. Nếu
+1 người bỏ sau M3 với 33\% cổ phần, công ty sẽ không thể gọi vốn hay mời
+người mới.
+\end{itemize}
+
+\subsubsection*{Vốn góp ban đầu (đề xuất)}
+
+\begin{itemize}
+\item Mỗi người góp một khoản tiền mặt nhỏ (ví dụ 50--100 triệu VND) để tạo runway
+6--9 tháng cho chi phí cơ bản (thuê văn phòng nhỏ, cloud, công cụ, pháp lý).
+\item Nếu một người góp nhiều hơn đáng kể, phần chênh nên được xử lý như
+\textbf{convertible note}, không trộn vào cổ phần.
+\item Không vay nợ cá nhân để bơm vào công ty trong 6 tháng đầu --- rủi ro quá lớn.
+\end{itemize}
+
+\subsubsection*{Lương trong năm đầu}
+
+\begin{itemize}
+\item \textbf{M1--M6:} Không có lương, hoặc lương tối thiểu (4--6 triệu/tháng) để
+đóng bảo hiểm. Tất cả dồn vào runway.
+\item \textbf{M7--M12:} Khi có doanh thu thật, bắt đầu trả lương cơ bản
+(10--15 triệu/tháng).
+\item \textbf{Năm 2+:} Lương thị trường. Ưu tiên trả Phú ngang hoặc cao hơn
+thị trường kỹ sư AI (tránh mất Phú).
+\end{itemize}
+
+\subsection{Văn hóa \& cam kết}
+
+\subsubsection*{Cam kết thời gian}
+
+\begin{itemize}
+\item Cả 3 người cam kết \textbf{tối thiểu 3 năm} đi cùng công ty.
+\item Nếu 1 người muốn rút sớm hơn, phải thông báo trước \textbf{3 tháng}, và hỗ trợ handoff.
+\item Tuyệt đối không có ``đang làm founder ở đây, vừa mở công ty khác''.
+\end{itemize}
+
+\subsubsection*{Cam kết minh bạch}
+
+\begin{itemize}
+\item \textbf{Tài chính công ty}: cả 3 có quyền xem mọi giao dịch, mọi hợp đồng.
+\item \textbf{Lịch làm việc}: có lịch chung, ai làm gì tuần này đều có thể thấy.
+\item \textbf{Quyết định}: ghi chép trong 1 Google Doc / Notion chung. Không có
+quyết định ``trong đầu''.
+\end{itemize}
+
+\subsubsection*{Cam kết cá nhân --- ``5 điều không làm''}
+
+\begin{enumerate}
+\item Không nói xấu đồng sáng lập sau lưng.
+\item Không hứa với khách hàng điều 2 người còn lại không biết.
+\item Không tuyển người thân trong năm đầu (tránh nhạy cảm).
+\item Không đầu tư cá nhân vào khách hàng hoặc đối thủ của công ty.
+\item Không ra quyết định quan trọng khi đang tức giận, mệt mỏi, hoặc say.
+\end{enumerate}
+
+\subsubsection*{Nhịp họp}
+
+\begin{tabularx}{\linewidth}{@{}p{3cm} p{2.5cm} X@{}}
+\toprule
+\textbf{Họp} & \textbf{Tần suất} & \textbf{Mục đích} \\
+\midrule
+\textbf{Daily standup} & 15 phút, 9h sáng & Hôm nay làm gì, kẹt gì. \\
+\textbf{Weekly review} & 90 phút, thứ 6 & Metrics tuần, pipeline, kỹ thuật. \\
+\textbf{Monthly strategy} & Nửa ngày, cuối tháng & Roadmap, pricing, hiring. \\
+\textbf{Quarterly offsite} & 1 ngày + 1 bữa tối & Nhìn lại quý, nhìn tới quý tới. \\
+\textbf{Annual retreat} & 2--3 ngày, ngoài DN & Nhìn lại năm, hiệu chỉnh 3 năm. \\
+\textbf{1:1 cặp đôi} & 30 phút, 2 tuần/lần & Mỗi cặp 2 người nói chuyện riêng. \\
+\bottomrule
+\end{tabularx}
+
+\clearpage
+
+% =============================================================
+% CHAPTER VI — RỦI RO & PHƯƠNG ÁN
+% =============================================================
+\section{Rủi ro \& Phương án}
+
+\subsection{10 rủi ro lớn nhất}
+
+\begin{tabularx}{\linewidth}{@{}p{0.5cm} p{3.3cm} X X@{}}
+\toprule
+\textbf{\#} & \textbf{Rủi ro} & \textbf{Xác suất} & \textbf{Phương án giảm thiểu} \\
+\midrule
+1 & Không tìm được design partner trả phí trong 6 tháng & Trung bình & Giảm giá pilot, mở rộng tới 5 trường khả thi, dùng network Hảo nâng độ tin cậy. \\
+2 & Phú burnout do làm một mình quá lâu & \textbf{Cao} & Tuyển kỹ sư \#2 part-time sau M6; Hảo theo dõi energy; cấm làm cuối tuần thường xuyên. \\
+3 & Hoàng không quen bán AI (khác với business cũ) & Trung bình & Hảo đi cùng 10 discovery đầu; có playbook sales chuẩn; có tài liệu kỹ thuật dễ hiểu. \\
+4 & Mâu thuẫn Phú--Hoàng về scope & \textbf{Cao} & Cơ chế 3 chữ ký; Hảo làm trọng tài; timebox pilot thay vì tranh luận. \\
+5 & Big tech (FPT / VNG / OpenAI / Anthropic) tung giải pháp vertical & Trung bình & Tập trung ngách Việt hoá \& hiểu sâu nghiệp vụ; xây moat bằng design partner trung thành. \\
+6 & Model cost tăng đột ngột & Thấp--Trung & Xây cost tracking từ M1; sẵn sàng chuyển giữa 2--3 model; self-host model nhỏ cho task đơn giản. \\
+7 & Khách thứ 3, 4 không cho tái sử dụng code vì custom quá nhiều & Trung bình & Hảo quyết định ngay từ pitch: công ty không nhận dự án không reuse được $\geq$ 60\%. \\
+8 & Cạn tiền mặt trước khi có doanh thu lặp lại & \textbf{Cao} & Gate 1 ở M6; mỗi người giữ nguồn thu phụ; không thuê văn phòng đắt trong năm đầu. \\
+9 & Một trong 3 người phải về việc cũ (ngoài ý muốn) & Thấp & Vesting 4 năm + 1 năm cliff; bảo hiểm nhân thọ cơ bản cho mỗi founder. \\
+10 & Khách hàng mất niềm tin sau 1 lỗi công khai & Thấp--Trung & Evals \& audit trail ngay từ MVP; quy trình handle incident rõ ràng; không bao giờ hứa 100\%. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Red lines --- những việc không bao giờ làm}
+
+\begin{enumerate}
+\item \textbf{Không nhận dự án không thể tái sử dụng $\geq$ 60\% framework.}
+Ngay cả khi khách trả nhiều. Đó là outsourcing trá hình.
+
+\item \textbf{Không bán sản phẩm chưa chạy thật.} Không có demo ``fake it till
+you make it''. Demo là MVP thật, hoặc không demo.
+
+\item \textbf{Không làm dự án có yêu cầu bỏ qua evals / audit / governance.}
+Không phải vì đạo đức cao siêu --- vì nó sẽ gây incident sau này.
+
+\item \textbf{Không hứa với khách điều 2 người còn lại chưa biết.} Mọi cam kết
+phải qua 3 chữ ký.
+
+\item \textbf{Không pha loãng cổ phần founder dưới 51\% trong 24 tháng đầu.}
+Không gọi vốn lớn nếu chưa đủ traction.
+
+\item \textbf{Không dùng tiền khách hàng cho việc ngoài dự án của khách đó.}
+Không ``lấy tiền dự án A trả lương làm dự án B''.
+
+\item \textbf{Không cover-up lỗi.} Với khách, với team, với nhau.
+\end{enumerate}
+
+\subsection{Go / No-go criteria --- khi nào thì DỪNG}
+
+\begin{warnbox}[title=Đây là phần khó nhất]
+Đa số startup không chết vì không biết bắt đầu, mà vì không biết dừng. Dưới đây
+là các tín hiệu mà nếu xuất hiện, 3 người phải ngồi lại nghiêm túc:
+\end{warnbox}
+
+\begin{itemize}
+\item \textbf{M6, chưa có 1 khách trả phí:} Không fail, nhưng cần phân tích nghiêm
+túc. Có thể kéo dài thêm 3 tháng.
+
+\item \textbf{M9, chưa có 1 khách trả phí:} Cảnh báo đỏ. Phải quyết định:
+tiếp tục 3 tháng nữa với scope hẹp hơn, hay downgrade công ty thành agency.
+
+\item \textbf{M12, vẫn chưa có khách trả phí:} \textbf{Dừng lại.} Không phải
+thất bại cá nhân --- là thị trường đã nói. Giữ framework làm tài sản, giữ quan
+hệ 3 người, nhưng tạm dừng mô hình công ty này.
+
+\item \textbf{Bất kỳ lúc nào: một founder bị stress nghiêm trọng, ảnh hưởng sức
+khỏe hoặc gia đình:} Dừng mọi việc khác, họp 3 người, ưu tiên con người trước công ty.
+
+\item \textbf{Bất kỳ lúc nào: đã có 3 lần vi phạm 3-chữ-ký:} Nghĩa là cơ chế đã
+gãy. Họp khẩn cấp. Không được ``thôi bỏ qua lần này''.
+\end{itemize}
+
+\clearpage
+
+% =============================================================
+% CHAPTER VII — 90 NGÀY ĐẦU & CAM KẾT
+% =============================================================
+\section{90 ngày đầu \& Cam kết}
+
+\subsection{Kế hoạch 90 ngày (M1--M3)}
+
+\subsubsection*{Tháng 1 --- Khởi động}
+
+\textbf{Tuần 1--2:}
+\begin{itemize}
+\item Đọc, bình luận, hiệu chỉnh playbook này. Chốt phiên bản v1.0.
+\item Ngồi 1 ngày riêng để chốt cổ phần, vesting, vốn góp, lương.
+\item Viết biên bản đồng thuận 3 người (có chữ ký).
+\end{itemize}
+
+\textbf{Tuần 3--4:}
+\begin{itemize}
+\item Pháp lý: đăng ký công ty TNHH (2 hoặc 3 thành viên), địa chỉ Đà Nẵng.
+\item Mở tài khoản ngân hàng doanh nghiệp.
+\item Thuê văn phòng nhỏ (co-working cũng được, 3--5 chỗ ngồi).
+\item Domain, email, công cụ làm việc (Notion, GitHub, Slack).
+\end{itemize}
+
+\subsubsection*{Tháng 2 --- Xây dựng \& Discovery}
+
+\textbf{Tuần 5--6:}
+\begin{itemize}
+\item \textbf{Phú:} Dựng skeleton framework v0 (Knowledge + Workflow + Tools).
+Prototype Admissions Agent trên dữ liệu giả của 1 trường.
+\item \textbf{Hoàng:} Lên danh sách 20 trường ĐH/CĐ miền Trung + miền Nam có
+khả năng là ICP. Viết pitch v1.
+\item \textbf{Hảo:} Liên hệ warm intro với 5 trường có quan hệ sẵn.
+\end{itemize}
+
+\textbf{Tuần 7--8:}
+\begin{itemize}
+\item \textbf{Hoàng + Hảo:} Thực hiện 5 discovery call đầu tiên. Ghi chép.
+\item \textbf{Phú:} Hoàn thiện prototype Admissions Agent, demo được cho khách.
+\item \textbf{3 người:} Weekly review --- cập nhật ICP, cập nhật use case, cập nhật pricing.
+\end{itemize}
+
+\subsubsection*{Tháng 3 --- Ký design partner đầu tiên}
+
+\textbf{Tuần 9--10:}
+\begin{itemize}
+\item Hoàn thành 10 discovery call. Phân tích --- 3 khách hàng có xác suất ký cao nhất.
+\item Viết proposal cho 3 khách. Demo prototype với dữ liệu thật của họ.
+\item Bắt đầu đàm phán hợp đồng pilot (50--150 triệu).
+\end{itemize}
+
+\textbf{Tuần 11--12:}
+\begin{itemize}
+\item Ký ít nhất \textbf{1 hợp đồng pilot trả phí}.
+\item Kick-off dự án. Phú bắt đầu build phiên bản thật.
+\item \textbf{Quarterly offsite --- nhìn lại 90 ngày, hiệu chỉnh playbook.}
+\end{itemize}
+
+\begin{keybox}[title=Mốc thành công của 90 ngày]
+\textbf{1 hợp đồng pilot trả phí + 10 discovery call + framework v0 có demo được + 3 người vẫn muốn đi cùng nhau.}
+
+Nếu cả 4 điều trên đạt được, công ty đã vượt qua điểm khó nhất ban đầu.
+\end{keybox}
+
+\subsection{Cam kết của 3 người}
+
+\vspace{1em}
+
+Với chữ ký dưới đây, chúng tôi --- \textbf{Đỗ Phúc Hảo, Lê Hữu Phú, Nguyễn Ngọc
+Hoàng} --- đồng thuận:
+
+\begin{enumerate}
+\item Cam kết ít nhất \textbf{3 năm} đi cùng nhau trong công ty này.
+\item Chấp nhận vai trò, quyền quyết định, và KPI đã nêu trong playbook.
+\item Tuân thủ cơ chế \textbf{3 chữ ký} cho các quyết định lớn.
+\item Không vi phạm 7 \textbf{red lines} đã liệt kê.
+\item Cam kết \textbf{minh bạch hoàn toàn} về tài chính, lịch làm việc, và quyết định.
+\item Đồng ý hiệu chỉnh playbook này sau mỗi \textbf{quarterly offsite}, khi cả 3 người đồng thuận.
+\item Đối xử với nhau --- kể cả khi không đồng ý --- bằng \textbf{sự tôn trọng, kiên nhẫn, và giả định thiện chí}.
+\end{enumerate}
+
+\vspace{2em}
+
+\begin{center}
+\begin{tabular}{ccc}
+\rule{5cm}{0.4pt} & \rule{5cm}{0.4pt} & \rule{5cm}{0.4pt} \\
+\textbf{Đỗ Phúc Hảo} & \textbf{Lê Hữu Phú} & \textbf{Nguyễn Ngọc Hoàng} \\
+CEO / Strategy & Platform Lead & GTM Lead \\
+\small Ngày: \hspace{2cm} & \small Ngày: \hspace{2cm} & \small Ngày: \hspace{2cm} \\
+\end{tabular}
+\end{center}
+
+\vfill
+
+\begin{center}
+\small\itshape\color{mid}
+``Ba người đi cùng nhau, tất yếu có người làm thầy ta.'' --- \textit{Khổng Tử}\\[0.5em]
+Nhưng trong công ty này, \textbf{chúng tôi đi cùng nhau và làm thầy lẫn nhau.}
+\end{center}
+
+\end{document}

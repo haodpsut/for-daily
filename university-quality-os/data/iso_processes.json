@@ -1,0 +1,3491 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-04-21T10:11:16.771558",
+  "source": "D:\\Locals\\git-working\\for-daily\\de-an-thanh-lap-cong-ty\\university\\iso",
+  "total": 122,
+  "by_department": {
+    "KHAO THI": 11,
+    "P.CTSV": 12,
+    "P.DAOTAO": 10,
+    "P.HC-TH": 22,
+    "P.HTQT-TT": 18,
+    "P.KH-CN": 10,
+    "P.QLDA và QTTB": 3,
+    "P.TCKT": 18,
+    "P.TCNS": 9,
+    "P.TTPC": 6,
+    "P.Tuyensinh": 3
+  },
+  "processes": [
+    {
+      "id": "KHAOTHI-001",
+      "name": "1. XAY DUNG VA QUAN LY NGAN HANG CAU HOI THI",
+      "department": "KHAO THI",
+      "dept_full": "Phòng Khảo thí và Đảm bảo chất lượng",
+      "folder_path": "KHAO THI/1. XAY DUNG VA QUAN LY NGAN HANG CAU HOI THI",
+      "qt_files": [
+        "QT_XAY DUNG VA QUAN LY NGAN HANG CAU HOI THI.pdf"
+      ],
+      "templates": [
+        "Hướng dẫn đưa câu hỏi thi vào hệ thống, khai thác, sử dụng.docx",
+        "Mâu thông báo xây dựng ngân hàng câu hỏi thi.docx",
+        "Phụ lục Ngân hàng câu hỏi thi.docx"
+      ],
+      "regulations": [
+        "Quy định về việc xây dựng, quản lý và sử dụng ngân hàng câu hỏi thi kết thúc học phần của Trường Đại học Kiến trúc Đà Nẵng.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 3,
+      "num_regulations": 1,
+      "keywords": [
+        "xay",
+        "dung",
+        "quan",
+        "ly",
+        "ngan",
+        "hang",
+        "cau",
+        "hoi"
+      ]
+    },
+    {
+      "id": "KHAOTHI-002",
+      "name": "10. TO CHUC, HUONG DAN TU DANH GIA CO SO GIAO DUC",
+      "department": "KHAO THI",
+      "dept_full": "Phòng Khảo thí và Đảm bảo chất lượng",
+      "folder_path": "KHAO THI/10. TO CHUC, HUONG DAN TU DANH GIA CO SO GIAO DUC",
+      "qt_files": [
+        "QT_ TO CHUC, HUONG DAN TU DANH GIA VA CHUAN BI DANH GIA NGOAI CO SƠ GIAO DỤC.pdf"
+      ],
+      "templates": [],
+      "regulations": [
+        "Công văn số 1668-QLCL-KĐCLGD của Cục Quản lý chất lượng - Bộ Giáo dục và Đào tạo.pdf",
+        "Công văn số 766 QLCL-KĐCLGD , Hướng dẫn tự đánh giá cơ sở giáo dục đại học.pdf",
+        "Công văn số 767 QLCL-KĐCLGD , Hướng dẫn đánh giá ngoài cơ sở giáo dục đại học.pdf",
+        "Công văn số 768 QLCL-KĐCLGD , Hướng dẫn theo bộ tiêu chuẩn đánh giá chất lượng cơ sở giáo dục đại học.pdf",
+        "Thông tư số 12-2017-TT-BGDĐTban hành quy định về kiểm định chất lượng giáo dục đại học.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 5,
+      "keywords": [
+        "to",
+        "chuc",
+        "huong",
+        "dan",
+        "danh",
+        "gia",
+        "so",
+        "giao"
+      ]
+    },
+    {
+      "id": "KHAOTHI-003",
+      "name": "11. TO CHUC, HUONG DAN TU DANH GIA CTDT",
+      "department": "KHAO THI",
+      "dept_full": "Phòng Khảo thí và Đảm bảo chất lượng",
+      "folder_path": "KHAO THI/11. TO CHUC, HUONG DAN TU DANH GIA CTDT",
+      "qt_files": [
+        "QT_ TO CHUC, HUONG DAN TU DANH GIA VÀ CHUAN BI DANH GIA NGOA CTDT.pdf"
+      ],
+      "templates": [],
+      "regulations": [
+        "Công văn số 1668-QLCL-KĐCLGD  Bảng hướng dẫn đánh giá CTĐT.pdf",
+        "Công văn số 1668QLCL-KĐCLGDcủa Cục Quản lý chất lượng - Bộ Giáo dục và Đào tạo.pdf",
+        "Công văn số 769 QLCL-KĐCLGD, Hướng dẫn theo bộ tiêu chuẩn đánh giá chất lượng chương trình đào tạo.pdf",
+        "Thông tư số 04-2016-TT-BGDĐT ngày 14 tháng 3 năm 2016 của Bộ trưởng Bộ Giáo dục và Đào tạo.pdf",
+        "Thông tư số 38-2013-TT-BGDĐT của Bộ Giáo dục và Đào tạo.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 5,
+      "keywords": [
+        "to",
+        "chuc",
+        "huong",
+        "dan",
+        "danh",
+        "gia",
+        "ctdt"
+      ]
+    },
+    {
+      "id": "KHAOTHI-004",
+      "name": "2. PHUC KHAO BAI THI KET THUC HOC PHAN",
+      "department": "KHAO THI",
+      "dept_full": "Phòng Khảo thí và Đảm bảo chất lượng",
+      "folder_path": "KHAO THI/2. PHUC KHAO BAI THI KET THUC HOC PHAN",
+      "qt_files": [
+        "QT - PHUC KHAO.pdf"
+      ],
+      "templates": [
+        "Biên bản chấm phúc khảo.xlsx",
+        "Danh sách sinh viên đăng ký phúc khảo tổng hợp.xlsx",
+        "Mẫu đơn xin phúc khảo bài thi kết thúc học phần.docx"
+      ],
+      "regulations": [
+        "Quy định sửa đổi bổ sung Quy định đánh giá kết quả học tập của sinh viên..pdf",
+        "Quy định đánh giá kết quả học tập của sinh viên..pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 3,
+      "num_regulations": 2,
+      "keywords": [
+        "phuc",
+        "khao",
+        "bai",
+        "thi",
+        "ket",
+        "thuc",
+        "hoc",
+        "phan"
+      ]
+    },
+    {
+      "id": "KHAOTHI-005",
+      "name": "3. TO CHUC THI TRAC NGHIEM TREN MAY TINH",
+      "department": "KHAO THI",
+      "dept_full": "Phòng Khảo thí và Đảm bảo chất lượng",
+      "folder_path": "KHAO THI/3. TO CHUC THI TRAC NGHIEM TREN MAY TINH",
+      "qt_files": [
+        "QT- THI TRAC NGHIEM TREN MAY TINH.pdf"
+      ],
+      "templates": [
+        "Hướng dẫn trắc nghiệm trên máy.docx"
+      ],
+      "regulations": [
+        "Hướng dẫn thi trên máy.docx",
+        "Hướng dẫn trắc nghiệm trên máy, CLIENT.docx",
+        "Quy định về Đánh giá kết quả học tập của sinh viên Trường Đại học Kiến trúc Đà Nẵng.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 1,
+      "num_regulations": 3,
+      "keywords": [
+        "to",
+        "chuc",
+        "thi",
+        "trac",
+        "nghiem",
+        "tren",
+        "may",
+        "tinh"
+      ]
+    },
+    {
+      "id": "KHAOTHI-006",
+      "name": "4. QUY TRINH CHAM THI BAI THI TU LUAN CO ROC PHACH",
+      "department": "KHAO THI",
+      "dept_full": "Phòng Khảo thí và Đảm bảo chất lượng",
+      "folder_path": "KHAO THI/4. QUY TRINH CHAM THI BAI THI TU LUAN CO ROC PHACH",
+      "qt_files": [
+        "QT- Cham bai thi tu luan co roc phach.pdf"
+      ],
+      "templates": [
+        "Biểu mẫu hướng dẫn dồn túi đánh phách.xlsx",
+        "Hướng dẫn sử dụng phần mềm.docx",
+        "Mẫu bảng điểm sau hồi phách.xlsx",
+        "Mẫu bảng điểm theo phách.xlsx"
+      ],
+      "regulations": [
+        "Hướng dẫn sử dụng phần mềm ASC modul Dồn túi, đánh phách, cắt phách, hồi điểm.DOCX",
+        "Quy chế đào tạo.pdf",
+        "Quy định đánh giá kết quả học tập của sinh viên..pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 4,
+      "num_regulations": 3,
+      "keywords": [
+        "cham",
+        "thi",
+        "bai",
+        "luan",
+        "roc",
+        "phach"
+      ]
+    },
+    {
+      "id": "KHAOTHI-007",
+      "name": "5. QUY TRINH THI KET THUC HOC PHAN",
+      "department": "KHAO THI",
+      "dept_full": "Phòng Khảo thí và Đảm bảo chất lượng",
+      "folder_path": "KHAO THI/5. QUY TRINH THI KET THUC HOC PHAN",
+      "qt_files": [
+        "QT _ THI KET THUC HOC PHAN.pdf"
+      ],
+      "templates": [
+        "hướng dẫn sử dụng quản lý thi.DOCX",
+        "sổ giao nhận bài thi.xls",
+        "sổ giao nhận đề thi.xlsx"
+      ],
+      "regulations": [
+        "phụ lục ngân hàng đề thi.docx",
+        "Quy trình thi kết thúc học phần.pdf",
+        "Quy định về đánh giá kết quả học tập của sv.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 3,
+      "num_regulations": 3,
+      "keywords": [
+        "thi",
+        "ket",
+        "thuc",
+        "hoc",
+        "phan"
+      ]
+    },
+    {
+      "id": "KHAOTHI-008",
+      "name": "6. QUY TRINH THUC HIEN QUY DINH VE VIEC CONG KHAI TRONG HOAT DONG CUA TRUONG",
+      "department": "KHAO THI",
+      "dept_full": "Phòng Khảo thí và Đảm bảo chất lượng",
+      "folder_path": "KHAO THI/6. QUY TRINH THUC HIEN QUY DINH VE VIEC CONG KHAI TRONG HOAT DONG CUA TRUONG",
+      "qt_files": [
+        "QT - THUC HIEN QUY DINH VE CONG KHAI TRONG HOAT DONG CUA TRUONG DH.pdf"
+      ],
+      "templates": [],
+      "regulations": [
+        "Quy định về việc Công khai trong hoạt động của trường Đại học Kiến trúc Đà Nẵng.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 1,
+      "keywords": [
+        "thuc",
+        "hien",
+        "dinh",
+        "cong",
+        "khai",
+        "hoat",
+        "dong",
+        "truong"
+      ]
+    },
+    {
+      "id": "KHAOTHI-009",
+      "name": "7. THI KHAO SAT DAU VAO",
+      "department": "KHAO THI",
+      "dept_full": "Phòng Khảo thí và Đảm bảo chất lượng",
+      "folder_path": "KHAO THI/7. THI KHAO SAT DAU VAO",
+      "qt_files": [
+        "QT_ KHAO SAT THI DAU VAO.pdf"
+      ],
+      "templates": [
+        "kết quả điểm.xlsx",
+        "quyết định công nhận kết quả.docx",
+        "sổ giao nhận đề thi.xlsx"
+      ],
+      "regulations": [
+        "Quy định xét miễn HP tiếng anh.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 3,
+      "num_regulations": 1,
+      "keywords": [
+        "thi",
+        "khao",
+        "sat",
+        "dau",
+        "vao"
+      ]
+    },
+    {
+      "id": "KHAOTHI-010",
+      "name": "8. THI KHAO SAT DAU RA",
+      "department": "KHAO THI",
+      "dept_full": "Phòng Khảo thí và Đảm bảo chất lượng",
+      "folder_path": "KHAO THI/8. THI KHAO SAT DAU RA",
+      "qt_files": [
+        "QT- KHAO SAT DAU RA.pdf"
+      ],
+      "templates": [
+        "bảng điểm.xlsx",
+        "phiếu chấm.xlsx",
+        "quyết định công nhận kết quả.xlsx",
+        "Sổ giao nhận bài thi.xls",
+        "sổ giao nhận đề thi.xlsx"
+      ],
+      "regulations": [
+        "Thi khảo sát đầu ra.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 5,
+      "num_regulations": 1,
+      "keywords": [
+        "thi",
+        "khao",
+        "sat",
+        "dau",
+        "ra"
+      ]
+    },
+    {
+      "id": "KHAOTHI-011",
+      "name": "9. KHAO SAT CAC BEN LIEN QUAN DEN HOAT DONG CUA NHA TRUONG",
+      "department": "KHAO THI",
+      "dept_full": "Phòng Khảo thí và Đảm bảo chất lượng",
+      "folder_path": "KHAO THI/9. KHAO SAT CAC BEN LIEN QUAN DEN HOAT DONG CUA NHA TRUONG",
+      "qt_files": [
+        "QT_ KHAO SAT CAC BEN LIEN QUAN DOI VOI HOAT DONG CUA TRUONG.pdf"
+      ],
+      "templates": [
+        "Báo cáo khảo sát.docx",
+        "Kế hoạch khảo sát, lấy ý kiến phản hồi từ các bên liên quan đối với hoạt động của Trường.doc",
+        "PHIẾU KHẢO SÁT LẤY Ý KIẾN PHẢN HỒI CỦA NHÀ TUYỂN DỤNG- DOANH NGHIỆP VỀ CHẤT LƯỢNG ĐÀO TẠO.docx",
+        "PHIẾU KHẢO SÁT SỰ HÀI LÒNG CỦA SINH VIÊN TRƯỚC KHI TỐT NGHIỆP VỀ CHẤT LƯỢNG ĐÀO TẠO CỦA TRƯỜNG.docx",
+        "PHIẾU KHẢO SÁT SỰ HÀI LÒNG CỦA SINH VIÊN VỀ HOẠT ĐỘNG GIẢNG DẠY CỦA GIẢNG VIÊN.docx",
+        "PHIẾU KHẢO SÁT SỰ HÀI LÒNG CỦA SINH VIÊN VỀ HOẠT ĐỘNG KHOA HỌC VÀ CÔNG NGHỆ.docx",
+        "PHIẾU KHẢO SÁT SỰ HÀI LÒNG CỦA SINH VIÊN ĐỐI VỚI CÁC HOẠT ĐỘNG CỦA NHÀ TRƯỜNG.docx",
+        "PHIẾU KHẢO SÁT TÂN SINH VIÊN VỀ CÔNG TÁC TUYỂN SINH VÀ NHẬP HỌC CỦA NHÀ TRƯỜNG.docx",
+        "PHIẾU KHẢO SÁT VỀ TÌNH HÌNH VIỆC LÀM VÀ CHẤT LƯỢNG ĐÀO TẠO CỦA TRƯỜNG.docx",
+        "PHIẾU KHẢO SÁT Ý KIẾN VỀ CHƯƠNG TRÌNH ĐÀO TẠO.docx"
+      ],
+      "regulations": [
+        "Quy chế tổ chức và hoạt động của Trường Đại học Kiến trúc Đà Nẵng.pdf",
+        "Thông tư số 04-2016-TT-BGDĐT ngày 14 tháng 3 năm 2016 của Bộ Giáo dục và Đào tạo.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 10,
+      "num_regulations": 2,
+      "keywords": [
+        "khao",
+        "sat",
+        "ben",
+        "lien",
+        "quan",
+        "hoat",
+        "dong",
+        "nha"
+      ]
+    },
+    {
+      "id": "PCTSV-001",
+      "name": "Quy trình cấp Giấy xác nhận sinh viên",
+      "department": "P.CTSV",
+      "dept_full": "Phòng Công tác Sinh viên",
+      "folder_path": "P.CTSV/Quy trình cấp Giấy xác nhận sinh viên",
+      "qt_files": [
+        "Quy trình cấp Giấy xác nhận sinh viên.pdf"
+      ],
+      "templates": [
+        "Giấy xác nhận về việc sinh viên đang học tại Trường.doc",
+        "Giấy xác nhận để sinh viên hưởng chính sách miễn, giảm học phí, hỗ trợ chi phí học tập theo nghị định số 81.docx",
+        "Giấy xác nhận để sinh viên vay vốn tín dụng HSSV.doc",
+        "Hướng dẫn thao thác đề xuất và cấp biểu mẫu xác nhận sinh viên trực tuyến.pdf"
+      ],
+      "regulations": [
+        "Nghị định số 1312021NĐ-TTg của Chính phủ quy định chi tiết và hướng dẫn thi hành Pháp lệnh Ưu đãi người có công với Cách mạng.pdf",
+        "Quy trình cấp Giấy xác nhận sinh viên.pdf",
+        "Quyết định số 052022QĐ-TTg sửa đổi bổ sung một số điều của Quyết định số 157QĐ-TTg của Thủ tướng Chính phủ về tín dụng đối với HSSV.pdf",
+        "Quyết định số 157QĐ-TTg của Thủ tướng Chính phủ về tín dụng đối với HSSV.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 4,
+      "num_regulations": 4,
+      "keywords": [
+        "cấp",
+        "giấy",
+        "xác",
+        "nhận",
+        "sinh",
+        "viên"
+      ]
+    },
+    {
+      "id": "PCTSV-002",
+      "name": "QUY TRÌNH CẬP NHẬT THÔNG TIN BAN CÁN SỰ - BCH LỚP",
+      "department": "P.CTSV",
+      "dept_full": "Phòng Công tác Sinh viên",
+      "folder_path": "P.CTSV/QUY TRÌNH CẬP NHẬT THÔNG TIN BAN CÁN SỰ - BCH LỚP",
+      "qt_files": [
+        "QUY TRÌNH CẬP NHẬT THÔNG TIN BAN CÁN SỰ - BCH LỚP.pdf"
+      ],
+      "templates": [
+        "Hướng dẫn thao tác phần mềm cập nhật thông tin BCS_BCH.docx",
+        "Mẫu file import BCS_BCH lớp.xls"
+      ],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 2,
+      "num_regulations": 0,
+      "keywords": [
+        "cập",
+        "nhật",
+        "thông",
+        "tin",
+        "ban",
+        "cán",
+        "sự",
+        "bch"
+      ]
+    },
+    {
+      "id": "PCTSV-003",
+      "name": "QUY TRÌNH CẬP NHẬT THÔNG TIN GIẢNG VIÊN CHỦ NHIỆMCỐ VẤN HỌC TẬP TRÊN PHẦN MỀM QUẢN LÝ",
+      "department": "P.CTSV",
+      "dept_full": "Phòng Công tác Sinh viên",
+      "folder_path": "P.CTSV/QUY TRÌNH CẬP NHẬT THÔNG TIN GIẢNG VIÊN CHỦ NHIỆMCỐ VẤN HỌC TẬP TRÊN PHẦN MỀM QUẢN LÝ",
+      "qt_files": [
+        "QUY TRÌNH CẬP NHẬT THÔNG TIN GIẢNG VIÊN CHỦ NHIỆMCỐ VẤN HỌC TẬP TRÊN PHẦN MỀM QUẢN LÝ.pdf"
+      ],
+      "templates": [
+        "Hướng dẫn thao tác phần mềm cập nhật thông tin GVCN_CVHT.docx",
+        "Mẫu file import thông tin GVCN-CVHT.xls"
+      ],
+      "regulations": [
+        "Quy định về công tác cố vấn học tập của trường ĐHKTĐN.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 2,
+      "num_regulations": 1,
+      "keywords": [
+        "cập",
+        "nhật",
+        "thông",
+        "tin",
+        "giảng",
+        "viên",
+        "chủ",
+        "nhiệmcố"
+      ]
+    },
+    {
+      "id": "PCTSV-004",
+      "name": "Quy trình cập nhật thông tin sinh viên",
+      "department": "P.CTSV",
+      "dept_full": "Phòng Công tác Sinh viên",
+      "folder_path": "P.CTSV/Quy trình cập nhật thông tin sinh viên",
+      "qt_files": [
+        "Quy trình cập nhật thông tin sinh viên.pdf"
+      ],
+      "templates": [
+        "Hướng dẫn thao thác đề xuất và cấp biểu mẫu xác nhận sinh viên trực tuyến.docx"
+      ],
+      "regulations": [
+        "Các bước sinh viên đề xuất cập nhật thông tin trên cổng thông tin httpssinhvien.dau.edu.vn.docx",
+        "Hướng dẫn sử dụng Cổng thông tin sinh viên.docx",
+        "Quy trình cập nhật thông tin sinh viên.docx"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 1,
+      "num_regulations": 3,
+      "keywords": [
+        "cập",
+        "nhật",
+        "thông",
+        "tin",
+        "sinh",
+        "viên"
+      ]
+    },
+    {
+      "id": "PCTSV-005",
+      "name": "QUY TRÌNH CẬP NHẬT TRẠNG THÁI SINH VIÊN TRÊN PHẦN MỀM QUẢN LÝ",
+      "department": "P.CTSV",
+      "dept_full": "Phòng Công tác Sinh viên",
+      "folder_path": "P.CTSV/QUY TRÌNH CẬP NHẬT TRẠNG THÁI SINH VIÊN TRÊN PHẦN MỀM QUẢN LÝ",
+      "qt_files": [
+        "QUY TRÌNH CẬP NHẬT TRẠNG THÁI SINH VIÊN TRÊN PHẦN MỀM QUẢN LÝ.pdf"
+      ],
+      "templates": [
+        "Hướng dẫn sử dụng phần mềm- Thao tác cập nhật trạng thái và nhập QĐ xử lý học vụ.docx",
+        "Hướng dẫn sử dụng phần mềm- Thao tác kiểm tra, lọc danh sách cập nhật QĐ xử lý học vụ.docx"
+      ],
+      "regulations": [
+        "Quy chế công tác sinh viên ĐH Kiến trúc ĐN.pdf",
+        "Quy định về hồ sơ sinh viên và ứng dụng công nghệ thông tin trong quản lý hồ sơ sinh viên.doc"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 2,
+      "num_regulations": 2,
+      "keywords": [
+        "cập",
+        "nhật",
+        "trạng",
+        "thái",
+        "sinh",
+        "viên",
+        "trên",
+        "phần"
+      ]
+    },
+    {
+      "id": "PCTSV-006",
+      "name": "Quy trình Khen thưởng và kỷ luật sinh viên",
+      "department": "P.CTSV",
+      "dept_full": "Phòng Công tác Sinh viên",
+      "folder_path": "P.CTSV/Quy trình Khen thưởng và kỷ luật sinh viên",
+      "qt_files": [
+        "Quy trình Khen thưởng và kỷ luật sinh viên.pdf"
+      ],
+      "templates": [
+        "Danh sách khen thưởng cá nhân sinh viên.xls",
+        "Danh sách khen thưởng tập thể lớp.xls",
+        "Mẫu danh sách đề nghị khen thưởng cá nhân SV.xls",
+        "Mẫu danh sách đề nghị khen thưởng tập thể lớp SV.xls"
+      ],
+      "regulations": [
+        "Quy trình Khen thưởng và kỷ luật sinh viên.docx"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 4,
+      "num_regulations": 1,
+      "keywords": [
+        "khen",
+        "thưởng",
+        "kỷ",
+        "luật",
+        "sinh",
+        "viên"
+      ]
+    },
+    {
+      "id": "PCTSV-007",
+      "name": "QUY TRÌNH LÀM THẺ SINH VIÊN",
+      "department": "P.CTSV",
+      "dept_full": "Phòng Công tác Sinh viên",
+      "folder_path": "P.CTSV/QUY TRÌNH LÀM THẺ SINH VIÊN",
+      "qt_files": [
+        "QUY TRÌNH LÀM THẺ SINH VIÊN.pdf"
+      ],
+      "templates": [
+        "Hướng dẫn thao tác phần mềm chụp hình thẻ và In thẻ sinh viên.docx",
+        "Mẫu phiếu trình đề xuất phôi thẻ và phụ kiện.doc",
+        "Mẫu thẻ sinh viên.docx"
+      ],
+      "regulations": [
+        "Quy chế công tác sinh viên Đại học Kiến trúc Đà Nẵng.pdf",
+        "Thông báo về việc đăng ký, sử dụng và bảo quản thẻ sinh viên.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 3,
+      "num_regulations": 2,
+      "keywords": [
+        "làm",
+        "thẻ",
+        "sinh",
+        "viên"
+      ]
+    },
+    {
+      "id": "PCTSV-008",
+      "name": "QUY TRÌNH QUẢN LÝ THÔNG TIN VÀ LƯU TRỮ HỒ SƠ SINH VIÊN",
+      "department": "P.CTSV",
+      "dept_full": "Phòng Công tác Sinh viên",
+      "folder_path": "P.CTSV/QUY TRÌNH QUẢN LÝ THÔNG TIN VÀ LƯU TRỮ HỒ SƠ SINH VIÊN",
+      "qt_files": [
+        "QUY TRÌNH QUẢN LÝ THÔNG TIN VÀ LƯU TRỮ HỒ SƠ SINH VIÊN.pdf"
+      ],
+      "templates": [
+        "Danh sách thiếu hồ sơ thông báo cho sv bổ sung.xls",
+        "Giấy cam đoan bổ sung hồ sơ.doc",
+        "Khung hồ sơ nhập học.doc",
+        "Sổ kí nhận hồ sơ.xls",
+        "Thao tác tick hồ sơ nhập học và lọc danh sách thiếu đủ hồ sơ.docx"
+      ],
+      "regulations": [
+        "Quy định thời hạn bảo quản tài liệu chuyên môn nghiệp vụ của ngành Giáo dục.pdf",
+        "Quy định về hồ sơ học sinh, sinh viên và ứng dụng công nghệ thông tin trong quản lý hồ sơ học sinh, sinh viên.doc"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 5,
+      "num_regulations": 2,
+      "keywords": [
+        "quản",
+        "lý",
+        "thông",
+        "tin",
+        "lưu",
+        "trữ",
+        "hồ",
+        "sơ"
+      ]
+    },
+    {
+      "id": "PCTSV-009",
+      "name": "QUY TRÌNH XÉT GIẢM HỌC PHÍ",
+      "department": "P.CTSV",
+      "dept_full": "Phòng Công tác Sinh viên",
+      "folder_path": "P.CTSV/QUY TRÌNH XÉT GIẢM HỌC PHÍ",
+      "qt_files": [
+        "QUY TRÌNH XÉT GIẢM HỌC PHÍ.pdf"
+      ],
+      "templates": [
+        "Mẫu đơn xin giảm học phí.doc",
+        "Sổ ký nộp đơn xin giảm học phí.xls",
+        "Đơn xin xác nhận đối tượng giảm học phí.doc"
+      ],
+      "regulations": [
+        "Quy chế công tác sinh viên ĐH Kiến trúc Đà Nẵng.pdf",
+        "Quy định Về chế độ giảm học phí đối với sinh viên.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 3,
+      "num_regulations": 2,
+      "keywords": [
+        "xét",
+        "giảm",
+        "học",
+        "phí"
+      ]
+    },
+    {
+      "id": "PCTSV-010",
+      "name": "QUY TRÌNH XÓA TÊN SINH VIÊN VĂNG NGHỈ HỌC DÀI NGÀY KHÔNG PHÉP",
+      "department": "P.CTSV",
+      "dept_full": "Phòng Công tác Sinh viên",
+      "folder_path": "P.CTSV/QUY TRÌNH XÓA TÊN SINH VIÊN VĂNG NGHỈ HỌC DÀI NGÀY KHÔNG PHÉP",
+      "qt_files": [
+        "QUY TRÌNH XÓA TÊN SINH VIÊN VĂNG NGHỈ HỌC DÀI NGÀY KHÔNG PHÉP.pdf"
+      ],
+      "templates": [
+        "DANH SÁCH SINH VIÊN BỊ XÓA TÊN RA KHỎI DANH SÁCH LỚP HỌC.xls",
+        "Mẫu danh sách đề xuất xóa tên theo khoa.xlsx",
+        "Mẫu danh sách đề xuất xóa tên theo lớp.xlsx",
+        "Thư thông báo tới gia đình sv vv buộc thôi học.doc"
+      ],
+      "regulations": [
+        "Quy chế công tác sinh viên ĐH Kiến trúc Đà Nẵng.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 4,
+      "num_regulations": 1,
+      "keywords": [
+        "xóa",
+        "tên",
+        "sinh",
+        "viên",
+        "văng",
+        "nghỉ",
+        "học",
+        "dài"
+      ]
+    },
+    {
+      "id": "PCTSV-011",
+      "name": "QUY TRÌNH XỬ LÝ SINH VIÊN THÔI HỌC RÚT HỒ SƠ",
+      "department": "P.CTSV",
+      "dept_full": "Phòng Công tác Sinh viên",
+      "folder_path": "P.CTSV/QUY TRÌNH XỬ LÝ SINH VIÊN THÔI HỌC RÚT HỒ SƠ",
+      "qt_files": [
+        "QUY TRÌNH XỬ LÝ SINH VIÊN THÔI HỌC RÚT HỒ SƠ.pdf"
+      ],
+      "templates": [
+        "Đơn xin thôi học rút hồ sơ.doc"
+      ],
+      "regulations": [
+        "Quy chế đào tạo trình độ Đại học Đại học Kiến trúc Đà Nẵng.pdf",
+        "Quy chế đào tạo trình độ đại học.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 1,
+      "num_regulations": 2,
+      "keywords": [
+        "xử",
+        "lý",
+        "sinh",
+        "viên",
+        "thôi",
+        "học",
+        "rút",
+        "hồ"
+      ]
+    },
+    {
+      "id": "PCTSV-012",
+      "name": "QUY TRÌNH ĐÁNH GIÁ KẾT QUẢ RÈN LUYỆN",
+      "department": "P.CTSV",
+      "dept_full": "Phòng Công tác Sinh viên",
+      "folder_path": "P.CTSV/QUY TRÌNH ĐÁNH GIÁ KẾT QUẢ RÈN LUYỆN",
+      "qt_files": [
+        "QUY TRÌNH ĐÁNH GIÁ KẾT QUẢ RÈN LUYỆN.pdf"
+      ],
+      "templates": [
+        "Bảng tổng hợp kết quả rèn luyện theo lớp.xls",
+        "Bảng tự đánh giá kết quả rèn luyện sinh viên.xls",
+        "Hướng dẫn thao tác phần mềm nhập và quản lý kết quả rèn luyện.docx"
+      ],
+      "regulations": [
+        "Quy chế đánh giá kết quả rèn luyện của người học được đào tạo trình độ đại học hệ chính quy.pdf",
+        "QUY ĐỊNH VỀ TIÊU CHÍ, KHUNG ĐIỂM, QUY TRÌNH ĐÁNH GIÁ KẾT QUẢ RÈN LUYỆN CỦA SINH VIÊN TRƯỜNG ĐẠI HỌC KIẾN TRÚC ĐÀ NẴNG.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 3,
+      "num_regulations": 2,
+      "keywords": [
+        "đánh",
+        "giá",
+        "kết",
+        "quả",
+        "rèn",
+        "luyện"
+      ]
+    },
+    {
+      "id": "PDAOTAO-001",
+      "name": "Cập nhật, rà soát, điều chỉnh và bổ sung chương trình đào tạo",
+      "department": "P.DAOTAO",
+      "dept_full": "Phòng Đào tạo",
+      "folder_path": "P.DAOTAO/Cập nhật, rà soát, điều chỉnh và bổ sung chương trình đào tạo",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Cập nhật, rà soát, điều chỉnh và bổ sung chương trình đào tạo.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "cập",
+        "nhật",
+        "rà",
+        "soát",
+        "điều",
+        "chỉnh",
+        "bổ",
+        "sung"
+      ]
+    },
+    {
+      "id": "PDAOTAO-002",
+      "name": "Lập kế hoạch học kỳ theo CTK",
+      "department": "P.DAOTAO",
+      "dept_full": "Phòng Đào tạo",
+      "folder_path": "P.DAOTAO/Lập kế hoạch học kỳ theo CTK",
+      "qt_files": [],
+      "templates": [
+        "QT.ĐT-0401.xls",
+        "QT.ĐT-0417.docx",
+        "QT.ĐT-0418.docx",
+        "QT.ĐT-0419.docx",
+        "QT.ĐT-0420.docx",
+        "QT.ĐT-0421.docx",
+        "QT.ĐT-0422.docx",
+        "QT.ĐT-0423.docx",
+        "QT.ĐT-0424.docx"
+      ],
+      "regulations": [
+        "Kế hoạch GD&HT năm học cụ thể đã được HT ký ban hành.pdf"
+      ],
+      "extra_files": [
+        "Lập kế hoạch học kỳ theo CTK.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 9,
+      "num_regulations": 1,
+      "keywords": [
+        "lập",
+        "kế",
+        "hoạch",
+        "học",
+        "kỳ",
+        "ctk"
+      ]
+    },
+    {
+      "id": "PDAOTAO-003",
+      "name": "Lập kế hoạch năm học",
+      "department": "P.DAOTAO",
+      "dept_full": "Phòng Đào tạo",
+      "folder_path": "P.DAOTAO/Lập kế hoạch năm học",
+      "qt_files": [],
+      "templates": [
+        "Kế hoạch GD&HT năm học cụ thể đã được HT ký ban hành.pdf",
+        "Mẫu lập kế hoạch năm học.xlsx"
+      ],
+      "regulations": [
+        "Quy chế đào tạo 082021 của Bộ GD&ĐT.pdf",
+        "Quy chế đào tạo 347QĐ-ĐHKTĐN của Trường Đại học Kiến trúc Đà Nẵng.pdf"
+      ],
+      "extra_files": [
+        "Lập kế hoạch năm học.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 2,
+      "num_regulations": 2,
+      "keywords": [
+        "lập",
+        "kế",
+        "hoạch",
+        "năm",
+        "học"
+      ]
+    },
+    {
+      "id": "PDAOTAO-004",
+      "name": "Lập thời khóa biểu (TKB)",
+      "department": "P.DAOTAO",
+      "dept_full": "Phòng Đào tạo",
+      "folder_path": "P.DAOTAO/Lập thời khóa biểu (TKB)",
+      "qt_files": [],
+      "templates": [
+        "QT.ĐT-0501.docx",
+        "QT.ĐT-0502.doc",
+        "QT.ĐT-0503.docx",
+        "QT.ĐT-0504.docx",
+        "QT.ĐT-0505.docx",
+        "QT.ĐT-0506.doc"
+      ],
+      "regulations": [
+        "Thông báo thời gian ĐK HP học kỳ... 1.pdf",
+        "Thông báo thời gian ĐK HP học kỳ... 2.pdf"
+      ],
+      "extra_files": [
+        "Lập thời khóa biểu (TKB).pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 6,
+      "num_regulations": 2,
+      "keywords": [
+        "lập",
+        "thời",
+        "khóa",
+        "biểu",
+        "tkb"
+      ]
+    },
+    {
+      "id": "PDAOTAO-005",
+      "name": "QUY TRÌNH THANH TOÁN KHỐI LƯỢNG GIẢNG DẠY VƯỢT GIỜ CHUẨN ĐỊNH MỨC ĐỐI VỚI GIẢNG VIÊN CƠ HỮU",
+      "department": "P.DAOTAO",
+      "dept_full": "Phòng Đào tạo",
+      "folder_path": "P.DAOTAO/QUY TRÌNH THANH TOÁN KHỐI LƯỢNG GIẢNG DẠY VƯỢT GIỜ CHUẨN ĐỊNH MỨC ĐỐI VỚI GIẢNG VIÊN CƠ HỮU",
+      "qt_files": [],
+      "templates": [
+        "BM.ĐT-16.01.xls",
+        "BM.ĐT-16.02.xlsx",
+        "QT.ĐT-16.03.xlsx",
+        "QT.ĐT-16.04.xls"
+      ],
+      "regulations": [
+        "TB kê khai KLGD.doc"
+      ],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 4,
+      "num_regulations": 1,
+      "keywords": [
+        "thanh",
+        "toán",
+        "khối",
+        "lượng",
+        "giảng",
+        "dạy",
+        "vượt",
+        "giờ"
+      ]
+    },
+    {
+      "id": "PDAOTAO-006",
+      "name": "QUY TRÌNH XỬ LÝ HỌC VỤ SINH VIÊN",
+      "department": "P.DAOTAO",
+      "dept_full": "Phòng Đào tạo",
+      "folder_path": "P.DAOTAO/QUY TRÌNH XỬ LÝ HỌC VỤ SINH VIÊN",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [
+        "Thông tư số 082021TT-BGDĐT ngày 1832021 của Bộ trưởng Bộ Giáo dục và Đào tạo ban hành Quy chế đào tạo trình độ đại học..pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 1,
+      "keywords": [
+        "xử",
+        "lý",
+        "học",
+        "vụ",
+        "sinh",
+        "viên"
+      ]
+    },
+    {
+      "id": "PDAOTAO-007",
+      "name": "Quản lý hoạt động giảng dạy",
+      "department": "P.DAOTAO",
+      "dept_full": "Phòng Đào tạo",
+      "folder_path": "P.DAOTAO/Quản lý hoạt động giảng dạy",
+      "qt_files": [],
+      "templates": [
+        "QT.ĐT-0601.docx",
+        "QT.ĐT-0602.docx",
+        "QT.ĐT-0603.docx",
+        "QT.ĐT-0604.docx"
+      ],
+      "regulations": [],
+      "extra_files": [
+        "Quản lý hoạt động giảng dạy.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 4,
+      "num_regulations": 0,
+      "keywords": [
+        "quản",
+        "lý",
+        "hoạt",
+        "động",
+        "giảng",
+        "dạy"
+      ]
+    },
+    {
+      "id": "PDAOTAO-008",
+      "name": "Quản lý hoạt động giảng dạy của Giảng viên",
+      "department": "P.DAOTAO",
+      "dept_full": "Phòng Đào tạo",
+      "folder_path": "P.DAOTAO/Quản lý hoạt động giảng dạy của Giảng viên",
+      "qt_files": [],
+      "templates": [
+        "BM.ĐT-06.0.docx",
+        "BM.ĐT-06.01.doc"
+      ],
+      "regulations": [
+        "Kế hoạch giảng dạy và học tập năm học.pdf",
+        "Quyết định 347QĐ-ĐHKTĐN ban hành Quy chế đào tạo trình độ đại học của Trường ĐH Kiến trúc ĐN.pdf",
+        "Thông tư 202020TT-BGDĐT ngày 27072020 của Bộ Giáo dục và Đào tạo.pdf"
+      ],
+      "extra_files": [
+        "Quản lý hoạt động giảng dạy của Giảng viên.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 2,
+      "num_regulations": 3,
+      "keywords": [
+        "quản",
+        "lý",
+        "hoạt",
+        "động",
+        "giảng",
+        "dạy",
+        "viên"
+      ]
+    },
+    {
+      "id": "PDAOTAO-009",
+      "name": "Quản lý viên thính giảng",
+      "department": "P.DAOTAO",
+      "dept_full": "Phòng Đào tạo",
+      "folder_path": "P.DAOTAO/Quản lý viên thính giảng",
+      "qt_files": [],
+      "templates": [
+        "QT.ĐT-0701.doc"
+      ],
+      "regulations": [],
+      "extra_files": [
+        "Quản lý viên thính giảng.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 1,
+      "num_regulations": 0,
+      "keywords": [
+        "quản",
+        "lý",
+        "viên",
+        "thính",
+        "giảng"
+      ]
+    },
+    {
+      "id": "PDAOTAO-010",
+      "name": "Xử lý kết quả học tập sinh viên",
+      "department": "P.DAOTAO",
+      "dept_full": "Phòng Đào tạo",
+      "folder_path": "P.DAOTAO/Xử lý kết quả học tập sinh viên",
+      "qt_files": [],
+      "templates": [
+        "BM.ĐT-10.01.xlsx",
+        "BM.ĐT-10.02.xlsx",
+        "BM.ĐT-10.03.doc",
+        "BM.ĐT-10.04.docx",
+        "BM.ĐT-10.05.docx",
+        "BM.ĐT-10.06.docx",
+        "BM.ĐT-10.07.xlsx",
+        "BM.ĐT-10.08.docx"
+      ],
+      "regulations": [
+        "HƯỚNG DẪN XỬ LÝ KQHT HỌC KỲ 1.pdf",
+        "HƯỚNG DẪN XỬ LÝ KQHT HỌC KỲ 2.pdf",
+        "Quyết định 347QĐ-ĐHKTĐN ban hành Quy chế đào tạo trình độ đại học của Trường ĐH Kiến trúc ĐN.pdf",
+        "Thông tư 082021TT-BGDĐT.pdf"
+      ],
+      "extra_files": [
+        "Xử lý kết quả học tập sinh viên.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 8,
+      "num_regulations": 4,
+      "keywords": [
+        "xử",
+        "lý",
+        "kết",
+        "quả",
+        "học",
+        "tập",
+        "sinh",
+        "viên"
+      ]
+    },
+    {
+      "id": "PHCTH-001",
+      "name": "QUY TRÌNH  Khám chữa bệnh hằng ngày",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH  Khám chữa bệnh hằng ngày",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [
+        "Quy định về công tác y tế trường học trong cơ sở giáo dục đại học và cơ sở giáo dục nghề nghiệp.pdf",
+        "Sổ cấp thuốc cho giảng viên, nhân viên và sinh viên.doc"
+      ],
+      "extra_files": [
+        "Khám chữa bệnh hằng ngày.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 2,
+      "keywords": [
+        "khám",
+        "chữa",
+        "bệnh",
+        "hằng",
+        "ngày"
+      ]
+    },
+    {
+      "id": "PHCTH-002",
+      "name": "QUY TRÌNH  KIỂM KÊ TÀI LIỆU, THIẾT BỊ",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH  KIỂM KÊ TÀI LIỆU, THIẾT BỊ",
+      "qt_files": [],
+      "templates": [
+        "Sổ đăng ký cá biệt.doc"
+      ],
+      "regulations": [],
+      "extra_files": [
+        "KIỂM KÊ TÀI LIỆU, THIẾT BỊ.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 1,
+      "num_regulations": 0,
+      "keywords": [
+        "kiểm",
+        "kê",
+        "tài",
+        "liệu",
+        "thiết",
+        "bị"
+      ]
+    },
+    {
+      "id": "PHCTH-003",
+      "name": "QUY TRÌNH BỔ SUNG TÀI LIỆU (SÁCH, BÁO, TẠP CHÍ) TẠI THƯ VIỆN",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH BỔ SUNG TÀI LIỆU (SÁCH, BÁO, TẠP CHÍ) TẠI THƯ VIỆN",
+      "qt_files": [],
+      "templates": [
+        "Biên mục tài liệu.doc",
+        "Danh mục tài liệu cần bổ sung.doc",
+        "Giấy đề nghị bổ sung sách.doc",
+        "Phiếu trình giải quyết công việc.doc",
+        "Sổ theo dõi báo, tạp chí.doc",
+        "Sổ đăng ký cá biệt.doc",
+        "Tải tài liệu lên thư viện số.doc"
+      ],
+      "regulations": [
+        "Luật Thư viện.pdf",
+        "Quyết định ban hành quy chế tổ chức và hoạt động thư viện trường đại học.doc",
+        "Thông tư quy định tiêu chuẩn thư viện cơ sở giáo dục đại học.pdf",
+        "Thông tư về ban hành chuẩn cơ sở giáo dục đại học.pdf"
+      ],
+      "extra_files": [
+        "BỔ SUNG TÀI LIỆU (SÁCH, BÁO, TẠP CHÍ) TẠI THƯ VIỆN.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 7,
+      "num_regulations": 4,
+      "keywords": [
+        "bổ",
+        "sung",
+        "tài",
+        "liệu",
+        "sách",
+        "báo",
+        "tạp",
+        "chí"
+      ]
+    },
+    {
+      "id": "PHCTH-004",
+      "name": "QUY TRÌNH CÔNG VIỆC HÀNH CHÍNH KHÁC",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH CÔNG VIỆC HÀNH CHÍNH KHÁC",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "CÔNG VIỆC HÀNH CHÍNH KHÁC.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "công",
+        "hành",
+        "chính",
+        "khác"
+      ]
+    },
+    {
+      "id": "PHCTH-005",
+      "name": "QUY TRÌNH Cấp thuốc cho đoàn đi công tác",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH Cấp thuốc cho đoàn đi công tác",
+      "qt_files": [],
+      "templates": [
+        "Sổ cấp thuốc cho giảng viên, nhân viên và sinh viên.doc"
+      ],
+      "regulations": [],
+      "extra_files": [
+        "Cấp thuốc cho đoàn đi công tác.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 1,
+      "num_regulations": 0,
+      "keywords": [
+        "cấp",
+        "thuốc",
+        "đoàn",
+        "đi",
+        "công",
+        "tác"
+      ]
+    },
+    {
+      "id": "PHCTH-006",
+      "name": "QUY TRÌNH Khám sức khỏe sinh viên đầu khóa",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH Khám sức khỏe sinh viên đầu khóa",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [
+        "Quy định về công tác y tế trường học trong cơ sở giáo dục đại học và cơ sở giáo dục nghề nghiệp.pdf"
+      ],
+      "extra_files": [
+        "Khám sức khỏe sinh viên đầu khóa.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 1,
+      "keywords": [
+        "khám",
+        "sức",
+        "khỏe",
+        "sinh",
+        "viên",
+        "đầu",
+        "khóa"
+      ]
+    },
+    {
+      "id": "PHCTH-007",
+      "name": "QUY TRÌNH Kiểm tra theo dõi nước uống qua lọc",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH Kiểm tra theo dõi nước uống qua lọc",
+      "qt_files": [],
+      "templates": [
+        "Phiếu trình đề xuất kiểm tra nguồn nước uống qua lọc.doc"
+      ],
+      "regulations": [],
+      "extra_files": [
+        "Kiểm tra theo dõi nước uống qua lọc.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 1,
+      "num_regulations": 0,
+      "keywords": [
+        "kiểm",
+        "tra",
+        "dõi",
+        "nước",
+        "uống",
+        "qua",
+        "lọc"
+      ]
+    },
+    {
+      "id": "PHCTH-008",
+      "name": "QUY TRÌNH Kiểm tra vệ sinh, môi trường",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH Kiểm tra vệ sinh, môi trường",
+      "qt_files": [],
+      "templates": [
+        "Sổ kiểm tra vệ sinh.doc"
+      ],
+      "regulations": [],
+      "extra_files": [
+        "Kiểm tra vệ sinh, môi trường.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 1,
+      "num_regulations": 0,
+      "keywords": [
+        "kiểm",
+        "tra",
+        "vệ",
+        "sinh",
+        "môi",
+        "trường"
+      ]
+    },
+    {
+      "id": "PHCTH-009",
+      "name": "QUY TRÌNH LẬP LỊCH CÔNG TÁC TUẦN",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH LẬP LỊCH CÔNG TÁC TUẦN",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Lập lịch tuần trên hệ thống E-office.docx",
+        "Lịch công tác tuần.docx"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "lập",
+        "lịch",
+        "công",
+        "tác",
+        "tuần"
+      ]
+    },
+    {
+      "id": "PHCTH-010",
+      "name": "QUY TRÌNH Mua thuốc, trang thiết bị y tế",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH Mua thuốc, trang thiết bị y tế",
+      "qt_files": [],
+      "templates": [
+        "Danh mua mục thuốc, trang thiết bị y tế.xlsx"
+      ],
+      "regulations": [],
+      "extra_files": [
+        "Mua thuốc, trang thiết bị y tế.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 1,
+      "num_regulations": 0,
+      "keywords": [
+        "mua",
+        "thuốc",
+        "trang",
+        "thiết",
+        "bị",
+        "tế"
+      ]
+    },
+    {
+      "id": "PHCTH-011",
+      "name": "QUY TRÌNH MUA VÀ QUẢN LÝ DỤNG CỤ, TRANG THIẾT BỊ VĂN PHÒNG",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH MUA VÀ QUẢN LÝ DỤNG CỤ, TRANG THIẾT BỊ VĂN PHÒNG",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "MUA VÀ QUẢN LÝ DỤNG CỤ, TRANG THIẾT BỊ VĂN PHÒNG.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "mua",
+        "quản",
+        "lý",
+        "dụng",
+        "cụ",
+        "trang",
+        "thiết",
+        "bị"
+      ]
+    },
+    {
+      "id": "PHCTH-012",
+      "name": "QUY TRÌNH MƯỢN - TRẢ TÀI LIỆU TẠI THƯ VIỆN",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH MƯỢN - TRẢ TÀI LIỆU TẠI THƯ VIỆN",
+      "qt_files": [],
+      "templates": [
+        "Mượn tài liệu.doc",
+        "Nội quy Mượn - Trả tài liệu.doc",
+        "Thu hồi tài liệu.doc",
+        "Trả tài liệu.doc"
+      ],
+      "regulations": [
+        "Luật Thư viện.pdf",
+        "Quyết định ban hành quy chế tổ chức và hoạt động thư viện trường đại học.doc",
+        "Thông tư quy định tiêu chuẩn thư viện cơ sở giáo dục đại học.pdf",
+        "Thông tư về ban hành chuẩn cơ sở giáo dục đại học.pdf"
+      ],
+      "extra_files": [
+        "MƯỢN - TRẢ TÀI LIỆU TẠI THƯ VIÊN.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 4,
+      "num_regulations": 4,
+      "keywords": [
+        "mượn",
+        "trả",
+        "tài",
+        "liệu",
+        "thư",
+        "viện"
+      ]
+    },
+    {
+      "id": "PHCTH-013",
+      "name": "QUY TRÌNH PHỤC HỒI TÀI LIỆU",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH PHỤC HỒI TÀI LIỆU",
+      "qt_files": [],
+      "templates": [
+        "Phiếu trình giải quyết công việc.doc"
+      ],
+      "regulations": [],
+      "extra_files": [
+        "PHỤC HỒI TÀI LIỆU.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 1,
+      "num_regulations": 0,
+      "keywords": [
+        "phục",
+        "hồi",
+        "tài",
+        "liệu"
+      ]
+    },
+    {
+      "id": "PHCTH-014",
+      "name": "QUY TRÌNH Quản lý hồ sơ BHYT, BHTN của sinh viên",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH Quản lý hồ sơ BHYT, BHTN của sinh viên",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Quản lý hồ sơ BHYT, BHTN của sinh viên.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "quản",
+        "lý",
+        "hồ",
+        "sơ",
+        "bhyt",
+        "bhtn",
+        "sinh",
+        "viên"
+      ]
+    },
+    {
+      "id": "PHCTH-015",
+      "name": "QUY TRÌNH QUẢN LÝ PHÔI BẰNG",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH QUẢN LÝ PHÔI BẰNG",
+      "qt_files": [],
+      "templates": [
+        "Biên bản hủy bỏ phôi văn bằng, chứng chỉ.docx",
+        "Biên bản nhập kho phôi bằng.docx",
+        "Kế hoạch công tác tự in phôi văn bằng và mua chứng chỉ.docx",
+        "Phiếu xuất kho phôi bằng.xlsx",
+        "Quyết định về việc thành lập Hội đồng hủy phôi văn bằng, chứng chỉ.docx",
+        "Sổ lưu phôi bằng.xlsx"
+      ],
+      "regulations": [
+        "Luật số 34-2028-QH14 - Luật sửa đổi, bổ sung một số điều của Luật giáo dục đại học.pdf",
+        "Nghị định 99-2029-NĐ-CP quy định chi tiết và hướng dẫn thi hành một số điều của Luật sửa đổi, bổ sung Luật GDĐH.pdf"
+      ],
+      "extra_files": [
+        "QUẢN LÝ PHÔI BẰNG.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 6,
+      "num_regulations": 2,
+      "keywords": [
+        "quản",
+        "lý",
+        "phôi"
+      ]
+    },
+    {
+      "id": "PHCTH-016",
+      "name": "QUY TRÌNH QUẢN LÝ VĂN BẢN ĐI",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH QUẢN LÝ VĂN BẢN ĐI",
+      "qt_files": [],
+      "templates": [
+        "Hướng dẫn sử dụng phần mềm xử lý văn bản đi.docx",
+        "Sổ đăng ký văn bản đi mật.doc",
+        "Sổ đăng ký văn bản đi.doc"
+      ],
+      "regulations": [
+        "Luật lưu trữ số 33-2024-QH15 ngày 21-6-2024.pdf",
+        "Nghị định 30-2020-NĐ-CP ngày 05-3-2020 về công tác văn thư.pdf",
+        "Thông tư 01-2024-TT-BGDĐT ngày 05-02-2024 về ban hành Chuẩn cơ sở giáo dục đại học.pdf"
+      ],
+      "extra_files": [
+        "QUẢN LÝ VĂN BẢN ĐI.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 3,
+      "num_regulations": 3,
+      "keywords": [
+        "quản",
+        "lý",
+        "văn",
+        "bản",
+        "đi"
+      ]
+    },
+    {
+      "id": "PHCTH-017",
+      "name": "QUY TRÌNH QUẢN LÝ VĂN BẢN ĐẾN",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH QUẢN LÝ VĂN BẢN ĐẾN",
+      "qt_files": [],
+      "templates": [
+        "Hướng dẫn sử dụng phần mềm - Xử lý văn bản đến.docx",
+        "Sổ đăng ký văn bản đến mật.doc",
+        "Sổ đăng ký văn bản đến.doc"
+      ],
+      "regulations": [
+        "Luật Lưu trữ.pdf",
+        "Nghi định về công tác văn thư.pdf",
+        "Thông tư ban hành Chuẩn cơ sở giáo dục đại học.pdf"
+      ],
+      "extra_files": [
+        "Quan ly van ban den.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 3,
+      "num_regulations": 3,
+      "keywords": [
+        "quản",
+        "lý",
+        "văn",
+        "bản"
+      ]
+    },
+    {
+      "id": "PHCTH-018",
+      "name": "QUY TRÌNH QUẢN LÝ WEBSITE THƯ VIỆN",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH QUẢN LÝ WEBSITE THƯ VIỆN",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "QUẢN LÝ WEBSITE THƯ VIỆN.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "quản",
+        "lý",
+        "website",
+        "thư",
+        "viện"
+      ]
+    },
+    {
+      "id": "PHCTH-019",
+      "name": "QUY TRÌNH QUẢN LÝ, SỬ DỤNG CON DẤU",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH QUẢN LÝ, SỬ DỤNG CON DẤU",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [
+        "Nghị định 56-2023-NĐ-CP - Sửa đổi, bổ sung 1 số điều của Nghị định 99.pdf",
+        "Nghị định 99-2016-NĐ-CP - Quản lý và sử dụng con dấu.pdf"
+      ],
+      "extra_files": [
+        "QUẢN LÝ, SỬ DỤNG CON DẤU.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 2,
+      "keywords": [
+        "quản",
+        "lý",
+        "sử",
+        "dụng",
+        "con",
+        "dấu"
+      ]
+    },
+    {
+      "id": "PHCTH-020",
+      "name": "QUY TRÌNH THANH LÝ TÀI LIỆU",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH THANH LÝ TÀI LIỆU",
+      "qt_files": [],
+      "templates": [
+        "Biên bản thanh lý sách, báo.doc"
+      ],
+      "regulations": [],
+      "extra_files": [
+        "THANH LÝ TÀI LIỆU.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 1,
+      "num_regulations": 0,
+      "keywords": [
+        "thanh",
+        "lý",
+        "tài",
+        "liệu"
+      ]
+    },
+    {
+      "id": "PHCTH-021",
+      "name": "QUY TRÌNH TRA CỨU TÀI LIỆU",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH TRA CỨU TÀI LIỆU",
+      "qt_files": [],
+      "templates": [
+        "Hướng dẫn tra cứu thư viện số.doc",
+        "Hướng dẫn tra cứu thư viện truyền thống.doc"
+      ],
+      "regulations": [],
+      "extra_files": [
+        "TRA CỨU TÀI LIỆU.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 2,
+      "num_regulations": 0,
+      "keywords": [
+        "tra",
+        "cứu",
+        "tài",
+        "liệu"
+      ]
+    },
+    {
+      "id": "PHCTH-022",
+      "name": "QUY TRÌNH TỔ CHỨC HỘI NGHỊ, HỘI THẢO, CHƯƠNG TRÌNH",
+      "department": "P.HC-TH",
+      "dept_full": "Phòng Hành chính - Tổng hợp",
+      "folder_path": "P.HC-TH/QUY TRÌNH TỔ CHỨC HỘI NGHỊ, HỘI THẢO, CHƯƠNG TRÌNH",
+      "qt_files": [],
+      "templates": [
+        "Báo cáo kết quả tổ chức hội nghị, hội thảo.doc",
+        "Kế hoạch phân công nhiệm vụ chuẩn bị cho hội nghị, hội thảo.doc",
+        "Kế hoạch tổ chức hội nghị, hội thảo.doc",
+        "Quyết định thành lập Ban tổ chức hội nghị, hội thảo.doc"
+      ],
+      "regulations": [],
+      "extra_files": [
+        "TỔ CHỨC HỘI NGHỊ, HỘI THẢO, CHƯƠNG TRÌNH.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 4,
+      "num_regulations": 0,
+      "keywords": [
+        "tổ",
+        "chức",
+        "hội",
+        "nghị",
+        "thảo",
+        "chương"
+      ]
+    },
+    {
+      "id": "PHTQTTT-001",
+      "name": "Hoạt động phục vụ công tác truyền thông tuyển sinh offline - Quà tặng tuyển sinh",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Hoạt động phục vụ công tác truyền thông tuyển sinh offline - Quà tặng tuyển sinh",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Hoạt động phục vụ công tác truyền thông tuyển sinh offline - Quà tặng tuyển sinh.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "hoạt",
+        "động",
+        "phục",
+        "vụ",
+        "công",
+        "tác",
+        "truyền",
+        "thông"
+      ]
+    },
+    {
+      "id": "PHTQTTT-002",
+      "name": "Hoạt động phục vụ công tác truyền thông tuyển sinh offline - Ấn phẩm tuyển sinh",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Hoạt động phục vụ công tác truyền thông tuyển sinh offline - Ấn phẩm tuyển sinh",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Hoạt động phục vụ công tác truyền thông tuyển sinh offline - Ấn phẩm tuyển sinh.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "hoạt",
+        "động",
+        "phục",
+        "vụ",
+        "công",
+        "tác",
+        "truyền",
+        "thông"
+      ]
+    },
+    {
+      "id": "PHTQTTT-003",
+      "name": "Ký kết văn bản hợp tác (MoA, MoU)",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Ký kết văn bản hợp tác (MoA, MoU)",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Ký kết văn bản hợp tác (MoA, MoU).pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "ký",
+        "kết",
+        "văn",
+        "bản",
+        "hợp",
+        "tác",
+        "moa",
+        "mou"
+      ]
+    },
+    {
+      "id": "PHTQTTT-004",
+      "name": "Tiếp đón đoàn khách quốc tế đến thăm và làm việc tại trường",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Tiếp đón đoàn khách quốc tế đến thăm và làm việc tại trường",
+      "qt_files": [
+        "Quy trình Tiếp đón đoàn khách quốc tế đến thăm và làm việc tại trường.pdf"
+      ],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "tiếp",
+        "đón",
+        "đoàn",
+        "khách",
+        "quốc",
+        "tế",
+        "thăm",
+        "làm"
+      ]
+    },
+    {
+      "id": "PHTQTTT-005",
+      "name": "Triển khai môn học cộng đồng đến giảng viên và sinh viên",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Triển khai môn học cộng đồng đến giảng viên và sinh viên",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Triển khai môn học cộng đồng đến giảng viên và sinh viên.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "triển",
+        "khai",
+        "môn",
+        "học",
+        "cộng",
+        "đồng",
+        "giảng",
+        "viên"
+      ]
+    },
+    {
+      "id": "PHTQTTT-006",
+      "name": "Truyền thông nội bộ - phát triển học hiệu",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Truyền thông nội bộ - phát triển học hiệu",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Truyền thông nội bộ - phát triển học hiệu.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "truyền",
+        "thông",
+        "bộ",
+        "phát",
+        "triển",
+        "học",
+        "hiệu"
+      ]
+    },
+    {
+      "id": "PHTQTTT-007",
+      "name": "Truyền thông nội bộ - tổ chức sự kiện",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Truyền thông nội bộ - tổ chức sự kiện",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Truyền thông nội bộ - tổ chức sự kiện.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "truyền",
+        "thông",
+        "bộ",
+        "tổ",
+        "chức",
+        "sự",
+        "kiện"
+      ]
+    },
+    {
+      "id": "PHTQTTT-008",
+      "name": "Truyền thông nội bộ - Đưa tin sự kiện",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Truyền thông nội bộ - Đưa tin sự kiện",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Truyền thông nội bộ - Đưa tin sự kiện.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "truyền",
+        "thông",
+        "bộ",
+        "đưa",
+        "tin",
+        "sự",
+        "kiện"
+      ]
+    },
+    {
+      "id": "PHTQTTT-009",
+      "name": "Truyền thông tuyển sinh online",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Truyền thông tuyển sinh online",
+      "qt_files": [
+        "Quy trình truyền thông, tuyển sinh online.pdf"
+      ],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "truyền",
+        "thông",
+        "tuyển",
+        "sinh",
+        "online"
+      ]
+    },
+    {
+      "id": "PHTQTTT-010",
+      "name": "Tổ chức chương trình giao lưu văn hóa",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Tổ chức chương trình giao lưu văn hóa",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Tổ chức chương trình giao lưu văn hóa.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "tổ",
+        "chức",
+        "chương",
+        "giao",
+        "lưu",
+        "văn",
+        "hóa"
+      ]
+    },
+    {
+      "id": "PHTQTTT-011",
+      "name": "Tổ chức chương trình thực tập Nhật Bản dành cho sinh viên",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Tổ chức chương trình thực tập Nhật Bản dành cho sinh viên",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Tổ chức chương trình thực tập Nhật Bản dành cho sinh viên.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "tổ",
+        "chức",
+        "chương",
+        "thực",
+        "tập",
+        "nhật",
+        "bản",
+        "dành"
+      ]
+    },
+    {
+      "id": "PHTQTTT-012",
+      "name": "Tổ chức chương trình trao đổi sinh viên 3+1 với Trường Đại học Dân tộc Quảng Tây (Trung Quốc)",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Tổ chức chương trình trao đổi sinh viên 3+1 với Trường Đại học Dân tộc Quảng Tây (Trung Quốc)",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "tổ",
+        "chức",
+        "chương",
+        "trao",
+        "đổi",
+        "sinh",
+        "viên",
+        "trường"
+      ]
+    },
+    {
+      "id": "PHTQTTT-013",
+      "name": "Tổ chức dự án cộng đồng",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Tổ chức dự án cộng đồng",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Tổ chức dự án cộng đồng.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "tổ",
+        "chức",
+        "dự",
+        "án",
+        "cộng",
+        "đồng"
+      ]
+    },
+    {
+      "id": "PHTQTTT-014",
+      "name": "Tổ chức Hội nghị-Hội thảo quốc tế",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Tổ chức Hội nghị-Hội thảo quốc tế",
+      "qt_files": [
+        "Quy trình Tổ chức Hội nghị-Hội thảo quốc tế.pdf"
+      ],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "tổ",
+        "chức",
+        "hội",
+        "nghị",
+        "thảo",
+        "quốc",
+        "tế"
+      ]
+    },
+    {
+      "id": "PHTQTTT-015",
+      "name": "Tổ chức hội thảo, workshop, chương trình tập huấn",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Tổ chức hội thảo, workshop, chương trình tập huấn",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Tổ chức hội thảo, workshop, chương trình tập huấn.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "tổ",
+        "chức",
+        "hội",
+        "thảo",
+        "workshop",
+        "chương",
+        "tập",
+        "huấn"
+      ]
+    },
+    {
+      "id": "PHTQTTT-016",
+      "name": "Tổ chức đoàn ra dành cho các đoàn đại diện Trường Đại học Kiến trúc Đà Nẵng đi công tác nước ngoài",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Tổ chức đoàn ra dành cho các đoàn đại diện Trường Đại học Kiến trúc Đà Nẵng đi công tác nước ngoài",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "tổ",
+        "chức",
+        "đoàn",
+        "ra",
+        "dành",
+        "đại",
+        "diện",
+        "trường"
+      ]
+    },
+    {
+      "id": "PHTQTTT-017",
+      "name": "Xin cấp thẻ tạm trú cho người lao động nước ngoài",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Xin cấp thẻ tạm trú cho người lao động nước ngoài",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Xin cấp thẻ tạm trú cho người lao động nước ngoài.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "xin",
+        "cấp",
+        "thẻ",
+        "tạm",
+        "trú",
+        "người",
+        "lao",
+        "động"
+      ]
+    },
+    {
+      "id": "PHTQTTT-018",
+      "name": "Xin cấp, gia hạn giấy phép lao động cho người lao động nước ngoài làm việc tại Trường",
+      "department": "P.HTQT-TT",
+      "dept_full": "Phòng Hợp tác Quốc tế và Truyền thông",
+      "folder_path": "P.HTQT-TT/Xin cấp, gia hạn giấy phép lao động cho người lao động nước ngoài làm việc tại Trường",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Xin cấp, gia hạn giấy phép lao động cho người lao động nước ngoài làm việc tại Trường.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "xin",
+        "cấp",
+        "gia",
+        "hạn",
+        "giấy",
+        "phép",
+        "lao",
+        "động"
+      ]
+    },
+    {
+      "id": "PKHCN-001",
+      "name": "1.Quy trình quản lý đề tài KHCN giảng viên",
+      "department": "P.KH-CN",
+      "dept_full": "Phòng Khoa học Công nghệ",
+      "folder_path": "P.KH-CN/1.Quy trình quản lý đề tài KHCN giảng viên",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "quản",
+        "lý",
+        "đề",
+        "tài",
+        "khcn",
+        "giảng",
+        "viên"
+      ]
+    },
+    {
+      "id": "PKHCN-002",
+      "name": "2.Quy trình quản lý đề tài NCKH của sinh viên",
+      "department": "P.KH-CN",
+      "dept_full": "Phòng Khoa học Công nghệ",
+      "folder_path": "P.KH-CN/2.Quy trình quản lý đề tài NCKH của sinh viên",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "quản",
+        "lý",
+        "đề",
+        "tài",
+        "nckh",
+        "sinh",
+        "viên"
+      ]
+    },
+    {
+      "id": "PKHCN-003",
+      "name": "3.Quy trình hoạt động của Hội đồng Khoa học & Đào tạo Trường Đại học Kiến trúc Đà Nẵng",
+      "department": "P.KH-CN",
+      "dept_full": "Phòng Khoa học Công nghệ",
+      "folder_path": "P.KH-CN/3.Quy trình hoạt động của Hội đồng Khoa học & Đào tạo Trường Đại học Kiến trúc Đà Nẵng",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "hoạt",
+        "động",
+        "hội",
+        "đồng",
+        "khoa",
+        "học",
+        "đào",
+        "tạo"
+      ]
+    },
+    {
+      "id": "PKHCN-004",
+      "name": "4. Quy trình thanh toán giờ Nghiên cứu khoa học",
+      "department": "P.KH-CN",
+      "dept_full": "Phòng Khoa học Công nghệ",
+      "folder_path": "P.KH-CN/4. Quy trình thanh toán giờ Nghiên cứu khoa học",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "thanh",
+        "toán",
+        "giờ",
+        "nghiên",
+        "cứu",
+        "khoa",
+        "học"
+      ]
+    },
+    {
+      "id": "PKHCN-005",
+      "name": "5. Quy trình thanh toán công bố quốc tế",
+      "department": "P.KH-CN",
+      "dept_full": "Phòng Khoa học Công nghệ",
+      "folder_path": "P.KH-CN/5. Quy trình thanh toán công bố quốc tế",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "thanh",
+        "toán",
+        "công",
+        "bố",
+        "quốc",
+        "tế"
+      ]
+    },
+    {
+      "id": "PKHCN-006",
+      "name": "6.Quy trình đăng ký tham dự Hội nghị, Hội thảo",
+      "department": "P.KH-CN",
+      "dept_full": "Phòng Khoa học Công nghệ",
+      "folder_path": "P.KH-CN/6.Quy trình đăng ký tham dự Hội nghị, Hội thảo",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "đăng",
+        "ký",
+        "tham",
+        "dự",
+        "hội",
+        "nghị",
+        "thảo"
+      ]
+    },
+    {
+      "id": "PKHCN-007",
+      "name": "7.Quy trình hoạt động của nhóm nghiên cứu, nghiên cứu mạnh ở Trường Đại học Kiến trúc Đà Nẵng",
+      "department": "P.KH-CN",
+      "dept_full": "Phòng Khoa học Công nghệ",
+      "folder_path": "P.KH-CN/7.Quy trình hoạt động của nhóm nghiên cứu, nghiên cứu mạnh ở Trường Đại học Kiến trúc Đà Nẵng",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "hoạt",
+        "động",
+        "nhóm",
+        "nghiên",
+        "cứu",
+        "mạnh",
+        "trường",
+        "đại"
+      ]
+    },
+    {
+      "id": "PKHCN-008",
+      "name": "8.Quy trình tổ chức Hội nghị, Hội thảo khoa học",
+      "department": "P.KH-CN",
+      "dept_full": "Phòng Khoa học Công nghệ",
+      "folder_path": "P.KH-CN/8.Quy trình tổ chức Hội nghị, Hội thảo khoa học",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "tổ",
+        "chức",
+        "hội",
+        "nghị",
+        "thảo",
+        "khoa",
+        "học"
+      ]
+    },
+    {
+      "id": "PKHCN-009",
+      "name": "Biểu mẫu",
+      "department": "P.KH-CN",
+      "dept_full": "Phòng Khoa học Công nghệ",
+      "folder_path": "P.KH-CN/Biểu mẫu",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "biểu",
+        "mẫu"
+      ]
+    },
+    {
+      "id": "PKHCN-010",
+      "name": "Văn bản",
+      "department": "P.KH-CN",
+      "dept_full": "Phòng Khoa học Công nghệ",
+      "folder_path": "P.KH-CN/Văn bản",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "văn",
+        "bản"
+      ]
+    },
+    {
+      "id": "PQLDAVQTTB-001",
+      "name": "Quy trinh mua sắm vật tư, trang thiết bị",
+      "department": "P.QLDA và QTTB",
+      "dept_full": "Phòng Quản lý Dự án và Quản trị Trang thiết bị",
+      "folder_path": "P.QLDA và QTTB/Quy trinh mua sắm vật tư, trang thiết bị",
+      "qt_files": [
+        "Quy trinh mua sắm vật tư, trang thiết bị.pdf"
+      ],
+      "templates": [
+        "QT.TH-02.pdf",
+        "TH-02-01.doc",
+        "TH-02-02.doc",
+        "TH-02-03.doc",
+        "TH-02-04.doc",
+        "TH-02-05.doc",
+        "TH-02-06.pdf",
+        "TH-02-07.pdf"
+      ],
+      "regulations": [
+        "Kế hoạch, dự trù mua sắm sửa chữa cải tạo cơ sở vật chất và trang thiết bị.pdf",
+        "Luật đấu thầu số 222023QH15.pdf",
+        "Nghị định 35 - Quản lý chi phí đầu tư xây dựng, chất lượng & bảo trì công trình.pdf",
+        "Quy trình lập báo cáo tài chính năm.pdf",
+        "Quy trình mua sắm vật tư thiết bị.docx",
+        "Về việc lập kế hoạch tài chính năm của các đơn vị thuộc trường.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 8,
+      "num_regulations": 6,
+      "keywords": [
+        "mua",
+        "sắm",
+        "vật",
+        "tư",
+        "trang",
+        "thiết",
+        "bị"
+      ]
+    },
+    {
+      "id": "PQLDAVQTTB-002",
+      "name": "Quy trình bảo trì sữa chữa trang thiết bị",
+      "department": "P.QLDA và QTTB",
+      "dept_full": "Phòng Quản lý Dự án và Quản trị Trang thiết bị",
+      "folder_path": "P.QLDA và QTTB/Quy trình bảo trì sữa chữa trang thiết bị",
+      "qt_files": [
+        "Quy trình bảo trì sữa chữa trang thiết bị.pdf"
+      ],
+      "templates": [
+        "BM 04-01.pdf",
+        "BM 04-02.pdf",
+        "BM 04-03.pdf",
+        "BM 04-04.pdf",
+        "BM 04-05.pdf",
+        "BM 04-06.pdf",
+        "BM 04-07.pdf",
+        "BM 04-08.pdf"
+      ],
+      "regulations": [
+        "Quy trình bảo trì sửa chữa trang thiết bị (Kèm theo QĐ 568 của Hiệu trưởng).pdf",
+        "Quy định chi tiết hợp đồng.pdf",
+        "Quy định chi tiết một số nội dung về quản lý dự án đầu tư xây dựng.pdf",
+        "Quy định chi tiết một số nộị dung về quản lý chất lượng, thi công xây dựng và bảo trì công trình.pdf",
+        "Quy định phân cấp công trình và hướng dẫn áp dụng trong quản lý xây dựng.pdf",
+        "Quản lý chi phí đầu tư xây dựng.pdf",
+        "Sửa đổi, bổ sung một số điều của các Nghị định thuộc lĩnh vực quản lý nhà nước đầu tư xây dựng.pdf",
+        "Sửa đổi, bổ sung một số điều Nghi định 37 về chi tiết hợp đồng.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 8,
+      "num_regulations": 8,
+      "keywords": [
+        "bảo",
+        "trì",
+        "sữa",
+        "chữa",
+        "trang",
+        "thiết",
+        "bị"
+      ]
+    },
+    {
+      "id": "PQLDAVQTTB-003",
+      "name": "Quy trình quản lý tài sản trang thiết bị",
+      "department": "P.QLDA và QTTB",
+      "dept_full": "Phòng Quản lý Dự án và Quản trị Trang thiết bị",
+      "folder_path": "P.QLDA và QTTB/Quy trình quản lý tài sản trang thiết bị",
+      "qt_files": [
+        "Quy trình quản lý tài sản trang thiết bị.pdf"
+      ],
+      "templates": [
+        "BM 03-01.pdf",
+        "BM 03-02.pdf",
+        "BM 03-03.pdf",
+        "BM 03-04.pdf",
+        "BM 03-05.pdf",
+        "BM 03-06.pdf",
+        "BM 03-07.pdf",
+        "BM 03-08.pdf",
+        "BM 03-09.pdf",
+        "BM 03-10.pdf",
+        "BM 03-11.pdf"
+      ],
+      "regulations": [
+        "Phương án kiểm kê tài sản trang thiết bị.pdf",
+        "Quy trình quản lý tài sản và trang thiết bị.pdf",
+        "Quyết định ban hành quản lý CSVC và trang thiết bị của Hiệu trưởng.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 11,
+      "num_regulations": 3,
+      "keywords": [
+        "quản",
+        "lý",
+        "tài",
+        "sản",
+        "trang",
+        "thiết",
+        "bị"
+      ]
+    },
+    {
+      "id": "PTCKT-001",
+      "name": "QUY TRÌNH CHI TRẢ CÁC KHOẢN TIỀN SINH VIÊN NỘP NHẦM-NỘP THỪA",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/QUY TRÌNH CHI TRẢ CÁC KHOẢN TIỀN SINH VIÊN NỘP NHẦM-NỘP THỪA",
+      "qt_files": [
+        "QUY TRÌNH CHI TRẢ CÁC KHOẢN TIỀN SINH VIÊN NỘP NHẦM-NỘP THỪA.pdf"
+      ],
+      "templates": [
+        "QT.TCKT.12 -1.doc"
+      ],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 1,
+      "num_regulations": 0,
+      "keywords": [
+        "chi",
+        "trả",
+        "khoản",
+        "tiền",
+        "sinh",
+        "viên",
+        "nộp",
+        "nhầm"
+      ]
+    },
+    {
+      "id": "PTCKT-002",
+      "name": "QUY TRÌNH GIA HẠN HỌC PHÍ",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/QUY TRÌNH GIA HẠN HỌC PHÍ",
+      "qt_files": [
+        "QUY TRÌNH GIA HẠN HỌC PHÍ.pdf"
+      ],
+      "templates": [
+        "Danh sách sinh viên có đơn gia hạn học phí.xls",
+        "Giấy đề nghị gia hạn học phí.doc"
+      ],
+      "regulations": [
+        "Thông báo nộp học phí của mỗi học kỳ trong mỗi năm học.doc"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 2,
+      "num_regulations": 1,
+      "keywords": [
+        "gia",
+        "hạn",
+        "học",
+        "phí"
+      ]
+    },
+    {
+      "id": "PTCKT-003",
+      "name": "QUY TRÌNH HẠCH TOÁN BẢO HIỂM XÃ HỘI CỦA NHÂN VIÊN VÀO GIÁ THÀNH",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/QUY TRÌNH HẠCH TOÁN BẢO HIỂM XÃ HỘI CỦA NHÂN VIÊN VÀO GIÁ THÀNH",
+      "qt_files": [
+        "QUY TRÌNH HẠCH TOÁN BẢO HIỂM XÃ HỘI CỦA NHÂN VIÊN VÀO GIÁ THÀNH.pdf"
+      ],
+      "templates": [],
+      "regulations": [
+        "thông tư 2002014BTC áp dụng cho đơn vị kế toán doanh nghiệp.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 1,
+      "keywords": [
+        "hạch",
+        "toán",
+        "bảo",
+        "hiểm",
+        "xã",
+        "hội",
+        "nhân",
+        "viên"
+      ]
+    },
+    {
+      "id": "PTCKT-004",
+      "name": "QUY TRÌNH KÊ KHAI VÀ NỘP THUẾ TNDN SAU KHI QUYẾT TOÁN TÀI CHÍNH NĂM",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/QUY TRÌNH KÊ KHAI VÀ NỘP THUẾ TNDN SAU KHI QUYẾT TOÁN TÀI CHÍNH NĂM",
+      "qt_files": [
+        "QUY TRÌNH KÊ KHAI VÀ NỘP THUẾ TNDN SAU KHI QUYẾT TOÁN TÀI CHÍNH NĂM.pdf"
+      ],
+      "templates": [
+        "BM TCKT 03-01.xlsx",
+        "BM TCKT 03-02.docx",
+        "BM TCKT 03-03.docx",
+        "BM TCKT 03-04.docx",
+        "BM TCKT 03-05.DOC",
+        "BM TCKT 03-06.xlsx"
+      ],
+      "regulations": [
+        "Báo cáo kết quả hoạt động kinh doanh.docx",
+        "Báo cáo lưu chuyển tiền tệ theo PP trực tiếp.docx",
+        "Bảng cân đối kế toán.docx",
+        "Thuyết minh báo cáo tài chính.DOC",
+        "thông tư 2002014BTC áp dụng cho đơn vị kế toán doanh nghiệp.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 6,
+      "num_regulations": 5,
+      "keywords": [
+        "kê",
+        "khai",
+        "nộp",
+        "thuế",
+        "tndn",
+        "sau",
+        "quyết",
+        "toán"
+      ]
+    },
+    {
+      "id": "PTCKT-005",
+      "name": "Quy trình làm việc của thủ quỹ",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/Quy trình làm việc của thủ quỹ",
+      "qt_files": [
+        "Quy trình làm việc của thủ quỹ.pdf"
+      ],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "làm",
+        "thủ",
+        "quỹ"
+      ]
+    },
+    {
+      "id": "PTCKT-006",
+      "name": "QUY TRÌNH PHÂN BỔ TÀI SẢN CỐ ĐỊNH, CÔNG CỤ DỤNG CỤ, PHÂN BỔ DÀI HẠN",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/QUY TRÌNH PHÂN BỔ TÀI SẢN CỐ ĐỊNH, CÔNG CỤ DỤNG CỤ, PHÂN BỔ DÀI HẠN",
+      "qt_files": [
+        "QUY TRÌNH PHÂN BỔ TÀI SẢN CỐ ĐỊNH, CÔNG CỤ DỤNG CỤ, PHÂN BỔ DÀI HẠN.pdf"
+      ],
+      "templates": [],
+      "regulations": [
+        "thông tư 2002014BTC áp dụng cho đơn vị kế toán doanh nghiệp.docx",
+        "Thông tư 45 Hướng dẫn chế độ quản lý, sử dụng và trích khấu hao tài sản cố định.doc"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 2,
+      "keywords": [
+        "phân",
+        "bổ",
+        "tài",
+        "sản",
+        "cố",
+        "định",
+        "công",
+        "cụ"
+      ]
+    },
+    {
+      "id": "PTCKT-007",
+      "name": "QUY TRÌNH QUẢN LÝ CÔNG NỢ SINH VIÊN",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/QUY TRÌNH QUẢN LÝ CÔNG NỢ SINH VIÊN",
+      "qt_files": [
+        "QUY TRÌNH QUẢN LÝ CÔNG NỢ SINH VIÊN.pdf"
+      ],
+      "templates": [
+        "QT.TCKT.13 - 11.xls",
+        "QT.TCKT.13- 1.pdf",
+        "QT.TCKT.13- 5.xls",
+        "QT.TCKT.13-4.docx",
+        "QT.TCKT.13-6.xls"
+      ],
+      "regulations": [
+        "Thông báo nộp học phí của mỗi học kỳ trong mỗi năm học.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 5,
+      "num_regulations": 1,
+      "keywords": [
+        "quản",
+        "lý",
+        "công",
+        "nợ",
+        "sinh",
+        "viên"
+      ]
+    },
+    {
+      "id": "PTCKT-008",
+      "name": "QUY TRÌNH QUẢN LÝ TIỀN GỬI TIẾT KIỆM",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/QUY TRÌNH QUẢN LÝ TIỀN GỬI TIẾT KIỆM",
+      "qt_files": [
+        "QUY TRÌNH QUẢN LÝ TIỀN GỬI TIẾT KIỆM.pdf"
+      ],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "quản",
+        "lý",
+        "tiền",
+        "gửi",
+        "tiết",
+        "kiệm"
+      ]
+    },
+    {
+      "id": "PTCKT-009",
+      "name": "QUY TRÌNH THANH QUYẾT TOÁN",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/QUY TRÌNH THANH QUYẾT TOÁN",
+      "qt_files": [
+        "QUY TRÌNH THANH QUYẾT TOÁN.pdf"
+      ],
+      "templates": [
+        "BM TCKT 01-01.doc",
+        "BM TCKT 01-02.docx",
+        "BM TCKT 01-03.docx",
+        "BM TCKT 01-04.docx",
+        "BM TCKT 01-05.doc",
+        "BM TCKT 01-06.doc",
+        "BM TCTK 01-07.xls"
+      ],
+      "regulations": [
+        "Bộ luật Lao động 2019 (452019QH14) Quy định về tiền lương, phụ cấp, các khoản thanh toán cho người lao động.pdf",
+        "Luật kế toán số 882015QH13.pdf",
+        "Luật quản lý thuế số 382019QH14.pdf",
+        "Luật thuế GTGT số 132008QH12.doc",
+        "Nghị định 1232020NĐ-CP Về hóa đơn – chứng từ điện tử (quy định chung) – đi cùng TT 782021TT-BTC.pdf",
+        "Nghị định 174 quy định một số điều của luật kế toán số 882015QH13.pdf",
+        "Quy chế chi tiêu nội bộ của Trường Đại học Kiến Trúc Đà Nẵng năm 2022.pdf",
+        "Thông tư 2002014BTC áp dụng cho đơn vị kế toán doanh nghiệp.docx",
+        "Thông tư 2192013TT-BTC Hướng dẫn thực hiện thuế GTGT, bao gồm nguyên tắc hóa đơn đầu vào.pdf",
+        "Thông tư 782021TT-BTC hướng dẫn luật quản lý thuế.pdf",
+        "Thông tư 802021TT-BTC hướng dẫn chi tiết thi hành luật quản lý thuế số 382019.pdf",
+        "Thông tư 962015TT-BTC Hướng dẫn thuế TNDN chi phí hợp lý, khống chế mức chi, các khoản không được tính vào chi phí.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 7,
+      "num_regulations": 12,
+      "keywords": [
+        "thanh",
+        "quyết",
+        "toán"
+      ]
+    },
+    {
+      "id": "PTCKT-010",
+      "name": "Quy trình thanh toán kinh phí tổ chức hội nghị, hội thảo",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/Quy trình thanh toán kinh phí tổ chức hội nghị, hội thảo",
+      "qt_files": [
+        "Quy trình thanh toán kinh phí tổ chức hội nghị, hội thảo.pdf"
+      ],
+      "templates": [],
+      "regulations": [
+        "Hướng dẫn luật quản lý thuế.pdf",
+        "Nghị định 702025NĐ-Cp sửa đổi một số điều của NĐ số 1232020NĐ-CP ngày 19102020 quy định về hóa đơn, chứng từ.pdf",
+        "Thông tư 1112013TT-BTC Hướng dẫn thuế TNCN khấu trừ, giảm trừ gia cảnh, thời điểm kê khai.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 3,
+      "keywords": [
+        "thanh",
+        "toán",
+        "kinh",
+        "phí",
+        "tổ",
+        "chức",
+        "hội",
+        "nghị"
+      ]
+    },
+    {
+      "id": "PTCKT-011",
+      "name": "QUY TRÌNH THU HỌC PHÍ VÀ LỆ PHÍ SINH VIÊN",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/QUY TRÌNH THU HỌC PHÍ VÀ LỆ PHÍ SINH VIÊN",
+      "qt_files": [
+        "QUY TRÌNH THU HỌC PHÍ VÀ LỆ PHÍ SINH VIÊN.pdf"
+      ],
+      "templates": [],
+      "regulations": [
+        "Luật Giáo dục đại học số 342018QH14 (sửa đổi, bổ sung).pdf",
+        "Nghị định 1232020NĐ-CP quy định về hóa đơn, chứng từ.pdf",
+        "Nghị định 702025NĐ-Cp sửa đổi một số điều của NĐ số 1232020NĐ-CP ngày 19102020 quy định về hóa đơn, chứng từ.pdf",
+        "Thông tư 782021TT-BTC về hóa đơn điện tử.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 4,
+      "keywords": [
+        "thu",
+        "học",
+        "phí",
+        "lệ",
+        "sinh",
+        "viên"
+      ]
+    },
+    {
+      "id": "PTCKT-012",
+      "name": "QUY TRÌNH THU LỆ PHÍ THI CHUẨN ĐẦU RA",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/QUY TRÌNH THU LỆ PHÍ THI CHUẨN ĐẦU RA",
+      "qt_files": [
+        "QUY TRÌNH THU LỆ PHÍ THI CHUẨN ĐẦU RA.pdf"
+      ],
+      "templates": [],
+      "regulations": [
+        "Thông báo lịch thi chuẩn đầu ra.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 1,
+      "keywords": [
+        "thu",
+        "lệ",
+        "phí",
+        "thi",
+        "chuẩn",
+        "đầu",
+        "ra"
+      ]
+    },
+    {
+      "id": "PTCKT-013",
+      "name": "Quy trình tiến hành kê khai thuế giá trị gia tăng",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/Quy trình tiến hành kê khai thuế giá trị gia tăng",
+      "qt_files": [
+        "Quy trình tiến hành kê khai thuế giá trị gia tăng.pdf"
+      ],
+      "templates": [],
+      "regulations": [
+        "Cơ sở pháp lý chung cho hoạt động kê khai, hoàn thuế và nộp thuế GTGT.pdf",
+        "Hướng dẫn quản lý thuế, mẫu tờ khai thuế GTGT (mẫu 01GTGT, 04GTGT, …).pdf",
+        "Hướng dẫn áp dụng hóa đơn điện tử trong kê khai và nộp thuế GTGT.pdf",
+        "Nghị định 2092013NĐ-CP (và sửa đổi bởi NĐ 122015, 1462017...).pdf",
+        "Quy định chung về đối tượng chịu thuế, phương pháp tính thuế, thuế suất GTGT.pdf",
+        "Quy định thời hạn, phương thức kê khai và nộp thuế GTGT theo quý hoặc theo tháng.pdf",
+        "Thông tư 2192013TT-BTC (sửa đổi bổ sung bởi Thông tư 262015TT-BTC, TT 782021TT-BTC…).pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 7,
+      "keywords": [
+        "tiến",
+        "hành",
+        "kê",
+        "khai",
+        "thuế",
+        "giá",
+        "trị",
+        "gia"
+      ]
+    },
+    {
+      "id": "PTCKT-014",
+      "name": "Quy trình tiến hành kê khai thuế thu nhập cá nhân hàng năm",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/Quy trình tiến hành kê khai thuế thu nhập cá nhân hàng năm",
+      "qt_files": [
+        "Quy trình tiến hành kê khai thuế thu nhập cá nhân hàng năm.pdf"
+      ],
+      "templates": [],
+      "regulations": [
+        "Hướng dẫn chi tiết giảm trừ, miễn thuế, cư trú.pdf",
+        "Hướng dẫn tờ khai quyết toán thuế TNCN năm.pdf",
+        "Quy định chung về nghĩa vụ kê khai, nộp thuế.pdf",
+        "Quy định thời hạn, phương thức kê khai thuế.pdf",
+        "Đăng ký thuế cho cá nhân, NPT.doc"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 5,
+      "keywords": [
+        "tiến",
+        "hành",
+        "kê",
+        "khai",
+        "thuế",
+        "thu",
+        "nhập",
+        "cá"
+      ]
+    },
+    {
+      "id": "PTCKT-015",
+      "name": "Quy trình tiến hành kê khai thuế thu nhập cá nhân hàng quý",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/Quy trình tiến hành kê khai thuế thu nhập cá nhân hàng quý",
+      "qt_files": [
+        "Quy trình tiến hành kê khai thuế thu nhập cá nhân hàng quý.pdf"
+      ],
+      "templates": [
+        "QT.TCKT - 05 - 1.docx",
+        "QT.TCKT - 05.docx",
+        "Quy trình tiến hành kê khai thuế thu nhập cá nhân hàng quý.docx"
+      ],
+      "regulations": [
+        "Hướng dẫn chi tiết về giảm trừ, khấu trừ thuế TNCN.pdf",
+        "Hướng dẫn về tờ khai thuế TNCN theo quý (Mẫu 05KK-TNCN).pdf",
+        "Quy định chung về nghĩa vụ kê khai, nộp thuế.pdf",
+        "Quy định thời hạn, phương thức kê khai thuế.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 3,
+      "num_regulations": 4,
+      "keywords": [
+        "tiến",
+        "hành",
+        "kê",
+        "khai",
+        "thuế",
+        "thu",
+        "nhập",
+        "cá"
+      ]
+    },
+    {
+      "id": "PTCKT-016",
+      "name": "Quy trình tiến hành kê khai thuế thu nhập cá nhân từ đầu tư vốn",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/Quy trình tiến hành kê khai thuế thu nhập cá nhân từ đầu tư vốn",
+      "qt_files": [
+        "Quy trình tiến hành kê khai thuế thu nhập cá nhân từ đầu tư vốn.pdf"
+      ],
+      "templates": [],
+      "regulations": [
+        "Căn cứ pháp lý chung quy định nghĩa vụ kê khai, nộp thuế TNCN.pdf",
+        "Hướng dẫn chi tiết về thu nhập từ đầu tư vốn, thuế suất 5%, miễn giảm thuế.pdf",
+        "Hướng dẫn mẫu tờ khai 06KK-TNCN đối với tổ chức trả thu nhập từ đầu tư vốn.pdf",
+        "Hướng dẫn đăng ký thuế cho cá nhân có thu nhập từ đầu tư vốn nếu chưa có mã số thuế.doc",
+        "Quy định các loại thu nhập chịu thuế, trong đó có thu nhập từ đầu tư vốn.doc",
+        "Quy định về thời hạn kê khai và nộp thuế theo quý đối với thuế TNCN khấu trừ tại nguồn.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 6,
+      "keywords": [
+        "tiến",
+        "hành",
+        "kê",
+        "khai",
+        "thuế",
+        "thu",
+        "nhập",
+        "cá"
+      ]
+    },
+    {
+      "id": "PTCKT-017",
+      "name": "QUY TRÌNH TÍNH VÀ THANH TOÁN LƯƠNG",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/QUY TRÌNH TÍNH VÀ THANH TOÁN LƯƠNG",
+      "qt_files": [
+        "QUY TRÌNH TÍNH VÀ THANH TOÁN LƯƠNG.pdf"
+      ],
+      "templates": [
+        "QT.TCKT.14 - 1.xls",
+        "QT.TCKT.14 - 2.xls",
+        "QT.TCKT.14 - 3.xls",
+        "QT.TCKT.14 - 4.xlsx",
+        "QT.TCKT.14 - 5.xlsx",
+        "QT.TCKT.14 - 6.xls",
+        "QT.TCKT.14 - 7.xls"
+      ],
+      "regulations": [
+        "412024QH15 LUẬT BẢO HIỂM XÃ HỘI.pdf",
+        "452019QH14 Bộ Luật Lao Động.pdf",
+        "Nghị định 1452020NĐ-CP Hướng dẫn tính lương làm thêm giờ.pdf",
+        "Nghị định số 742024 Quy định mức lương tối thiểu.pdf",
+        "Thông tư 1112013 hướng dẫn thực hiện luật thuế Thu Nhập Cá Nhân.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 7,
+      "num_regulations": 5,
+      "keywords": [
+        "tính",
+        "thanh",
+        "toán",
+        "lương"
+      ]
+    },
+    {
+      "id": "PTCKT-018",
+      "name": "QUY TRÌNH XÁC NHẬN CÔNG NỢ HỌC PHÍ CHO SINH VIÊN RA TRƯỜNG",
+      "department": "P.TCKT",
+      "dept_full": "Phòng Tài chính Kế toán",
+      "folder_path": "P.TCKT/QUY TRÌNH XÁC NHẬN CÔNG NỢ HỌC PHÍ CHO SINH VIÊN RA TRƯỜNG",
+      "qt_files": [
+        "QUY TRÌNH XÁC NHẬN CÔNG NỢ HỌC PHÍ CHO SINH VIÊN RA TRƯỜNG.pdf"
+      ],
+      "templates": [
+        "QT.TCKT.11-1.doc"
+      ],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 1,
+      "num_regulations": 0,
+      "keywords": [
+        "xác",
+        "nhận",
+        "công",
+        "nợ",
+        "học",
+        "phí",
+        "sinh",
+        "viên"
+      ]
+    },
+    {
+      "id": "PTCNS-001",
+      "name": "QUY TRÌNH GIẢI QUYẾT CHẾ ĐỘ ỐM ĐAU VÀ THAI SẢN",
+      "department": "P.TCNS",
+      "dept_full": "Phòng Tổ chức Nhân sự",
+      "folder_path": "P.TCNS/QUY TRÌNH GIẢI QUYẾT CHẾ ĐỘ ỐM ĐAU VÀ THAI SẢN",
+      "qt_files": [
+        "QUY TRÌNH GIẢI QUYẾT CHẾ ĐỘ ỐM ĐAU VÀ THAI SẢN.pdf"
+      ],
+      "templates": [],
+      "regulations": [
+        "Hướng dẫn Luật Bảo hiểm xã hội về BHXH bắt buộc.pdf",
+        "Luật Bảo hiểm xã hội.pdf",
+        "NGHỊ ĐỊNH CỦA CHÍNH PHỦ.pdf",
+        "QĐ Ban hành Quy trình giải quyết hưởng các chế độ BHXH, chi trả các chế độ BHXH, BHTN.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 4,
+      "keywords": [
+        "giải",
+        "quyết",
+        "chế",
+        "độ",
+        "ốm",
+        "đau",
+        "thai",
+        "sản"
+      ]
+    },
+    {
+      "id": "PTCNS-002",
+      "name": "Quy trình kết thúc Hợp đồng Lao động đối với GVNV",
+      "department": "P.TCNS",
+      "dept_full": "Phòng Tổ chức Nhân sự",
+      "folder_path": "P.TCNS/Quy trình kết thúc Hợp đồng Lao động đối với GVNV",
+      "qt_files": [
+        "Quy trình kết thúc Hợp đồng Lao động đối với GVNV.pdf"
+      ],
+      "templates": [
+        "Quyết định Về việc chấm dứt hợp đồng lao động đối với GVNV.doc"
+      ],
+      "regulations": [
+        "Bộ luật Lao động năm 2019.pdf",
+        "Luật Giáo dục đại học số 42VBHN-VPQH ngày 10122018 của Quốc hội nước CHXHCN Việt Nam.doc"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 1,
+      "num_regulations": 2,
+      "keywords": [
+        "kết",
+        "thúc",
+        "hợp",
+        "đồng",
+        "lao",
+        "động",
+        "gvnv"
+      ]
+    },
+    {
+      "id": "PTCNS-003",
+      "name": "QUY TRÌNH QUẢN LÝ ĐÓNG BẢO HIỂM XÃ HỘI BẮT BUỘC",
+      "department": "P.TCNS",
+      "dept_full": "Phòng Tổ chức Nhân sự",
+      "folder_path": "P.TCNS/QUY TRÌNH QUẢN LÝ ĐÓNG BẢO HIỂM XÃ HỘI BẮT BUỘC",
+      "qt_files": [
+        "QUY TRÌNH QUẢN LÝ ĐÓNG BẢO HIỂM XÃ HỘI BẮT BUỘC.pdf"
+      ],
+      "templates": [],
+      "regulations": [
+        "Luật Giáo dục đại học số 42-VBHN-VPQH.pdf",
+        "Nghị định số 74-CP Quy định MLTT đối với người lao động làm việc theo HĐLĐ.pdf",
+        "Quy trình BHXH & Chi tiêu nội bộ 2022 của Trường Đại học Kiến trúc Đà Nẵng.pdf",
+        "Quy định chi tiết Luật Giáo dục đại học (Nghị định 99).pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 4,
+      "keywords": [
+        "quản",
+        "lý",
+        "đóng",
+        "bảo",
+        "hiểm",
+        "xã",
+        "hội",
+        "bắt"
+      ]
+    },
+    {
+      "id": "PTCNS-004",
+      "name": "QUY TRÌNH THANH TOÁN TIỀN LƯƠNG",
+      "department": "P.TCNS",
+      "dept_full": "Phòng Tổ chức Nhân sự",
+      "folder_path": "P.TCNS/QUY TRÌNH THANH TOÁN TIỀN LƯƠNG",
+      "qt_files": [
+        "QUY TRÌNH THANH TOÁN TIỀN LƯƠNG.pdf"
+      ],
+      "templates": [],
+      "regulations": [
+        "Bộ luật Lao động 2019.pdf",
+        "Quy chế chi tiêu nội bộ Năm 2022 của trường ĐHKT Đà Nẵng (Kèm quyết định).pdf",
+        "Thông tư hướng dẫn thực hiện Luật thuế TNCN.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 3,
+      "keywords": [
+        "thanh",
+        "toán",
+        "tiền",
+        "lương"
+      ]
+    },
+    {
+      "id": "PTCNS-005",
+      "name": "Quy trình tuyển dụng nhân viên",
+      "department": "P.TCNS",
+      "dept_full": "Phòng Tổ chức Nhân sự",
+      "folder_path": "P.TCNS/Quy trình tuyển dụng nhân viên",
+      "qt_files": [
+        "Quy trình tuyển dụng nhân viên.pdf"
+      ],
+      "templates": [
+        "BM TCNS-04.01.doc",
+        "BM TCNS-04.02.doc",
+        "BM TCNS-04.03.doc",
+        "BM TCNS-04.04.doc"
+      ],
+      "regulations": [
+        "Bộ Luật Lao động năm 2024.pdf",
+        "Luật Giáo dục đại học số 42VBHN-VPQH ngày 10122018 của Quốc hội nước CHXHCN Việt Nam.doc",
+        "Quyết định số 2702006QĐ-TTg ngày 27112006 của Thủ tướng Chính phủ về việc thành lập Trường Đại học Kiến trúc Đà Nẵng.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 4,
+      "num_regulations": 3,
+      "keywords": [
+        "tuyển",
+        "dụng",
+        "nhân",
+        "viên"
+      ]
+    },
+    {
+      "id": "PTCNS-006",
+      "name": "Quy trình tuyển dụng, đào tạo và bồi dưỡng giảng viên cơ hữu",
+      "department": "P.TCNS",
+      "dept_full": "Phòng Tổ chức Nhân sự",
+      "folder_path": "P.TCNS/Quy trình tuyển dụng, đào tạo và bồi dưỡng giảng viên cơ hữu",
+      "qt_files": [
+        "Quy trình tuyển dụng, đào tạo và bồi dưỡng giảng viên cơ hữu.pdf"
+      ],
+      "templates": [
+        "BM TCNS-03.01.doc",
+        "BM TCNS-03.02.doc",
+        "BM TCNS-03.03.doc",
+        "BM TCNS-03.04.doc",
+        "BM TCNS-03.05.doc",
+        "BM TCNS-03.06.doc",
+        "BM TCNS-03.07.doc",
+        "BM TCNS-03.08.doc",
+        "BM TCNS-03.09.doc",
+        "BM TCNS-03.10.doc",
+        "BM TCNS-03.11.doc",
+        "BM TCNS-03.12.doc",
+        "BM TCNS-03.13.doc",
+        "BM TCNS-03.14.doc",
+        "BM TCNS-03.15.doc",
+        "BM TCNS-03.16.doc"
+      ],
+      "regulations": [
+        "Luật Giáo dục đại học số 42VBHN-VPQH ngày 10122018 của Quốc hội nước CHXHCN Việt Nam.doc"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 16,
+      "num_regulations": 1,
+      "keywords": [
+        "tuyển",
+        "dụng",
+        "đào",
+        "tạo",
+        "bồi",
+        "dưỡng",
+        "giảng",
+        "viên"
+      ]
+    },
+    {
+      "id": "PTCNS-007",
+      "name": "Quy trình về đánh giá mức độ hoàn thành nhiệm vụ đối với cá nhân và tập thể",
+      "department": "P.TCNS",
+      "dept_full": "Phòng Tổ chức Nhân sự",
+      "folder_path": "P.TCNS/Quy trình về đánh giá mức độ hoàn thành nhiệm vụ đối với cá nhân và tập thể",
+      "qt_files": [
+        "Quy trình về đánh giá mức độ hoàn thành nhiệm vụ đối với cá nhân và tập thể.pdf"
+      ],
+      "templates": [
+        "BM TCNS-06.01.doc",
+        "BM TCNS-06.02.doc",
+        "BM TCNS-06.03.doc",
+        "BM TCNS-06.04.doc",
+        "BM TCNS-06.05.doc"
+      ],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 5,
+      "num_regulations": 0,
+      "keywords": [
+        "đánh",
+        "giá",
+        "mức",
+        "độ",
+        "hoàn",
+        "thành",
+        "nhiệm",
+        "vụ"
+      ]
+    },
+    {
+      "id": "PTCNS-008",
+      "name": "Quy trình đề nghị được hưởng phụ cấp trình độ",
+      "department": "P.TCNS",
+      "dept_full": "Phòng Tổ chức Nhân sự",
+      "folder_path": "P.TCNS/Quy trình đề nghị được hưởng phụ cấp trình độ",
+      "qt_files": [
+        "Quy trình đề nghị được hưởng phụ cấp trình độ.pdf"
+      ],
+      "templates": [
+        "BM TCNS-11.01.doc",
+        "BM TCNS-11.02.doc",
+        "BM TCNS-11.03.doc"
+      ],
+      "regulations": [
+        "Luật Giáo dục đại học số 42VBHN-VPQH ngày 10122018 của Quốc hội nước CHXHCN Việt Nam.doc",
+        "Quy chế chi tiêu nội bộ.pdf",
+        "Quyết định số 2702006QĐ-TTg ngày 27112006 của Thủ tướng Chính phủ về việc thành lập Trường Đại học Kiến trúc Đà Nẵng.pdf"
+      ],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 3,
+      "num_regulations": 3,
+      "keywords": [
+        "đề",
+        "nghị",
+        "được",
+        "hưởng",
+        "phụ",
+        "cấp",
+        "độ"
+      ]
+    },
+    {
+      "id": "PTCNS-009",
+      "name": "Quy định về Thi đua Khen thưởng và Kỷ luật đối với cá nhân và Tập thể",
+      "department": "P.TCNS",
+      "dept_full": "Phòng Tổ chức Nhân sự",
+      "folder_path": "P.TCNS/Quy định về Thi đua Khen thưởng và Kỷ luật đối với cá nhân và Tập thể",
+      "qt_files": [],
+      "templates": [
+        "Biên bản họp về việc bình xét danh hiệu thi đua và khen thưởng năm học.doc",
+        "Báo cáo thành tích đề nghị xét tặng danh hiệu Chiến sĩ thi đua cấp cơ sở.doc",
+        "Quyết định về việc thi hành kỷ luật đối với CBGVCNV.doc",
+        "Tờ trình về việc đề nghị xét kỷ luật Cán bộ Giảng viên CNV.doc",
+        "Tờ trình về việc đề nghị xét, công nhận danh hiệu thi đua và khen thưởng năm học.doc"
+      ],
+      "regulations": [
+        "Luật Giáo dục đại học số 42VBHN-VPQH ngày 10122018 của Quốc hội nước CHXHCN Việt Nam.doc"
+      ],
+      "extra_files": [
+        "Quy định về Thi đua Khen thưởng và Kỷ luật đối với cá nhân và Tập thể.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 5,
+      "num_regulations": 1,
+      "keywords": [
+        "định",
+        "thi",
+        "đua",
+        "khen",
+        "thưởng",
+        "kỷ",
+        "luật",
+        "cá"
+      ]
+    },
+    {
+      "id": "PTTPC-001",
+      "name": "QUY TRÌNH CUỘC TIẾP CÔNG DÂN",
+      "department": "P.TTPC",
+      "dept_full": "Phòng Thanh tra Pháp chế",
+      "folder_path": "P.TTPC/QUY TRÌNH CUỘC TIẾP CÔNG DÂN",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "cuộc",
+        "tiếp",
+        "công",
+        "dân"
+      ]
+    },
+    {
+      "id": "PTTPC-002",
+      "name": "QUY TRÌNH GIẢI QUYẾT KHIẾU NẠI",
+      "department": "P.TTPC",
+      "dept_full": "Phòng Thanh tra Pháp chế",
+      "folder_path": "P.TTPC/QUY TRÌNH GIẢI QUYẾT KHIẾU NẠI",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "giải",
+        "quyết",
+        "khiếu",
+        "nại"
+      ]
+    },
+    {
+      "id": "PTTPC-003",
+      "name": "QUY TRÌNH GIẢI QUYẾT TỐ CÁO",
+      "department": "P.TTPC",
+      "dept_full": "Phòng Thanh tra Pháp chế",
+      "folder_path": "P.TTPC/QUY TRÌNH GIẢI QUYẾT TỐ CÁO",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "giải",
+        "quyết",
+        "tố",
+        "cáo"
+      ]
+    },
+    {
+      "id": "PTTPC-004",
+      "name": "QUY TRÌNH KIỂM TRA",
+      "department": "P.TTPC",
+      "dept_full": "Phòng Thanh tra Pháp chế",
+      "folder_path": "P.TTPC/QUY TRÌNH KIỂM TRA",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "kiểm",
+        "tra"
+      ]
+    },
+    {
+      "id": "PTTPC-005",
+      "name": "QUY TRÌNH THANH TRA",
+      "department": "P.TTPC",
+      "dept_full": "Phòng Thanh tra Pháp chế",
+      "folder_path": "P.TTPC/QUY TRÌNH THANH TRA",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "thanh",
+        "tra"
+      ]
+    },
+    {
+      "id": "PTTPC-006",
+      "name": "QUY TRÌNH THANH TRA TUYỂN SINH",
+      "department": "P.TTPC",
+      "dept_full": "Phòng Thanh tra Pháp chế",
+      "folder_path": "P.TTPC/QUY TRÌNH THANH TRA TUYỂN SINH",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "thanh",
+        "tra",
+        "tuyển",
+        "sinh"
+      ]
+    },
+    {
+      "id": "PTUYENSINH-001",
+      "name": "Quy trình tổ chức kỳ thi ĐGNLMT (nội dung 1 - Thi trắc nghiệm)",
+      "department": "P.Tuyensinh",
+      "dept_full": "Phòng Tuyển sinh",
+      "folder_path": "P.Tuyensinh/Quy trình tổ chức kỳ thi ĐGNLMT (nội dung 1 - Thi trắc nghiệm)",
+      "qt_files": [
+        "Quy trình tổ chức kỳ thi ĐGNLMT (nội dung 1 - Thi trắc nghiệm).pdf"
+      ],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [],
+      "num_qt": 1,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "tổ",
+        "chức",
+        "kỳ",
+        "thi",
+        "đgnlmt",
+        "dung",
+        "trắc",
+        "nghiệm"
+      ]
+    },
+    {
+      "id": "PTUYENSINH-002",
+      "name": "Soạn công văn gửi các bên liên quan về việc tổ chức kỳ thi ĐGNLMT",
+      "department": "P.Tuyensinh",
+      "dept_full": "Phòng Tuyển sinh",
+      "folder_path": "P.Tuyensinh/Soạn công văn gửi các bên liên quan về việc tổ chức kỳ thi ĐGNLMT",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Soạn công văn gửi các bên liên quan về việc tổ chức kỳ thi ĐGNLMT.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "soạn",
+        "công",
+        "văn",
+        "gửi",
+        "bên",
+        "liên",
+        "quan",
+        "tổ"
+      ]
+    },
+    {
+      "id": "PTUYENSINH-003",
+      "name": "Xây dựng Đề án tuyển sinh",
+      "department": "P.Tuyensinh",
+      "dept_full": "Phòng Tuyển sinh",
+      "folder_path": "P.Tuyensinh/Xây dựng Đề án tuyển sinh",
+      "qt_files": [],
+      "templates": [],
+      "regulations": [],
+      "extra_files": [
+        "Xây dựng Đề án tuyển sinh.pdf"
+      ],
+      "num_qt": 0,
+      "num_templates": 0,
+      "num_regulations": 0,
+      "keywords": [
+        "xây",
+        "dựng",
+        "đề",
+        "án",
+        "tuyển",
+        "sinh"
+      ]
+    }
+  ]
+}

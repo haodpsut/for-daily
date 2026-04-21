@@ -1,0 +1,35 @@
+# Env
+.env
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+
+# Data (large, user-specific)
+data/raw/
+data/extracted/
+*.jsonl
+
+# Keep these structured metadata files (small, reviewable)
+!data/criteria.json
+!data/iso_processes.json
+!data/ground_truth.json
+!data/README.md
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Docker
+docker-volumes/

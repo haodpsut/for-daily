@@ -1,0 +1,158 @@
+% =============================================================
+%  Company Direction — One Page
+%  Internal draft. Đà Nẵng, 2026.
+%  Biên dịch: xelatex one-page-direction.tex
+%  (cần XeLaTeX hoặc LuaLaTeX vì dùng fontspec cho tiếng Việt)
+% =============================================================
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[margin=1.2cm,top=0.9cm,bottom=0.9cm]{geometry}
+\usepackage{fontspec}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usetikzlibrary{positioning, shapes.geometric, arrows.meta, fit, calc}
+
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+
+\definecolor{ink}{HTML}{14213d}
+\definecolor{accent}{HTML}{fca311}
+\definecolor{mid}{HTML}{8d99ae}
+\definecolor{hao}{HTML}{b08968}    % Thổ — đất
+\definecolor{phu}{HTML}{8d99ae}    % Kim — bạc
+\definecolor{hoang}{HTML}{2a9d8f}  % Mộc — xanh
+\definecolor{warm}{HTML}{c44536}
+
+\titleformat{\section}{\normalfont\sffamily\bfseries\color{ink}\large}{\thesection.}{0.4em}{}
+\titlespacing*{\section}{0pt}{0.5em}{0.15em}
+
+\setlist{nosep, leftmargin=1.1em, topsep=2pt, partopsep=0pt, itemsep=1pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\pagestyle{empty}
+
+\begin{document}
+
+% ---------- HEADER ----------
+\begin{center}
+{\sffamily\bfseries\Large Company Direction — One Page}\\[1pt]
+{\sffamily\small Team 3 người \textbullet{} Đà Nẵng \textbullet{} 2026 \textbullet{} Internal draft}
+\end{center}
+\vspace{-4pt}
+
+% ---------- 1. VISION ----------
+\section*{1. Vision \& Positioning}
+\textbf{Chúng tôi xây hệ thống AI Agent tự vận hành, có kiểm soát, cho các workflow tri thức} — bắt đầu từ giáo dục, mở rộng sang du lịch và dịch vụ. Khách hàng trả tiền cho \emph{kết quả vận hành}, không trả tiền cho kiến trúc.
+\begin{itemize}
+\item \textbf{Thị trường nhìn vào:} AI Agent Systems for Knowledge-Intensive Workflows.
+\item \textbf{Tài sản nội bộ:} một framework chuẩn để dựng nhanh AI workflow / agent cho nhiều ngành.
+\item \textbf{Không bán} khái niệm ``framework''. \textbf{Không nhảy} multi-agent khi workflow đơn giản đủ dùng.
+\end{itemize}
+
+% ---------- 2. PRODUCT THESIS + TEAM ----------
+\section*{2. Product Thesis — 2 lớp \& Team}
+\vspace{-2pt}
+\begin{center}
+\begin{tikzpicture}[
+  font=\sffamily,
+  sol/.style={draw=ink, fill=accent!25, rounded corners=2pt,
+              minimum width=32mm, minimum height=8mm, align=center, inner sep=2pt,
+              font=\footnotesize\sffamily},
+  solfut/.style={draw=ink!70, fill=accent!5, dashed, rounded corners=2pt,
+              minimum width=32mm, minimum height=8mm, align=center, inner sep=2pt,
+              font=\footnotesize\sffamily\itshape},
+  fwk/.style={draw=ink, fill=mid!30, rounded corners=2pt,
+              minimum width=22mm, minimum height=6.5mm, align=center, inner sep=1.5pt,
+              font=\footnotesize\sffamily},
+  role/.style={circle, draw=ink, thick, minimum size=13mm, align=center,
+              font=\footnotesize\sffamily\bfseries, inner sep=0pt},
+  arr/.style={-{Latex[length=2.2mm]}, thick, ink!75, shorten <=1pt, shorten >=1pt},
+  lbl/.style={font=\footnotesize\sffamily\itshape, ink!80}
+]
+  % Layer A — Solutions
+  \node[sol] (a1) at (0,0) {Admissions\\Agent};
+  \node[sol, right=2.5mm of a1] (a2) {Student Services\\Agent};
+  \node[sol, right=2.5mm of a2] (a3) {Internal Knowledge\\Agent};
+  \node[solfut, right=2.5mm of a3] (a4) {Travel / Service\\(Q4)};
+  \node[lbl, above=0.5mm of a1.north west, anchor=south west]
+        {LỚP A — Solutions bán ra thị trường};
+
+  % Layer B — Framework
+  \node[fwk, below=14mm of a1.south west, anchor=north west] (b1) {Knowledge};
+  \node[fwk, right=1.5mm of b1] (b2) {Workflow};
+  \node[fwk, right=1.5mm of b2] (b3) {Tools};
+  \node[fwk, right=1.5mm of b3] (b4) {Reasoning};
+  \node[fwk, right=1.5mm of b4] (b5) {Evals};
+  \node[fwk, right=1.5mm of b5] (b6) {Governance};
+  \node[lbl, above=0.5mm of b1.north west, anchor=south west]
+        {LỚP B — Core Framework (tài sản nội bộ, không bán trực tiếp)};
+
+  % Arrow B -> A (packaging)
+  \draw[arr] ($(b3.north)!0.5!(b4.north)$) -- ++(0,3mm)
+        node[right=0pt, font=\scriptsize\sffamily\itshape, ink!70]{\;đóng gói thành solution};
+
+  % Roles
+  \node[role, fill=hao!35,   below=13mm of b1.south] (r1) {Hảo\\\scriptsize(Thổ)};
+  \node[role, fill=phu!50,   below=13mm of b3.south] (r2) {Phú\\\scriptsize(Kim)};
+  \node[role, fill=hoang!35, below=13mm of b6.south] (r3) {Hoàng\\\scriptsize(Mộc)};
+
+  \node[below=0.5mm of r1, font=\scriptsize\sffamily\bfseries, ink] {Strategy};
+  \node[below=0.5mm of r2, font=\scriptsize\sffamily\bfseries, ink] {Platform};
+  \node[below=0.5mm of r3, font=\scriptsize\sffamily\bfseries, ink] {GTM};
+
+  \draw[arr] (r1.north) -- (b1.south);
+  \draw[arr] (r2.north) -- ($(b3.south)!0.5!(b4.south)$);
+  \draw[arr] (r3.north) -- (b6.south);
+
+  % Ngũ hành interactions (subtle)
+  \draw[-{Latex[length=1.8mm]}, hao!90, thick] (r1) to[bend left=18]
+        node[midway, above, font=\tiny\sffamily, hao]{Thổ sinh Kim} (r2);
+  \draw[-{Latex[length=1.8mm]}, warm!80, thick, densely dashed] (r2) to[bend left=18]
+        node[midway, above, font=\tiny\sffamily, warm]{Kim khắc Mộc — cần trọng tài} (r3);
+\end{tikzpicture}
+\end{center}
+\vspace{-4pt}
+
+% ---------- 3. TEAM ROLES TABLE ----------
+\section*{3. Ba vai trò — Ba KPI riêng}
+\vspace{-2pt}
+\begin{tabularx}{\linewidth}{@{}p{2.3cm} X X@{}}
+\toprule
+\textbf{Người} & \textbf{Vai trò} & \textbf{KPI chính} \\
+\midrule
+\textbf{Hảo} \scriptsize CEO / Direction &
+Chọn vertical, giữ roadmap, gỡ xung đột kỹ thuật–sales, leverage network học thuật &
+Đúng vertical; \% reuse giữa dự án; chất lượng design partner \\
+\textbf{Phú} \scriptsize Platform Lead &
+Xây core framework, chuẩn hóa connector / guardrails / evals, giữ kiến trúc &
+Thời gian ra MVP; độ ổn định hệ thống; \% module tái sử dụng \\
+\textbf{Hoàng} \scriptsize GTM Lead &
+Tìm pain thật, chốt design partner, dẫn discovery workshop, chuyển use case $\rightarrow$ proposal &
+Số pilot trả phí; use case $\rightarrow$ proposal rate; insight thị trường \\
+\bottomrule
+\end{tabularx}
+
+% ---------- 4. 12-MONTH PLAN ----------
+\section*{4. 12-month Plan}
+\begin{itemize}
+\item \textbf{Q1 (M1--M3) — Chọn hẹp.} 1 vertical = \emph{Giáo dục}. 2 use case = \emph{Admissions Agent} + \emph{Internal Knowledge Agent}. 10 discovery call. 1 prototype chạy trên trường thật.
+\item \textbf{Q2 (M4--M6) — Design partner.} 2--3 pilot trả phí (tối thiểu 20--30\% giá thật). Hoàn thiện 6 khối framework nội bộ. Đo ROI thật trên 1 trường.
+\item \textbf{Q3 (M7--M9) — Packaging.} Chuẩn hóa connector / dashboard / evals / templates cho ngành giáo dục. Mở rộng 5--7 khách. Viết 1--2 case study.
+\item \textbf{Q4 (M10--M12) — Vertical 2.} Thử nghiệm \emph{Service / Visitor Agent} cho du lịch trên nền framework sẵn có. Chưa đụng subscription / platform play.
+\end{itemize}
+
+% ---------- 5. RULES ----------
+\section*{5. Rules of Engagement}
+\begin{itemize}
+\item \textbf{3 chữ ký / use case:} Hoàng (có khách trả tiền) $+$ Phú (làm được trong X tuần) $+$ Hảo (khớp roadmap). Thiếu 1 $\Rightarrow$ không bán, không build.
+\item \textbf{Không đẻ framework trước khi có khách.} Framework chỉ lớn lên từ use case thật, không xây trong chân không.
+\item \textbf{Không ôm 2 vertical cùng cường độ} trong năm đầu. Giáo dục ổn rồi mới mở du lịch.
+\item \textbf{Đơn giản trước, multi-agent sau.} Single agent + tool + workflow tốt $>$ multi-agent khi chưa cần.
+\item \textbf{Không làm outsourcing đội lốt platform.} Nếu mỗi khách một kiểu, không tái sử dụng $\Rightarrow$ từ chối hoặc tính giá agency.
+\end{itemize}
+
+\end{document}

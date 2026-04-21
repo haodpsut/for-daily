@@ -1,0 +1,1288 @@
+{
+  "version": "TT-2026-BGDDT",
+  "source": "Thông tư /2026/TT-BGDĐT (offline parse from PHAN-TICH-TONG-THE.md)",
+  "generated_at": "2026-04-21T10:18:11.586095",
+  "method": "offline-regex",
+  "total_standards": 15,
+  "total_criteria": 60,
+  "standards": [
+    {
+      "id": "TC01",
+      "name": "Tầm nhìn, sứ mạng, văn hoá và quản trị",
+      "group": "A",
+      "criteria": [
+        {
+          "id": "TC 1.1",
+          "name": "Công bố tầm nhìn, sứ mạng",
+          "requirements": [
+            "Công bố rõ ràng",
+            "xây dựng dựa trên phân tích bên liên quan"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến công bố tầm nhìn, sứ mạng",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "công",
+            "tầm",
+            "nhìn",
+            "mạng"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 1.2",
+          "name": "Hệ thống quản trị",
+          "requirements": [
+            "Hội đồng trường, BGH, Đảng ủy, Hội đồng KH&ĐT vận hành đúng luật"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến hệ thống quản trị",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "thống",
+            "quản",
+            "trị"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 1.3",
+          "name": "Giá trị văn hóa",
+          "requirements": [
+            "Đề cao liêm chính học thuật, hành vi chuẩn mực"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến giá trị văn hóa",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "giá",
+            "trị",
+            "văn",
+            "hóa"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 1.4",
+          "name": "Truyền đạt tầm nhìn",
+          "requirements": [
+            "Thực hiện đến nhân sự tất cả các cấp"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến truyền đạt tầm nhìn",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "truyền",
+            "đạt",
+            "tầm",
+            "nhìn"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 1.5",
+          "name": "Trách nhiệm xã hội",
+          "requirements": [
+            "Quyết định → kế hoạch hành động → bảo vệ bên liên quan/môi trường"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến trách nhiệm xã hội",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "trách",
+            "nhiệm",
+            "hội"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 1.6",
+          "name": "Cải tiến quản trị",
+          "requirements": [
+            "Đánh giá định kỳ, rà soát, điều chỉnh hệ thống văn bản"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến cải tiến quản trị",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "cải",
+            "tiến",
+            "quản",
+            "trị"
+          ],
+          "related_iso_processes": []
+        }
+      ]
+    },
+    {
+      "id": "TC02",
+      "name": "Lãnh đạo và chiến lược",
+      "group": "A",
+      "criteria": [
+        {
+          "id": "TC 2.1",
+          "name": "Cơ cấu tổ chức quản lý rõ ràng, thông tin đa chiều",
+          "requirements": [
+            "Cơ cấu tổ chức quản lý rõ ràng, thông tin đa chiều"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến cơ cấu tổ chức quản lý rõ ràng, thông tin đa chiều",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "cấu",
+            "chức",
+            "quản",
+            "ràng",
+            "thông",
+            "tin"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 2.2",
+          "name": "Rà soát định kỳ cơ cấu tổ chức",
+          "requirements": [
+            "Rà soát định kỳ cơ cấu tổ chức"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến rà soát định kỳ cơ cấu tổ chức",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "soát",
+            "định",
+            "cấu",
+            "chức"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 2.3",
+          "name": "Kế hoạch chiến lược ngắn/trung/dài hạn (phân tích SWOT/PESTLE)",
+          "requirements": [
+            "Kế hoạch chiến lược ngắn/trung/dài hạn (phân tích SWOT/PESTLE)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến kế hoạch chiến lược ngắn/trung/dài hạn (phân tích swot/pestle)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "hoạch",
+            "chiến",
+            "lược",
+            "ngắn",
+            "trung",
+            "dài"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 2.4",
+          "name": "Triển khai và giám sát kế hoạch chiến lược",
+          "requirements": [
+            "Triển khai và giám sát kế hoạch chiến lược"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến triển khai và giám sát kế hoạch chiến lược",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "triển",
+            "khai",
+            "giám",
+            "sát",
+            "hoạch",
+            "chiến"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 2.5",
+          "name": "Cải tiến lãnh đạo và quản lý",
+          "requirements": [
+            "Cải tiến lãnh đạo và quản lý"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến cải tiến lãnh đạo và quản lý",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "cải",
+            "tiến",
+            "lãnh",
+            "đạo",
+            "quản"
+          ],
+          "related_iso_processes": []
+        }
+      ]
+    },
+    {
+      "id": "TC03",
+      "name": "Nguồn nhân lực",
+      "group": "A",
+      "criteria": [
+        {
+          "id": "TC 3.1",
+          "name": "Quy hoạch và tuyển dụng nhân sự",
+          "requirements": [
+            "Quy hoạch và tuyển dụng nhân sự"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến quy hoạch và tuyển dụng nhân sự",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "quy",
+            "hoạch",
+            "tuyển",
+            "dụng",
+            "nhân"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 3.2",
+          "name": "Đánh giá hiệu quả công việc của nhân sự",
+          "requirements": [
+            "Đánh giá hiệu quả công việc của nhân sự"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến đánh giá hiệu quả công việc của nhân sự",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "đánh",
+            "giá",
+            "hiệu",
+            "quả",
+            "công",
+            "việc"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 3.3",
+          "name": "Phát triển chuyên môn và nghiệp vụ",
+          "requirements": [
+            "Phát triển chuyên môn và nghiệp vụ"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến phát triển chuyên môn và nghiệp vụ",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "phát",
+            "triển",
+            "chuyên",
+            "môn",
+            "nghiệp"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 3.4",
+          "name": "Chế độ đãi ngộ, phúc lợi và môi trường làm việc",
+          "requirements": [
+            "Chế độ đãi ngộ, phúc lợi và môi trường làm việc"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến chế độ đãi ngộ, phúc lợi và môi trường làm việc",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "chế",
+            "đãi",
+            "ngộ",
+            "phúc",
+            "lợi",
+            "môi"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 3.5",
+          "name": "Cải tiến quản lý nguồn nhân lực",
+          "requirements": [
+            "Cải tiến quản lý nguồn nhân lực"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến cải tiến quản lý nguồn nhân lực",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "cải",
+            "tiến",
+            "quản",
+            "nguồn",
+            "nhân",
+            "lực"
+          ],
+          "related_iso_processes": []
+        }
+      ]
+    },
+    {
+      "id": "TC04",
+      "name": "Nguồn lực tài chính và vật chất",
+      "group": "A",
+      "criteria": [
+        {
+          "id": "TC 4.1",
+          "name": "Lập kế hoạch và quản lý tài chính",
+          "requirements": [
+            "Lập kế hoạch và quản lý tài chính"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến lập kế hoạch và quản lý tài chính",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "lập",
+            "hoạch",
+            "quản",
+            "tài",
+            "chính"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 4.2",
+          "name": "Cơ sở vật chất (diện tích, phòng học, lab, KTX)",
+          "requirements": [
+            "Cơ sở vật chất (diện tích, phòng học, lab, KTX)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến cơ sở vật chất (diện tích, phòng học, lab, ktx)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "vật",
+            "chất",
+            "diện",
+            "tích",
+            "phòng",
+            "học"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 4.3",
+          "name": "Thư viện và tài nguyên học liệu số",
+          "requirements": [
+            "Thư viện và tài nguyên học liệu số"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến thư viện và tài nguyên học liệu số",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "thư",
+            "viện",
+            "tài",
+            "nguyên",
+            "học",
+            "liệu"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 4.4",
+          "name": "CNTT & hạ tầng số (hệ thống CNTT, băng thông, phần mềm quản lý)",
+          "requirements": [
+            "CNTT & hạ tầng số (hệ thống CNTT, băng thông, phần mềm quản lý)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến cntt & hạ tầng số (hệ thống cntt, băng thông, phần mềm quản lý)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "cntt",
+            "tầng",
+            "thống",
+            "cntt",
+            "băng",
+            "thông"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 4.5",
+          "name": "Cải tiến quản lý tài chính và CSVC",
+          "requirements": [
+            "Cải tiến quản lý tài chính và CSVC"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến cải tiến quản lý tài chính và csvc",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "cải",
+            "tiến",
+            "quản",
+            "tài",
+            "chính",
+            "csvc"
+          ],
+          "related_iso_processes": []
+        }
+      ]
+    },
+    {
+      "id": "TC05",
+      "name": "Mạng lưới và quan hệ đối ngoại",
+      "group": "A",
+      "criteria": [
+        {
+          "id": "TC 5.1",
+          "name": "Hợp tác trong nước và quốc tế (DN, trường, tổ chức nghiên cứu)",
+          "requirements": [
+            "Hợp tác trong nước và quốc tế (DN, trường, tổ chức nghiên cứu)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến hợp tác trong nước và quốc tế (dn, trường, tổ chức nghiên cứu)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "hợp",
+            "tác",
+            "nước",
+            "quốc",
+            "trường",
+            "chức"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 5.2",
+          "name": "Cải tiến hoạt động hợp tác và kết nối",
+          "requirements": [
+            "Cải tiến hoạt động hợp tác và kết nối"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến cải tiến hoạt động hợp tác và kết nối",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "cải",
+            "tiến",
+            "hoạt",
+            "động",
+            "hợp",
+            "tác"
+          ],
+          "related_iso_processes": []
+        }
+      ]
+    },
+    {
+      "id": "TC06",
+      "name": "Chính sách về đào tạo",
+      "group": "B",
+      "criteria": [
+        {
+          "id": "TC 6.1",
+          "name": "Tuyển sinh (tiêu chí, quy trình, công khai)",
+          "requirements": [
+            "Tuyển sinh (tiêu chí, quy trình, công khai)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến tuyển sinh (tiêu chí, quy trình, công khai)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "tuyển",
+            "sinh",
+            "tiêu",
+            "chí",
+            "quy",
+            "trình"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 6.2",
+          "name": "CTĐT (thiết kế, rà soát, chuẩn đầu ra OBE)",
+          "requirements": [
+            "CTĐT (thiết kế, rà soát, chuẩn đầu ra OBE)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến ctđt (thiết kế, rà soát, chuẩn đầu ra obe)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "ctđt",
+            "thiết",
+            "soát",
+            "chuẩn",
+            "đầu",
+            "obe"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 6.3",
+          "name": "Giảng dạy và học tập (phương pháp, tài liệu, phản hồi)",
+          "requirements": [
+            "Giảng dạy và học tập (phương pháp, tài liệu, phản hồi)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến giảng dạy và học tập (phương pháp, tài liệu, phản hồi)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "giảng",
+            "dạy",
+            "học",
+            "tập",
+            "phương",
+            "pháp"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 6.4",
+          "name": "Kiểm tra, đánh giá người học",
+          "requirements": [
+            "Kiểm tra, đánh giá người học"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến kiểm tra, đánh giá người học",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "kiểm",
+            "tra",
+            "đánh",
+            "giá",
+            "người",
+            "học"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 6.5",
+          "name": "Hỗ trợ người học (tư vấn, học bổng, việc làm)",
+          "requirements": [
+            "Hỗ trợ người học (tư vấn, học bổng, việc làm)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến hỗ trợ người học (tư vấn, học bổng, việc làm)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "trợ",
+            "người",
+            "học",
+            "vấn",
+            "học",
+            "bổng"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 6.6",
+          "name": "Quản lý thông tin người học",
+          "requirements": [
+            "Quản lý thông tin người học"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến quản lý thông tin người học",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "quản",
+            "thông",
+            "tin",
+            "người",
+            "học"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 6.7",
+          "name": "Cải tiến chính sách đào tạo",
+          "requirements": [
+            "Cải tiến chính sách đào tạo"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến cải tiến chính sách đào tạo",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "cải",
+            "tiến",
+            "chính",
+            "sách",
+            "đào",
+            "tạo"
+          ],
+          "related_iso_processes": []
+        }
+      ]
+    },
+    {
+      "id": "TC07",
+      "name": "Chính sách về NCKH",
+      "group": "B",
+      "criteria": [
+        {
+          "id": "TC 7.1",
+          "name": "Chiến lược và định hướng NCKH",
+          "requirements": [
+            "Chiến lược và định hướng NCKH"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến chiến lược và định hướng nckh",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "chiến",
+            "lược",
+            "định",
+            "hướng",
+            "nckh"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 7.2",
+          "name": "Môi trường và nguồn lực cho NCKH",
+          "requirements": [
+            "Môi trường và nguồn lực cho NCKH"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến môi trường và nguồn lực cho nckh",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "môi",
+            "trường",
+            "nguồn",
+            "lực",
+            "cho",
+            "nckh"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 7.3",
+          "name": "Sở hữu trí tuệ và đạo đức nghiên cứu",
+          "requirements": [
+            "Sở hữu trí tuệ và đạo đức nghiên cứu"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến sở hữu trí tuệ và đạo đức nghiên cứu",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "hữu",
+            "trí",
+            "tuệ",
+            "đạo",
+            "đức",
+            "nghiên"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 7.4",
+          "name": "Phát triển năng lực nghiên cứu của GV và NCS",
+          "requirements": [
+            "Phát triển năng lực nghiên cứu của GV và NCS"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến phát triển năng lực nghiên cứu của gv và ncs",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "phát",
+            "triển",
+            "năng",
+            "lực",
+            "nghiên",
+            "cứu"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 7.5",
+          "name": "Cải tiến chính sách NCKH",
+          "requirements": [
+            "Cải tiến chính sách NCKH"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến cải tiến chính sách nckh",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "cải",
+            "tiến",
+            "chính",
+            "sách",
+            "nckh"
+          ],
+          "related_iso_processes": []
+        }
+      ]
+    },
+    {
+      "id": "TC08",
+      "name": "Kết nối và phục vụ cộng đồng",
+      "group": "B",
+      "criteria": [
+        {
+          "id": "TC 8.1",
+          "name": "Chính sách và kế hoạch kết nối cộng đồng",
+          "requirements": [
+            "Chính sách và kế hoạch kết nối cộng đồng"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến chính sách và kế hoạch kết nối cộng đồng",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "chính",
+            "sách",
+            "hoạch",
+            "kết",
+            "nối",
+            "cộng"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 8.2",
+          "name": "Triển khai hoạt động kết nối (chuyển giao KH-CN, tư vấn, tình nguyện)",
+          "requirements": [
+            "Triển khai hoạt động kết nối (chuyển giao KH-CN, tư vấn, tình nguyện)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến triển khai hoạt động kết nối (chuyển giao kh-cn, tư vấn, tình nguyện)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "triển",
+            "khai",
+            "hoạt",
+            "động",
+            "kết",
+            "nối"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 8.3",
+          "name": "Cải tiến hoạt động kết nối cộng đồng",
+          "requirements": [
+            "Cải tiến hoạt động kết nối cộng đồng"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến cải tiến hoạt động kết nối cộng đồng",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "cải",
+            "tiến",
+            "hoạt",
+            "động",
+            "kết",
+            "nối"
+          ],
+          "related_iso_processes": []
+        }
+      ]
+    },
+    {
+      "id": "TC09",
+      "name": "Hệ thống bảo đảm chất lượng",
+      "group": "B",
+      "criteria": [
+        {
+          "id": "TC 9.1",
+          "name": "Cơ cấu và chính sách BĐCL bên trong (IQA)",
+          "requirements": [
+            "Cơ cấu và chính sách BĐCL bên trong (IQA)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến cơ cấu và chính sách bđcl bên trong (iqa)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "cấu",
+            "chính",
+            "sách",
+            "bđcl",
+            "bên",
+            "iqa"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 9.2",
+          "name": "Quy trình và công cụ BĐCL",
+          "requirements": [
+            "Quy trình và công cụ BĐCL"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến quy trình và công cụ bđcl",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "quy",
+            "trình",
+            "công",
+            "bđcl"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 9.3",
+          "name": "Giám sát và đánh giá định kỳ chất lượng",
+          "requirements": [
+            "Giám sát và đánh giá định kỳ chất lượng"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến giám sát và đánh giá định kỳ chất lượng",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "giám",
+            "sát",
+            "đánh",
+            "giá",
+            "định",
+            "chất"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 9.4",
+          "name": "Cải tiến hệ thống BĐCL",
+          "requirements": [
+            "Cải tiến hệ thống BĐCL"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến cải tiến hệ thống bđcl",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "cải",
+            "tiến",
+            "thống",
+            "bđcl"
+          ],
+          "related_iso_processes": []
+        }
+      ]
+    },
+    {
+      "id": "TC10",
+      "name": "Hệ thống thông tin BĐCL bên trong",
+      "group": "B",
+      "criteria": [
+        {
+          "id": "TC 10.1",
+          "name": "Thu thập, quản lý và sử dụng dữ liệu chất lượng",
+          "requirements": [
+            "Thu thập, quản lý và sử dụng dữ liệu chất lượng"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến thu thập, quản lý và sử dụng dữ liệu chất lượng",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "thu",
+            "thập",
+            "quản",
+            "dụng",
+            "liệu",
+            "chất"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 10.2",
+          "name": "Báo cáo và công bố thông tin chất lượng",
+          "requirements": [
+            "Báo cáo và công bố thông tin chất lượng"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến báo cáo và công bố thông tin chất lượng",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "báo",
+            "cáo",
+            "công",
+            "thông",
+            "tin",
+            "chất"
+          ],
+          "related_iso_processes": []
+        }
+      ]
+    },
+    {
+      "id": "TC11",
+      "name": "Nâng cao chất lượng",
+      "group": "B",
+      "criteria": [
+        {
+          "id": "TC 11.1",
+          "name": "Chu trình cải tiến liên tục (PDCA)",
+          "requirements": [
+            "Chu trình cải tiến liên tục (PDCA)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến chu trình cải tiến liên tục (pdca)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "chu",
+            "trình",
+            "cải",
+            "tiến",
+            "liên",
+            "tục"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 11.2",
+          "name": "Đổi mới sáng tạo trong hoạt động của CSĐT",
+          "requirements": [
+            "Đổi mới sáng tạo trong hoạt động của CSĐT"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến đổi mới sáng tạo trong hoạt động của csđt",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "đổi",
+            "mới",
+            "sáng",
+            "tạo",
+            "hoạt",
+            "động"
+          ],
+          "related_iso_processes": []
+        }
+      ]
+    },
+    {
+      "id": "TC12",
+      "name": "Kết quả về đào tạo",
+      "group": "C",
+      "criteria": [
+        {
+          "id": "TC 12.1",
+          "name": "Tỉ lệ tốt nghiệp, tỉ lệ thôi học, thời gian hoàn thành",
+          "requirements": [
+            "Tỉ lệ tốt nghiệp, tỉ lệ thôi học, thời gian hoàn thành"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến tỉ lệ tốt nghiệp, tỉ lệ thôi học, thời gian hoàn thành",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "tốt",
+            "nghiệp",
+            "thôi",
+            "học",
+            "thời",
+            "gian"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 12.2",
+          "name": "Chất lượng tốt nghiệp (điểm, loại)",
+          "requirements": [
+            "Chất lượng tốt nghiệp (điểm, loại)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến chất lượng tốt nghiệp (điểm, loại)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "chất",
+            "lượng",
+            "tốt",
+            "nghiệp",
+            "điểm",
+            "loại"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 12.3",
+          "name": "Tỉ lệ có việc làm sau 6-12 tháng, thu nhập bình quân",
+          "requirements": [
+            "Tỉ lệ có việc làm sau 6-12 tháng, thu nhập bình quân"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến tỉ lệ có việc làm sau 6-12 tháng, thu nhập bình quân",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "việc",
+            "làm",
+            "sau",
+            "tháng",
+            "thu",
+            "nhập"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 12.4",
+          "name": "Mức độ hài lòng của người học với CTĐT và CSĐT",
+          "requirements": [
+            "Mức độ hài lòng của người học với CTĐT và CSĐT"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến mức độ hài lòng của người học với ctđt và csđt",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "mức",
+            "hài",
+            "lòng",
+            "người",
+            "học",
+            "ctđt"
+          ],
+          "related_iso_processes": []
+        }
+      ]
+    },
+    {
+      "id": "TC13",
+      "name": "Kết quả về NCKH",
+      "group": "C",
+      "criteria": [
+        {
+          "id": "TC 13.1",
+          "name": "Số đề tài NCKH (cấp NN, cấp Bộ, cấp cơ sở)",
+          "requirements": [
+            "Số đề tài NCKH (cấp NN, cấp Bộ, cấp cơ sở)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến số đề tài nckh (cấp nn, cấp bộ, cấp cơ sở)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "tài",
+            "nckh",
+            "cấp",
+            "cấp",
+            "cấp"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 13.2",
+          "name": "Số bài báo khoa học (tạp chí quốc tế ISI/Scopus, trong nước)",
+          "requirements": [
+            "Số bài báo khoa học (tạp chí quốc tế ISI/Scopus, trong nước)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến số bài báo khoa học (tạp chí quốc tế isi/scopus, trong nước)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "bài",
+            "báo",
+            "khoa",
+            "học",
+            "tạp",
+            "chí"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 13.3",
+          "name": "Sáng chế, giải pháp hữu ích, chuyển giao công nghệ",
+          "requirements": [
+            "Sáng chế, giải pháp hữu ích, chuyển giao công nghệ"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến sáng chế, giải pháp hữu ích, chuyển giao công nghệ",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "sáng",
+            "chế",
+            "giải",
+            "pháp",
+            "hữu",
+            "ích"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 13.4",
+          "name": "NCKH của người học (bài báo, đề tài SV)",
+          "requirements": [
+            "NCKH của người học (bài báo, đề tài SV)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến nckh của người học (bài báo, đề tài sv)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "nckh",
+            "người",
+            "học",
+            "bài",
+            "báo",
+            "tài"
+          ],
+          "related_iso_processes": []
+        }
+      ]
+    },
+    {
+      "id": "TC14",
+      "name": "Kết quả kết nối & phục vụ cộng đồng",
+      "group": "C",
+      "criteria": [
+        {
+          "id": "TC 14.1",
+          "name": "Số lượng hợp tác với DN, địa phương, tổ chức",
+          "requirements": [
+            "Số lượng hợp tác với DN, địa phương, tổ chức"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến số lượng hợp tác với dn, địa phương, tổ chức",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "lượng",
+            "hợp",
+            "tác",
+            "địa",
+            "phương",
+            "chức"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 14.2",
+          "name": "Chuyển giao công nghệ, tư vấn, dịch vụ KH-CN",
+          "requirements": [
+            "Chuyển giao công nghệ, tư vấn, dịch vụ KH-CN"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến chuyển giao công nghệ, tư vấn, dịch vụ kh-cn",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "chuyển",
+            "giao",
+            "công",
+            "nghệ",
+            "vấn",
+            "dịch"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 14.3",
+          "name": "Hoạt động phục vụ cộng đồng (tình nguyện, đào tạo bồi dưỡng)",
+          "requirements": [
+            "Hoạt động phục vụ cộng đồng (tình nguyện, đào tạo bồi dưỡng)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến hoạt động phục vụ cộng đồng (tình nguyện, đào tạo bồi dưỡng)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "hoạt",
+            "động",
+            "phục",
+            "cộng",
+            "đồng",
+            "tình"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 14.4",
+          "name": "Tác động của hoạt động kết nối đến cộng đồng",
+          "requirements": [
+            "Tác động của hoạt động kết nối đến cộng đồng"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến tác động của hoạt động kết nối đến cộng đồng",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "tác",
+            "động",
+            "hoạt",
+            "động",
+            "kết",
+            "nối"
+          ],
+          "related_iso_processes": []
+        }
+      ]
+    },
+    {
+      "id": "TC15",
+      "name": "Kết quả tài chính và thị trường",
+      "group": "C",
+      "criteria": [
+        {
+          "id": "TC 15.1",
+          "name": "Hiệu quả tài chính (thu-chi, cân đối ngân sách, tăng trưởng)",
+          "requirements": [
+            "Hiệu quả tài chính (thu-chi, cân đối ngân sách, tăng trưởng)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến hiệu quả tài chính (thu-chi, cân đối ngân sách, tăng trưởng)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "hiệu",
+            "quả",
+            "tài",
+            "chính",
+            "thu",
+            "chi"
+          ],
+          "related_iso_processes": []
+        },
+        {
+          "id": "TC 15.2",
+          "name": "Uy tín và vị thế trên thị trường (xếp hạng, nhận diện thương hiệu)",
+          "requirements": [
+            "Uy tín và vị thế trên thị trường (xếp hạng, nhận diện thương hiệu)"
+          ],
+          "evidence_types": [
+            "Tài liệu liên quan đến uy tín và vị thế trên thị trường (xếp hạng, nhận diện thương hiệu)",
+            "Văn bản, biên bản, báo cáo có liên quan"
+          ],
+          "keywords": [
+            "tín",
+            "thế",
+            "trên",
+            "thị",
+            "trường",
+            "xếp"
+          ],
+          "related_iso_processes": []
+        }
+      ]
+    }
+  ]
+}
