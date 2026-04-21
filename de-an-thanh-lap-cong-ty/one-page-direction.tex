@@ -1,12 +1,12 @@
 % =============================================================
-%  Company Direction — One Page
-%  Internal draft. Đà Nẵng, 2026.
+%  Direction & MVP Planning
+%  Để Hảo định hình các MVP có thể làm + thấy output mockup trước khi quyết
+%  Đà Nẵng, 2026 — Internal
 %  Biên dịch: xelatex one-page-direction.tex
-%  (cần XeLaTeX hoặc LuaLaTeX vì dùng fontspec cho tiếng Việt)
 % =============================================================
-\documentclass[10pt,a4paper]{article}
+\documentclass[11pt,a4paper]{article}
 
-\usepackage[margin=1.2cm,top=0.9cm,bottom=0.9cm]{geometry}
+\usepackage[margin=2.2cm,top=2cm,bottom=2.2cm]{geometry}
 \usepackage{fontspec}
 \usepackage{tikz}
 \usepackage{xcolor}
@@ -14,145 +14,1010 @@
 \usepackage{booktabs}
 \usepackage{enumitem}
 \usepackage{titlesec}
-\usetikzlibrary{positioning, shapes.geometric, arrows.meta, fit, calc}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{tcolorbox}
+\usepackage{amssymb}
+\tcbuselibrary{skins, breakable}
+\usetikzlibrary{positioning, shapes.geometric, shapes.misc, arrows.meta,
+                fit, calc, decorations.pathreplacing, backgrounds, chains}
 
 \setmainfont{Latin Modern Roman}
 \setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
 
 \definecolor{ink}{HTML}{14213d}
 \definecolor{accent}{HTML}{fca311}
 \definecolor{mid}{HTML}{8d99ae}
-\definecolor{hao}{HTML}{b08968}    % Thổ — đất
-\definecolor{phu}{HTML}{8d99ae}    % Kim — bạc
-\definecolor{hoang}{HTML}{2a9d8f}  % Mộc — xanh
-\definecolor{warm}{HTML}{c44536}
+\definecolor{ok}{HTML}{2a9d8f}
+\definecolor{warn}{HTML}{c44536}
+\definecolor{soft}{HTML}{f4f1de}
+\definecolor{leaf}{HTML}{3d5a80}
+\definecolor{cool}{HTML}{5e6472}
+\definecolor{mvpcolor}{HTML}{1d3557}
+\definecolor{outputcolor}{HTML}{e07a5f}
+\definecolor{mockbg}{HTML}{f8f6f0}
 
-\titleformat{\section}{\normalfont\sffamily\bfseries\color{ink}\large}{\thesection.}{0.4em}{}
-\titlespacing*{\section}{0pt}{0.5em}{0.15em}
+\hypersetup{colorlinks=true, linkcolor=ink, urlcolor=leaf}
 
-\setlist{nosep, leftmargin=1.1em, topsep=2pt, partopsep=0pt, itemsep=1pt}
+\titleformat{\section}{\sffamily\bfseries\LARGE\color{ink}}{Chương \thesection.}{0.5em}{}
+\titleformat{\subsection}{\sffamily\bfseries\large\color{ink}}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\sffamily\bfseries\normalsize\color{ink}}{}{0em}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.6em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.3em}
+\titlespacing*{\subsubsection}{0pt}{0.6em}{0.2em}
+
+\setlist{nosep, leftmargin=1.3em, topsep=3pt, itemsep=2pt}
+\setlength{\parskip}{4pt}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{3pt}
-\pagestyle{empty}
+\onehalfspacing
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\sffamily\footnotesize\color{mid} Direction \& MVP Planning}
+\fancyhead[R]{\sffamily\footnotesize\color{mid} Internal \textbullet{} 2026}
+\fancyfoot[C]{\sffamily\footnotesize\color{mid}\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\newtcolorbox{keybox}[1][]{
+  enhanced, colback=soft, colframe=accent, boxrule=0.5pt,
+  left=8pt, right=8pt, top=5pt, bottom=5pt, arc=1pt,
+  fonttitle=\sffamily\bfseries\color{ink}, #1
+}
+\newtcolorbox{mvpbox}[2][]{
+  enhanced, colback=mvpcolor!6, colframe=mvpcolor, boxrule=0.5pt,
+  left=8pt, right=8pt, top=5pt, bottom=5pt, arc=1pt,
+  fonttitle=\sffamily\bfseries\color{mvpcolor},
+  title={\large MVP \##2}, #1
+}
+\newtcolorbox{mockbox}[1][]{
+  enhanced, colback=mockbg, colframe=ink!30, boxrule=0.5pt,
+  left=10pt, right=10pt, top=8pt, bottom=8pt, arc=2pt,
+  fontupper=\ttfamily\footnotesize, #1
+}
 
 \begin{document}
 
-% ---------- HEADER ----------
+% =============================================================
+% TITLE PAGE
+% =============================================================
+\thispagestyle{empty}
+\vspace*{2.5cm}
 \begin{center}
-{\sffamily\bfseries\Large Company Direction — One Page}\\[1pt]
-{\sffamily\small Team 3 người \textbullet{} Đà Nẵng \textbullet{} 2026 \textbullet{} Internal draft}
-\end{center}
-\vspace{-4pt}
+{\sffamily\bfseries\fontsize{30}{36}\selectfont\color{ink} Direction \& MVP Planning}\\[0.5em]
+{\sffamily\Large\color{mid} Định hình MVP nào? Output thế nào?}\\[0.5em]
+{\sffamily\large\color{mid} University Quality OS — CAIRA-DAU 2026}\\[3em]
 
-% ---------- 1. VISION ----------
-\section*{1. Vision \& Positioning}
-\textbf{Chúng tôi xây hệ thống AI Agent tự vận hành, có kiểm soát, cho các workflow tri thức} — bắt đầu từ giáo dục, mở rộng sang du lịch và dịch vụ. Khách hàng trả tiền cho \emph{kết quả vận hành}, không trả tiền cho kiến trúc.
+\begin{tikzpicture}[font=\sffamily\footnotesize]
+  \node[circle, draw=mvpcolor, very thick, fill=mvpcolor!15, minimum size=2.5cm, align=center] (q) at (0,0) {\textbf{?}};
+  \node[circle, draw=mvpcolor, fill=mvpcolor!10, minimum size=1.5cm, align=center, font=\tiny] (m1) at (-3.5,2) {MVP\\options};
+  \node[circle, draw=mvpcolor, fill=mvpcolor!10, minimum size=1.5cm, align=center, font=\tiny] (m2) at (3.5,2) {Output\\format};
+  \node[circle, draw=mvpcolor, fill=mvpcolor!10, minimum size=1.5cm, align=center, font=\tiny] (m3) at (-3.5,-2) {User\\persona};
+  \node[circle, draw=mvpcolor, fill=mvpcolor!10, minimum size=1.5cm, align=center, font=\tiny] (m4) at (3.5,-2) {Validation\\plan};
+  \draw[mvpcolor, dashed] (m1) -- (q);
+  \draw[mvpcolor, dashed] (m2) -- (q);
+  \draw[mvpcolor, dashed] (m3) -- (q);
+  \draw[mvpcolor, dashed] (m4) -- (q);
+\end{tikzpicture}
+
+\vspace{2em}
+{\sffamily\color{mid} Đà Nẵng, tháng 4 năm 2026}
+\end{center}
+\vfill
+\begin{center}
+{\footnotesize\itshape\color{mid}
+Tài liệu này liệt kê 10 MVP có thể làm trong khuôn khổ University Quality OS,\\
+mỗi MVP có sketch output rõ ràng, để Hảo có thể \textit{hình dung} sản phẩm\\
+trước khi quyết định build. Cuối tài liệu là decision framework + đề xuất sequence.}
+\end{center}
+\clearpage
+
+\tableofcontents
+\clearpage
+
+% =============================================================
+% TÓM TẮT
+% =============================================================
+\section*{Tóm tắt — Vì sao tài liệu này tồn tại}
+\addcontentsline{toc}{section}{Tóm tắt}
+
+Sau khi đã có tầm nhìn rộng (University Quality OS, CAIRA-first, spin-out 2027
+tuỳ điều kiện), câu hỏi tiếp theo là rất cụ thể:
+
+\begin{keybox}[title=Câu hỏi cần trả lời]
+\textbf{2026 chúng ta build cụ thể MVP nào? Mỗi MVP user thấy gì? Bán cho ai?
+Validation thế nào?}
+\end{keybox}
+
+Hảo nói: \textit{``tôi chưa định hình sẽ làm những MVP nào''}. Đây là câu hỏi
+honest và đúng thời điểm --- KHÔNG nên ép quyết định khi chưa hình dung được
+sản phẩm.
+
+\textbf{Tài liệu này giải quyết bằng 4 bước:}
+\begin{enumerate}
+\item Liệt kê 10 candidate MVP trong scope University Quality OS
+\item Mỗi MVP có 1 trang chi tiết: user, pain, input/output, effort, value
+\item Output mockup visual cho mỗi MVP (anh thấy ``hình dáng'' thật)
+\item Decision framework + 3 đề xuất sequence (conservative / standard / ambitious)
+\end{enumerate}
+
+\textbf{Bố cục:}
 \begin{itemize}
-\item \textbf{Thị trường nhìn vào:} AI Agent Systems for Knowledge-Intensive Workflows.
-\item \textbf{Tài sản nội bộ:} một framework chuẩn để dựng nhanh AI workflow / agent cho nhiều ngành.
-\item \textbf{Không bán} khái niệm ``framework''. \textbf{Không nhảy} multi-agent khi workflow đơn giản đủ dùng.
+\item \textbf{Phần I}: Bức tranh tổng University Quality OS
+\item \textbf{Phần II}: 10 MVP candidates --- profile từng cái
+\item \textbf{Phần III}: Output mockups visual (cốt lõi)
+\item \textbf{Phần IV}: Decision framework + recommended sequences
 \end{itemize}
 
-% ---------- 2. PRODUCT THESIS + TEAM ----------
-\section*{2. Product Thesis — 2 lớp \& Team}
-\vspace{-2pt}
+\clearpage
+
+% =============================================================
+% PART I — BỨC TRANH TỔNG
+% =============================================================
 \begin{center}
-\begin{tikzpicture}[
-  font=\sffamily,
-  sol/.style={draw=ink, fill=accent!25, rounded corners=2pt,
-              minimum width=32mm, minimum height=8mm, align=center, inner sep=2pt,
-              font=\footnotesize\sffamily},
-  solfut/.style={draw=ink!70, fill=accent!5, dashed, rounded corners=2pt,
-              minimum width=32mm, minimum height=8mm, align=center, inner sep=2pt,
-              font=\footnotesize\sffamily\itshape},
-  fwk/.style={draw=ink, fill=mid!30, rounded corners=2pt,
-              minimum width=22mm, minimum height=6.5mm, align=center, inner sep=1.5pt,
-              font=\footnotesize\sffamily},
-  role/.style={circle, draw=ink, thick, minimum size=13mm, align=center,
-              font=\footnotesize\sffamily\bfseries, inner sep=0pt},
-  arr/.style={-{Latex[length=2.2mm]}, thick, ink!75, shorten <=1pt, shorten >=1pt},
-  lbl/.style={font=\footnotesize\sffamily\itshape, ink!80}
-]
-  % Layer A — Solutions
-  \node[sol] (a1) at (0,0) {Admissions\\Agent};
-  \node[sol, right=2.5mm of a1] (a2) {Student Services\\Agent};
-  \node[sol, right=2.5mm of a2] (a3) {Internal Knowledge\\Agent};
-  \node[solfut, right=2.5mm of a3] (a4) {Travel / Service\\(Q4)};
-  \node[lbl, above=0.5mm of a1.north west, anchor=south west]
-        {LỚP A — Solutions bán ra thị trường};
+\vspace*{0.5em}
+{\sffamily\bfseries\Huge\color{ink} Phần I}\\[0.5em]
+{\sffamily\LARGE\color{mid} Bức tranh sản phẩm tổng}\\[0.5em]
+{\color{ink}\rule{6cm}{0.4pt}}
+\end{center}
+\vspace{1em}
 
-  % Layer B — Framework
-  \node[fwk, below=14mm of a1.south west, anchor=north west] (b1) {Knowledge};
-  \node[fwk, right=1.5mm of b1] (b2) {Workflow};
-  \node[fwk, right=1.5mm of b2] (b3) {Tools};
-  \node[fwk, right=1.5mm of b3] (b4) {Reasoning};
-  \node[fwk, right=1.5mm of b4] (b5) {Evals};
-  \node[fwk, right=1.5mm of b5] (b6) {Governance};
-  \node[lbl, above=0.5mm of b1.north west, anchor=south west]
-        {LỚP B — Core Framework (tài sản nội bộ, không bán trực tiếp)};
+% =============================================================
+\section{University Quality OS — kiến trúc tổng}
 
-  % Arrow B -> A (packaging)
-  \draw[arr] ($(b3.north)!0.5!(b4.north)$) -- ++(0,3mm)
-        node[right=0pt, font=\scriptsize\sffamily\itshape, ink!70]{\;đóng gói thành solution};
+\subsection{Sản phẩm là gì}
 
-  % Roles
-  \node[role, fill=hao!35,   below=13mm of b1.south] (r1) {Hảo\\\scriptsize(Thổ)};
-  \node[role, fill=phu!50,   below=13mm of b3.south] (r2) {Phú\\\scriptsize(Kim)};
-  \node[role, fill=hoang!35, below=13mm of b6.south] (r3) {Hoàng\\\scriptsize(Mộc)};
+University Quality OS = \textbf{layer agentic AI kết nối 3 kho dữ liệu của
+trường ĐH thành một workflow thống nhất}:
 
-  \node[below=0.5mm of r1, font=\scriptsize\sffamily\bfseries, ink] {Strategy};
-  \node[below=0.5mm of r2, font=\scriptsize\sffamily\bfseries, ink] {Platform};
-  \node[below=0.5mm of r3, font=\scriptsize\sffamily\bfseries, ink] {GTM};
+\begin{center}
+\begin{tikzpicture}[font=\sffamily\footnotesize, node distance=8mm,
+  layer/.style={draw=ink, rounded corners=3pt, minimum width=5cm, minimum height=1.2cm, align=center, inner sep=4pt},
+  arr/.style={-{Latex[length=2.5mm]}, thick}]
 
-  \draw[arr] (r1.north) -- (b1.south);
-  \draw[arr] (r2.north) -- ($(b3.south)!0.5!(b4.south)$);
-  \draw[arr] (r3.north) -- (b6.south);
+  \node[layer, fill=outputcolor!25] (out) at (0,4) {\textbf{LỚP NGOÀI — User-facing}\\\scriptsize Solutions: Admissions, Quality, Curriculum, ...};
 
-  % Ngũ hành interactions (subtle)
-  \draw[-{Latex[length=1.8mm]}, hao!90, thick] (r1) to[bend left=18]
-        node[midway, above, font=\tiny\sffamily, hao]{Thổ sinh Kim} (r2);
-  \draw[-{Latex[length=1.8mm]}, warm!80, thick, densely dashed] (r2) to[bend left=18]
-        node[midway, above, font=\tiny\sffamily, warm]{Kim khắc Mộc — cần trọng tài} (r3);
+  \node[layer, fill=mvpcolor!25] (mid) at (0,2) {\textbf{LỚP GIỮA — Agentic Framework}\\\scriptsize Knowledge / Workflow / Tools / Reasoning / Evals / Governance};
+
+  \node[layer, fill=cool!25] (data) at (0,0) {\textbf{LỚP DỮ LIỆU}\\\scriptsize ISO (~819 file) + KĐCLGD (60 tiêu chí) + PLO/CLO (TT04-2025)};
+
+  \draw[arr] (data) -- (mid);
+  \draw[arr] (mid) -- (out);
 \end{tikzpicture}
 \end{center}
-\vspace{-4pt}
 
-% ---------- 3. TEAM ROLES TABLE ----------
-\section*{3. Ba vai trò — Ba KPI riêng}
-\vspace{-2pt}
-\begin{tabularx}{\linewidth}{@{}p{2.3cm} X X@{}}
+\textbf{Mỗi MVP là một slice của lớp ngoài.} Chúng dùng chung framework lớp giữa
++ dữ liệu lớp đáy. Build framework 1 lần, ship MVP nhiều lần.
+
+\subsection{Vì sao đây là cách tiếp cận đúng}
+
+\begin{itemize}
+\item \textbf{Framework leverage:} MVP thứ 2 dùng 70\% code MVP thứ 1 → tốc độ tăng theo thời gian.
+\item \textbf{Risk diversification:} Nếu MVP \#1 không hit market, MVP \#2 vẫn có cơ hội với cùng nền tảng.
+\item \textbf{Sales motion thuận:} Khách dùng 1 MVP, dễ upsell MVP thứ 2.
+\item \textbf{Brand consistency:} 5 MVP đều dưới brand ``Quality OS'', không phải 5 sản phẩm rời rạc.
+\end{itemize}
+
+\subsection{Khác biệt giữa MVP \textit{vibe} và MVP \textit{commercial}}
+
+Quan trọng phân biệt:
+
+\begin{tabularx}{\linewidth}{@{}p{3cm} X X@{}}
 \toprule
-\textbf{Người} & \textbf{Vai trò} & \textbf{KPI chính} \\
+\textbf{Loại} & \textbf{Vibe MVP} & \textbf{Commercial MVP} \\
 \midrule
-\textbf{Hảo} \scriptsize CEO / Direction &
-Chọn vertical, giữ roadmap, gỡ xung đột kỹ thuật–sales, leverage network học thuật &
-Đúng vertical; \% reuse giữa dự án; chất lượng design partner \\
-\textbf{Phú} \scriptsize Platform Lead &
-Xây core framework, chuẩn hóa connector / guardrails / evals, giữ kiến trúc &
-Thời gian ra MVP; độ ổn định hệ thống; \% module tái sử dụng \\
-\textbf{Hoàng} \scriptsize GTM Lead &
-Tìm pain thật, chốt design partner, dẫn discovery workshop, chuyển use case $\rightarrow$ proposal &
-Số pilot trả phí; use case $\rightarrow$ proposal rate; insight thị trường \\
+Mục tiêu & Test hypothesis & Phục vụ khách hàng trả phí \\
+Thời gian & 1 weekend (16h) & 8-12 tuần \\
+Code quality & ``Dùng được'' & Production-grade \\
+UI & Streamlit/Gradio & Custom React/Next.js \\
+Test với & 1-2 người internal & Khách thật \\
+Output expected & Demo + insight & Working pilot \\
+Deliverable & Prototype + LEARNINGS.md & Pilot deployment + SLA \\
 \bottomrule
 \end{tabularx}
 
-% ---------- 4. 12-MONTH PLAN ----------
-\section*{4. 12-month Plan}
+Tài liệu này tập trung vào \textbf{Vibe MVP} (đợt đầu Q2-Q3/2026). Sau khi 2-3
+vibe MVP validated, mới chuyển sang Commercial MVP cho 1-2 use case mạnh nhất
+(Q4/2026 → Q1/2027).
+
+\clearpage
+
+% =============================================================
+% PART II — 10 MVP CANDIDATES
+% =============================================================
+\begin{center}
+\vspace*{0.5em}
+{\sffamily\bfseries\Huge\color{mvpcolor} Phần II}\\[0.5em]
+{\sffamily\LARGE\color{mid} 10 MVP Candidates}\\[0.5em]
+{\color{mvpcolor}\rule{6cm}{0.4pt}}
+\end{center}
+\vspace{1em}
+
+% =============================================================
+\section{Catalog 10 MVP candidates}
+
+10 MVP dưới đây chia 3 nhóm:
+
 \begin{itemize}
-\item \textbf{Q1 (M1--M3) — Chọn hẹp.} 1 vertical = \emph{Giáo dục}. 2 use case = \emph{Admissions Agent} + \emph{Internal Knowledge Agent}. 10 discovery call. 1 prototype chạy trên trường thật.
-\item \textbf{Q2 (M4--M6) — Design partner.} 2--3 pilot trả phí (tối thiểu 20--30\% giá thật). Hoàn thiện 6 khối framework nội bộ. Đo ROI thật trên 1 trường.
-\item \textbf{Q3 (M7--M9) — Packaging.} Chuẩn hóa connector / dashboard / evals / templates cho ngành giáo dục. Mở rộng 5--7 khách. Viết 1--2 case study.
-\item \textbf{Q4 (M10--M12) — Vertical 2.} Thử nghiệm \emph{Service / Visitor Agent} cho du lịch trên nền framework sẵn có. Chưa đụng subscription / platform play.
+\item \textbf{Nhóm A — Quality \& Compliance} (4 MVP): hỗ trợ KĐCLGD, ISO, audit. \textit{Đây là moat sâu nhất của Hảo.}
+\item \textbf{Nhóm B — Operations \& Service} (3 MVP): admissions, student services, internal knowledge. \textit{Dễ bán nhất, bằng chứng dễ đo.}
+\item \textbf{Nhóm C — Academic \& Research} (3 MVP): curriculum, research, rubric. \textit{Niche nhưng không ai cạnh tranh được Hảo.}
 \end{itemize}
 
-% ---------- 5. RULES ----------
-\section*{5. Rules of Engagement}
+\subsection{Bảng overview 10 MVP}
+
+\begin{tabularx}{\linewidth}{@{}p{0.4cm} p{4cm} c c c c X@{}}
+\toprule
+\textbf{\#} & \textbf{MVP Name} & \textbf{Group} & \textbf{Effort} & \textbf{Value} & \textbf{Risk} & \textbf{Buyer} \\
+\midrule
+1 & Document Classifier & A & Med & High & Low & QA Office \\
+2 & Evidence Finder & A & Med & High & Med & QA Office, TĐG team \\
+3 & Biểu 04 Drafter & A & High & V.High & Med & TĐG team \\
+4 & KPI Dashboard (Biểu 16) & A & Low & Med & Low & Hiệu trưởng \\
+5 & Admissions Q\&A Agent & B & Med & High & Low & P.Tuyển sinh \\
+6 & Internal Knowledge Agent & B & Med & Med & Low & Toàn trường \\
+7 & Student Services Triage & B & High & Med & Med & P.CTSV \\
+8 & Curriculum Mapper (CLO/PLO) & C & Med & High & Med & P.Đào tạo, AUN-QA team \\
+9 & Rubric Generator & C & Low & Med & Low & Giảng viên \\
+10 & CTĐT Designer & C & V.High & V.High & High & Trưởng khoa, Phó HT đào tạo \\
+\bottomrule
+\end{tabularx}
+
+\textbf{Effort:} Low = 2-4 tuần, Med = 4-8 tuần, High = 8-12 tuần, V.High = 3+ tháng.\\
+\textbf{Value:} Med = 100-300M VND/year customer; High = 300-500M; V.High = 500M-1B.
+
+\subsection{Logic chọn lọc 10 MVP này}
+
+Tại sao 10 này, không phải khác? Tiêu chí lọc:
+
+\begin{enumerate}
+\item \textbf{Pain thật:} Mỗi MVP giải quyết pain mà cán bộ DAU ngày nào cũng gặp.
+\item \textbf{Reuse framework:} Đều build trên cùng 6 khối Knowledge/Workflow/Tools/Reasoning/Evals/Governance.
+\item \textbf{Hảo có domain:} Ít nhất 1 founder có kinh nghiệm thật về ngành đó.
+\item \textbf{Có data sẵn:} Không cần collect dataset từ zero (ISO + KĐCLGD + congvan đã có).
+\item \textbf{Khả thi với 1-2 engineer:} Không cần team 10 người để build prototype.
+\item \textbf{Sellable ngoài DAU:} Mọi trường ĐH VN đều có pain tương tự.
+\end{enumerate}
+
+10 MVP đáp ứng 6 tiêu chí. Các use case loại bỏ (không trong list):
 \begin{itemize}
-\item \textbf{3 chữ ký / use case:} Hoàng (có khách trả tiền) $+$ Phú (làm được trong X tuần) $+$ Hảo (khớp roadmap). Thiếu 1 $\Rightarrow$ không bán, không build.
-\item \textbf{Không đẻ framework trước khi có khách.} Framework chỉ lớn lên từ use case thật, không xây trong chân không.
-\item \textbf{Không ôm 2 vertical cùng cường độ} trong năm đầu. Giáo dục ổn rồi mới mở du lịch.
-\item \textbf{Đơn giản trước, multi-agent sau.} Single agent + tool + workflow tốt $>$ multi-agent khi chưa cần.
-\item \textbf{Không làm outsourcing đội lốt platform.} Nếu mỗi khách một kiểu, không tái sử dụng $\Rightarrow$ từ chối hoặc tính giá agency.
+\item AI tutor / chatbot học sinh-sinh viên (khác phân khúc, đã có VioEdu/Marathon)
+\item AI proctoring (giám sát thi online — phân khúc khác, có sẵn từ EdTech khác)
+\item Predictive student dropout (cần nhiều historical data)
+\item Tự động chấm thi (rủi ro pháp lý + đạo đức cao)
 \end{itemize}
+
+\clearpage
+
+% =============================================================
+\section{Profile chi tiết 10 MVP}
+
+% MVP 1
+\begin{mvpbox}{1}{title=MVP \#1 — Document Classifier}
+\textbf{One-liner:} Drop document → AI tự gắn ISO process + KĐCLGD criteria.
+
+\textbf{User \& Pain:}
+\begin{itemize}
+\item Cán bộ ĐBCL nhận hàng trăm văn bản/tháng, không biết phân loại.
+\item Chuẩn bị TĐG: 6 tháng để label 5000+ document thủ công.
+\end{itemize}
+
+\textbf{Input:} 1 file PDF/DOCX (Vietnamese)\\
+\textbf{Output:} Top-3 ISO process + Top-5 KĐCLGD criteria + reasoning + confidence
+
+\textbf{Validation:} Hảo label 20 doc → AI đạt $\geq$ 70\% top-1 accuracy.\\
+\textbf{Success:} Cán bộ DAU dùng để bulk-tag historical files trong 1 tuần.\\
+\textbf{Effort:} 1 weekend (vibe) + 4 tuần (commercial)\\
+\textbf{Trạng thái:} \textcolor{ok}{\textbf{Đã code scaffold (MVP-1 done)}}
+\end{mvpbox}
+
+% MVP 2
+\begin{mvpbox}{2}{title=MVP \#2 — Evidence Finder}
+\textbf{One-liner:} Chọn 1 KĐCLGD criterion → AI tìm top-5 documents minh chứng.
+
+\textbf{User \& Pain:}
+\begin{itemize}
+\item Khi viết Biểu 04, phải tìm minh chứng từ 5000+ files. Mất 1-2h/criterion.
+\item 60 tiêu chí × 1.5h = 90 giờ chỉ để tìm.
+\end{itemize}
+
+\textbf{Input:} Criterion ID hoặc free-text query\\
+\textbf{Output:} Top-5 docs + excerpts + relevance score + coverage map
+
+\textbf{Validation:} 10 criteria, AI đạt Precision@5 $\geq$ 80\% so với Hảo's expected.\\
+\textbf{Success:} Cán bộ giảm thời gian tìm evidence từ 2h → 15 phút/criterion.\\
+\textbf{Effort:} 1 weekend (vibe) + 6 tuần (commercial)\\
+\textbf{Trạng thái:} SRS sẵn, chưa code
+\end{mvpbox}
+
+% MVP 3
+\begin{mvpbox}{3}{title=MVP \#3 — Biểu 04 Drafter}
+\textbf{One-liner:} Criterion + evidence → AI draft Biểu 04 (4 sections + kết luận).
+
+\textbf{User \& Pain:}
+\begin{itemize}
+\item Mỗi Biểu 04 mất 1-2h viết. 60 criteria = 90 giờ.
+\item Mỗi 5 năm TĐG lại viết từ đầu.
+\end{itemize}
+
+\textbf{Input:} Criterion + selected evidence (từ MVP \#2)\\
+\textbf{Output:} Biểu 04 DOCX với 4 sections + citations + ĐẠT/KHÔNG ĐẠT
+
+\textbf{Validation:} Hảo edit AI draft, edit distance $<$ 30\% so với manual.\\
+\textbf{Success:} Cán bộ chỉ edit 20\% draft AI thay vì viết từ đầu.\\
+\textbf{Effort:} 1 weekend (vibe) + 8 tuần (commercial)\\
+\textbf{Trạng thái:} SRS sẵn, chưa code
+\end{mvpbox}
+
+% MVP 4
+\begin{mvpbox}{4}{title=MVP \#4 — KPI Dashboard (Biểu 16)}
+\textbf{One-liner:} Dashboard real-time cho 51 KPI Biểu 16 + alerts khi gần ngưỡng.
+
+\textbf{User \& Pain:}
+\begin{itemize}
+\item Hiệu trưởng/HĐT cần xem KPI trường định kỳ.
+\item Hiện: Excel manually update, không real-time.
+\end{itemize}
+
+\textbf{Input:} Tích hợp với SIS, CRM, KH-CN database\\
+\textbf{Output:} Web dashboard với charts + trend + benchmark
+
+\textbf{Validation:} Hiệu trưởng DAU dùng dashboard hàng tháng thay Excel.\\
+\textbf{Success:} Decision turnaround time giảm 50\%.\\
+\textbf{Effort:} 4 tuần (chủ yếu integration, ít AI)\\
+\textbf{Trạng thái:} Chưa scaffold
+\end{mvpbox}
+
+% MVP 5
+\begin{mvpbox}{5}{title=MVP \#5 — Admissions Q\&A Agent}
+\textbf{One-liner:} 24/7 chatbot trả lời câu hỏi tuyển sinh trên Zalo OA + website.
+
+\textbf{User \& Pain:}
+\begin{itemize}
+\item Cán bộ tuyển sinh 4 người, mùa cao điểm 150-300 câu hỏi/ngày.
+\item 70\% câu lặp lại (học phí, điều kiện, hồ sơ).
+\item 25\% câu rơi (>24h không phản hồi).
+\end{itemize}
+
+\textbf{Input:} Câu hỏi tự nhiên (chat/email)\\
+\textbf{Output:} Câu trả lời với citation tài liệu + escalate option
+
+\textbf{Validation:} Sau 4 tuần shadow + HITL: auto-resolve $\geq$ 50\%, CSAT $\geq$ 4.0/5.\\
+\textbf{Success:} Phòng tuyển sinh giảm 60\% câu hỏi routine.\\
+\textbf{Effort:} 1 weekend (vibe) + 8 tuần (commercial)\\
+\textbf{Trạng thái:} Chưa scaffold (nhưng đã thảo luận nhiều)
+\end{mvpbox}
+
+% MVP 6
+\begin{mvpbox}{6}{title=MVP \#6 — Internal Knowledge Agent}
+\textbf{One-liner:} Trợ lý hỏi-đáp quy chế nội bộ cho giảng viên/cán bộ.
+
+\textbf{User \& Pain:}
+\begin{itemize}
+\item Giảng viên/cán bộ tìm quy chế, SOP rải rác ở Drive, email, văn bản giấy.
+\item 30-50\% thời gian tìm thông tin có thể giảm.
+\end{itemize}
+
+\textbf{Input:} Câu hỏi nội bộ (Slack/email/web)\\
+\textbf{Output:} Câu trả lời với citation + access control theo role
+
+\textbf{Validation:} 30 cán bộ DAU dùng 4 tuần, $\geq$ 50\% question đáp ứng.\\
+\textbf{Success:} Giảm 30\% thời gian tìm văn bản nội bộ.\\
+\textbf{Effort:} 4-6 tuần\\
+\textbf{Trạng thái:} Chưa scaffold
+\end{mvpbox}
+
+% MVP 7
+\begin{mvpbox}{7}{title=MVP \#7 — Student Services Triage}
+\textbf{One-liner:} Phân loại + định tuyến yêu cầu sinh viên đến đúng phòng/agent.
+
+\textbf{User \& Pain:}
+\begin{itemize}
+\item Phòng CTSV nhận đủ loại yêu cầu (xác nhận SV, xét miễn giảm, cố vấn, kỷ luật).
+\item Mất time để route đến đúng người xử lý.
+\end{itemize}
+
+\textbf{Input:} Yêu cầu SV (form/chat/email)\\
+\textbf{Output:} Phân loại intent + auto-route + initial response
+
+\textbf{Validation:} Routing accuracy $\geq$ 85\%, time-to-first-response $\leq$ 30s.\\
+\textbf{Success:} P.CTSV tăng throughput 40\%.\\
+\textbf{Effort:} 8-10 tuần\\
+\textbf{Trạng thái:} Chưa scaffold (phức tạp hơn các MVP khác)
+\end{mvpbox}
+
+% MVP 8
+\begin{mvpbox}{8}{title=MVP \#8 — Curriculum Mapper (CLO/PLO)}
+\textbf{One-liner:} Upload đề cương môn → AI map CLO ↔ PLO theo chuẩn AUN-QA/ABET.
+
+\textbf{User \& Pain:}
+\begin{itemize}
+\item Phòng Đào tạo + giảng viên tự map CLO/PLO trong Excel.
+\item AUN-QA prep: hàng trăm môn × manual mapping = nhiều tháng.
+\end{itemize}
+
+\textbf{Input:} Đề cương môn (DOCX/PDF) + danh sách PLO chương trình\\
+\textbf{Output:} Matrix CLO×PLO với contribution levels (●/◉/○)
+
+\textbf{Validation:} 20 môn, AI mapping match Hảo's manual $\geq$ 75\%.\\
+\textbf{Success:} P.Đào tạo có thể prep AUN-QA tài liệu trong 2 tuần thay vì 2 tháng.\\
+\textbf{Effort:} 4-6 tuần\\
+\textbf{Trạng thái:} Chưa scaffold (UNIQUE moat của Hảo --- domain CTĐT)
+\end{mvpbox}
+
+% MVP 9
+\begin{mvpbox}{9}{title=MVP \#9 — Rubric Generator}
+\textbf{One-liner:} Input learning outcome → AI sinh rubric chuẩn (4 tiêu chí × 4 mức).
+
+\textbf{User \& Pain:}
+\begin{itemize}
+\item Giảng viên tự xây rubric khi đánh giá assignments → không nhất quán.
+\item KĐCLGD yêu cầu rubric chuẩn cho mỗi outcome.
+\end{itemize}
+
+\textbf{Input:} Learning outcome statement\\
+\textbf{Output:} Rubric DOCX 4×4 với scoring criteria + rubric explanation
+
+\textbf{Validation:} 30 outcomes, giảng viên rate AI rubric quality $\geq$ 4/5.\\
+\textbf{Success:} Tỉ lệ giảng viên dùng rubric chuẩn tăng 50\%.\\
+\textbf{Effort:} 2-3 tuần (smallest MVP)\\
+\textbf{Trạng thái:} Chưa scaffold
+\end{mvpbox}
+
+% MVP 10
+\begin{mvpbox}{10}{title=MVP \#10 — CTĐT Designer}
+\textbf{One-liner:} AI hỗ trợ thiết kế chương trình đào tạo mới từ A-Z.
+
+\textbf{User \& Pain:}
+\begin{itemize}
+\item Mở ngành mới: workflow 6-12 tháng, hàng chục cuộc họp.
+\item Cần balance: PLO ↔ CLO ↔ môn ↔ tín chỉ ↔ chuẩn quốc tế.
+\end{itemize}
+
+\textbf{Input:} Ngành dự kiến + đối tượng + chuẩn quốc tế (ABET/AUN-QA)\\
+\textbf{Output:} CTĐT draft (Word multi-page) với PLO/môn/tín chỉ/mapping
+
+\textbf{Validation:} Hảo đánh giá draft AI usable cho thảo luận khoa.\\
+\textbf{Success:} Workflow CTĐT giảm từ 12 tháng → 6 tháng.\\
+\textbf{Effort:} 12-16 tuần (LỚN NHẤT)\\
+\textbf{Trạng thái:} Chưa scaffold (V.High effort, V.High value, ưu tiên 2027+)
+\end{mvpbox}
+
+\clearpage
+
+% =============================================================
+% PART III — OUTPUT MOCKUPS
+% =============================================================
+\begin{center}
+\vspace*{0.5em}
+{\sffamily\bfseries\Huge\color{outputcolor} Phần III}\\[0.5em]
+{\sffamily\LARGE\color{mid} Output Mockups --- thấy hình dáng}\\[0.5em]
+{\color{outputcolor}\rule{6cm}{0.4pt}}
+\end{center}
+\vspace{1em}
+
+% =============================================================
+\section{Output mockups visual cho từng MVP}
+
+Đây là phần \textbf{quan trọng nhất} của tài liệu. Mỗi mockup show user thấy gì khi
+dùng MVP. Khi đọc, anh tự hỏi: \textit{``Cán bộ DAU thấy cái này có muốn dùng không?''}
+
+% Mockup 1
+\subsection{MVP \#1 — Document Classifier output}
+
+\begin{mockbox}
+{\bfseries\color{ink} CLASSIFY DOCUMENT}\\[2pt]
+{\color{mid} Input: }QT\_XAY DUNG NGAN HANG CAU HOI THI.pdf\\
+{\color{mid} Length: }6,687 chars / 13 pages / KHAO THI dept\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries\color{ink} ► ISO Process matches}\\[2pt]
+\fbox{KHAOTHI-001} \quad confidence: \fbox{92\%}\\
+\quad ``\textit{Xây dựng và quản lý ngân hàng câu hỏi thi}''\\
+\quad \textcolor{mid}{Reasoning: Document title \& content match exactly}\\[3pt]
+\fbox{KHAOTHI-005} \quad confidence: \fbox{71\%}\\
+\quad ``\textit{Quy trình thi kết thúc học phần}''\\
+\quad \textcolor{mid}{Reasoning: Related — câu hỏi thi feed vào kỳ thi KTHP}\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries\color{ink} ► KĐCLGD Criteria matches (multi-label)}\\[2pt]
+\fbox{TC 6.4} \quad confidence: \fbox{88\%}\\
+\quad ``\textit{Quản lý hoạt động dạy-học}''\\[3pt]
+\fbox{TC 9.1} \quad confidence: \fbox{76\%}\\
+\quad ``\textit{Hệ thống đánh giá kết quả người học}''\\[3pt]
+\fbox{TC 9.3} \quad confidence: \fbox{63\%}\\
+\quad ``\textit{Đánh giá có tin cậy}''\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+\textcolor{mid}{Latency: 4.2s \quad Cost: 480 VND \quad Tokens: 2.1K in / 0.4K out}\\[4pt]
+{[\fbox{✓ Correct}] \quad [\fbox{⚠ Partial}] \quad [\fbox{✗ Wrong}] \quad Notes: \rule{4cm}{0.3pt}}
+\end{mockbox}
+
+\textbf{Khi nào dùng:} Bulk-tag tất cả ISO files trong 1 ngày thay vì 6 tuần.
+
+% Mockup 2
+\subsection{MVP \#2 — Evidence Finder output}
+
+\begin{mockbox}
+{\bfseries\color{ink} FIND EVIDENCE FOR CRITERION}\\[2pt]
+{\color{mid} Selected: }\fbox{TC 3.1 --- Quy hoạch và tuyển dụng nhân sự}\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries\color{ink} ► Top 5 evidence found (from 819 docs)}\\[2pt]
+\fbox{1} \fbox{PTCNS-001} \quad relevance: \fbox{0.94}\\
+\quad \textit{Quy trình tuyển dụng nhân viên}\\
+\quad \textcolor{mid}{Quote: ``Quy trình tuyển dụng được áp dụng đồng nhất...''}\\
+\quad \textcolor{mid}{Page 3, Section 2}\\[3pt]
+\fbox{2} \fbox{PTCNS-008} \quad relevance: \fbox{0.87}\\
+\quad \textit{Quy chế tuyển dụng, đào tạo và bồi dưỡng giảng viên}\\
+\quad \textcolor{mid}{Quote: ``Việc quy hoạch nhân sự phải dựa trên...''}\\[3pt]
+\fbox{3} \fbox{PTCNS-003} \quad relevance: \fbox{0.78}\\
+\quad \textit{Quy trình về đánh giá mức độ hoàn thành nhiệm vụ}\\[3pt]
+... (2 more) ...\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries\color{ink} ► Coverage analysis}\\[2pt]
+Yêu cầu 1: ``Có kế hoạch quy hoạch nhân sự'' → \fbox{✓ Covered by PTCNS-001, PTCNS-008}\\
+Yêu cầu 2: ``Có quy trình tuyển dụng minh bạch'' → \fbox{✓ Covered by PTCNS-001}\\
+Yêu cầu 3: ``Có chính sách đãi ngộ'' → \fbox{✗ GAP --- need to find evidence}\\[4pt]
+{[\fbox{✓ Use these 5}] \quad [Show next 5 →]}
+\end{mockbox}
+
+\textbf{Khi nào dùng:} Khi viết Biểu 04, click 1 nút thay vì search Drive 2h.
+
+% Mockup 3
+\subsection{MVP \#3 — Biểu 04 Drafter output}
+
+\begin{mockbox}
+{\bfseries\color{ink} BIỂU 04 DRAFT --- TC 3.1}\\[2pt]
+{\color{mid} Sources: PTCNS-001, PTCNS-008, PTCNS-003}\\
+{\color{mid} Generated by: claude-sonnet-4-6 in 38s, cost 2,850 VND}\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries\color{ink} 1. HIỆN TRẠNG}\\[2pt]
+DAU đã ban hành quy trình tuyển dụng nhân sự được áp dụng\\
+đồng nhất toàn trường \fbox{[Nguồn: PTCNS-001, tr.3]}. Quy hoạch\\
+nhân sự được thực hiện hàng năm dựa trên yêu cầu phát triển\\
+\fbox{[Nguồn: PTCNS-008, tr.7]}.\\[6pt]
+{\bfseries\color{ink} 2. ĐIỂM MẠNH}\\[2pt]
+Quy trình minh bạch, có hội đồng đánh giá đa cấp \fbox{[PTCNS-001]}.\\
+Có cơ chế đánh giá hoàn thành nhiệm vụ định kỳ \fbox{[PTCNS-003]}.\\[6pt]
+{\bfseries\color{ink} 3. TỒN TẠI}\\[2pt]
+Chính sách đãi ngộ chưa có văn bản cụ thể. Cần bổ sung\\
+trong chu kỳ tới.\\[6pt]
+{\bfseries\color{ink} 4. KẾ HOẠCH HÀNH ĐỘNG}\\[2pt]
+- Q1/2027: Xây dựng Quy chế Đãi ngộ chi tiết\\
+- Q2/2027: Lấy ý kiến cán bộ \& thông qua HĐT\\
+- Q3/2027: Ban hành \& triển khai\\[6pt]
+{\bfseries\color{ink} KẾT LUẬN: \fbox{ĐẠT VỚI CẢI TIẾN}}\\[6pt]
+{[\fbox{✏ Edit}] \quad [\fbox{🔄 Regenerate section}] \quad [\fbox{📥 Export DOCX}]}
+\end{mockbox}
+
+\textbf{Khi nào dùng:} Hảo edit AI draft 30\% thay vì viết Biểu 04 từ đầu.
+
+% Mockup 4
+\subsection{MVP \#4 — KPI Dashboard (Biểu 16) output}
+
+\begin{mockbox}
+{\bfseries\color{ink} QUALITY DASHBOARD --- DAU 2025-2026}\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries\color{ink} ► Đào tạo}\\[2pt]
+Tỉ lệ tốt nghiệp đúng hạn: \fbox{87.3\%} \textcolor{ok}{▲ +2.1\%}\\
+Tỉ lệ có việc làm sau 6 tháng: \fbox{91.5\%} \textcolor{ok}{▲ +1.8\%}\\
+Tỉ lệ thôi học: \fbox{4.2\%} \textcolor{warn}{▲ +0.7\%}\\[6pt]
+{\bfseries\color{ink} ► NCKH}\\[2pt]
+Bài báo ISI/Scopus: \fbox{47} \textcolor{ok}{▲ +12 vs 2024}\\
+Đề tài cấp Bộ: \fbox{8} \textcolor{mid}{▬}\\
+Doanh thu chuyển giao: \fbox{2.3 tỷ VND} \textcolor{ok}{▲ +0.8B}\\[6pt]
+{\bfseries\color{ink} ► Nhân lực}\\[2pt]
+GV/SV ratio: \fbox{1:18} \textcolor{ok}{✓ chuẩn}\\
+\% PhD: \fbox{42\%} \textcolor{ok}{✓ +3\% vs 2024}\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries\color{warn} ⚠ ALERTS}\\[2pt]
+- Tỉ lệ thôi học vượt ngưỡng. Khuyến nghị: investigate Q2 2026 cohort\\
+- 3 KPI chưa có dữ liệu Q4 2025: cần update từ P.KH-CN\\[4pt]
+{[\fbox{📊 Detailed view}] \quad [\fbox{📥 Export Biểu 16}] \quad [\fbox{🔄 Refresh data}]}
+\end{mockbox}
+
+\textbf{Khi nào dùng:} Họp HĐT hàng tháng, real-time data thay vì Excel quý cũ.
+
+% Mockup 5
+\subsection{MVP \#5 — Admissions Q\&A Agent output}
+
+\begin{mockbox}
+{\bfseries\color{ink} ADMISSIONS AGENT --- Zalo OA chat}\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries [Phụ huynh]:} chao em, hoc phi nganh kien truc 2026 bao nhieu?\\[4pt]
+{\bfseries\color{leaf} [DAU Bot]:} Dạ chào anh/chị 👋\\[2pt]
+Học phí ngành Kiến trúc năm học 2026-2027 tại Trường ĐH Kiến trúc\\
+Đà Nẵng là \fbox{18.500.000 VND/học kỳ}.\\[2pt]
+\textcolor{mid}{[Nguồn: Tài liệu tuyển sinh 2026, trang 12]}\\[2pt]
+Anh/chị có cần thêm thông tin gì không?\\
+\fbox{[Học bổng]} \fbox{[Hồ sơ]} \fbox{[Lịch nhập học]} \fbox{[Tư vấn người]}\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries [Phụ huynh]:} co hoc bong gi khong?\\[4pt]
+{\bfseries\color{leaf} [DAU Bot]:} DAU có 3 loại học bổng:\\
+\quad 1. Học bổng tài năng (top 5\% tuyển sinh): 100\% học phí\\
+\quad 2. Học bổng khuyến học: 50\% học phí\\
+\quad 3. Học bổng đối ngoại: tuỳ chuyên ngành\\[2pt]
+\textcolor{mid}{[Nguồn: Quy chế học bổng 2026]}\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries [Phụ huynh]:} con tao bi diem yeu mon van, co duoc chuyen nganh khong?\\[4pt]
+{\bfseries\color{warn} [DAU Bot]:} Em xin phép kết nối anh/chị với cô tư vấn để được hỗ trợ chi tiết. Cô sẽ liên hệ trong 30 phút. ☎️\\
+\textcolor{mid}{(Escalated to human --- intent: complex consultation)}\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+\textcolor{mid}{Stats this conversation: 3 messages, 2 auto / 1 escalated, latency avg 8s}
+\end{mockbox}
+
+\textbf{Khi nào dùng:} 24/7 trên Zalo, giảm 60\% câu hỏi vào phòng tuyển sinh.
+
+% Mockup 6
+\subsection{MVP \#6 --- Internal Knowledge Agent output}
+
+\begin{mockbox}
+{\bfseries\color{ink} INTERNAL KNOWLEDGE --- Slack channel}\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries [GV Nguyễn]:} @qos cho hỏi quy chế giảng viên đi công tác có gì khác năm ngoái không?\\[4pt]
+{\bfseries\color{leaf} [QualityOS]:} Theo Quyết định 158/QĐ-ĐHKTĐN ngày 02/04/2024, có 3 thay đổi:\\
+\quad 1. Đăng ký công tác qua phần mềm thay vì biểu mẫu giấy\\
+\quad 2. Mức phụ cấp công tác trong nước tăng từ 250K → 300K/ngày\\
+\quad 3. Yêu cầu báo cáo hậu công tác trong 5 ngày làm việc\\[2pt]
+\textcolor{mid}{[Nguồn: QĐ 158/QĐ-ĐHKTĐN, Section 2.3]}\\[2pt]
+{[\fbox{📄 Xem văn bản gốc}] \quad [\fbox{👍 Helpful}] \quad [\fbox{👎 Not quite}]}\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries [CB Trần]:} @qos tôi cần tổ chức seminar khoa học, quy trình thế nào?\\[4pt]
+{\bfseries\color{leaf} [QualityOS]:} Tổ chức seminar khoa học theo Quy trình PKHCN-008:\\
+\quad B1: Đề xuất chủ đề + ngân sách (2 tuần trước)\\
+\quad B2: Phòng KH-CN duyệt (3-5 ngày)\\
+\quad B3: Phát thông báo + đăng ký người tham dự\\
+\quad B4: Báo cáo + thanh toán hậu sự kiện (5 ngày sau)\\[2pt]
+\textcolor{mid}{[Nguồn: PKHCN-008 Quy trình tổ chức Hội nghị Hội thảo KH]}\\
+\textcolor{mid}{Biểu mẫu cần: PL.01 (Đề xuất), PL.02 (Báo cáo)}\\
+{[\fbox{📥 Download biểu mẫu}]}
+\end{mockbox}
+
+\textbf{Khi nào dùng:} Toàn bộ giảng viên/cán bộ DAU, giảm 30\% time tìm văn bản.
+
+% Mockup 7
+\subsection{MVP \#7 --- Student Services Triage output}
+
+\begin{mockbox}
+{\bfseries\color{ink} STUDENT SERVICES TRIAGE --- email inbox}\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries Email từ:} sinhvien123@dau.edu.vn\\
+{\bfseries Subject:} \textit{em can xac nhan sinh vien gap qua a}\\[4pt]
+{\bfseries\color{leaf} ► AI triage:}\\
+{\color{mid} Intent:} \fbox{REQUEST\_CERT} (xác nhận sinh viên)\\
+{\color{mid} Priority:} \fbox{HIGH} (urgency keyword: ``gấp'')\\
+{\color{mid} Auto-route to:} P.CTSV --- bộ phận giấy tờ sinh viên\\
+{\color{mid} Suggested initial response:}\\[2pt]
+\textit{``Em xin phép, để cấp Giấy xác nhận sinh viên, em vui lòng gửi:}\\
+\textit{(1) Mã sinh viên, (2) Lý do cần xác nhận, (3) Số bản cần.}\\
+\textit{Phòng CTSV sẽ xử lý trong 1 ngày làm việc theo Quy trình PCTSV-011.''}\\[2pt]
+{\color{mid} [Nguồn: PCTSV-011 Quy trình cấp Giấy xác nhận sinh viên]}\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{[\fbox{✉ Send response}] \quad [\fbox{✏ Edit first}] \quad [\fbox{👤 Assign to person}]}\\[6pt]
+\textcolor{mid}{Today: 47 emails, 38 auto-routed (81\%), 9 needed human triage}
+\end{mockbox}
+
+\textbf{Khi nào dùng:} P.CTSV không bị overwhelmed mùa cao điểm.
+
+% Mockup 8
+\subsection{MVP \#8 --- Curriculum Mapper output}
+
+\begin{mockbox}
+{\bfseries\color{ink} CLO/PLO MAPPING MATRIX --- Ngành CNTT}\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries Môn:} Lập trình hướng đối tượng (3 tín chỉ)\\
+{\bfseries CTĐT:} Cử nhân CNTT --- Khoá 2024\\[6pt]
+\begin{verbatim}
+              | PLO1 | PLO2 | PLO3 | PLO4 | PLO5 |
+--------------|------|------|------|------|------|
+CLO 1: Hiểu  |  ●   |      |  ◉   |      |      |
+nguyên lý OOP |      |      |      |      |      |
+--------------|------|------|------|------|------|
+CLO 2: Thiết  |      |  ●   |      |  ◉   |      |
+kế class      |      |      |      |      |      |
+diagram       |      |      |      |      |      |
+--------------|------|------|------|------|------|
+CLO 3: Cài    |  ◉   |      |  ●   |      |  ◉   |
+đặt OOP       |      |      |      |      |      |
+trong Java    |      |      |      |      |      |
+--------------|------|------|------|------|------|
+\end{verbatim}
+\textcolor{mid}{● = Strong (3 pts) \quad ◉ = Moderate (2 pts) \quad blank = N/A}\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries\color{ink} ► AI suggestions}\\[2pt]
+- CLO 2 chưa map với PLO5 (làm việc nhóm) → Cân nhắc thêm group project\\
+- PLO1 (Foundation) đã được cover bởi 2/3 CLO → Strong\\[4pt]
+{[\fbox{📥 Export Excel for AUN-QA prep}] \quad [\fbox{✏ Edit mapping}]}
+\end{mockbox}
+
+\textbf{Khi nào dùng:} P.Đào tạo prep AUN-QA submission --- giảm từ 2 tháng → 2 tuần.
+
+% Mockup 9
+\subsection{MVP \#9 --- Rubric Generator output}
+
+\begin{mockbox}
+{\bfseries\color{ink} RUBRIC GENERATOR}\\[6pt]
+{\color{mid} Input outcome:} \textit{``Sinh viên có khả năng phân tích yêu cầu phần mềm và viết User Stories chuẩn Agile''}\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries\color{ink} Generated Rubric:}\\[4pt]
+\begin{verbatim}
+              | Excellent  | Good       | Fair       | Poor       |
+              | (4)        | (3)        | (2)        | (1)        |
+--------------|------------|------------|------------|------------|
+Phân tích    | Capture đủ | Capture    | Capture    | Bỏ sót     |
+yêu cầu       | mọi req    | 80%+       | 60%+       | nhiều req  |
+              | functional | requirement| requirement|            |
+              | + non-func |            |            |            |
+--------------|------------|------------|------------|------------|
+User Story    | Format     | Format     | Format gần | Sai format |
+format        | chuẩn 100% | chuẩn 80%+ | đúng       |            |
+              | + acceptance|            |            |            |
+              | criteria   |            |            |            |
+--------------|------------|------------|------------|------------|
+INVEST       | Đạt cả 6   | Đạt 4-5    | Đạt 2-3    | < 2        |
+quality       | tiêu chí   | tiêu chí   | tiêu chí   | tiêu chí   |
+--------------|------------|------------|------------|------------|
+Sắp xếp     | Theo MoSCoW| Có rõ      | Tự nhiên   | Không rõ   |
+priority      | rõ         | priority   | (tốt)      | priority   |
+              | + reasoning|            |            |            |
+\end{verbatim}
+\textcolor{mid}{Total: 16 points (4 criteria × 4 levels)}\\[6pt]
+{[\fbox{📥 Download Word}] \quad [\fbox{✏ Edit}] \quad [\fbox{🔄 Regenerate}]}
+\end{mockbox}
+
+\textbf{Khi nào dùng:} Giảng viên prep assignment, dùng cho KĐCLGD evidence.
+
+% Mockup 10
+\subsection{MVP \#10 --- CTĐT Designer output}
+
+\begin{mockbox}
+{\bfseries\color{ink} CTĐT DESIGNER --- New Program Wizard}\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries Ngành:} Khoa học Dữ liệu (mở mới 2027)\\
+{\bfseries Bậc:} Cử nhân (4 năm, 130 tín chỉ)\\
+{\bfseries Chuẩn:} AUN-QA + ABET\\
+{\bfseries Đối tượng:} HS THPT đậu xét tuyển\\[6pt]
+\rule{\linewidth}{0.3pt}\\[4pt]
+{\bfseries\color{ink} ► AI generated draft:}\\[2pt]
+{\bfseries 1. Tầm nhìn ngành} (1 paragraph)\\[2pt]
+{\bfseries 2. PLOs (5 program learning outcomes):}\\
+\quad PLO1: Foundation toán \& thống kê cho data\\
+\quad PLO2: Programming \& engineering skills\\
+\quad PLO3: Data analysis \& interpretation\\
+\quad PLO4: Communication of insights\\
+\quad PLO5: Ethical \& responsible data use\\[2pt]
+{\bfseries 3. Cấu trúc chương trình:}\\
+\quad - Đại cương: 30 tín chỉ\\
+\quad - Cơ sở ngành: 40 tín chỉ\\
+\quad - Chuyên ngành: 50 tín chỉ\\
+\quad - Tự chọn + thực tập + tốt nghiệp: 10 tín chỉ\\[2pt]
+{\bfseries 4. Danh sách 32 môn học} (với tên, tín chỉ, prereq, CLO)\\
+{\bfseries 5. Mapping matrix CLO ↔ PLO} (full coverage)\\
+{\bfseries 6. So sánh với top 3 trường (gợi ý reference: VinUni, BK, FU)}\\[6pt]
+{[\fbox{📥 Export đầy đủ Word 80-page}] \quad [\fbox{✏ Edit từng phần}]}\\[6pt]
+\textcolor{mid}{Generated in 12 min, cost 18,000 VND}\\
+\textcolor{mid}{Recommended: 2-3 buổi họp khoa để refine}
+\end{mockbox}
+
+\textbf{Khi nào dùng:} Mở ngành mới, giảm timeline từ 12 tháng → 6 tháng.
+
+\clearpage
+
+% =============================================================
+% PART IV — DECISION FRAMEWORK
+% =============================================================
+\begin{center}
+\vspace*{0.5em}
+{\sffamily\bfseries\Huge\color{ink} Phần IV}\\[0.5em]
+{\sffamily\LARGE\color{mid} Decision Framework + Recommended Sequence}\\[0.5em]
+{\color{ink}\rule{6cm}{0.4pt}}
+\end{center}
+\vspace{1em}
+
+% =============================================================
+\section{Decision framework: nên làm MVP nào trước}
+
+\subsection{4 trục đánh giá cho mỗi MVP}
+
+\begin{tabularx}{\linewidth}{@{}p{3.5cm} X@{}}
+\toprule
+\textbf{Trục} & \textbf{Câu hỏi} \\
+\midrule
+\textbf{1. Pain validated?} & Có người thật trong DAU đang khổ vì cái này không? Hỏi được tên cụ thể không? \\
+\textbf{2. Data ready?} & Đã có dữ liệu để build? Hay phải collect từ zero? \\
+\textbf{3. Hảo's domain?} & Hảo có domain expertise unique không? Đây là moat hay generic? \\
+\textbf{4. Sellable outside?} & Trường khác có pain tương tự + chi trả được không? \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Score 10 MVP theo 4 trục (đánh giá honest)}
+
+Mỗi trục: ★ (yếu), ★★ (trung bình), ★★★ (mạnh).
+
+\begin{tabularx}{\linewidth}{@{}p{0.4cm} p{3.5cm} c c c c c X@{}}
+\toprule
+\textbf{\#} & \textbf{MVP} & \textbf{Pain} & \textbf{Data} & \textbf{Domain} & \textbf{Sellable} & \textbf{Total} & \textbf{Note} \\
+\midrule
+1 & Document Classifier & ★★★ & ★★★ & ★★ & ★★★ & 11 & Đã code \\
+2 & Evidence Finder & ★★★ & ★★★ & ★★★ & ★★★ & 12 & Highest score \\
+3 & Biểu 04 Drafter & ★★★ & ★★★ & ★★★ & ★★★ & 12 & Highest score \\
+4 & KPI Dashboard & ★★ & ★★ & ★ & ★★ & 7 & Generic, low moat \\
+5 & Admissions Q\&A & ★★★ & ★★★ & ★ & ★★★ & 10 & Easy buy, low moat \\
+6 & Internal Knowledge & ★★★ & ★★ & ★★ & ★★★ & 10 & Hard to differentiate \\
+7 & Student Services Triage & ★★ & ★★ & ★ & ★★ & 7 & Complex, lower priority \\
+8 & Curriculum Mapper & ★★★ & ★★ & ★★★ & ★★ & 10 & UNIQUE moat (Hảo CTĐT) \\
+9 & Rubric Generator & ★★ & ★★ & ★★★ & ★★ & 9 & Low effort, niche \\
+10 & CTĐT Designer & ★★ & ★★ & ★★★ & ★★ & 9 & Highest effort, far future \\
+\bottomrule
+\end{tabularx}
+
+\textbf{Top 3 score:} MVP \#2, \#3, \#1 (all 11-12). Đây là lý do scaffold MVP-1/2/3
+đã được prep --- chúng có highest expected value.
+
+\textbf{Cũng đáng làm sớm:} MVP \#5 (Admissions Q\&A) --- pain rõ nhất, dễ demo nhất với khách trường ngoài.
+
+\textbf{Cần để sau:} MVP \#10 (CTĐT Designer) --- effort quá lớn, chờ team scale.
+
+\clearpage
+
+% =============================================================
+\section{3 đề xuất sequence}
+
+Tuỳ ambition + risk tolerance, có 3 đường đi:
+
+\subsection{Path A --- Conservative (low risk, deep moat)}
+
+\textbf{Triết lý:} ``Đi sâu vào cái duy nhất chỉ Hảo làm được.''
+
+\begin{tabularx}{\linewidth}{@{}p{2cm} X@{}}
+\toprule
+\textbf{Quý} & \textbf{MVP \& mục tiêu} \\
+\midrule
+Q2/2026 & MVP-0 (data prep) + MVP \#1 Classifier \\
+Q3/2026 & MVP \#2 Evidence Finder + MVP \#3 Biểu 04 Drafter \\
+Q4/2026 & Pilot 3 MVP nội bộ DAU --- 1 case study cho TĐG cycle \\
+Q1/2027 & Workshop, demo cho 5-10 trường, viết paper \\
+\bottomrule
+\end{tabularx}
+
+\textbf{Đầu ra cuối Q1/2027:}
+\begin{itemize}
+\item 3 MVP chạy production tại DAU
+\item 1 case study đầy đủ cho 1 chu kỳ TĐG
+\item 1 paper submitted về methodology
+\item Pipeline 5+ trường quan tâm
+\end{itemize}
+
+\textbf{Phù hợp nếu:} Hảo muốn academic credibility + moat sâu trước market expansion.\\
+\textbf{Risk:} Slower revenue, có thể bị competitor vào trước.
+
+\subsection{Path B --- Standard (balanced)}
+
+\textbf{Triết lý:} ``2 sản phẩm: 1 dễ demo, 1 sâu moat.''
+
+\begin{tabularx}{\linewidth}{@{}p{2cm} X@{}}
+\toprule
+\textbf{Quý} & \textbf{MVP \& mục tiêu} \\
+\midrule
+Q2/2026 & MVP-0 + MVP \#1 Classifier \\
+Q3/2026 & MVP \#5 Admissions Q\&A (parallel branch, dễ demo) \\
+Q4/2026 & MVP \#2 Evidence Finder + Pilot Admissions tại DAU \\
+Q1/2027 & MVP \#3 Biểu 04 + Workshop demo cả 2 sản phẩm \\
+\bottomrule
+\end{tabularx}
+
+\textbf{Đầu ra cuối Q1/2027:}
+\begin{itemize}
+\item Admissions Agent live tại DAU (\textbf{flagship demo} dễ pitch)
+\item Quality Manager v0 (Classifier + Evidence Finder + Drafter base)
+\item 1 paper submitted
+\item Pipeline 8+ trường quan tâm
+\end{itemize}
+
+\textbf{Phù hợp nếu:} Cân bằng giữa moat \& market traction. \emph{Đây là default
+recommendation của tôi.}\\
+\textbf{Risk:} Phú có thể overload nếu không hire engineer \#2 sớm.
+
+\subsection{Path C --- Aggressive (max market exposure)}
+
+\textbf{Triết lý:} ``Ship nhanh nhiều hướng để tìm hit.''
+
+\begin{tabularx}{\linewidth}{@{}p{2cm} X@{}}
+\toprule
+\textbf{Quý} & \textbf{MVP \& mục tiêu} \\
+\midrule
+Q2/2026 & MVP-0 + MVP \#1 + MVP \#5 (parallel) \\
+Q3/2026 & MVP \#2 + MVP \#6 (Internal Knowledge) + MVP \#9 (Rubric) \\
+Q4/2026 & MVP \#3 + MVP \#8 (Curriculum Mapper) \\
+Q1/2027 & Pilot 5+ MVP nội bộ + workshop demo all \\
+\bottomrule
+\end{tabularx}
+
+\textbf{Đầu ra cuối Q1/2027:}
+\begin{itemize}
+\item 7+ MVP demo-able
+\item Pipeline 10+ trường (with options to choose product)
+\item Có thể spin-out sớm với portfolio hơn là 1 product
+\end{itemize}
+
+\textbf{Phù hợp nếu:} Có team mở rộng nhanh + funding. \\
+\textbf{Risk:} \textbf{High burnout risk} + nhiều MVP nửa vời, không sản phẩm nào polished.\\
+\textbf{Tôi không khuyên Path C} cho team 2-3 người 2026.
+
+\subsection{Khuyến nghị của tôi}
+
+\begin{keybox}[title=Recommended path]
+\textbf{Path B (Standard).} Lý do:
+
+\begin{enumerate}
+\item \textbf{Admissions Agent} dễ demo cho khách ngoài --- visual, có ROI rõ.
+\item \textbf{Quality Manager} (Classifier + Finder + Drafter) là moat lâu dài.
+\item Tránh được bẫy ``demo nhiều, sâu ít'' của Path C.
+\item Tránh được bẫy ``sâu nhưng không bán được'' của Path A.
+\end{enumerate}
+
+Sau Q1/2027, dựa trên dữ liệu thật từ pilot, mới quyết MVP \#4-10 nào tiếp theo.
+\end{keybox}
+
+\clearpage
+
+% =============================================================
+\section{3 câu hỏi Hảo cần trả lời để chốt}
+
+Trước khi chốt path nào, Hảo nên tự trả lời 3 câu sau:
+
+\subsection{Câu 1: Anh muốn moat hay traction trước?}
+
+\begin{itemize}
+\item \textbf{Moat trước (chọn Path A):} Hảo ưu tiên build cái không ai copy được --- Quality OS sâu trong KĐCLGD/CTĐT. Chấp nhận bán hàng chậm hơn. Phù hợp nếu mục tiêu là leader vertical 5-10 năm.
+\item \textbf{Traction trước (chọn Path B):} Hảo cần proof market, có sản phẩm dễ pitch + dễ ROI. Phù hợp nếu cần spin-out 2027 và khách ngoài DAU sớm.
+\end{itemize}
+
+\subsection{Câu 2: Phú có thể handle bao nhiêu MVP cùng lúc?}
+
+Honest answer: 1 engineer có thể tốt làm \textbf{1 MVP/lúc}, OK làm \textbf{2 MVP parallel}
+(với RA support), gãy nếu \textbf{$\geq$ 3 MVP cùng lúc}.
+
+\textbf{Implication:}
+\begin{itemize}
+\item Path A: 1 MVP/quý → Phú comfortable
+\item Path B: 1-2 MVP/quý → Phú cần RA + có thể engineer \#2 từ M9
+\item Path C: 3+ MVP/quý → Phú burnout chắc chắn
+\end{itemize}
+
+\subsection{Câu 3: Khách hàng đầu tiên ngoài DAU sẽ chọn cái gì?}
+
+Đây là \textbf{câu hỏi market validation}. Hảo phải đi 5-7 discovery call (trường ngoài)
+trong Q3/2026 và HỎI THẲNG: \textit{``Trường anh chị có pain X không? Sẵn sàng trả Y cho
+solution Z không?''}
+
+3 outputs có thể:
+\begin{itemize}
+\item Đa số nói \textbf{Admissions agent} (dễ pitch, ROI rõ) → Path B vibing.
+\item Đa số nói \textbf{KĐCLGD support} (urgency cao do TT 2026) → Path A vibing.
+\item Đa số confused / không có pain rõ → \textbf{cần discovery sâu hơn}, không vội build.
+\end{itemize}
+
+\textbf{Decision rule:} Sau 5 discovery, có $\geq$ 3 trường nói cùng 1 pain → đó là MVP ưu tiên.
+
+\subsection{Decision deadline đề xuất}
+
+\begin{tabularx}{\linewidth}{@{}p{2cm} X@{}}
+\toprule
+\textbf{Khi nào} & \textbf{Quyết định gì} \\
+\midrule
+Cuối tháng 5/2026 & MVP-0 done + chốt Path A vs B \\
+Cuối tháng 6/2026 & MVP \#1 vibe done + decide commercial MVP \#1 vs \#5 \\
+Cuối Q3/2026 & Sau 10 discovery → confirm path; pivot nếu cần \\
+Cuối Q1/2027 & Gate 2 spin-out decision \\
+\bottomrule
+\end{tabularx}
+
+\vfill
+
+\begin{center}
+\small\itshape\color{mid}
+``A vision without an MVP is just a dream.\\
+An MVP without a clear output is just code.''\\
+--- adapted from Steve Blank
+\end{center}
 
 \end{document}
