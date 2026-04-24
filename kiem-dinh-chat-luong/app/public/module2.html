@@ -146,6 +146,23 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); co
 .result-opt.selected-dat  .opt-label { color: var(--green); }
 .result-opt.selected-kdat .opt-label { color: var(--red); }
 
+/* PL2 detail block (requirements + self-check + suggested evidence) */
+.fp-detail-section { margin-bottom: 10px; }
+.fp-detail-section h5 { font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); font-weight: 700; margin-bottom: 6px; }
+.fp-detail-section h5 .n { color: var(--accent); }
+.fp-reqs-pl2 { list-style: none; padding: 0; }
+.fp-reqs-pl2 li { padding: 6px 10px; margin-bottom: 3px; background: var(--bg); border-left: 3px solid var(--accent); border-radius: 0 4px 4px 0; font-size: 12px; line-height: 1.5; display: flex; gap: 8px; }
+.fp-reqs-pl2 li .idx { color: var(--accent); font-weight: 700; flex-shrink: 0; min-width: 18px; }
+.fp-selfcheck-list { list-style: none; padding: 0; }
+.fp-selfcheck-list li { padding: 5px 10px 5px 24px; margin-bottom: 2px; font-size: 12px; color: var(--text); line-height: 1.5; position: relative; background: var(--bg); border-radius: 4px; }
+.fp-selfcheck-list li::before { content: '?'; position: absolute; left: 8px; top: 5px; color: var(--yellow); font-weight: 700; }
+.fp-ev-sug { background: var(--bg); border-radius: 4px; padding: 8px 10px; font-size: 12px; }
+.fp-ev-sug .ev-row { padding: 3px 0; display: flex; gap: 8px; align-items: flex-start; }
+.fp-ev-sug .ev-row .icon { flex-shrink: 0; }
+.fp-ev-sug .ev-row .chk { color: var(--muted); flex-shrink: 0; }
+.fp-ev-sug .ev-row.has .chk { color: var(--green); }
+.fp-ev-sug .ev-row .name { flex: 1; }
+
 /* Evidence linked */
 .mc-table { width: 100%; border-collapse: collapse; font-size: 12px; }
 .mc-table th { background: var(--panel); padding: 8px 10px; text-align: left; color: var(--muted); font-size: 11px; border-bottom: 1px solid var(--border); }
@@ -296,6 +313,13 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); co
         <h3>PHIẾU TỰ ĐÁNH GIÁ TIÊU CHÍ (Biểu 04)</h3>
         <div class="tc-title" id="fp-fulltitle"></div>
         <div class="tc-reqs"><ul id="fp-reqs"></ul></div>
+
+        <!-- Chi tiết PL2 + self-check (hiện khi có trong standards-detail.js) -->
+        <div id="fp-detail" style="display:none;margin-top:14px;">
+          <div class="fp-detail-section" id="fp-reqs-detail"></div>
+          <div class="fp-detail-section" id="fp-selfcheck"></div>
+          <div class="fp-detail-section" id="fp-evidence-sug"></div>
+        </div>
       </div>
 
       <!-- I. Hiện trạng -->
@@ -619,6 +643,91 @@ async function openCriteria(code) {
 
   // Evidence table
   renderEvidenceTable(data.evidence);
+
+  // PL2 detail (requirements + self-check + suggested evidence)
+  await loadFpDetail(code, data.evidence);
+}
+
+let FP_DETAIL_CACHE = {};
+let FP_EV_TYPE_MAP = null;
+
+async function loadFpDetail(code, evidence) {
+  if (!FP_EV_TYPE_MAP) {
+    try { FP_EV_TYPE_MAP = await fetch('/api/evidence-types').then(r => r.json()); }
+    catch { FP_EV_TYPE_MAP = {}; }
+  }
+  let detail;
+  if (FP_DETAIL_CACHE[code] !== undefined) detail = FP_DETAIL_CACHE[code];
+  else {
+    try { detail = await fetch(`/api/criteria/${code}`).then(r => r.json()); }
+    catch { detail = null; }
+    FP_DETAIL_CACHE[code] = detail;
+  }
+
+  const host = document.getElementById('fp-detail');
+  if (!detail) {
+    host.style.display = 'none';
+    // Reset placeholders to default
+    document.getElementById('f-hientrang').placeholder = 'Mô tả thực trạng hiện tại của nhà trường liên quan đến tiêu chí này. Nêu cụ thể các hoạt động, kết quả, số liệu minh chứng...';
+    document.getElementById('f-diemmanh').placeholder = 'Liệt kê những điểm mạnh, thành tích nổi bật đã đạt được...';
+    document.getElementById('f-tontai').placeholder = 'Nêu rõ những hạn chế, bất cập cần khắc phục...';
+    document.getElementById('f-kehoach').placeholder = 'Các biện pháp, thời hạn và người chịu trách nhiệm để cải thiện...';
+    return;
+  }
+  host.style.display = 'block';
+
+  // Requirements from PL2
+  const reqsHtml = `
+    <h5>⚡ Yêu cầu tiêu chí theo PL2 <span class="n">(${detail.requirements.length})</span></h5>
+    <ul class="fp-reqs-pl2">
+      ${detail.requirements.map((r, i) => `<li><span class="idx">${i+1}.</span><span>${escHtml(r)}</span></li>`).join('')}
+    </ul>`;
+  document.getElementById('fp-reqs-detail').innerHTML = reqsHtml;
+
+  // Self-check questions
+  if (detail.self_check_questions && detail.self_check_questions.length) {
+    document.getElementById('fp-selfcheck').innerHTML = `
+      <h5>🤔 Câu hỏi tự đánh giá trước khi viết</h5>
+      <ul class="fp-selfcheck-list">
+        ${detail.self_check_questions.map(q => `<li>${escHtml(q)}</li>`).join('')}
+      </ul>`;
+  } else {
+    document.getElementById('fp-selfcheck').innerHTML = '';
+  }
+
+  // Suggested evidence vs uploaded (keyword match)
+  if (detail.suggested_evidence && detail.suggested_evidence.length) {
+    const matches = detail.suggested_evidence.map(sug => {
+      const key = sug.name.toLowerCase().split(/[\s,/\(\)]+/).filter(w => w.length > 4);
+      const found = evidence.filter(u => {
+        const text = ((u.mo_ta || '') + ' ' + (u.file_name || '')).toLowerCase();
+        return key.some(w => text.includes(w));
+      });
+      return { sug, found };
+    });
+    const hasCount = matches.filter(m => m.found.length > 0).length;
+    document.getElementById('fp-evidence-sug').innerHTML = `
+      <h5>📑 Minh chứng gợi ý <span class="n">(${hasCount}/${detail.suggested_evidence.length} đã có)</span></h5>
+      <div class="fp-ev-sug">
+        ${matches.map(m => {
+          const t = FP_EV_TYPE_MAP?.[m.sug.type] || {};
+          return `<div class="ev-row ${m.found.length > 0 ? 'has' : ''}">
+            <span class="chk">${m.found.length > 0 ? '✓' : '○'}</span>
+            <span class="icon">${t.icon || '•'}</span>
+            <span class="name">${escHtml(m.sug.name)}${m.found.length > 0 ? ` <span style="color:var(--green);font-weight:700;">(${m.found.map(f => f.code).join(', ')})</span>` : ''}</span>
+          </div>`;
+        }).join('')}
+      </div>`;
+  } else {
+    document.getElementById('fp-evidence-sug').innerHTML = '';
+  }
+
+  // Apply placeholders if provided
+  const p = detail.placeholders || {};
+  if (p.hien_trang) document.getElementById('f-hientrang').placeholder = p.hien_trang;
+  if (p.diem_manh)  document.getElementById('f-diemmanh').placeholder  = p.diem_manh;
+  if (p.ton_tai)    document.getElementById('f-tontai').placeholder    = p.ton_tai;
+  if (p.ke_hoach)   document.getElementById('f-kehoach').placeholder   = p.ke_hoach;
 }
 
 function renderEvidenceTable(list) {

@@ -173,7 +173,22 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ─── API: Standards ───────────────────────────────────────────────────────────
+const { STANDARDS_DETAIL, EVIDENCE_TYPES } = require('./standards-detail.js');
+
 app.get('/api/standards', (req, res) => res.json(STANDARDS));
+app.get('/api/evidence-types', (req, res) => res.json(EVIDENCE_TYPES));
+
+// Chi tiết 1 tiêu chí (yêu cầu + minh chứng gợi ý + self-check)
+// Trả null nếu chưa có chi tiết (các TC chưa được seed ở Pha A)
+app.get('/api/criteria/:code', (req, res) => {
+  const code = req.params.code; // VD "1.1"
+  res.json(STANDARDS_DETAIL[code] || null);
+});
+
+app.get('/api/criteria', (req, res) => {
+  // Trả full map (dùng khi cần preload bulk, VD trong Module 2 sidebar)
+  res.json(STANDARDS_DETAIL);
+});
 
 // ─── API: Workspaces ──────────────────────────────────────────────────────────
 // A workspace = 1 đợt kiểm định (CSGD theo TT26 hoặc CTĐT theo TT04)

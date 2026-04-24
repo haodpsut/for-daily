@@ -604,6 +604,73 @@ td {
 .nav-link { display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 16px; font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; transition: all .15s; white-space: nowrap; }
 .nav-link:hover { color: var(--text); }
 .nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── Criterion detail panel (hiện khi chọn tiêu chí có chi tiết) ─ */
+.criterion-panel {
+  background: var(--panel); border: 1px solid var(--border); border-left: 4px solid var(--accent);
+  border-radius: 6px; padding: 14px 18px; margin: 0 14px 12px; display: none;
+}
+.criterion-panel.show { display: block; }
+.criterion-panel .cp-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; gap: 10px; }
+.criterion-panel h3 { font-size: 13px; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+.criterion-panel .cp-code { background: var(--accent2); color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 700; }
+.criterion-panel .cp-full-name { font-size: 13px; color: var(--text); line-height: 1.5; margin-bottom: 10px; font-weight: 600; }
+.criterion-panel .cp-collapse-btn { background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 4px; padding: 3px 10px; font-size: 11px; cursor: pointer; }
+.criterion-panel .cp-collapse-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+.cp-section { margin-top: 12px; }
+.cp-section h4 { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; font-weight: 700; margin-bottom: 6px; }
+.cp-section h4 .count { color: var(--accent); }
+
+.cp-reqs { list-style: none; padding: 0; }
+.cp-reqs li {
+  padding: 6px 10px; margin-bottom: 4px; background: #22263a;
+  border-radius: 4px; font-size: 12px; line-height: 1.5; display: flex; gap: 8px;
+}
+.cp-reqs li .n { color: var(--accent); font-weight: 700; flex-shrink: 0; min-width: 18px; }
+
+.cp-checklist { display: flex; flex-direction: column; gap: 4px; }
+.cp-item {
+  display: flex; gap: 10px; padding: 8px 10px; background: #22263a; border-radius: 4px;
+  font-size: 12px; align-items: flex-start; border-left: 3px solid transparent;
+}
+.cp-item.has { border-left-color: var(--green); background: rgba(46, 168, 126, .08); }
+.cp-item .chk { font-size: 16px; line-height: 1; flex-shrink: 0; }
+.cp-item.has .chk { color: var(--green); }
+.cp-item:not(.has) .chk { color: var(--muted); opacity: .6; }
+.cp-item .body { flex: 1; }
+.cp-item .name { color: var(--text); }
+.cp-item .meta { font-size: 10px; color: var(--muted); margin-top: 2px; display: flex; gap: 8px; flex-wrap: wrap; }
+.cp-item .meta .ev-type { padding: 1px 6px; border-radius: 3px; background: rgba(255,255,255,.05); font-weight: 600; }
+.cp-item.has .meta .mc-codes { color: var(--green); font-weight: 700; }
+
+.cp-selfcheck { list-style: none; padding: 0; }
+.cp-selfcheck li {
+  padding: 6px 10px 6px 26px; margin-bottom: 3px; font-size: 12px; color: var(--text);
+  line-height: 1.5; position: relative;
+}
+.cp-selfcheck li::before {
+  content: '?'; position: absolute; left: 8px; top: 6px; color: var(--yellow); font-weight: 700;
+}
+
+.cp-progress { background: #22263a; border-radius: 4px; padding: 8px 10px; font-size: 11px; color: var(--muted); margin-top: 8px; display: flex; align-items: center; gap: 10px; }
+.cp-progress .bar { flex: 1; height: 6px; background: #0f1117; border-radius: 3px; overflow: hidden; }
+.cp-progress .bar-fill { height: 100%; background: var(--green); transition: width .3s; }
+.cp-progress .txt b { color: var(--text); }
+
+/* Modal: suggested evidence quick-fill */
+.modal-suggestions {
+  background: #22263a; border-radius: 4px; padding: 8px 10px; margin-top: 6px;
+  max-height: 180px; overflow-y: auto;
+}
+.modal-suggestions .sug-head { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .3px; margin-bottom: 4px; font-weight: 700; }
+.modal-suggestions .sug-item {
+  display: block; width: 100%; text-align: left; background: transparent; border: 1px solid var(--border);
+  color: var(--text); font-size: 11px; padding: 5px 8px; border-radius: 3px; margin-bottom: 3px;
+  cursor: pointer; transition: all .12s; font-family: inherit;
+}
+.modal-suggestions .sug-item:hover { border-color: var(--accent); background: rgba(79, 142, 247, .08); }
+.modal-suggestions .sug-item.used { opacity: .5; text-decoration: line-through; }
 </style>
 <script src="/workspace-switcher.js" defer></script>
 </head>
@@ -656,6 +723,8 @@ td {
     </div>
   </div>
 
+  <div class="criterion-panel" id="criterion-panel"></div>
+
   <div class="filter-bar">
     <input id="search-input" type="text" placeholder="🔍  Tìm theo mô tả, mã minh chứng, tên file, nguồn..." oninput="applySearch()">
     <div id="active-filter"></div>
@@ -702,7 +771,7 @@ td {
         </div>
         <div class="form-group">
           <label>Tiêu chí *</label>
-          <select id="sel-tchi" onchange="updateCodePreview()">
+          <select id="sel-tchi" onchange="updateCodePreview(); refreshModalSuggestions();">
             <option value="">-- Chọn tiêu chí --</option>
           </select>
         </div>
@@ -716,6 +785,7 @@ td {
       <div class="form-group">
         <label>Mô tả minh chứng *</label>
         <textarea id="f-mota" placeholder="Nhập mô tả ngắn gọn về nội dung minh chứng..."></textarea>
+        <div class="modal-suggestions" id="modal-suggestions" style="display:none"></div>
       </div>
 
       <div class="form-row">
@@ -887,6 +957,7 @@ function filterByCriteria(tc, tchi) {
   document.getElementById(`std-arr-${tc}`).classList.add('open');
 
   loadEvidence();
+  loadCriterionDetail(tchi);
 }
 
 function clearFilter() {
@@ -896,6 +967,160 @@ function clearFilter() {
   updateActiveFilter();
   loadEvidence();
   loadStats();
+  hideCriterionPanel();
+}
+
+// ── Criterion Detail Panel (PL2: chi tiết + minh chứng gợi ý) ────────────────
+let CRITERION_DETAIL_CACHE = {};  // cache theo code "1.1"
+let EVIDENCE_TYPE_MAP = null;
+
+async function loadEvidenceTypes() {
+  if (EVIDENCE_TYPE_MAP) return;
+  try { EVIDENCE_TYPE_MAP = await fetch('/api/evidence-types').then(r => r.json()); }
+  catch { EVIDENCE_TYPE_MAP = {}; }
+}
+
+function hideCriterionPanel() {
+  document.getElementById('criterion-panel').classList.remove('show');
+}
+
+async function loadCriterionDetail(code) {
+  await loadEvidenceTypes();
+  let detail;
+  if (CRITERION_DETAIL_CACHE[code] !== undefined) {
+    detail = CRITERION_DETAIL_CACHE[code];
+  } else {
+    try { detail = await fetch(`/api/criteria/${code}`).then(r => r.json()); }
+    catch { detail = null; }
+    CRITERION_DETAIL_CACHE[code] = detail;
+  }
+  renderCriterionPanel(code, detail);
+}
+
+function renderCriterionPanel(code, d) {
+  const panel = document.getElementById('criterion-panel');
+  if (!d) {
+    panel.innerHTML = `
+      <div class="cp-head">
+        <h3>Chi tiết tiêu chí</h3>
+        <span class="cp-code">${code}</span>
+      </div>
+      <div style="font-size:12px;color:var(--muted);padding:6px 0;">
+        ⓘ Chi tiết cho tiêu chí này sẽ được bổ sung ở Pha B (hiện chỉ có TC 1.1–1.6).
+      </div>`;
+    panel.classList.add('show');
+    return;
+  }
+
+  // Match uploaded evidence vs suggested list (keyword match on mô tả / tên file)
+  const uploaded = evidenceList.filter(e => e.tieu_chi === code);
+  const matches = d.suggested_evidence.map(sug => {
+    const key = sug.name.toLowerCase().split(/[\s,/\(\)]+/).filter(w => w.length > 4);
+    const found = uploaded.filter(u => {
+      const text = ((u.mo_ta || '') + ' ' + (u.file_name || '')).toLowerCase();
+      return key.some(w => text.includes(w));
+    });
+    return { sug, found };
+  });
+  const hasCount = matches.filter(m => m.found.length > 0).length;
+  const pct = d.suggested_evidence.length > 0 ? Math.round(hasCount / d.suggested_evidence.length * 100) : 0;
+
+  panel.innerHTML = `
+    <div class="cp-head">
+      <div>
+        <h3>📋 Chi tiết tiêu chí</h3>
+      </div>
+      <span class="cp-code">${code}</span>
+      <button class="cp-collapse-btn" onclick="hideCriterionPanel()">Ẩn</button>
+    </div>
+    <div class="cp-full-name">${escHtml(d.full_name)}</div>
+
+    <div class="cp-section">
+      <h4>⚡ Yêu cầu tiêu chí <span class="count">(${d.requirements.length})</span></h4>
+      <ul class="cp-reqs">
+        ${d.requirements.map((r, i) => `<li><span class="n">${i+1}.</span><span>${escHtml(r)}</span></li>`).join('')}
+      </ul>
+    </div>
+
+    <div class="cp-section">
+      <h4>📑 Minh chứng gợi ý <span class="count">(${hasCount}/${d.suggested_evidence.length} đã có)</span></h4>
+      <div class="cp-checklist">
+        ${matches.map(m => {
+          const t = EVIDENCE_TYPE_MAP?.[m.sug.type] || {};
+          const hasCls = m.found.length > 0 ? 'has' : '';
+          return `<div class="cp-item ${hasCls}">
+            <div class="chk">${m.found.length > 0 ? '✓' : '○'}</div>
+            <div class="body">
+              <div class="name">${escHtml(m.sug.name)}</div>
+              <div class="meta">
+                <span class="ev-type">${t.icon || ''} ${escHtml(t.label || m.sug.type)}</span>
+                <span style="color:var(--muted);">${escHtml(m.sug.category || '')}</span>
+                ${m.found.length > 0 ? `<span class="mc-codes">📎 ${m.found.map(f => escHtml(f.code)).join(', ')}</span>` : ''}
+              </div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="cp-progress">
+        <div class="bar"><div class="bar-fill" style="width:${pct}%;"></div></div>
+        <div class="txt">Bao phủ: <b>${pct}%</b></div>
+      </div>
+    </div>
+
+    ${d.self_check_questions && d.self_check_questions.length ? `
+      <div class="cp-section">
+        <h4>🤔 Câu hỏi tự đánh giá <span class="count">(${d.self_check_questions.length})</span></h4>
+        <ul class="cp-selfcheck">
+          ${d.self_check_questions.map(q => `<li>${escHtml(q)}</li>`).join('')}
+        </ul>
+      </div>` : ''}
+  `;
+  panel.classList.add('show');
+}
+
+// Show suggestions inside upload modal when criterion is selected
+async function refreshModalSuggestions() {
+  const tchiSel = document.getElementById('sel-tchi').value;
+  const host = document.getElementById('modal-suggestions');
+  if (!tchiSel) { host.style.display = 'none'; return; }
+  const code = tchiSel;
+  await loadEvidenceTypes();
+  let detail;
+  if (CRITERION_DETAIL_CACHE[code] !== undefined) detail = CRITERION_DETAIL_CACHE[code];
+  else {
+    try { detail = await fetch(`/api/criteria/${code}`).then(r => r.json()); }
+    catch { detail = null; }
+    CRITERION_DETAIL_CACHE[code] = detail;
+  }
+  if (!detail || !detail.suggested_evidence || detail.suggested_evidence.length === 0) {
+    host.style.display = 'none'; return;
+  }
+  const uploaded = evidenceList.filter(e => e.tieu_chi === code);
+  host.innerHTML = `
+    <div class="sug-head">💡 Minh chứng gợi ý (click để auto-fill mô tả):</div>
+    ${detail.suggested_evidence.map((s, i) => {
+      const key = s.name.toLowerCase().split(/[\s,/\(\)]+/).filter(w => w.length > 4);
+      const used = uploaded.some(u => {
+        const text = ((u.mo_ta || '') + ' ' + (u.file_name || '')).toLowerCase();
+        return key.some(w => text.includes(w));
+      });
+      const t = EVIDENCE_TYPE_MAP?.[s.type] || {};
+      return `<button type="button" class="sug-item ${used ? 'used' : ''}" onclick="applySuggestion(${i})">${t.icon || '•'} ${escHtml(s.name)}</button>`;
+    }).join('')}
+  `;
+  host.style.display = 'block';
+  host._suggestions = detail.suggested_evidence;
+}
+
+function applySuggestion(i) {
+  const host = document.getElementById('modal-suggestions');
+  const sugs = host._suggestions || [];
+  if (!sugs[i]) return;
+  const textarea = document.getElementById('f-mota');
+  if (textarea.value.trim()) {
+    if (!confirm('Mô tả đã có nội dung. Ghi đè?')) return;
+  }
+  textarea.value = sugs[i].name;
 }
 
 function applySearch() {
@@ -1001,6 +1226,7 @@ function openModal() {
       setTimeout(() => {
         document.getElementById('sel-tchi').value = filterTchi;
         updateCodePreview();
+        refreshModalSuggestions();
       }, 50);
     }
   }
@@ -1019,6 +1245,7 @@ function resetForm() {
   document.getElementById('f-ghichu').value = '';
   document.getElementById('file-chosen').textContent = '';
   document.getElementById('code-preview').textContent = 'Hn.ab.cd.ef';
+  document.getElementById('modal-suggestions').style.display = 'none';
   selectedFile = null;
 }
 
