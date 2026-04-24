@@ -30,22 +30,49 @@
   ],
   "nextWorkspaceId": 4,
 
+  "school_info": {
+    "1": {
+      "ten_truong": "Đại học Kiến trúc Đà Nẵng",
+      "ma_truong": "DAU",
+      "dia_chi": "566 Núi Thành, quận Hải Châu, Đà Nẵng",
+      "website": "https://dau.edu.vn",
+      "email": "info@dau.edu.vn",
+      "nam_thanh_lap": 2006
+    }
+  },
+
   "evidence": [],
   "nextId": 1,
-
-  "assessments": [],
-  "nextAssessId": 1,
 
   "kpi_data": [
     {
       "id": 1,
       "workspace_id": 1,
-      "nam_hoc": "2024-2025",
+      "nam_hoc": "2023-2024",
+      "so_gv_co_huu": 175,
+      "pct_gv_ts": 30,
+      "pct_tot_nghiep": 82,
+      "pct_viec_lam_12t": 70,
+      "so_bao_isi_scopus": 28,
+      "so_nguoi_hoc_dh": 2800,
       "created_at": "09:00:00 1/4/2026",
       "updated_at": "09:00:00 1/4/2026"
     },
     {
       "id": 2,
+      "workspace_id": 1,
+      "nam_hoc": "2024-2025",
+      "so_gv_co_huu": 180,
+      "pct_gv_ts": 32,
+      "pct_tot_nghiep": 84,
+      "pct_viec_lam_12t": 74,
+      "so_bao_isi_scopus": 35,
+      "so_nguoi_hoc_dh": 3000,
+      "created_at": "09:00:00 1/4/2026",
+      "updated_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 3,
       "workspace_id": 1,
       "nam_hoc": "2025-2026",
       "so_gv_co_huu": 185,
@@ -58,127 +85,486 @@
       "updated_at": "09:00:00 1/4/2026"
     }
   ],
-  "nextKpiId": 3,
+  "nextKpiId": 4,
 
-  "school_info": {
-    "1": {
-      "ten_truong": "Đại học Kiến trúc Đà Nẵng",
-      "ma_truong": "DAU"
+  "assessments": [
+    {
+      "id": 1, "workspace_id": 1, "tieu_chuan": 1, "tieu_chi": "1.1",
+      "hien_trang": "CSĐT ban hành Quyết định số 123/QĐ-DAU ngày 15/01/2024 về công bố tầm nhìn và sứ mạng giai đoạn 2024-2030. Tầm nhìn hướng đến trở thành trường đại học hàng đầu khu vực miền Trung về đào tạo kiến trúc và công nghệ. Sứ mạng đào tạo nguồn nhân lực chất lượng cao, gắn với nhu cầu địa phương. Quá trình xây dựng có tham vấn 45 bên liên quan (SV, GV, DN, cựu SV) qua khảo sát và hội thảo.",
+      "diem_manh": "(1) Tầm nhìn/sứ mạng được công bố rộng rãi qua website, sổ tay SV, bảng thông báo; (2) Có căn cứ Chiến lược phát triển Đà Nẵng đến 2030; (3) Định kỳ rà soát 5 năm/lần.",
+      "ton_tai": "(1) Tần suất truyền thông đến CB mới chưa đều; (2) Khảo sát bên liên quan quốc tế còn hạn chế.",
+      "ke_hoach": "(1) Tổ chức Orientation Day hằng quý cho CB mới từ Q3/2026; (2) Mở rộng khảo sát đối tác quốc tế trong năm 2027.",
+      "ket_qua": "DAT", "trang_thai": "approved",
+      "nguoi_thuc_hien": "Phòng KT&ĐBCL", "mc_bo_sung": "",
+      "created_at": "09:00:00 1/4/2026", "updated_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 2, "workspace_id": 1, "tieu_chuan": 1, "tieu_chi": "1.2",
+      "hien_trang": "CSĐT có hệ thống quản trị đầy đủ theo Luật GDĐH: Hội đồng trường (QĐ 245/QĐ-DAU, 15 thành viên, họp 4 lần/năm), Ban Giám hiệu (Hiệu trưởng + 3 Phó Hiệu trưởng), Đảng ủy, Công đoàn, Hội đồng KH&ĐT, 5 Hội đồng tư vấn chuyên môn. Quy chế tổ chức hoạt động ban hành theo QĐ 100/QĐ-HĐT, sửa đổi lần gần nhất 6/2025.",
+      "diem_manh": "Cơ cấu đầy đủ theo Luật GDĐH; quy chế phối hợp rõ ràng; HĐT họp định kỳ có biên bản đầy đủ; báo cáo giải trình công khai trên website hằng quý.",
+      "ton_tai": "Một số Hội đồng tư vấn (Hội đồng KH-CN) họp chưa đều; cơ chế giảm thiểu rủi ro mới dừng ở văn bản khung.",
+      "ke_hoach": "Rà soát quy chế HĐ KH-CN trong Q4/2026; xây dựng sổ tay quản trị rủi ro ban hành 2027.",
+      "ket_qua": "DAT", "trang_thai": "approved",
+      "nguoi_thuc_hien": "Phòng HCTH", "mc_bo_sung": "",
+      "created_at": "09:00:00 1/4/2026", "updated_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 3, "workspace_id": 1, "tieu_chuan": 1, "tieu_chi": "1.3",
+      "hien_trang": "Giá trị cốt lõi DAU: Liêm chính - Sáng tạo - Hội nhập công bố theo QĐ 67/QĐ-DAU 2024. Tích hợp vào Quy chế đào tạo, Quy định đạo đức NCKH (QĐ 89/QĐ-DAU), Sổ tay SV/GV. Có quy định chống đạo văn, sử dụng phần mềm Turnitin kiểm tra 100% luận văn ThS/TS.",
+      "diem_manh": "Quy định liêm chính học thuật đầy đủ; Turnitin triển khai đồng bộ; quy tắc ứng xử phổ biến đến 100% nhân sự qua tập huấn đầu năm học.",
+      "ton_tai": "Kiểm tra đạo văn chủ yếu ở bậc ThS/TS, chưa rộng ở bậc ĐH; chưa có hệ thống theo dõi vi phạm tổng thể.",
+      "ke_hoach": "Triển khai kiểm tra đạo văn cho 100% luận văn ĐH từ năm học 2026-2027; đào tạo liêm chính cho GV mới.",
+      "ket_qua": "DAT", "trang_thai": "approved",
+      "nguoi_thuc_hien": "Phòng KT&ĐBCL", "mc_bo_sung": "",
+      "created_at": "09:00:00 1/4/2026", "updated_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 4, "workspace_id": 1, "tieu_chuan": 1, "tieu_chi": "1.4",
+      "hien_trang": "Tầm nhìn, sứ mạng, văn hóa được truyền đạt qua: (i) website, sổ tay; (ii) tập huấn đầu năm cho GV mới (3 lớp/năm, 100% GV mới tham dự); (iii) 7 bảng hiệu trong khuôn viên; (iv) tích hợp vào kế hoạch công tác của 100% đơn vị. Khảo sát 2025: 82% CB/GV hiểu rõ tầm nhìn/sứ mạng.",
+      "diem_manh": "Hệ thống truyền thông đa kênh; KPI đơn vị gắn với mục tiêu chiến lược; khảo sát nhận thức định kỳ hằng năm.",
+      "ton_tai": "Mức độ hiểu của SV năm 1 chỉ ~ 65%; kế hoạch cá nhân một số đơn vị còn chung chung.",
+      "ke_hoach": "Tổ chức Welcome Day bắt buộc cho 100% SV năm 1 từ năm học 2026-2027; rà soát KPI đơn vị theo chuẩn SMART.",
+      "ket_qua": "DAT", "trang_thai": "approved",
+      "nguoi_thuc_hien": "Phòng Truyền thông + Phòng ĐT", "mc_bo_sung": "",
+      "created_at": "09:00:00 1/4/2026", "updated_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 5, "workspace_id": 1, "tieu_chuan": 1, "tieu_chi": "1.5",
+      "hien_trang": "QĐ 158/QĐ-HĐT về chiến lược được cụ thể hóa bằng 12 kế hoạch hành động. Chính sách môi trường theo QĐ 201/QĐ-DAU triển khai 2024: lắp đặt 450 bóng đèn LED, hệ thống solar 80kWp, giảm 22% tiêu thụ điện. Hoạt động phục vụ cộng đồng 2025: 18 chương trình tình nguyện, 850 lượt SV/GV tham gia. Báo cáo giám sát định kỳ hằng quý.",
+      "diem_manh": "Có bộ chỉ tiêu KPI về trách nhiệm xã hội; báo cáo công khai trên website; chương trình cộng đồng có quy mô lớn (Mùa hè xanh 2025 phủ 6 xã vùng sâu).",
+      "ton_tai": "Chính sách môi trường chưa đo lường định lượng carbon footprint; cơ chế phản hồi từ các bên còn phân tán qua nhiều kênh.",
+      "ke_hoach": "Áp dụng bộ chỉ số SDG cho trường trong 2027; triển khai hotline phản hồi tập trung Q2/2027.",
+      "ket_qua": "DAT", "trang_thai": "approved",
+      "nguoi_thuc_hien": "Phòng Hành chính + Đoàn TN", "mc_bo_sung": "",
+      "created_at": "09:00:00 1/4/2026", "updated_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 6, "workspace_id": 1, "tieu_chuan": 1, "tieu_chi": "1.6",
+      "hien_trang": "CSĐT có quy trình đánh giá HĐT 2 năm/lần, BGH 1 năm/lần theo QĐ 88/QĐ-HĐT. Trong 2024-2025 đã: (i) ban hành Quy chế TC&HĐ phiên bản mới (QĐ 100/QĐ-HĐT); (ii) tập huấn nâng cao năng lực cho 42 CB quản trị; (iii) cải thiện chỉ số thời gian xử lý văn bản từ 5 ngày xuống 2.5 ngày.",
+      "diem_manh": "Có chương trình tập huấn lãnh đạo định kỳ; quy trình rà soát văn bản 3 năm/lần; số liệu cụ thể cho thấy giảm 50% thời gian xử lý.",
+      "ton_tai": "Chưa có hệ thống đánh giá 360° cho nhân sự quản trị; một số văn bản cũ chưa được cập nhật đầy đủ sau khi Luật GDĐH 2024 sửa đổi.",
+      "ke_hoach": "Triển khai đánh giá 360° cho nhân sự cấp trưởng/phó từ Q2/2027; rà soát toàn bộ văn bản quản trị để phù hợp Luật GDĐH sửa đổi trong 2027.",
+      "ket_qua": "KHONG_DAT",
+      "trang_thai": "reviewed",
+      "nguoi_thuc_hien": "Phòng TCCB", "mc_bo_sung": "Cần bổ sung minh chứng về đánh giá 360° trước ĐGN",
+      "created_at": "09:00:00 1/4/2026", "updated_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 7, "workspace_id": 1, "tieu_chuan": 2, "tieu_chi": "2.1",
+      "hien_trang": "Cơ cấu tổ chức DAU ban hành QĐ 50/QĐ-HĐT, gồm: HĐT, BGH, 8 phòng chức năng, 5 khoa, 4 trung tâm, 2 viện. Quy chế TC&HĐ ban hành QĐ 100/QĐ-HĐT. Các kênh truyền thông: website nội bộ (daudms.edu.vn), email chung @dau.edu.vn, hệ thống e-Office đã số hóa 100% văn bản từ 2024.",
+      "diem_manh": "Cơ cấu tổ chức rõ ràng, công khai trên website; e-Office triển khai đồng bộ; họp giao ban hằng tuần có biên bản.",
+      "ton_tai": "Một số đơn vị có chức năng chồng chéo (Khoa Kiến trúc và Trung tâm Thiết kế đô thị); phản hồi 2 chiều từ GV chưa thực hiện định kỳ.",
+      "ke_hoach": "Rà soát chức năng các đơn vị Q1/2027; tổ chức khảo sát hiệu quả truyền thông nội bộ hằng năm từ 2026.",
+      "ket_qua": "DAT", "trang_thai": "approved",
+      "nguoi_thuc_hien": "Phòng HCTH", "mc_bo_sung": "",
+      "created_at": "09:00:00 1/4/2026", "updated_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 8, "workspace_id": 1, "tieu_chuan": 2, "tieu_chi": "2.3",
+      "hien_trang": "Kế hoạch chiến lược DAU 2024-2030 ban hành QĐ 158/QĐ-HĐT. Có phân tích SWOT và PESTLE (tài liệu kèm theo); tham vấn qua 8 cuộc họp và khảo sát 165 người. Bao phủ 4 mảng: đào tạo (15 KPI), NCKH (10 KPI), phục vụ cộng đồng (8 KPI), quản trị (7 KPI). Kế hoạch năm học cụ thể hóa từ chiến lược.",
+      "diem_manh": "Kế hoạch toàn diện, có SWOT/PESTLE bài bản; tham vấn đa đối tượng; báo cáo tiến độ hằng quý công khai; gắn chiến lược vùng Đà Nẵng đến 2030.",
+      "ton_tai": "Một số KPI còn định tính, chưa đo lường chặt (vd 'tăng uy tín' không có thước đo); điều chỉnh giữa kỳ chưa có quy trình chuẩn.",
+      "ke_hoach": "Chuyển 5 KPI định tính → định lượng trong 2026; ban hành quy trình điều chỉnh chiến lược giữa kỳ trong 2027.",
+      "ket_qua": "DAT", "trang_thai": "approved",
+      "nguoi_thuc_hien": "Phòng KH&ĐBCL", "mc_bo_sung": "",
+      "created_at": "09:00:00 1/4/2026", "updated_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 9, "workspace_id": 1, "tieu_chuan": 3, "tieu_chi": "3.1",
+      "hien_trang": "Quy hoạch nhân lực giai đoạn 2024-2030 theo QĐ 220/QĐ-DAU, xác định tăng từ 180 → 220 GV, trong đó 40% TS (hiện 35%). Đề án VTVL ban hành 2024. Trong 2024-2025 đã tuyển 12 GV mới (6 TS), bổ nhiệm 3 trưởng phó đơn vị. Tỷ lệ GV TS hiện đạt 35%, đáp ứng chuẩn Bộ (> 25%).",
+      "diem_manh": "Quy hoạch chi tiết cho 5 đối tượng nhân sự; đáp ứng 90% chỉ tiêu giai đoạn; cơ cấu trình độ GV cải thiện rõ (TS từ 28% → 35% trong 3 năm).",
+      "ton_tai": "Tuyển dụng NCV (Nghiên cứu viên) chỉ đạt 60% chỉ tiêu; cân đối giới tính trong ngành Công nghệ còn chưa đều (85% nam).",
+      "ke_hoach": "Tăng cường truyền thông tuyển NCV quốc tế từ 2026; chính sách thu hút nữ GV trong ngành kỹ thuật (học bổng, hỗ trợ định cư).",
+      "ket_qua": "DAT", "trang_thai": "approved",
+      "nguoi_thuc_hien": "Phòng TCCB", "mc_bo_sung": "",
+      "created_at": "09:00:00 1/4/2026", "updated_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 10, "workspace_id": 1, "tieu_chuan": 6, "tieu_chi": "6.2",
+      "hien_trang": "Quy trình thiết kế/rà soát CTĐT ban hành QĐ 135/QĐ-DAU. 100% CTĐT (12 chương trình) có PLO công bố. Chu kỳ rà soát 2 năm/lần. Đã rà soát 8 CTĐT trong 2024-2025, có tham vấn 25 DN và 120 cựu SV. Tất cả CTĐT theo nguyên tắc OBE.",
+      "diem_manh": "100% CTĐT theo OBE; bản mapping PLO ↔ Khung trình độ quốc gia VN đầy đủ; tham vấn DN bài bản; giảng viên tham gia 100%.",
+      "ton_tai": "Một số CTĐT chưa cập nhật chuẩn nghề nghiệp mới nhất (vd Kiến trúc chưa theo chuẩn Hội Kiến trúc sư mới); tỷ lệ phản hồi DN còn thấp (28%).",
+      "ke_hoach": "Cập nhật CTĐT Kiến trúc theo chuẩn mới từ 2026; xây dựng network DN cố định để tăng tỷ lệ phản hồi lên 50% trong 2027.",
+      "ket_qua": "DAT", "trang_thai": "approved",
+      "nguoi_thuc_hien": "Phòng ĐT + các Khoa", "mc_bo_sung": "",
+      "created_at": "09:00:00 1/4/2026", "updated_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 11, "workspace_id": 1, "tieu_chuan": 12, "tieu_chi": "12.1",
+      "hien_trang": "Tỷ lệ tốt nghiệp đúng hạn toàn trường 86% (2025, 5 năm TB 84%). Tỷ lệ thôi học 4.5%, nguyên nhân chính: học lực 60%, chuyển ngành 25%, khác 15%. Đã đo CLO trên 8/12 CTĐT (67%), đo PLO trên 4/12 CTĐT (33%). Đối sánh với 5 trường cùng loại: vị thế top 3 về tỷ lệ tốt nghiệp.",
+      "diem_manh": "Tỷ lệ tốt nghiệp cao, xu hướng tăng đều (82% → 86% trong 3 năm); đo CLO phủ rộng; đối sánh dương tính.",
+      "ton_tai": "CTĐT Kiến trúc và Đồ họa thôi học > 10%; đo PLO mới sơ khai ở một số CTĐT.",
+      "ke_hoach": "Chương trình mentor 1-1 cho SV nguy cơ thôi học từ Q1/2026; chuẩn hóa đo PLO toàn trường trong 2027.",
+      "ket_qua": "DAT", "trang_thai": "approved",
+      "nguoi_thuc_hien": "Phòng ĐT + KT&ĐBCL", "mc_bo_sung": "",
+      "created_at": "09:00:00 1/4/2026", "updated_at": "09:00:00 1/4/2026"
     }
-  },
+  ],
+  "nextAssessId": 12,
 
-  "tdg_plans": [],
-  "nextTdgId": 1,
-  "nextTaskId": 1,
+  "tdg_plans": [
+    {
+      "id": 1, "workspace_id": 1,
+      "name": "Kế hoạch TĐG DAU 2026",
+      "ngay_bat_dau": "01/09/2025",
+      "created_at": "09:00:00 1/4/2026",
+      "tasks": [
+        { "id": 1, "phase": 1, "week_start": 1, "week_end": 1, "title": "Ra quyết định thành lập Hội đồng TĐG (Biểu 01)", "assignee": "HT Phạm Văn A", "status": "done", "priority": "high", "notes": "QĐ 01/QĐ-DAU-TĐG ngày 05/09/2025" },
+        { "id": 2, "phase": 1, "week_start": 1, "week_end": 2, "title": "Phân công nhiệm vụ cho các nhóm TĐG", "assignee": "P.KT&ĐBCL", "status": "done", "priority": "normal", "notes": "5 nhóm, 42 thành viên" },
+        { "id": 3, "phase": 1, "week_start": 2, "week_end": 2, "title": "Xây dựng Kế hoạch TĐG chi tiết (Biểu 02)", "assignee": "P.KT&ĐBCL", "status": "done", "priority": "high", "notes": "" },
+        { "id": 4, "phase": 1, "week_start": 3, "week_end": 4, "title": "Tập huấn Hội đồng TĐG về quy trình & biểu mẫu", "assignee": "Chuyên gia ngoài + P.KT&ĐBCL", "status": "done", "priority": "normal", "notes": "2 buổi, 42/42 thành viên tham dự" },
+        { "id": 5, "phase": 2, "week_start": 5, "week_end": 6, "title": "Thu thập minh chứng — Tiêu chuẩn 1, 2, 3", "assignee": "Nhóm 1", "status": "done", "priority": "normal", "notes": "180/200 MC thu thập" },
+        { "id": 6, "phase": 2, "week_start": 7, "week_end": 8, "title": "Thu thập minh chứng — Tiêu chuẩn 4, 5, 6", "assignee": "Nhóm 2", "status": "done", "priority": "normal", "notes": "" },
+        { "id": 7, "phase": 2, "week_start": 9, "week_end": 10, "title": "Thu thập minh chứng — Tiêu chuẩn 7, 8, 9", "assignee": "Nhóm 3", "status": "in_progress", "priority": "normal", "notes": "Đang thu thập MC NCKH" },
+        { "id": 8, "phase": 2, "week_start": 11, "week_end": 12, "title": "Thu thập minh chứng — Tiêu chuẩn 10–15", "assignee": "Nhóm 4", "status": "in_progress", "priority": "normal", "notes": "" },
+        { "id": 9, "phase": 2, "week_start": 10, "week_end": 12, "title": "Mã hóa và phân loại minh chứng (Hn.ab.cd.ef)", "assignee": "Nhóm 5", "status": "in_progress", "priority": "normal", "notes": "Sử dụng app KĐCLGD-DAU" },
+        { "id": 10, "phase": 2, "week_start": 12, "week_end": 12, "title": "Nhập dữ liệu KPI vào Biểu 16", "assignee": "P.ĐT + P.KH-CN", "status": "done", "priority": "high", "notes": "3 năm 2023-2026" },
+        { "id": 11, "phase": 3, "week_start": 13, "week_end": 14, "title": "Đánh giá Tiêu chuẩn 1–4 (Biểu 04)", "assignee": "Nhóm 1,2", "status": "done", "priority": "high", "notes": "11/21 tiêu chí hoàn thành" },
+        { "id": 12, "phase": 3, "week_start": 15, "week_end": 16, "title": "Đánh giá Tiêu chuẩn 5–9 (Biểu 04)", "assignee": "Nhóm 2,3", "status": "in_progress", "priority": "high", "notes": "" },
+        { "id": 13, "phase": 3, "week_start": 17, "week_end": 18, "title": "Đánh giá Tiêu chuẩn 10–15 (Biểu 04)", "assignee": "Nhóm 3,4", "status": "todo", "priority": "high", "notes": "" },
+        { "id": 14, "phase": 3, "week_start": 18, "week_end": 18, "title": "Họp Hội đồng TĐG — xem xét kết quả đánh giá", "assignee": "HĐ TĐG", "status": "todo", "priority": "normal", "notes": "" },
+        { "id": 15, "phase": 4, "week_start": 19, "week_end": 20, "title": "Viết Báo cáo TĐG — Phần mở đầu & TC 1–7 (Biểu 05)", "assignee": "Nhóm viết báo cáo", "status": "todo", "priority": "high", "notes": "" },
+        { "id": 16, "phase": 4, "week_start": 21, "week_end": 22, "title": "Viết Báo cáo TĐG — TC 8–15 & kết luận", "assignee": "Nhóm viết báo cáo", "status": "todo", "priority": "high", "notes": "" },
+        { "id": 17, "phase": 4, "week_start": 22, "week_end": 22, "title": "Rà soát, chỉnh sửa Báo cáo TĐG lần 1", "assignee": "HĐ TĐG + chuyên gia ngoài", "status": "todo", "priority": "normal", "notes": "" },
+        { "id": 18, "phase": 5, "week_start": 23, "week_end": 23, "title": "Thẩm định nội bộ, chỉnh sửa lần cuối", "assignee": "HT + HĐT", "status": "todo", "priority": "high", "notes": "" },
+        { "id": 19, "phase": 5, "week_start": 23, "week_end": 24, "title": "Hoàn thiện và đóng gói hồ sơ minh chứng", "assignee": "P.KT&ĐBCL", "status": "todo", "priority": "normal", "notes": "" },
+        { "id": 20, "phase": 5, "week_start": 24, "week_end": 24, "title": "Nộp hồ sơ TĐG cho cơ quan kiểm định", "assignee": "HT", "status": "todo", "priority": "high", "notes": "Dự kiến nộp cho Trung tâm KĐCLGD-ĐHQG TP.HCM" }
+      ]
+    }
+  ],
+  "nextTdgId": 2,
+  "nextTaskId": 21,
 
-  "surveys": [],
-  "nextSurveyId": 1,
-  "nextResponseId": 1,
+  "surveys": [
+    {
+      "id": 1, "workspace_id": 1, "type": "bieu09",
+      "title": "Khảo sát SV — Biểu 09 (Đợt ĐGN 2025-2026)",
+      "description": "Khảo sát đánh giá chất lượng giáo dục từ góc độ người học",
+      "token": "SV2526A", "active": true,
+      "created_at": "10:00:00 5/4/2026",
+      "responses": [
+        { "id": 1, "submitted_at": "14:20:00 8/4/2026", "answers": { "q1": 5, "q2": 4, "q3": 5, "q4": 4, "q5": 3, "q6": 4, "q7": 5, "q8": 4, "q9": 4, "q10": 5, "comment": "Giảng viên nhiệt tình, cơ sở vật chất tốt. Mong có thêm hoạt động ngoại khóa và kết nối DN." } },
+        { "id": 2, "submitted_at": "14:25:00 8/4/2026", "answers": { "q1": 4, "q2": 4, "q3": 3, "q4": 5, "q5": 4, "q6": 3, "q7": 4, "q8": 5, "q9": 4, "q10": 4, "comment": "Cần cải thiện tốc độ wifi phòng học và các phòng máy tính cũ." } },
+        { "id": 3, "submitted_at": "09:15:00 9/4/2026", "answers": { "q1": 5, "q2": 5, "q3": 4, "q4": 5, "q5": 4, "q6": 5, "q7": 4, "q8": 4, "q9": 5, "q10": 5, "comment": "Rất hài lòng với chương trình." } },
+        { "id": 4, "submitted_at": "10:00:00 9/4/2026", "answers": { "q1": 3, "q2": 3, "q3": 4, "q4": 4, "q5": 3, "q6": 3, "q7": 3, "q8": 4, "q9": 3, "q10": 3, "comment": "" } },
+        { "id": 5, "submitted_at": "16:30:00 10/4/2026", "answers": { "q1": 4, "q2": 5, "q3": 4, "q4": 5, "q5": 5, "q6": 4, "q7": 5, "q8": 5, "q9": 5, "q10": 5, "comment": "Thực tập DN rất tốt, học được nhiều." } }
+      ]
+    },
+    {
+      "id": 2, "workspace_id": 1, "type": "bieu10",
+      "title": "Khảo sát Nhà tuyển dụng — Biểu 10",
+      "description": "Thu thập phản hồi về chất lượng SV tốt nghiệp từ doanh nghiệp",
+      "token": "DN2526B", "active": true,
+      "created_at": "10:00:00 5/4/2026",
+      "responses": [
+        { "id": 6, "submitted_at": "11:00:00 12/4/2026", "answers": { "q1": 4, "q2": 4, "q3": 5, "q4": 3, "q5": 4, "q6": 5, "q7": 3, "q8": 4, "q9": 4, "q10": 4, "comment": "SV có năng lực chuyên môn tốt nhưng cần tăng kỹ năng tiếng Anh và giao tiếp." } },
+        { "id": 7, "submitted_at": "14:15:00 12/4/2026", "answers": { "q1": 5, "q2": 4, "q3": 4, "q4": 4, "q5": 5, "q6": 5, "q7": 3, "q8": 5, "q9": 5, "q10": 5, "comment": "Nhà tuyển dụng 5 năm liên tiếp, SV DAU luôn có thái độ tốt và tự học cao." } },
+        { "id": 8, "submitted_at": "16:00:00 13/4/2026", "answers": { "q1": 4, "q2": 5, "q3": 5, "q4": 4, "q5": 4, "q6": 5, "q7": 4, "q8": 5, "q9": 5, "q10": 4, "comment": "" } }
+      ]
+    }
+  ],
+  "nextSurveyId": 3,
+  "nextResponseId": 9,
 
-  "reports": [],
-  "nextReportId": 1,
+  "reports": [
+    {
+      "id": 1, "workspace_id": 1,
+      "title": "Báo cáo Tự đánh giá DAU 2025-2026",
+      "period": "2025-2026", "author": "PGS.TS Phạm Văn A (Hiệu trưởng)",
+      "co_so_phap_ly": "Báo cáo này được xây dựng theo: (1) Luật Giáo dục đại học 2012 (sửa đổi 2024); (2) Thông tư 26/2026/TT-BGDĐT ngày 01/02/2026 của Bộ GD&ĐT về Quy định kiểm định chất lượng cơ sở giáo dục đại học; (3) Phụ lục I và II của TT26 về biểu mẫu và hướng dẫn đánh giá 60 tiêu chí thuộc 15 tiêu chuẩn; (4) Kế hoạch chiến lược DAU 2024-2030 theo QĐ 158/QĐ-HĐT.",
+      "mo_ta_qua_trinh": "Quá trình tự đánh giá kéo dài 24 tuần (từ 09/2025 đến 03/2026) theo 5 giai đoạn: Chuẩn bị (T1-4), Thu thập minh chứng (T5-12), Đánh giá tiêu chí Biểu 04 (T13-18), Viết báo cáo (T19-22), Hoàn thiện và nộp (T23-24). Hội đồng TĐG gồm 42 thành viên chia thành 5 nhóm phụ trách theo nhóm tiêu chuẩn. Đã thu thập 680 minh chứng, phỏng vấn 120 bên liên quan, khảo sát 850 SV/GV/cựu SV/DN.",
+      "mo_ta_csdt": "Đại học Kiến trúc Đà Nẵng (DAU) thành lập năm 2006, là cơ sở giáo dục đại học tư thục đầu tiên của khu vực miền Trung - Tây Nguyên về đào tạo kiến trúc và công nghệ. Hiện DAU có 185 giảng viên cơ hữu (35% trình độ TS), 3.200 người học hệ đại học, 12 chương trình đào tạo (trong đó 8 đã kiểm định), 5 khoa đào tạo (Kiến trúc, Xây dựng, CNTT, Kinh tế, Nghệ thuật).",
+      "tom_tat_ket_qua": "Kết quả tự đánh giá 60 tiêu chí: 48 ĐẠT, 8 KHÔNG ĐẠT, 4 chưa đánh giá. Tổng quan: Các tiêu chuẩn về Tầm nhìn-Sứ mạng-Quản trị (TC1), Chính sách đào tạo (TC6), Kết quả đào tạo (TC12) đạt tốt. Các điểm cần cải thiện: một số văn bản quản trị cũ cần cập nhật sau Luật sửa đổi (TC 1.6), đo PLO chưa phủ hết CTĐT (TC 6.6), hệ thống thông tin BĐCL cần tích hợp chặt hơn (TC 10.1). KPIs: Tỷ lệ TN đúng hạn 86%, việc làm sau 12 tháng 78%, công bố ISI/Scopus 42 bài/năm.",
+      "ke_hoach_cai_tien": "Kế hoạch 2026-2027: (1) Rà soát toàn bộ văn bản quản trị phù hợp Luật GDĐH sửa đổi 2024 — Q1/2027; (2) Triển khai đo PLO toàn bộ 12 CTĐT — trong 2026-2027; (3) Tích hợp MIS với LMS, HRIS, FMIS — Q3/2027; (4) Chương trình mentor 1-1 cho SV nguy cơ thôi học — từ Q1/2026; (5) Đầu tư lab công nghệ số hóa — 2026; (6) Đánh giá 360° cho nhân sự quản trị — Q2/2027.",
+      "created_at": "09:00:00 15/4/2026", "updated_at": "09:00:00 15/4/2026"
+    }
+  ],
+  "nextReportId": 2,
 
   "peos": [
-    {
-      "id": 1,
-      "workspace_id": 2,
-      "code": "PEO1",
-      "content": "Người tốt nghiệp vận dụng kiến thức CNTT để giải quyết các bài toán thực tiễn trong doanh nghiệp.",
-      "created_at": "09:00:00 1/4/2026"
-    },
-    {
-      "id": 2,
-      "workspace_id": 2,
-      "code": "PEO2",
-      "content": "Người tốt nghiệp thể hiện năng lực học tập suốt đời và trách nhiệm đạo đức nghề nghiệp.",
-      "created_at": "09:00:00 1/4/2026"
-    }
+    { "id": 1, "workspace_id": 2, "code": "PEO1", "content": "Người tốt nghiệp vận dụng kiến thức CNTT để giải quyết các bài toán thực tiễn trong doanh nghiệp và xã hội.", "created_at": "09:00:00 1/4/2026" },
+    { "id": 2, "workspace_id": 2, "code": "PEO2", "content": "Người tốt nghiệp thể hiện năng lực học tập suốt đời và trách nhiệm đạo đức nghề nghiệp.", "created_at": "09:00:00 1/4/2026" },
+    { "id": 3, "workspace_id": 2, "code": "PEO3", "content": "Người tốt nghiệp làm việc hiệu quả trong môi trường đa ngành và đa văn hóa.", "created_at": "09:00:00 1/4/2026" },
+    { "id": 4, "workspace_id": 2, "code": "PEO4", "content": "Người tốt nghiệp đóng góp tích cực vào sự phát triển của cộng đồng và xã hội bền vững.", "created_at": "09:00:00 1/4/2026" }
   ],
-  "nextPeoId": 3,
+  "nextPeoId": 5,
 
   "plos": [
-    {
-      "id": 1,
-      "workspace_id": 2,
-      "code": "PLO1",
-      "content": "Phân tích một bài toán tính toán phức tạp và xác định giải pháp phần mềm phù hợp.",
-      "bloom_level": "analyze",
-      "type": "knowledge",
-      "created_at": "09:00:00 1/4/2026"
-    },
-    {
-      "id": 2,
-      "workspace_id": 2,
-      "code": "PLO2",
-      "content": "Thiết kế và hiện thực một giải pháp phần mềm đáp ứng yêu cầu.",
-      "bloom_level": "create",
-      "type": "skill",
-      "created_at": "09:00:00 1/4/2026"
-    },
-    {
-      "id": 3,
-      "workspace_id": 2,
-      "code": "PLO3",
-      "content": "Giao tiếp hiệu quả trong các tình huống kỹ thuật chuyên môn.",
-      "bloom_level": "apply",
-      "type": "skill",
-      "created_at": "09:00:00 1/4/2026"
-    }
+    { "id": 1, "workspace_id": 2, "code": "PLO1", "content": "Phân tích một bài toán tính toán phức tạp và xác định giải pháp phần mềm phù hợp dựa trên nguyên lý khoa học máy tính.", "bloom_level": "analyze", "type": "knowledge", "created_at": "09:00:00 1/4/2026" },
+    { "id": 2, "workspace_id": 2, "code": "PLO2", "content": "Thiết kế và hiện thực một giải pháp phần mềm đáp ứng yêu cầu nghiệp vụ xác định.", "bloom_level": "create", "type": "skill", "created_at": "09:00:00 1/4/2026" },
+    { "id": 3, "workspace_id": 2, "code": "PLO3", "content": "Giao tiếp hiệu quả trong các tình huống kỹ thuật chuyên môn với nhiều đối tượng khác nhau.", "bloom_level": "apply", "type": "skill", "created_at": "09:00:00 1/4/2026" },
+    { "id": 4, "workspace_id": 2, "code": "PLO4", "content": "Nhận thức trách nhiệm nghề nghiệp và tuân thủ các chuẩn mực đạo đức trong hoạt động CNTT.", "bloom_level": "apply", "type": "attitude", "created_at": "09:00:00 1/4/2026" },
+    { "id": 5, "workspace_id": 2, "code": "PLO5", "content": "Làm việc hiệu quả trong nhóm đa ngành để đạt mục tiêu chung trong phát triển phần mềm.", "bloom_level": "apply", "type": "skill", "created_at": "09:00:00 1/4/2026" },
+    { "id": 6, "workspace_id": 2, "code": "PLO6", "content": "Phân tích tác động cục bộ và toàn cầu của các giải pháp máy tính trong bối cảnh xã hội, kinh tế và môi trường.", "bloom_level": "evaluate", "type": "knowledge", "created_at": "09:00:00 1/4/2026" },
+    { "id": 7, "workspace_id": 2, "code": "PLO7", "content": "Nhận thức nhu cầu và tự định hướng tiếp thu kiến thức mới, học tập suốt đời trong lĩnh vực CNTT.", "bloom_level": "apply", "type": "attitude", "created_at": "09:00:00 1/4/2026" }
   ],
-  "nextPloId": 4,
+  "nextPloId": 8,
 
   "courses": [
-    {
-      "id": 1,
-      "workspace_id": 2,
-      "code": "CS101",
-      "name": "Nhập môn lập trình",
-      "credits": 3,
-      "semester": 1,
-      "type": "core",
-      "created_at": "09:00:00 1/4/2026"
-    },
-    {
-      "id": 2,
-      "workspace_id": 2,
-      "code": "CS201",
-      "name": "Cấu trúc dữ liệu & Giải thuật",
-      "credits": 4,
-      "semester": 2,
-      "type": "core",
-      "created_at": "09:00:00 1/4/2026"
-    },
-    {
-      "id": 3,
-      "workspace_id": 2,
-      "code": "CS301",
-      "name": "Công nghệ phần mềm",
-      "credits": 3,
-      "semester": 4,
-      "type": "core",
-      "created_at": "09:00:00 1/4/2026"
-    }
+    { "id": 1, "workspace_id": 2, "code": "CS101", "name": "Nhập môn lập trình", "credits": 3, "semester": 1, "type": "core", "created_at": "09:00:00 1/4/2026" },
+    { "id": 2, "workspace_id": 2, "code": "CS201", "name": "Cấu trúc dữ liệu & Giải thuật", "credits": 4, "semester": 2, "type": "core", "created_at": "09:00:00 1/4/2026" },
+    { "id": 3, "workspace_id": 2, "code": "CS301", "name": "Công nghệ phần mềm", "credits": 3, "semester": 4, "type": "core", "created_at": "09:00:00 1/4/2026" }
   ],
   "nextCourseId": 4,
 
-  "clos": [],
-  "nextCloId": 1,
+  "clos": [
+    { "id": 1, "workspace_id": 2, "course_id": 1, "code": "CLO1", "content": "Hiểu được cú pháp cơ bản của ngôn ngữ lập trình C/Python: biến, kiểu dữ liệu, toán tử, câu lệnh điều khiển.", "bloom_level": "understand", "type": "knowledge", "created_at": "09:00:00 1/4/2026" },
+    { "id": 2, "workspace_id": 2, "course_id": 1, "code": "CLO2", "content": "Viết được chương trình giải quyết bài toán đơn giản sử dụng biến, điều kiện, vòng lặp, hàm.", "bloom_level": "apply", "type": "skill", "rubric_id": 1, "created_at": "09:00:00 1/4/2026" },
+    { "id": 3, "workspace_id": 2, "course_id": 1, "code": "CLO3", "content": "Phân tích, gỡ lỗi và kiểm thử chương trình đơn giản.", "bloom_level": "analyze", "type": "skill", "rubric_id": 1, "created_at": "09:00:00 1/4/2026" },
+    { "id": 4, "workspace_id": 2, "course_id": 1, "code": "CLO4", "content": "Thể hiện tinh thần học tập chủ động và làm việc nhóm trong dự án lập trình nhỏ.", "bloom_level": "apply", "type": "attitude", "rubric_id": 3, "created_at": "09:00:00 1/4/2026" },
 
-  "course_plo_map": [],
-  "clo_plo_map": [],
+    { "id": 5, "workspace_id": 2, "course_id": 2, "code": "CLO1", "content": "Hiểu các cấu trúc dữ liệu cơ bản: mảng, danh sách liên kết, ngăn xếp, hàng đợi, cây, đồ thị, bảng băm.", "bloom_level": "understand", "type": "knowledge", "created_at": "09:00:00 1/4/2026" },
+    { "id": 6, "workspace_id": 2, "course_id": 2, "code": "CLO2", "content": "Phân tích độ phức tạp về thời gian và không gian của các thuật toán bằng ký hiệu Big-O.", "bloom_level": "analyze", "type": "knowledge", "created_at": "09:00:00 1/4/2026" },
+    { "id": 7, "workspace_id": 2, "course_id": 2, "code": "CLO3", "content": "Thiết kế thuật toán giải các bài toán cụ thể: sắp xếp, tìm kiếm, duyệt đồ thị.", "bloom_level": "create", "type": "skill", "rubric_id": 1, "created_at": "09:00:00 1/4/2026" },
+    { "id": 8, "workspace_id": 2, "course_id": 2, "code": "CLO4", "content": "Cài đặt và kiểm thử các cấu trúc dữ liệu, thuật toán trong ngôn ngữ lập trình cụ thể.", "bloom_level": "apply", "type": "skill", "rubric_id": 1, "created_at": "09:00:00 1/4/2026" },
+    { "id": 9, "workspace_id": 2, "course_id": 2, "code": "CLO5", "content": "Đánh giá và lựa chọn cấu trúc dữ liệu, thuật toán phù hợp cho từng bài toán thực tiễn.", "bloom_level": "evaluate", "type": "skill", "rubric_id": 1, "created_at": "09:00:00 1/4/2026" },
 
-  "rubrics": [],
-  "nextRubricId": 1,
+    { "id": 10, "workspace_id": 2, "course_id": 3, "code": "CLO1", "content": "Hiểu vòng đời phát triển phần mềm và các mô hình phát triển (Waterfall, Agile, Scrum).", "bloom_level": "understand", "type": "knowledge", "created_at": "09:00:00 1/4/2026" },
+    { "id": 11, "workspace_id": 2, "course_id": 3, "code": "CLO2", "content": "Áp dụng các kỹ thuật phân tích và đặc tả yêu cầu phần mềm (use case, user story, quy trình).", "bloom_level": "apply", "type": "skill", "rubric_id": 2, "created_at": "09:00:00 1/4/2026" },
+    { "id": 12, "workspace_id": 2, "course_id": 3, "code": "CLO3", "content": "Thiết kế kiến trúc phần mềm sử dụng các mẫu thiết kế và nguyên lý SOLID.", "bloom_level": "create", "type": "skill", "rubric_id": 2, "created_at": "09:00:00 1/4/2026" },
+    { "id": 13, "workspace_id": 2, "course_id": 3, "code": "CLO4", "content": "Giao tiếp và làm việc nhóm hiệu quả trong dự án phần mềm theo phương pháp Agile.", "bloom_level": "apply", "type": "attitude", "rubric_id": 3, "created_at": "09:00:00 1/4/2026" }
+  ],
+  "nextCloId": 14,
 
-  "assessment_plans": [],
-  "nextPlanId": 1,
+  "course_plo_map": [
+    { "workspace_id": 2, "course_id": 1, "plo_id": 1, "level": "I" },
+    { "workspace_id": 2, "course_id": 1, "plo_id": 2, "level": "I" },
+    { "workspace_id": 2, "course_id": 1, "plo_id": 3, "level": "I" },
+    { "workspace_id": 2, "course_id": 1, "plo_id": 5, "level": "I" },
+    { "workspace_id": 2, "course_id": 1, "plo_id": 7, "level": "I" },
 
-  "assessment_items": [],
-  "nextItemId": 1,
+    { "workspace_id": 2, "course_id": 2, "plo_id": 1, "level": "R" },
+    { "workspace_id": 2, "course_id": 2, "plo_id": 2, "level": "R" },
+    { "workspace_id": 2, "course_id": 2, "plo_id": 6, "level": "I" },
 
-  "plan_students": [],
-  "nextPlanStudentId": 1,
+    { "workspace_id": 2, "course_id": 3, "plo_id": 1, "level": "M" },
+    { "workspace_id": 2, "course_id": 3, "plo_id": 2, "level": "M" },
+    { "workspace_id": 2, "course_id": 3, "plo_id": 3, "level": "R" },
+    { "workspace_id": 2, "course_id": 3, "plo_id": 4, "level": "I" },
+    { "workspace_id": 2, "course_id": 3, "plo_id": 5, "level": "R" },
+    { "workspace_id": 2, "course_id": 3, "plo_id": 6, "level": "R" },
+    { "workspace_id": 2, "course_id": 3, "plo_id": 7, "level": "R" }
+  ],
 
-  "scores": [],
-  "nextScoreId": 1
+  "clo_plo_map": [
+    { "workspace_id": 2, "clo_id": 1, "plo_id": 1, "weight": 1 },
+    { "workspace_id": 2, "clo_id": 2, "plo_id": 2, "weight": 1.5 },
+    { "workspace_id": 2, "clo_id": 2, "plo_id": 1, "weight": 0.5 },
+    { "workspace_id": 2, "clo_id": 3, "plo_id": 1, "weight": 1 },
+    { "workspace_id": 2, "clo_id": 3, "plo_id": 2, "weight": 0.5 },
+    { "workspace_id": 2, "clo_id": 4, "plo_id": 5, "weight": 1 },
+    { "workspace_id": 2, "clo_id": 4, "plo_id": 3, "weight": 0.5 },
+    { "workspace_id": 2, "clo_id": 4, "plo_id": 7, "weight": 0.5 },
+
+    { "workspace_id": 2, "clo_id": 5, "plo_id": 1, "weight": 1 },
+    { "workspace_id": 2, "clo_id": 6, "plo_id": 1, "weight": 1.5 },
+    { "workspace_id": 2, "clo_id": 7, "plo_id": 2, "weight": 1.5 },
+    { "workspace_id": 2, "clo_id": 7, "plo_id": 1, "weight": 0.5 },
+    { "workspace_id": 2, "clo_id": 8, "plo_id": 2, "weight": 1 },
+    { "workspace_id": 2, "clo_id": 9, "plo_id": 1, "weight": 0.5 },
+    { "workspace_id": 2, "clo_id": 9, "plo_id": 6, "weight": 1 },
+
+    { "workspace_id": 2, "clo_id": 10, "plo_id": 1, "weight": 1 },
+    { "workspace_id": 2, "clo_id": 11, "plo_id": 2, "weight": 1.5 },
+    { "workspace_id": 2, "clo_id": 11, "plo_id": 3, "weight": 0.5 },
+    { "workspace_id": 2, "clo_id": 12, "plo_id": 2, "weight": 1.5 },
+    { "workspace_id": 2, "clo_id": 12, "plo_id": 6, "weight": 0.5 },
+    { "workspace_id": 2, "clo_id": 13, "plo_id": 3, "weight": 1 },
+    { "workspace_id": 2, "clo_id": 13, "plo_id": 5, "weight": 1 },
+    { "workspace_id": 2, "clo_id": 13, "plo_id": 4, "weight": 0.5 },
+    { "workspace_id": 2, "clo_id": 13, "plo_id": 7, "weight": 0.5 }
+  ],
+
+  "rubrics": [
+    {
+      "id": 1, "workspace_id": 2,
+      "name": "Rubric chuẩn A-D cho CLO Kỹ năng",
+      "description": "Thang đo 4 mức chuẩn theo IUH — dùng cho CLO loại Skill (lập trình, thiết kế, cài đặt).",
+      "scale_type": "A_D",
+      "levels": [
+        { "name": "Yếu", "is_pass": false, "weight": 25, "description": "Chỉ hiểu ≤ 40% yêu cầu. Không hoàn thành bài tập độc lập. Lỗi cú pháp/logic thường xuyên. Cần hỗ trợ liên tục từ GV." },
+        { "name": "Trung bình", "is_pass": false, "weight": 25, "description": "Hiểu 40–60% yêu cầu. Hoàn thành bài cơ bản với hỗ trợ từng bước. Còn một số lỗi logic khi làm bài khó hơn." },
+        { "name": "Khá", "is_pass": true, "weight": 25, "description": "Hiểu 60–80% yêu cầu. Độc lập hoàn thành bài tập tiêu chuẩn. Gỡ lỗi được các lỗi thông thường. Giải thích được hướng tiếp cận." },
+        { "name": "Giỏi", "is_pass": true, "weight": 25, "description": "Hiểu > 80% yêu cầu. Chủ động chọn giải pháp tối ưu. Mở rộng bài toán, tìm hiểu ngoài phạm vi yêu cầu. Đóng góp cho đồng đội." }
+      ],
+      "created_at": "09:00:00 1/4/2026", "updated_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 2, "workspace_id": 2,
+      "name": "Rubric đánh giá Dự án phần mềm",
+      "description": "Dùng cho các học phần có dự án cuối kỳ. Đánh giá năng lực phân tích, thiết kế và trình bày.",
+      "scale_type": "NOVICE",
+      "levels": [
+        { "name": "Cần phát triển", "is_pass": false, "weight": 15, "description": "Dự án chưa đáp ứng yêu cầu cơ bản. Tài liệu sơ sài. Thiết kế thiếu hoặc không nhất quán. Trình bày không rõ ràng." },
+        { "name": "Đang phát triển", "is_pass": false, "weight": 25, "description": "Dự án đáp ứng phần lớn yêu cầu cơ bản. Tài liệu đủ nhưng còn thiếu chi tiết. Thiết kế đơn giản, chưa áp dụng mẫu thiết kế." },
+        { "name": "Hài lòng", "is_pass": true, "weight": 30, "description": "Đáp ứng đầy đủ yêu cầu. Tài liệu rõ ràng, có use case, ERD. Thiết kế áp dụng mẫu SOLID ở mức cơ bản. Trình bày tốt." },
+        { "name": "Vượt trội", "is_pass": true, "weight": 30, "description": "Vượt yêu cầu. Tài liệu chuyên nghiệp. Thiết kế sáng tạo, tối ưu. Trình bày xuất sắc, có demo chạy thực tế. Thể hiện khả năng tự học." }
+      ],
+      "created_at": "09:00:00 1/4/2026", "updated_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 3, "workspace_id": 2,
+      "name": "Rubric Làm việc nhóm & Thái độ",
+      "description": "Đo kỹ năng mềm: hợp tác, trách nhiệm, đạo đức. Dùng cho CLO loại Attitude.",
+      "scale_type": "NUMERIC",
+      "levels": [
+        { "name": "Mức 1", "is_pass": false, "weight": 20, "description": "Ít tham gia thảo luận nhóm. Không đóng góp ý tưởng. Thường chậm deadline cá nhân." },
+        { "name": "Mức 2", "is_pass": false, "weight": 25, "description": "Tham gia nhưng chưa tích cực. Hoàn thành phần được giao nhưng chưa chủ động hỗ trợ đồng đội." },
+        { "name": "Mức 3", "is_pass": true, "weight": 30, "description": "Tham gia tích cực. Đóng góp ý tưởng xây dựng. Hoàn thành đúng hạn. Hỗ trợ đồng đội khi cần." },
+        { "name": "Mức 4", "is_pass": true, "weight": 25, "description": "Chủ động dẫn dắt thảo luận. Giải quyết xung đột trong nhóm. Đóng vai trò kết nối. Thể hiện trách nhiệm cao và đạo đức nghề nghiệp." }
+      ],
+      "created_at": "09:00:00 1/4/2026", "updated_at": "09:00:00 1/4/2026"
+    }
+  ],
+  "nextRubricId": 4,
+
+  "assessment_plans": [
+    {
+      "id": 1, "workspace_id": 2, "course_id": 1,
+      "name": "CS101 — HK1 2025-2026 Lớp CNTT-K20",
+      "semester": 1, "school_year": "2025-2026",
+      "threshold_pct": 75, "pass_score_pct": 50,
+      "status": "active",
+      "created_at": "09:00:00 15/8/2025", "updated_at": "09:00:00 15/8/2025"
+    }
+  ],
+  "nextPlanId": 2,
+
+  "assessment_items": [
+    {
+      "id": 1, "workspace_id": 2, "plan_id": 1,
+      "name": "Bài tập nhóm 1 — Biến, điều kiện, vòng lặp",
+      "type": "project", "max_score": 10,
+      "description": "Nhóm 3-4 SV xây dựng chương trình nhỏ (máy tính BMI, quản lý điểm). Nộp code + báo cáo 2 trang.",
+      "clo_targets": [
+        { "clo_id": 1, "weight": 30 },
+        { "clo_id": 2, "weight": 50 },
+        { "clo_id": 4, "weight": 20 }
+      ],
+      "created_at": "09:00:00 1/10/2025", "updated_at": "09:00:00 1/10/2025"
+    },
+    {
+      "id": 2, "workspace_id": 2, "plan_id": 1,
+      "name": "Bài kiểm tra giữa kỳ (Trắc nghiệm + Tự luận)",
+      "type": "test", "max_score": 10,
+      "description": "30 câu trắc nghiệm (5đ) + 2 câu tự luận viết code (5đ). Thời gian 90 phút.",
+      "clo_targets": [
+        { "clo_id": 1, "weight": 30 },
+        { "clo_id": 2, "weight": 40 },
+        { "clo_id": 3, "weight": 30 }
+      ],
+      "created_at": "09:00:00 1/10/2025", "updated_at": "09:00:00 1/10/2025"
+    },
+    {
+      "id": 3, "workspace_id": 2, "plan_id": 1,
+      "name": "Bài thi cuối kỳ",
+      "type": "test", "max_score": 10,
+      "description": "5 câu: 2 trắc nghiệm hiểu cú pháp, 2 câu viết code, 1 câu gỡ lỗi. 120 phút.",
+      "clo_targets": [
+        { "clo_id": 2, "weight": 30 },
+        { "clo_id": 3, "weight": 50 },
+        { "clo_id": 1, "weight": 20 }
+      ],
+      "created_at": "09:00:00 1/10/2025", "updated_at": "09:00:00 1/10/2025"
+    },
+    {
+      "id": 4, "workspace_id": 2, "plan_id": 1,
+      "name": "Dự án cuối kỳ (nhóm)",
+      "type": "project", "max_score": 10,
+      "description": "Nhóm 4 SV xây dựng ứng dụng nhỏ (Quản lý thư viện, Đặt lịch phòng). Chấm theo Rubric 2 (Dự án). Có thuyết trình.",
+      "clo_targets": [
+        { "clo_id": 2, "weight": 30 },
+        { "clo_id": 3, "weight": 30 },
+        { "clo_id": 4, "weight": 40 }
+      ],
+      "created_at": "09:00:00 1/10/2025", "updated_at": "09:00:00 1/10/2025"
+    }
+  ],
+  "nextItemId": 5,
+
+  "plan_students": [
+    { "id": 1, "workspace_id": 2, "plan_id": 1, "code": "20211001", "full_name": "Nguyễn Văn An", "created_at": "09:00:00 1/9/2025" },
+    { "id": 2, "workspace_id": 2, "plan_id": 1, "code": "20211002", "full_name": "Trần Thị Bình", "created_at": "09:00:00 1/9/2025" },
+    { "id": 3, "workspace_id": 2, "plan_id": 1, "code": "20211003", "full_name": "Lê Văn Cường", "created_at": "09:00:00 1/9/2025" },
+    { "id": 4, "workspace_id": 2, "plan_id": 1, "code": "20211004", "full_name": "Phạm Thị Dung", "created_at": "09:00:00 1/9/2025" },
+    { "id": 5, "workspace_id": 2, "plan_id": 1, "code": "20211005", "full_name": "Hoàng Văn Em", "created_at": "09:00:00 1/9/2025" },
+    { "id": 6, "workspace_id": 2, "plan_id": 1, "code": "20211006", "full_name": "Vũ Thị Phương", "created_at": "09:00:00 1/9/2025" },
+    { "id": 7, "workspace_id": 2, "plan_id": 1, "code": "20211007", "full_name": "Đặng Văn Giang", "created_at": "09:00:00 1/9/2025" },
+    { "id": 8, "workspace_id": 2, "plan_id": 1, "code": "20211008", "full_name": "Bùi Thị Hạnh", "created_at": "09:00:00 1/9/2025" },
+    { "id": 9, "workspace_id": 2, "plan_id": 1, "code": "20211009", "full_name": "Ngô Văn Ích", "created_at": "09:00:00 1/9/2025" },
+    { "id": 10, "workspace_id": 2, "plan_id": 1, "code": "20211010", "full_name": "Đỗ Thị Kiều", "created_at": "09:00:00 1/9/2025" },
+    { "id": 11, "workspace_id": 2, "plan_id": 1, "code": "20211011", "full_name": "Lý Văn Long", "created_at": "09:00:00 1/9/2025" },
+    { "id": 12, "workspace_id": 2, "plan_id": 1, "code": "20211012", "full_name": "Hồ Thị My", "created_at": "09:00:00 1/9/2025" },
+    { "id": 13, "workspace_id": 2, "plan_id": 1, "code": "20211013", "full_name": "Phan Văn Nam", "created_at": "09:00:00 1/9/2025" },
+    { "id": 14, "workspace_id": 2, "plan_id": 1, "code": "20211014", "full_name": "Trịnh Thị Oanh", "created_at": "09:00:00 1/9/2025" },
+    { "id": 15, "workspace_id": 2, "plan_id": 1, "code": "20211015", "full_name": "Nguyễn Văn Phúc", "created_at": "09:00:00 1/9/2025" }
+  ],
+  "nextPlanStudentId": 16,
+
+  "scores": [
+    { "id":  1, "workspace_id": 2, "item_id": 1, "plan_student_id": 1, "score": 9, "updated_at": "09:00:00 20/10/2025" },
+    { "id":  2, "workspace_id": 2, "item_id": 1, "plan_student_id": 2, "score": 8, "updated_at": "09:00:00 20/10/2025" },
+    { "id":  3, "workspace_id": 2, "item_id": 1, "plan_student_id": 3, "score": 8.5, "updated_at": "09:00:00 20/10/2025" },
+    { "id":  4, "workspace_id": 2, "item_id": 1, "plan_student_id": 4, "score": 7, "updated_at": "09:00:00 20/10/2025" },
+    { "id":  5, "workspace_id": 2, "item_id": 1, "plan_student_id": 5, "score": 7.5, "updated_at": "09:00:00 20/10/2025" },
+    { "id":  6, "workspace_id": 2, "item_id": 1, "plan_student_id": 6, "score": 6.5, "updated_at": "09:00:00 20/10/2025" },
+    { "id":  7, "workspace_id": 2, "item_id": 1, "plan_student_id": 7, "score": 7, "updated_at": "09:00:00 20/10/2025" },
+    { "id":  8, "workspace_id": 2, "item_id": 1, "plan_student_id": 8, "score": 6, "updated_at": "09:00:00 20/10/2025" },
+    { "id":  9, "workspace_id": 2, "item_id": 1, "plan_student_id": 9, "score": 5.5, "updated_at": "09:00:00 20/10/2025" },
+    { "id": 10, "workspace_id": 2, "item_id": 1, "plan_student_id": 10, "score": 5, "updated_at": "09:00:00 20/10/2025" },
+    { "id": 11, "workspace_id": 2, "item_id": 1, "plan_student_id": 11, "score": 6, "updated_at": "09:00:00 20/10/2025" },
+    { "id": 12, "workspace_id": 2, "item_id": 1, "plan_student_id": 12, "score": 4.5, "updated_at": "09:00:00 20/10/2025" },
+    { "id": 13, "workspace_id": 2, "item_id": 1, "plan_student_id": 13, "score": 3.5, "updated_at": "09:00:00 20/10/2025" },
+    { "id": 14, "workspace_id": 2, "item_id": 1, "plan_student_id": 14, "score": 4, "updated_at": "09:00:00 20/10/2025" },
+    { "id": 15, "workspace_id": 2, "item_id": 1, "plan_student_id": 15, "score": 3, "updated_at": "09:00:00 20/10/2025" },
+
+    { "id": 16, "workspace_id": 2, "item_id": 2, "plan_student_id": 1, "score": 8.5, "updated_at": "09:00:00 15/11/2025" },
+    { "id": 17, "workspace_id": 2, "item_id": 2, "plan_student_id": 2, "score": 7.5, "updated_at": "09:00:00 15/11/2025" },
+    { "id": 18, "workspace_id": 2, "item_id": 2, "plan_student_id": 3, "score": 9, "updated_at": "09:00:00 15/11/2025" },
+    { "id": 19, "workspace_id": 2, "item_id": 2, "plan_student_id": 4, "score": 6.5, "updated_at": "09:00:00 15/11/2025" },
+    { "id": 20, "workspace_id": 2, "item_id": 2, "plan_student_id": 5, "score": 7, "updated_at": "09:00:00 15/11/2025" },
+    { "id": 21, "workspace_id": 2, "item_id": 2, "plan_student_id": 6, "score": 6, "updated_at": "09:00:00 15/11/2025" },
+    { "id": 22, "workspace_id": 2, "item_id": 2, "plan_student_id": 7, "score": 6.5, "updated_at": "09:00:00 15/11/2025" },
+    { "id": 23, "workspace_id": 2, "item_id": 2, "plan_student_id": 8, "score": 5.5, "updated_at": "09:00:00 15/11/2025" },
+    { "id": 24, "workspace_id": 2, "item_id": 2, "plan_student_id": 9, "score": 5, "updated_at": "09:00:00 15/11/2025" },
+    { "id": 25, "workspace_id": 2, "item_id": 2, "plan_student_id": 10, "score": 4.5, "updated_at": "09:00:00 15/11/2025" },
+    { "id": 26, "workspace_id": 2, "item_id": 2, "plan_student_id": 11, "score": 5.5, "updated_at": "09:00:00 15/11/2025" },
+    { "id": 27, "workspace_id": 2, "item_id": 2, "plan_student_id": 12, "score": 4, "updated_at": "09:00:00 15/11/2025" },
+    { "id": 28, "workspace_id": 2, "item_id": 2, "plan_student_id": 13, "score": 3, "updated_at": "09:00:00 15/11/2025" },
+    { "id": 29, "workspace_id": 2, "item_id": 2, "plan_student_id": 14, "score": 3.5, "updated_at": "09:00:00 15/11/2025" },
+    { "id": 30, "workspace_id": 2, "item_id": 2, "plan_student_id": 15, "score": 2.5, "updated_at": "09:00:00 15/11/2025" },
+
+    { "id": 31, "workspace_id": 2, "item_id": 3, "plan_student_id": 1, "score": 9, "updated_at": "09:00:00 20/12/2025" },
+    { "id": 32, "workspace_id": 2, "item_id": 3, "plan_student_id": 2, "score": 8, "updated_at": "09:00:00 20/12/2025" },
+    { "id": 33, "workspace_id": 2, "item_id": 3, "plan_student_id": 3, "score": 8.5, "updated_at": "09:00:00 20/12/2025" },
+    { "id": 34, "workspace_id": 2, "item_id": 3, "plan_student_id": 4, "score": 7, "updated_at": "09:00:00 20/12/2025" },
+    { "id": 35, "workspace_id": 2, "item_id": 3, "plan_student_id": 5, "score": 7.5, "updated_at": "09:00:00 20/12/2025" },
+    { "id": 36, "workspace_id": 2, "item_id": 3, "plan_student_id": 6, "score": 6, "updated_at": "09:00:00 20/12/2025" },
+    { "id": 37, "workspace_id": 2, "item_id": 3, "plan_student_id": 7, "score": 6.5, "updated_at": "09:00:00 20/12/2025" },
+    { "id": 38, "workspace_id": 2, "item_id": 3, "plan_student_id": 8, "score": 5.5, "updated_at": "09:00:00 20/12/2025" },
+    { "id": 39, "workspace_id": 2, "item_id": 3, "plan_student_id": 9, "score": 5, "updated_at": "09:00:00 20/12/2025" },
+    { "id": 40, "workspace_id": 2, "item_id": 3, "plan_student_id": 10, "score": 5, "updated_at": "09:00:00 20/12/2025" },
+    { "id": 41, "workspace_id": 2, "item_id": 3, "plan_student_id": 11, "score": 6, "updated_at": "09:00:00 20/12/2025" },
+    { "id": 42, "workspace_id": 2, "item_id": 3, "plan_student_id": 12, "score": 4, "updated_at": "09:00:00 20/12/2025" },
+    { "id": 43, "workspace_id": 2, "item_id": 3, "plan_student_id": 13, "score": 3, "updated_at": "09:00:00 20/12/2025" },
+    { "id": 44, "workspace_id": 2, "item_id": 3, "plan_student_id": 14, "score": 3.5, "updated_at": "09:00:00 20/12/2025" },
+    { "id": 45, "workspace_id": 2, "item_id": 3, "plan_student_id": 15, "score": 2.5, "updated_at": "09:00:00 20/12/2025" },
+
+    { "id": 46, "workspace_id": 2, "item_id": 4, "plan_student_id": 1, "score": 8.5, "updated_at": "09:00:00 25/12/2025" },
+    { "id": 47, "workspace_id": 2, "item_id": 4, "plan_student_id": 2, "score": 8, "updated_at": "09:00:00 25/12/2025" },
+    { "id": 48, "workspace_id": 2, "item_id": 4, "plan_student_id": 3, "score": 9, "updated_at": "09:00:00 25/12/2025" },
+    { "id": 49, "workspace_id": 2, "item_id": 4, "plan_student_id": 4, "score": 7.5, "updated_at": "09:00:00 25/12/2025" },
+    { "id": 50, "workspace_id": 2, "item_id": 4, "plan_student_id": 5, "score": 8, "updated_at": "09:00:00 25/12/2025" },
+    { "id": 51, "workspace_id": 2, "item_id": 4, "plan_student_id": 6, "score": 7, "updated_at": "09:00:00 25/12/2025" },
+    { "id": 52, "workspace_id": 2, "item_id": 4, "plan_student_id": 7, "score": 7, "updated_at": "09:00:00 25/12/2025" },
+    { "id": 53, "workspace_id": 2, "item_id": 4, "plan_student_id": 8, "score": 6.5, "updated_at": "09:00:00 25/12/2025" },
+    { "id": 54, "workspace_id": 2, "item_id": 4, "plan_student_id": 9, "score": 6, "updated_at": "09:00:00 25/12/2025" },
+    { "id": 55, "workspace_id": 2, "item_id": 4, "plan_student_id": 10, "score": 5.5, "updated_at": "09:00:00 25/12/2025" },
+    { "id": 56, "workspace_id": 2, "item_id": 4, "plan_student_id": 11, "score": 6.5, "updated_at": "09:00:00 25/12/2025" },
+    { "id": 57, "workspace_id": 2, "item_id": 4, "plan_student_id": 12, "score": 5, "updated_at": "09:00:00 25/12/2025" },
+    { "id": 58, "workspace_id": 2, "item_id": 4, "plan_student_id": 13, "score": 4, "updated_at": "09:00:00 25/12/2025" },
+    { "id": 59, "workspace_id": 2, "item_id": 4, "plan_student_id": 14, "score": 4.5, "updated_at": "09:00:00 25/12/2025" },
+    { "id": 60, "workspace_id": 2, "item_id": 4, "plan_student_id": 15, "score": 3.5, "updated_at": "09:00:00 25/12/2025" }
+  ],
+  "nextScoreId": 61
 }
