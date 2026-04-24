@@ -26,8 +26,10 @@ make setup
 
 ### 2. Google Colab Pro+
 
-Open `notebooks/colab_bootstrap.ipynb` in Colab. It will:
-1. Clone the GitHub repo (after you push it);
+See [**COLAB_GUIDE.md**](./COLAB_GUIDE.md) for step-by-step setup + tiered workflow for sharing results back.
+
+Quick summary: open `notebooks/colab_bootstrap.ipynb` in Colab. It will:
+1. Clone the GitHub repo (use a PAT if private);
 2. Install pinned dependencies;
 3. Run a smoke test on a tiny subset.
 
