@@ -2060,7 +2060,11 @@ app.get('/api/plo-rollup', (req, res) => {
 });
 
 // ─── Start ────────────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`\n✅  Quản lý minh chứng KĐCLGD`);
-  console.log(`   http://localhost:${PORT}\n`);
-});
+// Local: listen on port. Vercel serverless: export app for the platform to invoke.
+if (!IS_VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`\n✅  Quản lý minh chứng KĐCLGD`);
+    console.log(`   http://localhost:${PORT}\n`);
+  });
+}
+module.exports = app;
