@@ -1,0 +1,493 @@
+% !TEX program = xelatex
+% Biên dịch: xelatex 02-stress-test-3-niche.tex
+% Tuân thủ 00-methodology.tex
+
+\documentclass[11pt,a4paper]{article}
+
+%=========================================================
+% PACKAGES
+%=========================================================
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{vietnamese}
+\setotherlanguage{english}
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{url}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+%=========================================================
+% STYLE
+%=========================================================
+\definecolor{accent}{HTML}{0B5FA5}
+\definecolor{accent2}{HTML}{B8860B}
+\definecolor{success}{HTML}{2E8B57}
+\definecolor{danger}{HTML}{B22222}
+\definecolor{soft}{HTML}{F4F6FA}
+\definecolor{softyellow}{HTML}{FFF8E1}
+\definecolor{softgreen}{HTML}{E8F5E9}
+\definecolor{softred}{HTML}{FDECEC}
+
+\hypersetup{
+  colorlinks=true, linkcolor=accent, urlcolor=accent, citecolor=accent2,
+  pdftitle={02 - Stress Test cho 3 Niche},
+  pdfauthor={TS. Do Phuc Hao}
+}
+
+\titleformat{\section}{\Large\bfseries\color{accent}}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\large\bfseries\color{accent}}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.5em}{}
+
+\setlist[itemize]{leftmargin=1.2em, itemsep=2pt, topsep=3pt}
+\setlist[enumerate]{leftmargin=1.4em, itemsep=2pt, topsep=3pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small\textit{Stress Test 3 Niche}}
+\lhead{\small TS. Đỗ Phúc Hảo}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+\newtcolorbox{note}[1][]{
+  enhanced, breakable, colback=soft, colframe=accent, boxrule=0.4pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white, colbacktitle=accent
+}
+
+\newtcolorbox{critique}[1][]{
+  enhanced, breakable, colback=softred, colframe=danger, boxrule=0.6pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white, colbacktitle=danger
+}
+
+\newtcolorbox{greenbox}[1][]{
+  enhanced, breakable, colback=softgreen, colframe=success, boxrule=0.6pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white, colbacktitle=success
+}
+
+\newtcolorbox{goldbox}[1][]{
+  enhanced, breakable, colback=softyellow, colframe=accent2, boxrule=0.6pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white, colbacktitle=accent2
+}
+
+%=========================================================
+% METADATA
+%=========================================================
+\title{\vspace{-1.5cm}\textbf{\color{accent} 02 --- Stress Test cho 3 Niche Đề xuất} \\[3pt]
+       \Large Áp dụng The Transactions Architect \\[2pt]
+       \normalsize \textit{QI-IDS-NTN vs. QFL-IoT vs. QS-QI-CII}}
+\author{TS. Đỗ Phúc Hảo \\ \small Khoa CNTT --- Đại học Kiến trúc Đà Nẵng}
+\date{Ngày 24 tháng 04 năm 2026 (phiên bản 0.1)}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{note}[Mục đích]
+Tài liệu áp \textbf{Anti-Toy Filter} (Mục 3 của \texttt{00-methodology.tex}) cho từng niche trong số 3 niche đã đề xuất ở file 01. Mỗi niche được trình bày theo \textbf{4-part format} bắt buộc. Cuối tài liệu có \textbf{bảng chấm điểm khách quan} theo 8 tiêu chí và \textbf{đề xuất xếp hạng} để tác giả ra quyết định chốt niche.
+\end{note}
+
+\tableofcontents
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+%=========================================================
+\section{Bối cảnh \& tiêu chí đánh giá}
+%=========================================================
+
+Ba niche được phân tích:
+
+\begin{enumerate}
+  \item \textbf{Niche 1 --- QI-IDS-NTN}: Quantum-Inspired / Hybrid Intrusion Detection cho Non-Terrestrial Networks (6G SAGIN).
+  \item \textbf{Niche 2 --- QFL-IoT}: Quantum Federated Learning cho Resource-Constrained Medical IoT.
+  \item \textbf{Niche 3 --- QS-QI-CII}: Quantum-Safe \& Quantum-Inspired combo cho Critical Infrastructure.
+\end{enumerate}
+
+Tám tiêu chí chấm điểm (thang $0$--$5$, cao = tốt):
+
+\begin{longtable}{@{}p{0.6cm} p{4.2cm} p{10cm}@{}}
+\toprule
+\textbf{\#} & \textbf{Tiêu chí} & \textbf{Câu hỏi đánh giá} \\
+\midrule
+\endhead
+1 & \textbf{Fit với thế mạnh} & Hồ sơ tác giả đã có paper/dataset/tool liên quan chưa? \\
+2 & \textbf{Fit với lab GS} & Đúng ``sân chơi'' mà GS Duong đang đẩy không? \\
+3 & \textbf{Gap rõ ràng} & Có khoảng trống nghiên cứu cụ thể hay là ``me-too''? \\
+4 & \textbf{Khả năng formulate MINLP} & Có thể viết thành $\mathbf{P_1}$ non-convex không tầm thường không? \\
+5 & \textbf{Dữ liệu / benchmark} & Có dataset công khai để chạy thực nghiệm không? \\
+6 & \textbf{Khả thi compute} & Qubit budget có khớp với RTX 4090 / Colab Pro+ không? \\
+7 & \textbf{Tiềm năng publish} & Có phù hợp với TWC / JSAC / T-IFS / IoTJ không? \\
+8 & \textbf{Rủi ro} & Mức độ rủi ro (quá hot, bị scoop, thiếu nền, v.v.)? (điểm cao = ít rủi ro) \\
+\bottomrule
+\end{longtable}
+
+%=========================================================
+\section{Niche 1 --- QI-IDS-NTN}
+%=========================================================
+
+\subsection{Mục 1 --- Critique of Original Idea}
+
+\textbf{Raw idea}: \textit{``Dùng Quantum Graph Neural Network để phát hiện xâm nhập trong mạng NTN / 6G SAGIN.''}
+
+\begin{critique}[Reviewer-2 lens]
+\begin{enumerate}
+  \item \textbf{Toy dataset}: Nếu chỉ dùng NSL-KDD / CICIDS, reviewer sẽ reject ngay --- dataset đó không đặc thù NTN, đã bị beat.
+  \item \textbf{Static topology}: Vệ tinh LEO di chuyển liên tục; nếu mô hình coi topology cố định thì không còn là ``NTN''.
+  \item \textbf{Thiếu on-board constraint}: On-board compute / power của LEO là giới hạn thực sự; toy version bỏ qua.
+  \item \textbf{Quantum advantage mơ hồ}: Classical GNN đã đủ tốt cho IDS; cần chứng minh scale / dimension mà classical fail.
+  \item \textbf{Thiếu mô hình kẻ tấn công}: Attack model random/trivial thì không phản ánh zero-day, stealthy DDoS, RPC injection.
+\end{enumerate}
+\end{critique}
+
+\subsection{Mục 2 --- Upgraded System Model}
+
+\paragraph{Sets \& indices.}
+\begin{itemize}
+  \item $\mathcal{U} = \{u_1, \dots, u_M\}$: tập UE mặt đất, $|\mathcal{U}| = M$.
+  \item $\mathcal{S} = \{s_1, \dots, s_K\}$: constellation LEO satellites, $|\mathcal{S}| = K$, $K \geq 20$.
+  \item $\mathcal{G} = \{g_1, \dots, g_L\}$: ground gateways.
+  \item $\mathcal{T} = \{1, \dots, T\}$: time slots, $|\mathcal{T}| = T$.
+  \item $\mathcal{E}_t \subseteq \mathcal{U} \cup \mathcal{S} \cup \mathcal{G}$: tập nút của graph tại $t$.
+  \item $\mathbf{A}_t \in \{0,1\}^{|\mathcal{E}_t|\times|\mathcal{E}_t|}$: adjacency matrix động.
+\end{itemize}
+
+\paragraph{Stochastic elements.}
+\begin{itemize}
+  \item \textbf{Topology dynamics}: quỹ đạo Keplerian $\Rightarrow$ $\mathbf{A}_t = f(\mathbf{A}_{t-1}, \boldsymbol{\theta}_t)$, với $\boldsymbol{\theta}_t$ là vector trạng thái quỹ đạo.
+  \item \textbf{Traffic}: lưu lượng legitimate đến mỗi UE $u_m$ theo Poisson $\lambda_m$; service time Gamma $\Gamma(\alpha_m, \beta_m)$.
+  \item \textbf{Attack traffic}: mixture --- $(1-\pi_t)$ legitimate + $\pi_t$ attack, với $\pi_t$ non-stationary (attack burstiness).
+  \item \textbf{Channel}: free-space path loss + rain-fade stochastic, CSI imperfect $\hat{\mathbf{h}} = \mathbf{h} + \Delta\mathbf{h}$, $\Delta\mathbf{h} \sim \mathcal{CN}(0, \sigma_e^2 \mathbf{I})$.
+\end{itemize}
+
+\paragraph{Attack model.}
+\begin{itemize}
+  \item Low-rate DDoS, stealthy lateral movement, RPL-based (IoT-satellite) injection --- 4--6 lớp tấn công.
+  \item Yêu cầu: phát hiện trong $T_d \leq 500$ ms (near-real-time).
+\end{itemize}
+
+\paragraph{Detection node placement.}
+
+Biến nhị phân $x_{k,t} \in \{0,1\}$: satellite $s_k$ có host detection module tại slot $t$ hay không. Ràng buộc on-board compute budget $C_k^{\max}$.
+
+\subsection{Mục 3 --- Hard Problem Formulation $\mathbf{P_1}$}
+
+$$
+\begin{aligned}
+\mathbf{P_1^{(\mathrm{IDS})}}: \quad
+& \underset{\{x_{k,t}\}, \{\boldsymbol{\omega}\}}{\text{minimize}}
+  && \sum_{t \in \mathcal{T}} \mathcal{L}_{\mathrm{det}}\big(\boldsymbol{\omega}; \mathbf{A}_t, \mathbf{X}_t\big)
+     + \eta \sum_{k,t} x_{k,t} \, c_k \\
+& \text{s.t.}
+  && \mathbb{P}\big[ \mathrm{miss}(t) \big] \leq \epsilon_m, \quad \forall t, \\
+&  && \mathbb{P}\big[ \mathrm{false\_alarm}(t) \big] \leq \epsilon_f, \quad \forall t, \\
+&  && \sum_{k} x_{k,t} \cdot c_k^{\mathrm{op}} \leq C_{\mathrm{total}}^{\max}, \quad \forall t, \\
+&  && T_{\mathrm{det}}(x_{k,t}, \boldsymbol{\omega}) \leq T_d, \quad \forall t, \quad \text{(latency)} \\
+&  && \mathrm{depth}(\mathrm{VQC}) \leq D_{\max}, \, \mathrm{qubits} \leq Q_{\max}, \\
+&  && x_{k,t} \in \{0,1\}, \quad \boldsymbol{\omega} \in \mathbb{R}^d. \quad \text{(coupling via } \mathcal{L}_{\mathrm{det}}\text{)}
+\end{aligned}
+$$
+
+Trong đó: $\boldsymbol{\omega}$ là tham số của QGNN; $\mathbf{X}_t$ là node feature tensor; $c_k$ là chi phí năng lượng on-board; coupling: giá trị $\boldsymbol{\omega}$ tối ưu phụ thuộc chọn $x_{k,t}$ (vì chỉ những satellite được bật mới đóng góp vào training).
+
+\textbf{Đặc tính}: MINLP, non-convex (do $\mathcal{L}_{\mathrm{det}}$ của QGNN), coupling giữa rời rạc và liên tục. Bài toán NP-hard (giảm từ set-cover cho placement).
+
+\subsection{Mục 4 --- Dual-Approach Roadmap}
+
+\paragraph{Step 1 --- The Math (simplified).}
+\begin{itemize}
+  \item Thả constraint QGNN: dùng classical GNN $\Rightarrow$ bài gốc thành MIP over placement + SGD over $\boldsymbol{\omega}$.
+  \item \textbf{Alternating optimization}: (a) fix $\boldsymbol{\omega}$, giải placement bằng Lagrangian relaxation + branch-and-bound cho small $K$; (b) fix $x$, SGD trên $\boldsymbol{\omega}$.
+  \item Chứng minh convergence đến stationary point (Bertsekas 1999 style).
+\end{itemize}
+
+\paragraph{Step 2 --- The Quantum (why needed).}
+\begin{itemize}
+  \item Khi $K > 200$ (LEO mega-constellation: Starlink, Kuiper\dots), placement search scale tệ.
+  \item Topology thay đổi liên tục $\Rightarrow$ re-solve real-time; classical không kịp.
+  \item \textbf{Đề xuất}: \textit{Topology-aware Quantum Graph Neural Network} với amplitude encoding cho adjacency + variational layer re-use giữa slots.
+  \item Federated across satellites để giảm downlink bandwidth.
+  \item Expected advantage: representation power cho graph có $10^3$--$10^4$ node với $\mathcal{O}(\log N)$ qubits.
+\end{itemize}
+
+\paragraph{Tạp chí mục tiêu.}
+\textbf{IEEE T-IFS} (security angle) hoặc \textbf{IEEE IoTJ} (NTN-IoT). Paper warm-up: \textbf{IEEE WCL} hoặc \textbf{OJ-COMS}.
+
+\paragraph{Danh sách hình dự kiến.}
+(1) SAGIN system model; (2) Attack taxonomy; (3) QGNN ansatz + amplitude encoding graph; (4) Convergence curve; (5) Detection accuracy vs constellation size $K$; (6) Ablation circuit depth $\times$ qubits.
+
+%=========================================================
+\section{Niche 2 --- QFL-IoT}
+%=========================================================
+
+\subsection{Mục 1 --- Critique of Original Idea}
+
+\textbf{Raw idea}: \textit{``Quantum Federated Learning cho medical IoT với non-IID data.''}
+
+\begin{critique}[Reviewer-2 lens]
+\begin{enumerate}
+  \item \textbf{Không realistic hardware}: Wearable IoT không chạy được VQC. Nếu client chạy QPU thật, đó là edge server, không phải IoT.
+  \item \textbf{Barren plateau}: Không mitigate thì FL với VQC sâu sẽ thất bại. Paper phải đề cập.
+  \item \textbf{Non-IID chưa mô hình chặt}: Dirichlet $\alpha$ là chuẩn, nhưng medical thường có nhiều loại shift (label, feature, quantity).
+  \item \textbf{Privacy angle}: Y tế không thể bỏ qua DP; baseline không có DP là straw-man.
+  \item \textbf{Quantum advantage}: Classical FedAvg / FedProx / SCAFFOLD đã rất tốt --- cần chứng minh regime quantum thắng.
+\end{enumerate}
+\end{critique}
+
+\subsection{Mục 2 --- Upgraded System Model}
+
+\paragraph{Sets.}
+\begin{itemize}
+  \item $\mathcal{C} = \{c_1, \dots, c_N\}$: $N = 100$ clients, chia 2 loại: $\mathcal{C}_q$ (có QPU edge, $|\mathcal{C}_q| = N_q$) và $\mathcal{C}_c$ (classical only).
+  \item $\mathcal{R} = \{1, \dots, R\}$: rounds.
+\end{itemize}
+
+\paragraph{Data.}
+Non-IID Dirichlet $\mathbf{p}_i \sim \mathrm{Dir}(\alpha)$ với $\alpha \in \{0.1, 0.3, 1.0\}$; feature shift giữa các hospital clusters.
+
+\paragraph{Hardware heterogeneity.}
+Client $i$ có tài nguyên compute $C_i$, bandwidth $B_i$. Client QPU có $Q_i$ qubits, circuit depth tối đa $D_i$.
+
+\paragraph{Privacy.}
+$(\epsilon, \delta)$-Differential Privacy: gradient clip + Gaussian noise tại mỗi client.
+
+\paragraph{Barren plateau mitigation.}
+Variance của gradient $\mathrm{Var}(\partial_\theta \mathcal{L}) \geq \gamma > 0$ phải được duy trì trong suốt training.
+
+\subsection{Mục 3 --- Hard Problem Formulation $\mathbf{P_1}$}
+
+$$
+\begin{aligned}
+\mathbf{P_1^{(\mathrm{QFL})}}: \quad
+& \underset{\{y_i\}, \{w_i\}, \{d_i\}}{\text{minimize}}
+  && \mathbb{E}_{(\mathbf{x}, y) \sim \mathcal{D}}\big[ \ell(f_{\boldsymbol{\Theta}}(\mathbf{x}), y) \big] \\
+& \text{s.t.}
+  && \boldsymbol{\Theta} = \sum_{i} w_i \cdot \boldsymbol{\theta}_i^{(R)}(y_i, d_i), \\
+&  && \sum_{i} w_i = 1, \quad w_i \geq 0, \\
+&  && y_i \in \{0, 1\}, \quad y_i \leq \mathbb{I}[i \in \mathcal{C}_q], \\
+&  && d_i \in \{d_{\min}, \dots, D_i\}, \\
+&  && \mathrm{Var}\big[\partial_\theta \mathcal{L}_i\big] \geq \gamma, \quad \forall i: y_i=1, \\
+&  && (\epsilon_i, \delta_i)\text{-DP satisfied at client } i, \\
+&  && \sum_i B_i \cdot \mathbb{I}[i \text{ active}] \leq B_{\mathrm{total}}.
+\end{aligned}
+$$
+
+Trong đó: $y_i = 1$ nghĩa là chọn chạy quantum tại client $i$; $d_i$ là circuit depth; $w_i$ là aggregation weight; $\boldsymbol{\theta}_i^{(R)}$ là tham số sau $R$ local rounds.
+
+\textbf{Đặc tính}: MINLP với coupling mạnh (barren plateau constraint phụ thuộc $d_i$, $Q_i$, ansatz structure).
+
+\subsection{Mục 4 --- Dual-Approach Roadmap}
+
+\paragraph{Step 1 --- Classical.}
+\begin{itemize}
+  \item Baseline: FedAvg, FedProx, SCAFFOLD, FedNova, FedBN --- tất cả với DP.
+  \item Mixed-precision FL: một số client chạy full precision, một số chạy quantized --- làm proxy cho quantum-classical mix.
+  \item SCA / ADMM cho weight aggregation optimal.
+\end{itemize}
+
+\paragraph{Step 2 --- Quantum.}
+\begin{itemize}
+  \item Client $\mathcal{C}_q$: chạy VQC với shallow ansatz + layer-wise training để né barren plateau.
+  \item Server: aggregate classical parameter vector (VQC parameters là real vectors).
+  \item Quantum advantage tìm ở regime: extreme non-IID + small dataset per client + high-dimensional feature (genomic, ECG).
+\end{itemize}
+
+\paragraph{Tạp chí mục tiêu.}
+\textbf{IEEE IoTJ} (match với paper QFL-LSTM của lab GS), \textbf{IEEE TNSE}.
+
+\paragraph{Danh sách hình dự kiến.}
+(1) Hybrid FL architecture; (2) Client heterogeneity diagram; (3) VQC ansatz với barren plateau mitigation; (4) Non-IID partition visualization; (5) Accuracy vs $\alpha$ (non-IID level); (6) Privacy-utility trade-off.
+
+%=========================================================
+\section{Niche 3 --- QS-QI-CII}
+%=========================================================
+
+\subsection{Mục 1 --- Critique of Original Idea}
+
+\textbf{Raw idea}: \textit{``Combo Quantum-Safe crypto + Quantum-Inspired anomaly detection cho Critical Infrastructure.''}
+
+\begin{critique}[Reviewer-2 lens]
+\begin{enumerate}
+  \item \textbf{Scope quá rộng}: Hai chủ đề gần như độc lập. PQ-crypto và QI-AD rất ít giao nhau về mặt kỹ thuật.
+  \item \textbf{PQ-crypto đã bão hoà}: NIST đã chuẩn hoá (Kyber, Dilithium\dots); contribution marginal.
+  \item \textbf{CII quá generic}: SCADA / ICS / smart grid / water khác nhau về traffic pattern; không thể bó chung.
+  \item \textbf{Dataset khó tìm}: CII data rất nhạy cảm, datasets công khai (như Mississippi State ICS) cũ và hạn chế.
+  \item \textbf{Quantum advantage}: QI-AD chạy trên CPU, không có hardware advantage. Cần đóng góp mới về \textit{representation} hoặc \textit{inductive bias}.
+\end{enumerate}
+\end{critique}
+
+\begin{critique}[Đánh giá tổng thể]
+Niche 3 \textbf{phải được thu hẹp} thành 1 trong 2 nhánh:
+\begin{itemize}
+  \item \textbf{Nhánh 3a}: Chỉ QI-AD cho 1 loại CII cụ thể (ví dụ smart grid).
+  \item \textbf{Nhánh 3b}: Chỉ PQ-crypto cho 1 protocol cụ thể trong CII (ví dụ DNP3/IEC-61850).
+\end{itemize}
+Dưới đây tôi chỉ trình bày \textbf{Nhánh 3a} vì nó khả thi với thế mạnh hiện tại của tác giả.
+\end{critique}
+
+\subsection{Mục 2 --- Upgraded System Model (Nhánh 3a: QI-AD cho Smart Grid)}
+
+\paragraph{Sets.}
+\begin{itemize}
+  \item $\mathcal{B} = \{1, \dots, B\}$: buses (nút) trong lưới điện.
+  \item $\mathcal{L}$: tập nhánh (đường dây).
+  \item $\mathcal{S}_m \subset \mathcal{B}$: tập sensor PMU / smart meter.
+\end{itemize}
+
+\paragraph{Dynamics.}
+\begin{itemize}
+  \item Power flow $\mathbf{P}_t$ và voltage $\mathbf{V}_t$ tuân theo AC power-flow equations.
+  \item Attack: False Data Injection Attack (FDIA): $\tilde{\mathbf{z}}_t = \mathbf{z}_t + \mathbf{a}_t$, với $\mathbf{a}_t \in \mathrm{null}(\mathbf{H})$ (stealthy, không bị BDD phát hiện).
+  \item Measurement noise $\mathbf{n}_t \sim \mathcal{N}(\mathbf{0}, \mathbf{R})$.
+\end{itemize}
+
+\paragraph{Detection qua QI-KAN.}
+\begin{itemize}
+  \item Input: cửa sổ $W$ slot đo liên tiếp $\mathbf{z}_{t-W+1:t}$.
+  \item Output: $\hat{y}_t \in [0,1]$ (xác suất attack).
+  \item Kiến trúc: Kolmogorov-Arnold Networks với basis functions được chọn cảm hứng từ tensor network / MPS.
+\end{itemize}
+
+\subsection{Mục 3 --- Hard Problem Formulation $\mathbf{P_1}$}
+
+$$
+\begin{aligned}
+\mathbf{P_1^{(\mathrm{CII})}}: \quad
+& \underset{\{s_j\}, \boldsymbol{\phi}}{\text{minimize}}
+  && \mathbb{E}_{\tilde{\mathbf{z}}}\big[ \ell_{\mathrm{BCE}}(g_{\boldsymbol{\phi}}(\tilde{\mathbf{z}}), y) \big]
+     + \mu \sum_{j} s_j \\
+& \text{s.t.}
+  && \mathbb{P}[\mathrm{detect}\,|\,\mathbf{a}_t \ne \mathbf{0}] \geq 1 - \epsilon_m, \\
+&  && \mathbb{P}[\mathrm{detect}\,|\,\mathbf{a}_t = \mathbf{0}] \leq \epsilon_f, \\
+&  && \sum_{j} s_j \cdot c_j^{\mathrm{sensor}} \leq C_{\mathrm{budget}}, \\
+&  && \mathrm{rank}(\mathbf{H}_{\mathrm{obs}}(\mathbf{s})) = B, \quad \text{(observability)} \\
+&  && s_j \in \{0,1\}, \quad \boldsymbol{\phi} \in \mathbb{R}^d.
+\end{aligned}
+$$
+
+Trong đó: $s_j$ là binary indicator chọn đặt sensor tại bus $j$; $\boldsymbol{\phi}$ là tham số QI-KAN; coupling: observability constraint ràng buộc placement.
+
+\textbf{Đặc tính}: MINLP + observability constraint (rank condition) là rất khó --- tương đương combinatorial.
+
+\subsection{Mục 4 --- Dual-Approach Roadmap}
+
+\paragraph{Step 1 --- Classical.}
+\begin{itemize}
+  \item BCD: fix $\mathbf{s}$, SGD trên $\boldsymbol{\phi}$; fix $\boldsymbol{\phi}$, giải sensor placement bằng submodular optimization (Nemhauser).
+  \item Baseline detection: BDD, SVM, Random Forest, LSTM autoencoder, classical KAN.
+\end{itemize}
+
+\paragraph{Step 2 --- Quantum-Inspired.}
+\begin{itemize}
+  \item \textbf{QI-KAN}: KAN với basis functions cảm hứng từ tensor product state, chứng minh \textit{inductive bias} tốt hơn cho stealthy attack.
+  \item Không dùng QPU $\Rightarrow$ không có barren plateau, nhưng cần chứng minh benefit.
+  \item Risk: quantum-inspired không ``hot'' bằng QML thực; reviewer có thể ép thêm hybrid experiment.
+\end{itemize}
+
+\paragraph{Tạp chí mục tiêu.}
+\textbf{IEEE T-IFS} hoặc \textbf{IEEE Trans. on Smart Grid}.
+
+%=========================================================
+\section{Bảng chấm điểm khách quan}
+%=========================================================
+
+Thang điểm $0$--$5$ (5 = tốt nhất).
+
+\begin{longtable}{@{}p{5.5cm} c c c p{3cm}@{}}
+\toprule
+\textbf{Tiêu chí} & \textbf{N1} & \textbf{N2} & \textbf{N3a} & \textbf{Lý do chênh lệch} \\
+\midrule
+\endhead
+1. Fit với thế mạnh cá nhân & 5 & 4 & 4 & N1 ghép thẳng KAN-IDS + FL-GEO + NTN đã có \\
+2. Fit với lab GS Duong & 5 & 4 & 2 & N3 không phải ``sân chơi'' chính của GS \\
+3. Gap rõ ràng & 4 & 3 & 3 & N2 đã có paper QFL-LSTM 2026 cạnh tranh \\
+4. Khả năng formulate MINLP & 5 & 5 & 4 & Cả 3 đều formulate được; N3 phức tạp hơn do observability \\
+5. Dữ liệu / benchmark & 4 & 3 & 2 & N3 CII dataset công khai hạn chế \\
+6. Khả thi compute (RTX 4090) & 4 & 4 & 5 & N3a không cần QPU $\Rightarrow$ dễ nhất \\
+7. Tiềm năng publish Q1 & 5 & 4 & 3 & N1 có T-IFS/IoTJ/WCL; N3 cần Trans. Smart Grid (hơi lệch wireless) \\
+8. Rủi ro thấp & 3 & 3 & 4 & N1 là ``hot'' nên rủi ro bị scoop; N3 ít cạnh tranh hơn nhưng khó publish wireless \\
+\midrule
+\textbf{Tổng} & \textbf{35} & \textbf{30} & \textbf{27} & /40 \\
+\bottomrule
+\end{longtable}
+
+\begin{goldbox}[Xếp hạng]
+\begin{enumerate}
+  \item \textbf{Niche 1 (QI-IDS-NTN)} --- 35/40 $\bigstar$ \textbf{đề xuất chính}.
+  \item \textbf{Niche 2 (QFL-IoT)} --- 30/40 --- phương án B.
+  \item \textbf{Niche 3a (QI-AD Smart Grid)} --- 27/40 --- phương án C.
+\end{enumerate}
+\end{goldbox}
+
+%=========================================================
+\section{Đề xuất chốt hướng}
+%=========================================================
+
+\begin{greenbox}[Khuyến nghị]
+Chọn \textbf{Niche 1 --- QI-IDS-NTN} làm hướng chính, vì:
+\begin{itemize}
+  \item Fit cao nhất với thế mạnh đã có (quantum-inspired KAN cho IDS + FL cho GEO satellite).
+  \item Đúng ``sân chơi'' GS Duong đang đẩy (SAGIN, QML, QGNN).
+  \item Có thể đặt mục tiêu 2 paper: (a) warm-up WCL/OJ-COMS 4--5 trang (classical baseline + small QGNN); (b) full TWC/T-IFS (MINLP + federated QGNN + large-scale).
+  \item Ghép được với NAFOSTED CII predictive security bằng cách mở rộng kịch bản sang ``critical IoT infrastructure over NTN''.
+\end{itemize}
+
+\textbf{Phương án dự phòng}: giữ Niche 2 trong ngăn kéo cho paper thứ 2 sau khi có kinh nghiệm với QGNN.
+\end{greenbox}
+
+\subsection{Rủi ro của Niche 1 và cách giảm}
+
+\begin{longtable}{@{}p{5cm} p{10cm}@{}}
+\toprule
+\textbf{Rủi ro} & \textbf{Cách giảm} \\
+\midrule
+\endhead
+Bị scoop bởi paper GLOBECOM/ICC 2026 & Đưa yếu tố \textbf{security} vào sớm (lab GS chưa làm mạnh security trong SAGIN $\Rightarrow$ ít overlap). \\
+Dataset NTN không công khai & Dùng dataset NTN simulator (Hypatia, StarryNet, NS-3 SNS3) + kết hợp flow dataset (CICIDS, ToN-IoT) với mapping trọng số liên kết LEO. \\
+Quantum advantage khó chứng minh & Viết kỹ phần ``scalability + representation'', thêm experiment classical GNN vs QGNN với cùng số tham số. \\
+Barren plateau trong QGNN & Dùng layer-wise training + local cost function + Gaussian init (theo Cerezo 2021). \\
+Compute budget cho mô phỏng constellation lớn & Giới hạn chính $K \leq 100$, mở rộng bằng hierarchical/federated structure. \\
+\bottomrule
+\end{longtable}
+
+%=========================================================
+\section{Bước tiếp theo sau khi chốt}
+%=========================================================
+
+Khi \textbf{Niche 1 được chốt chính thức}, trình tự các file kế tiếp:
+
+\begin{enumerate}
+  \item \textbf{03-sota-niche1-ntn-ids.tex}: 15--20 paper liên quan (QGNN, NTN security, federated IDS, LEO AI), bảng so sánh SOTA, gap matrix rõ ràng.
+  \item \textbf{04-experiment-plan-niche1.tex}: dataset chi tiết, baselines, metrics, ablation, compute breakdown RTX 4090 vs Colab.
+  \item \textbf{05-tier-a-reading-note.tex}: tóm tắt 4 foundation paper.
+  \item \textbf{figures/}: TikZ diagrams system model, QGNN ansatz.
+  \item \textbf{Repo GitHub skeleton}: push commit đầu.
+  \item \textbf{Baseline runnable}: classical GNN-IDS trên 1 dataset (CICIDS + NTN topology simulator) --- sanity check pipeline.
+\end{enumerate}
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.3cm}
+\textit{\small Phiên bản 0.1 --- 24/04/2026. Chờ xác nhận chốt niche từ tác giả.}
+
+\end{document}

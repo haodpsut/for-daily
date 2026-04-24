@@ -1,0 +1,368 @@
+% !TEX program = xelatex
+% Biên dịch: xelatex 05-tier-a-reading-note.tex
+% Tuân thủ 00-methodology.tex
+
+\documentclass[11pt,a4paper]{article}
+
+%=========================================================
+% PACKAGES
+%=========================================================
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{vietnamese}
+\setotherlanguage{english}
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{url}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+%=========================================================
+% STYLE
+%=========================================================
+\definecolor{accent}{HTML}{0B5FA5}
+\definecolor{accent2}{HTML}{B8860B}
+\definecolor{success}{HTML}{2E8B57}
+\definecolor{soft}{HTML}{F4F6FA}
+\definecolor{softyellow}{HTML}{FFF8E1}
+\definecolor{softgreen}{HTML}{E8F5E9}
+
+\hypersetup{colorlinks=true, linkcolor=accent, urlcolor=accent, citecolor=accent2,
+  pdftitle={05 - Tier A Reading Notes - QML Foundations}, pdfauthor={TS. Do Phuc Hao}}
+
+\titleformat{\section}{\Large\bfseries\color{accent}}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\large\bfseries\color{accent}}{\thesubsection}{0.5em}{}
+
+\setlist[itemize]{leftmargin=1.2em, itemsep=2pt, topsep=3pt}
+\setlist[enumerate]{leftmargin=1.4em, itemsep=2pt, topsep=3pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small\textit{Tier A Reading Notes}}
+\lhead{\small TS. Đỗ Phúc Hảo}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+\newtcolorbox{take}[1][]{enhanced, breakable, colback=softgreen, colframe=success,
+  boxrule=0.6pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white, colbacktitle=success}
+
+\newtcolorbox{warn}[1][]{enhanced, breakable, colback=softyellow, colframe=accent2,
+  boxrule=0.6pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white, colbacktitle=accent2}
+
+\newtcolorbox{note}[1][]{enhanced, breakable, colback=soft, colframe=accent,
+  boxrule=0.4pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white, colbacktitle=accent}
+
+%=========================================================
+% METADATA
+%=========================================================
+\title{\vspace{-1.5cm}\textbf{\color{accent} 05 --- Tier A Reading Notes} \\[3pt]
+       \Large QML Foundations --- 4 paper phải đọc \\[2pt]
+       \normalsize \textit{Biamonte 2017 $\cdot$ Schuld 2021 $\cdot$ Cerezo 2021 $\cdot$ McClean 2018}}
+\author{TS. Đỗ Phúc Hảo \\ \small Khoa CNTT --- Đại học Kiến trúc Đà Nẵng}
+\date{Ngày 24 tháng 04 năm 2026 (phiên bản 0.1)}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{note}[Mục đích]
+Tóm lược 4 foundation paper (Tier A ở file 01) với \textbf{đủ sâu} để tác giả có thể tự viết section ``Preliminaries'' trong paper của mình. Mỗi note gồm: (1) bối cảnh \& động cơ, (2) ý tưởng cốt lõi + công thức chính, (3) kết quả nổi bật, (4) \textit{takeaway cho dự án DynaQGNN-IDS}, (5) câu hỏi mở / hướng research trực tiếp nối dài.
+\end{note}
+
+\tableofcontents
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+%=========================================================
+\section{Biamonte et al. (2017) --- ``Quantum Machine Learning''}
+%=========================================================
+
+\textbf{Venue}: \textit{Nature}, vol. 549, pp. 195--202, 2017. Ref: Biamonte, Wittek, Pancotti, Rebentrost, Wiebe, Lloyd.
+
+\subsection{Bối cảnh \& động cơ}
+
+Paper survey đầu tiên trên tạp chí top định hình lĩnh vực QML. Ra đời khi D-Wave quantum annealer đã hoạt động, NISQ era chưa bắt đầu. Câu hỏi trung tâm: \textit{quantum computing có thể tăng tốc ML như thế nào?}
+
+\subsection{Ý tưởng cốt lõi}
+
+Ba nguồn ``quantum advantage'' khả dĩ cho ML:
+
+\begin{enumerate}
+  \item \textbf{Speedup thuật toán tuyến tính}:
+    Thuật toán HHL (Harrow, Hassidim, Lloyd, 2009) giải hệ $\mathbf{A}\mathbf{x} = \mathbf{b}$ trong $\mathcal{O}(\log N \cdot \kappa^2 / \epsilon)$ thay vì $\mathcal{O}(N)$ cổ điển (có điều kiện: $\mathbf{A}$ sparse + well-conditioned + chỉ đọc few amplitudes của $\mathbf{x}$).
+  \item \textbf{Mở rộng không gian đặc trưng qua feature map lượng tử}:
+    Encoding $\mathbf{x} \mapsto \ket{\phi(\mathbf{x})}$ cho phép biểu diễn trong không gian Hilbert $2^n$-chiều. Kernel $K(\mathbf{x}, \mathbf{x}') = |\braket{\phi(\mathbf{x})|\phi(\mathbf{x}')}|^2$.
+  \item \textbf{Sampling từ phân phối khó}:
+    Quantum Boltzmann machines sample từ Gibbs distribution trên model lượng tử.
+\end{enumerate}
+
+\paragraph{Taxonomy QML 2$\times$2}:
+
+\begin{longtable}{@{}p{2.5cm} p{5.5cm} p{6cm}@{}}
+\toprule
+ & \textbf{Data: Classical} & \textbf{Data: Quantum} \\
+\midrule
+\endhead
+\textbf{Algo: Classical} & Standard ML (baseline) & Analyze quantum experiments by classical ML \\
+\textbf{Algo: Quantum} & QML cho classical data (MAJORITY of papers) & Quantum ML cho quantum data (e.g., Hamiltonian learning) \\
+\bottomrule
+\end{longtable}
+
+\subsection{Kết quả nổi bật}
+\begin{itemize}
+  \item Chứng minh HHL-based QSVM, Quantum PCA, Quantum clustering với exponential speedup lý thuyết.
+  \item Cảnh báo về \textbf{caveat data loading}: nếu phải encode classical data vào qubit từng bit thì speedup bị triệt tiêu $\Rightarrow$ cần QRAM (không khả thi hardware).
+  \item Chỉ ra quantum annealing có thể dùng cho sampling model-based.
+\end{itemize}
+
+\begin{take}[Takeaway cho DynaQGNN-IDS]
+\begin{itemize}
+  \item \textbf{Encoding đúng là then chốt}: Paper của ta phải so sánh \textit{angle} vs \textit{amplitude} vs \textit{re-uploading} và giải thích lý do chọn. Đây là gốc rễ của quantum advantage thật hay ảo.
+  \item \textbf{Không hứa hẹn exponential speedup}: với NISQ, ta nhắm ``representation efficiency'' (ít qubit hơn để đạt expressivity tương đương classical depth) và ``noise resilience'' thay vì raw speedup.
+  \item \textbf{Phải trả lời caveat data loading}: paper của ta load đồ thị NTN snapshot (adjacency + node features) --- phải thảo luận cost encoding trong Complexity Analysis section.
+\end{itemize}
+\end{take}
+
+\subsection{Câu hỏi mở}
+\begin{itemize}
+  \item Khi nào kernel trick lượng tử có ``provable advantage''? (đã được Havlíček 2019 + Huang 2021 trả lời một phần).
+  \item NISQ-friendly QML algorithms? $\rightarrow$ VQA (Cerezo 2021 xuống sau).
+\end{itemize}
+
+%=========================================================
+\section{Schuld \& Petruccione (2021) --- ``ML with Quantum Computers''}
+%=========================================================
+
+\textbf{Venue}: Springer textbook, 2nd edition (mở rộng từ 2018 edition).
+
+\subsection{Bối cảnh \& động cơ}
+
+Sách giáo khoa chuẩn đầu tiên cho QML dành cho cả physicist và ML practitioner. Biên soạn kịp thời với sự bùng nổ NISQ / PennyLane (Schuld là co-founder của Xanadu PennyLane).
+
+\subsection{Cấu trúc \& ý tưởng cốt lõi}
+
+\paragraph{Phần I --- Foundations}: Cơ sở QC (Hilbert, unitary, measurement) + ML (supervised, unsupervised). Dirac notation bị lấy làm language chính.
+
+\paragraph{Phần II --- Information Encoding}: Chi tiết \textbf{4 loại encoding}:
+\begin{enumerate}
+  \item \textbf{Basis encoding}: mỗi bit classical $\mapsto$ 1 qubit (cost: $N$ qubit cho $N$-bit data).
+  \item \textbf{Amplitude encoding}: vector $\mathbf{x} \in \mathbb{R}^{2^n}$ $\mapsto \ket{\psi} = \sum_i x_i \ket{i}/\|\mathbf{x}\|$; chỉ cần $n = \log_2 N$ qubit. \textbf{Nhưng} cost chuẩn bị state $\mathcal{O}(N)$ gate.
+  \item \textbf{Angle encoding}: $\mathbf{x} \mapsto \bigotimes_i R_y(\theta_i) \ket{0}$; đơn giản, hiệu quả cho NISQ.
+  \item \textbf{Hamiltonian / Data re-uploading}: encode data nhiều lần vào circuit $\rightarrow$ tăng expressivity (Pérez-Salinas 2020).
+\end{enumerate}
+
+\paragraph{Phần III --- Quantum Models}:
+\begin{itemize}
+  \item Variational quantum circuits (VQC) như \textit{parametrized function class}.
+  \item Kernel methods: quantum kernel estimation, chuyển QSVM thành kernel-based classifier.
+  \item Born machines: generative model dựa trên Born rule.
+\end{itemize}
+
+\paragraph{Phần IV --- Training}:
+\begin{itemize}
+  \item \textbf{Parameter-shift rule}: gradient của $\braket{\hat{H}}_{\boldsymbol{\theta}}$ tính được bằng cách chạy circuit với $\theta_k \pm \pi/2$ (không cần adjoint differentiation phức tạp).
+  \item \textbf{Analytic vs hardware gradients}: trên QPU thật, cần tối thiểu 2 circuit evaluations per parameter per step.
+  \item \textbf{Noise + shot noise}: gradient estimator có variance $\propto 1/S$ (shots); thực tế cần thousand shots.
+\end{itemize}
+
+\begin{take}[Takeaway cho DynaQGNN-IDS]
+\begin{itemize}
+  \item \textbf{Encoding strategy cho đồ thị NTN}: adjacency $\mathbf{A}_t \in \{0,1\}^{K \times K}$ + node features $\mathbf{X}_t$. Đề xuất: \textit{hybrid encoding} --- angle cho node features, amplitude/block-encoding cho adjacency (theo Lloyd 2016).
+  \item \textbf{Parameter-shift rule + PennyLane}: triển khai chuẩn, không tự viết. Tận dụng \texttt{pennylane-lightning-gpu} với adjoint differentiation cho simulator.
+  \item \textbf{Shot noise trong real QPU}: khi chạy IBM hardware validation cho paper B, cần budget $\geq 8000$ shots/circuit.
+\end{itemize}
+\end{take}
+
+\subsection{Chương cần đọc kỹ}
+\begin{enumerate}
+  \item Chương 5 (Encoding) --- nền cho thiết kế DynaQGNN encoder.
+  \item Chương 8 (Training) --- parameter-shift, barren plateau intro.
+  \item Chương 9 (Quantum kernel methods) --- vì QSVM là baseline.
+\end{enumerate}
+
+%=========================================================
+\section{Cerezo et al. (2021) --- ``Variational Quantum Algorithms''}
+%=========================================================
+
+\textbf{Venue}: \textit{Nature Reviews Physics}, vol. 3, pp. 625--644, 2021. Ref: Cerezo, Arrasmith, Babbush, Benjamin, Endo, Fujii, McClean, Mitarai, Yuan, Cincio, Coles.
+
+\subsection{Bối cảnh \& động cơ}
+
+Survey định hình ``VQA era''. Trả lời câu hỏi: trong NISQ thời đại, thuật toán lượng tử nào có cơ may thắng? Trả lời: \textbf{variational hybrid}.
+
+\subsection{Khung VQA tổng quát}
+
+Mỗi VQA được đặc trưng bởi 4 thành phần:
+
+\begin{enumerate}
+  \item \textbf{Cost function} $C(\boldsymbol{\theta})$: đặc trưng bài toán, typically $C(\boldsymbol{\theta}) = \braket{\psi(\boldsymbol{\theta})|\hat{H}|\psi(\boldsymbol{\theta})}$.
+  \item \textbf{Ansatz} $U(\boldsymbol{\theta})$: parameterized circuit, chia 2 nhóm:
+    \begin{itemize}
+      \item Problem-inspired (VQE với chemistry ansatz, QAOA layers).
+      \item Hardware-efficient (HEA) --- đơn giản, native gates.
+    \end{itemize}
+  \item \textbf{Gradient computation}: parameter-shift, adjoint, SPSA (shot-efficient).
+  \item \textbf{Classical optimizer}: Adam, L-BFGS, SPSA, Nelder-Mead.
+\end{enumerate}
+
+\paragraph{Các flagship VQA}:
+\begin{itemize}
+  \item \textbf{VQE} (Peruzzo 2014) --- tìm ground state energy, chemistry.
+  \item \textbf{QAOA} (Farhi 2014) --- combinatorial optimization (MaxCut, portfolio\dots).
+  \item \textbf{VQC / QNN}: classification, regression.
+  \item \textbf{VQLS} (Variational Quantum Linear Solver) --- alternative cho HHL NISQ-friendly.
+  \item \textbf{QGAN}: generative.
+\end{itemize}
+
+\subsection{Thách thức chính}
+
+\begin{warn}[Ba thách thức khi áp VQA]
+\begin{enumerate}
+  \item \textbf{Barren plateau} (McClean 2018): gradient $\mathrm{Var}[\partial_\theta C] \propto 2^{-n}$ cho HEA sâu $\Rightarrow$ training thất bại.
+  \item \textbf{Expressibility vs trainability trade-off}: ansatz ``expressive'' thường khớp với barren plateau; ansatz ``trainable'' thường kém biểu đạt.
+  \item \textbf{Noise}: quantum noise làm landscape phẳng hơn, tăng barren plateau (Wang 2021).
+\end{enumerate}
+\end{warn}
+
+\subsection{Chiến lược đối phó (reviewer BẮT BUỘC muốn thấy)}
+\begin{itemize}
+  \item \textbf{Shallow circuits + layer-wise training} (Grant 2019; Skolik 2021).
+  \item \textbf{Local cost functions} (Cerezo 2021a): đo từng qubit thay vì global observable.
+  \item \textbf{Smart initialization}: Gaussian / identity block initialization.
+  \item \textbf{Problem-inspired ansatz}: match symmetry bài toán, loại bỏ parameter dư.
+  \item \textbf{Entanglement-aware design}: tránh quá entangled từ đầu.
+\end{itemize}
+
+\begin{take}[Takeaway cho DynaQGNN-IDS]
+\begin{itemize}
+  \item \textbf{Chọn ansatz}: đề xuất \textit{topology-aware problem-inspired} --- ansatz mirror cấu trúc adjacency $\mathbf{A}_t$ (CNOT pattern = edges); không dùng HEA thuần. Điều này cũng giúp né barren plateau.
+  \item \textbf{Parameter-shift} + \textbf{adjoint differentiation} trên simulator; khi validation trên IBM hardware thì chỉ parameter-shift.
+  \item \textbf{Local cost}: thiết kế detection loss dạng local (per-flow decision) thay vì global (batch-level) để mitigate barren plateau.
+  \item \textbf{Phải có section ``Complexity and Trainability Analysis''} trong paper --- reviewer sẽ đòi.
+\end{itemize}
+\end{take}
+
+%=========================================================
+\section{McClean et al. (2018) --- ``Barren Plateaus''}
+%=========================================================
+
+\textbf{Venue}: \textit{Nature Communications}, vol. 9, 4812, 2018. Ref: McClean, Boixo, Smelyanskiy, Babbush, Neven.
+
+\subsection{Bối cảnh}
+
+Paper ``báo tử''. Cho thấy rằng naively tăng circuit depth sẽ gặp vấn đề cực nghiêm trọng. Được cite $>$ 2000 lần.
+
+\subsection{Kết quả chính}
+
+Cho ansatz $U(\boldsymbol{\theta}) = \prod_l U_l(\theta_l) V_l$ với $U_l$ random unitary tạo từ gate chạy trên 2-design:
+
+\[
+\mathbb{E}[\partial_\theta C] = 0, \quad \mathrm{Var}[\partial_\theta C] = \Theta(2^{-n}).
+\]
+
+Nghĩa là với $n$ qubit và ansatz đủ sâu, gradient \textbf{giảm mũ}; với $n = 30$ thì gradient $\sim 10^{-9}$, optimizer nào cũng dừng.
+
+\subsection{Trực giác}
+
+Với unitary đủ random (``tiệm cận Haar measure''), landscape tiệm cận phẳng gần 0. Training khởi tạo random $\Rightarrow$ gradient vanish $\Rightarrow$ không học được.
+
+\subsection{Những gì làm tăng barren plateau}
+\begin{enumerate}
+  \item Circuit quá sâu.
+  \item Ansatz quá expressive.
+  \item Global cost function (đo trên nhiều qubit cùng lúc).
+  \item Noise tăng (Wang 2021 bổ sung).
+  \item Entanglement quá cao từ đầu.
+\end{enumerate}
+
+\subsection{Những gì giảm barren plateau}
+\begin{enumerate}
+  \item Shallow circuit ($\leq \mathcal{O}(\log n)$ depth).
+  \item Problem-inspired ansatz, structured.
+  \item Local cost function.
+  \item Smart initialization (identity block, Gaussian small).
+  \item Layer-wise / block-wise training.
+  \item Pre-training với smaller task.
+\end{enumerate}
+
+\begin{warn}[Quy tắc kiểm tra bắt buộc cho paper]
+Mọi paper VQC/QNN phải báo cáo $\mathrm{Var}[\partial_\theta C]$ theo số qubit $n \in \{4, 8, 12, 16\}$. Nếu thấy giảm mũ $\rightarrow$ thừa nhận \& mitigate. Nếu không $\rightarrow$ giải thích tại sao.
+\end{warn}
+
+\begin{take}[Takeaway cho DynaQGNN-IDS]
+\begin{itemize}
+  \item Bắt buộc có \textbf{barren plateau diagnostic}: plot $\mathrm{Var}[\partial_\theta C]$ vs $n$. Đây là phần của ablation A5 (xem file 04).
+  \item Phải có \textbf{ablation ``BP mitigation enabled vs disabled''} để chứng minh tác dụng của kỹ thuật mình chọn.
+  \item \textbf{Chọn depth} không quá sâu: mục tiêu $D \in \{2, 4, 6\}$ layers; $D = 8$ chỉ để cho thấy ``mới bắt đầu bị BP''.
+  \item \textbf{Local cost}: thiết kế loss per-node hoặc per-edge, không tổng qubit cùng lúc.
+\end{itemize}
+\end{take}
+
+%=========================================================
+\section{Ghép nối 4 paper thành 1 section ``Preliminaries'' cho DynaQGNN-IDS}
+%=========================================================
+
+Dưới đây là skeleton mà tác giả có thể dùng trực tiếp cho Section II của paper A:
+
+\begin{note}[Skeleton Section II --- Preliminaries]
+\textbf{II.A Quantum Machine Learning Primer}: dùng Biamonte 2017 để giới thiệu 3 nguồn quantum advantage, nhấn mạnh feature map và kernel methods.
+
+\textbf{II.B Variational Quantum Circuits}: dùng Schuld 2021 + Cerezo 2021 để định nghĩa VQC, ansatz (HEA vs problem-inspired), parameter-shift rule, hybrid optimization loop.
+
+\textbf{II.C Encoding Classical Graph Data}: Schuld 2021 Chương 5; cụ thể cho ta: angle encoding cho node features + block-encoding adjacency (mention Lloyd 2016 graph state preparation).
+
+\textbf{II.D Barren Plateaus and Mitigation}: McClean 2018; trình bày ngắn công thức $\mathrm{Var}[\partial_\theta C] = \Theta(2^{-n})$; liệt kê 5 chiến lược mitigation; khẳng định DynaQGNN dùng 3 trong số đó (shallow + problem-inspired + local cost).
+\end{note}
+
+%=========================================================
+\section{Danh sách đọc nối dài ngay sau Tier A}
+%=========================================================
+
+Sau khi nắm Tier A, đọc ngay 5 paper ngắn sau để hoàn thiện nền:
+
+\begin{enumerate}
+  \item \textbf{Schuld \& Killoran 2019} --- ``Quantum ML in Feature Hilbert Spaces'' --- kernel view chặt chẽ.
+  \item \textbf{Havlíček et al. 2019} --- ``Supervised learning with quantum-enhanced feature spaces'' (Nature) --- quantum kernel thực sự thắng khi nào.
+  \item \textbf{Mitarai et al. 2018} --- ``Quantum circuit learning'' --- định nghĩa parameter-shift rule.
+  \item \textbf{Pérez-Salinas et al. 2020} --- ``Data re-uploading for universal approximation'' --- trick tăng expressivity ansatz nông.
+  \item \textbf{Huang et al. 2021} --- ``Power of data in QML'' (Nature Communications) --- chỉ ra khi nào classical + data thắng quantum.
+\end{enumerate}
+
+%=========================================================
+\section{Tiếp theo}
+%=========================================================
+
+Sau file này, theo kế hoạch sẽ sang:
+\begin{itemize}
+  \item \textbf{figures/fig-system-model.tex} --- TikZ standalone system model SAGIN.
+  \item \textbf{figures/fig-dynaqgnn-ansatz.tex} --- TikZ circuit diagram DynaQGNN.
+  \item \textbf{Repo skeleton} \texttt{dynaqgnn-ntn-ids/}.
+\end{itemize}
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.3cm}
+\textit{\small Phiên bản 0.1 --- 24/04/2026. Sau khi đọc đủ 4 paper + 5 paper nối dài, bump lên 0.2 với gạch chân ý quan trọng được highlight khi đọc.}
+
+\end{document}

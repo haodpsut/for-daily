@@ -1,0 +1,522 @@
+% !TEX program = xelatex
+% Biên dịch: xelatex 03-sota-niche1-ntn-ids.tex
+% Tuân thủ 00-methodology.tex
+
+\documentclass[11pt,a4paper]{article}
+
+%=========================================================
+% PACKAGES
+%=========================================================
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{vietnamese}
+\setotherlanguage{english}
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{url}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+%=========================================================
+% STYLE
+%=========================================================
+\definecolor{accent}{HTML}{0B5FA5}
+\definecolor{accent2}{HTML}{B8860B}
+\definecolor{success}{HTML}{2E8B57}
+\definecolor{danger}{HTML}{B22222}
+\definecolor{soft}{HTML}{F4F6FA}
+\definecolor{softyellow}{HTML}{FFF8E1}
+\definecolor{softgreen}{HTML}{E8F5E9}
+
+\hypersetup{colorlinks=true, linkcolor=accent, urlcolor=accent, citecolor=accent2,
+  pdftitle={03 - SOTA Niche 1 QI-IDS-NTN}, pdfauthor={TS. Do Phuc Hao}}
+
+\titleformat{\section}{\Large\bfseries\color{accent}}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\large\bfseries\color{accent}}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.5em}{}
+
+\setlist[itemize]{leftmargin=1.2em, itemsep=2pt, topsep=3pt}
+\setlist[enumerate]{leftmargin=1.4em, itemsep=2pt, topsep=3pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small\textit{SOTA --- Niche 1 QI-IDS-NTN}}
+\lhead{\small TS. Đỗ Phúc Hảo}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+\newtcolorbox{note}[1][]{enhanced, breakable, colback=soft, colframe=accent,
+  boxrule=0.4pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white, colbacktitle=accent}
+
+\newtcolorbox{goldbox}[1][]{enhanced, breakable, colback=softyellow, colframe=accent2,
+  boxrule=0.6pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white, colbacktitle=accent2}
+
+\newtcolorbox{greenbox}[1][]{enhanced, breakable, colback=softgreen, colframe=success,
+  boxrule=0.6pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white, colbacktitle=success}
+
+%=========================================================
+% METADATA
+%=========================================================
+\title{\vspace{-1.5cm}\textbf{\color{accent} 03 --- State-of-the-Art Review} \\[3pt]
+       \Large Niche 1 --- QI-IDS cho NTN / 6G SAGIN \\[2pt]
+       \normalsize \textit{Literature deep-dive 26 paper + Gap Matrix + Positioning}}
+\author{TS. Đỗ Phúc Hảo \\ \small Khoa CNTT --- Đại học Kiến trúc Đà Nẵng}
+\date{Ngày 24 tháng 04 năm 2026 (phiên bản 0.1)}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{note}[Mục đích]
+Tài liệu này khảo sát state-of-the-art cho niche đã chốt: \textbf{Quantum-Inspired / Hybrid Intrusion Detection trên mạng phi mặt đất (NTN / 6G SAGIN)}. Tổng cộng \textbf{26 paper} được phân nhóm thành 6 nhánh (tier), phân tích đóng góp \& hạn chế, sau đó tổng hợp thành \textbf{Gap Matrix} để xác định đóng góp cụ thể của dự án.
+\end{note}
+
+\tableofcontents
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+%=========================================================
+\section{Khung phân loại và chiến lược khảo sát}
+%=========================================================
+
+Để định vị đóng góp mới, cần lập bản đồ ba trục nghiên cứu giao nhau:
+
+\begin{enumerate}
+  \item \textbf{Trục A --- Phương pháp}: Classical GNN-IDS $\rightarrow$ Federated GNN-IDS $\rightarrow$ Quantum-Inspired $\rightarrow$ Full Quantum (VQC, QGNN).
+  \item \textbf{Trục B --- Môi trường}: Terrestrial IoT $\rightarrow$ STIN (satellite-terrestrial integrated) $\rightarrow$ SAGIN $\rightarrow$ Pure NTN (LEO mega-constellation).
+  \item \textbf{Trục C --- Mô hình tấn công}: Known attacks (NSL-KDD, CICIDS) $\rightarrow$ IoT botnet $\rightarrow$ Stealthy/adversarial $\rightarrow$ Space-specific (DDoS LEO, AcidRain-like).
+\end{enumerate}
+
+Điểm ``mục tiêu'' của paper thứ nhất: \textbf{(A = Quantum-Inspired/Hybrid) $\cap$ (B = STIN hoặc SAGIN) $\cap$ (C = Stealthy DDoS + IoT botnet qua LEO)}. Không có paper nào hiện hữu phủ đủ ba góc này.
+
+Sáu tier được khảo sát:
+\begin{itemize}
+  \item Tier 1 --- QGNN Foundations.
+  \item Tier 2 --- Quantum / Quantum-Inspired IDS \& Anomaly Detection.
+  \item Tier 3 --- Classical GNN-based IDS (baseline mạnh).
+  \item Tier 4 --- LEO / NTN / STIN Security.
+  \item Tier 5 --- Federated Learning cho IDS \& NTN.
+  \item Tier 6 --- Lab GS Duong --- QML cho wireless/6G.
+\end{itemize}
+
+%=========================================================
+\section{Tier 1 --- QGNN Foundations}
+%=========================================================
+
+\subsection{Verdon et al., ``Quantum Graph Neural Networks'', arXiv:1909.12264 (2019)}
+\begin{itemize}
+  \item \textbf{Đóng góp}: Paper nền tảng, giới thiệu QGNN ansatz leveraging Hamiltonian evolution. Bốn biến thể: QGRNN, QGCNN, spectral clustering, graph isomorphism classification.
+  \item \textbf{Hạn chế}: Chỉ chứng minh trên quantum task (learn Hamiltonian, entanglement generation). \textbf{Chưa có application cho classical graph} như network traffic.
+\end{itemize}
+
+\subsection{Tüysüz et al., ``From Graphs to Qubits: A Critical Review'', arXiv:2408.06524 (2024)}
+\begin{itemize}
+  \item \textbf{Đóng góp}: Survey mới nhất, chỉ ra 5 rào cản chính: (i) graph encoding inefficiency, (ii) barren plateau trong deep QGNN, (iii) thiếu inductive bias, (iv) readout noise, (v) chưa có chuẩn benchmark.
+  \item \textbf{Giá trị cho dự án}: \textbf{Checklist chuẩn} khi thiết kế QGNN mới --- mọi đóng góp phải address ít nhất 2/5 rào cản.
+\end{itemize}
+
+\subsection{``Inductive Graph Representation Learning with QGNN'', arXiv:2503.24111 (2025)}
+\begin{itemize}
+  \item \textbf{Đóng góp}: Generalize QGNN cho inductive setting (graph mới chưa thấy khi training) --- quan trọng cho NTN topology thay đổi.
+  \item \textbf{Hạn chế}: Vẫn trên benchmark Cora/Citeseer, không có kịch bản động / network traffic.
+\end{itemize}
+
+\subsection{``QGraphLIME --- Explaining Quantum Graph Neural Networks'', arXiv:2510.05683 (2025)}
+\begin{itemize}
+  \item \textbf{Đóng góp}: Lần đầu XAI cho QGNN.
+  \item \textbf{Giá trị}: Paper security bắt buộc có XAI angle (reviewer sẽ hỏi); có thể mượn framework này.
+\end{itemize}
+
+%=========================================================
+\section{Tier 2 --- Quantum \& Quantum-Inspired IDS}
+%=========================================================
+
+\subsection{``Network Anomaly Detection Using QNN'', IEEE Trans. Quantum Engineering (2024)}
+\begin{itemize}
+  \item Dùng QNN thuần cho NSL-KDD. Accuracy báo cáo ~90\% nhưng scale nhỏ (2000 samples).
+  \item \textbf{Hạn chế}: Không có graph structure; chỉ flow-level features.
+\end{itemize}
+
+\subsection{``Quantum-Enhanced IoT Security Against DDoS --- PGOA + QGNN'', Springer IJSTTE (2025)}
+\begin{itemize}
+  \item \textbf{Đóng góp}: QGNN đầu tiên áp cho IoT DDoS. Kết hợp Piecewise Gazelle Optimization cho feature selection.
+  \item \textbf{Hạn chế}: Graph construction ad-hoc; không đánh giá topology động; dataset cũ (CICIDS2017).
+  \item \textbf{Cửa vào}: Đây là paper \textbf{gần nhất với đề xuất của ta} --- phải đặt lên bàn so sánh trực tiếp.
+\end{itemize}
+
+\subsection{``Intrusion Detection System Based on QGAN'', SCITEPRESS (2025)}
+\begin{itemize}
+  \item \textbf{Đóng góp}: VQC generator + classical discriminator; NSL-KDD: accuracy 0.937, F1 0.938.
+  \item \textbf{Hạn chế}: Không có cấu trúc đồ thị; không xét NTN.
+\end{itemize}
+
+\subsection{``QuIDS: Quantum SVC for IoT'', IEEE 2024}
+\begin{itemize}
+  \item \textbf{Đóng góp}: 4 qubits, 8 flow features, recall 91.1\%. Chứng minh hiệu quả với dữ liệu huấn luyện nhỏ.
+  \item \textbf{Hạn chế}: Không scale; không graph; không NTN.
+\end{itemize}
+
+\subsection{``Quantum Deep Learning-Based Anomaly Detection'', Quantum Machine Intelligence (Springer 2024)}
+\begin{itemize}
+  \item Ba framework dựa trên quantum auto-encoder.
+  \item \textbf{Giá trị}: Auto-encoder là baseline bắt buộc cho so sánh.
+\end{itemize}
+
+\subsection{Do, Le et al., ``Beyond the Black Box: Quantum-Inspired KANs for NID'' (2025)}
+\begin{itemize}
+  \item \textbf{Paper của chính tác giả} --- QI-KAN cho network intrusion detection.
+  \item \textbf{Giá trị}: Đây là \textbf{stepping stone} để nâng lên QGNN có cấu trúc NTN.
+\end{itemize}
+
+\subsection{``Federated Quantum-Inspired Anomaly Detection'', Frontiers AI (2025)}
+\begin{itemize}
+  \item \textbf{Đóng góp}: Kết hợp FL với QI-AD cho tình huống privacy-preserved cross-silo.
+  \item \textbf{Hạn chế}: Chạy trên IoT terrestrial, không có NTN, không có topology động.
+  \item \textbf{Cửa vào}: Kết hợp được với thế mạnh FL-GEO của tác giả.
+\end{itemize}
+
+\subsection{``Quantum-Empowered FL cho 6G IoT Security'', FGCS/Elsevier (2024)}
+\begin{itemize}
+  \item \textbf{Đóng góp}: Vision paper về QFL-IDS trong 6G; liệt kê challenge.
+  \item \textbf{Hạn chế}: Conceptual, không có experiment.
+\end{itemize}
+
+%=========================================================
+\section{Tier 3 --- Classical GNN-based IDS (baseline mạnh)}
+%=========================================================
+
+\subsection{Lo et al., ``E-GraphSAGE'', ACM/IEEE 2021 (arXiv:2103.16329)}
+\begin{itemize}
+  \item \textbf{Đóng góp}: Extend GraphSAGE để capture edge features (flow attributes) + topology. Benchmark trên 4 NIDS dataset.
+  \item \textbf{Giá trị}: \textbf{Baseline số 1} không thể thiếu trong paper của ta.
+\end{itemize}
+
+\subsection{Caville et al., ``Anomal-E: Self-Supervised GNN IDS'', Knowledge-Based Systems (2022)}
+\begin{itemize}
+  \item E-GraphSAGE + Deep Graph Infomax (DGI) cho unsupervised learning.
+  \item Baseline số 2, đặc biệt cho scenario thiếu nhãn (rất phù hợp NTN).
+\end{itemize}
+
+\subsection{``E-GRACL: IoT IDS based on GNN'', J. Supercomputing (2024)}
+\begin{itemize}
+  \item Contrastive learning cho GNN-IDS. Có baseline code mở.
+\end{itemize}
+
+\subsection{``GNN-IDS'', ACM 2024}
+\begin{itemize}
+  \item GNN + DQN cho IDS adaptive. Giá trị: lấy pattern cho ablation ``pure GNN vs GNN+RL''.
+\end{itemize}
+
+\subsection{``Advanced IoT IDS with Graph Attention Networks'', Nature Sci. Reports (2025)}
+\begin{itemize}
+  \item GAT cho IoT IDS. Baseline attention mechanism.
+\end{itemize}
+
+%=========================================================
+\section{Tier 4 --- LEO / NTN / STIN Security}
+%=========================================================
+
+\subsection{``LEO Satellite Security and Reliability'' Survey, arXiv:2201.03063 (2022)}
+\begin{itemize}
+  \item Survey đầu ngành về LEO security. Phân loại threat: jamming, spoofing, DDoS, hijacking, side-channel.
+  \item \textbf{Giá trị}: Nguồn taxonomy chuẩn.
+\end{itemize}
+
+\subsection{Salim et al., ``Satellite Comm System Security Survey'', MDPI Sensors (2024)}
+\begin{itemize}
+  \item Survey cập nhật 2024: AcidRain (KA-SAT), AcidPour case studies.
+  \item Giá trị: Case studies thực tế để motivate paper.
+\end{itemize}
+
+\subsection{``DDoS in LEO Constellation Networks'', MDPI Sensors (2022)}
+\begin{itemize}
+  \item Phân tích performance dưới DDoS; không có detection.
+\end{itemize}
+
+\subsection{``Network IDS Adversarial Attacks for LEO'', Springer 2022}
+\begin{itemize}
+  \item Deep learning IDS cho LEO + adversarial vulnerabilities.
+  \item \textbf{Giá trị}: Cho thấy vỏn vẹn NN không đủ --- tạo motivation cho QGNN với robustness.
+\end{itemize}
+
+\subsection{``DoS in SDN-LEO Constellation'', NSF/ResearchGate (2023)}
+\begin{itemize}
+  \item Phân tích DoS trong LEO với SDN control plane.
+  \item Giá trị: Kiến trúc điều khiển tập trung là attack surface.
+\end{itemize}
+
+\subsection{Liu et al., ``LEOEdge: Satellite-Ground AI Inference'', IEEE JSAC (2024)}
+\begin{itemize}
+  \item Platform cho AI inference cooperation giữa satellite và ground.
+  \item \textbf{Giá trị lớn}: Đây là base architecture mà paper của ta có thể build on --- QGNN deployment trên LEOEdge.
+\end{itemize}
+
+\subsection{``Hypatia với DoS/DDoS extension'', Int. J. Information Security (2025)}
+\begin{itemize}
+  \item Extend Hypatia simulator với 4 attack types: TCP SYN flood, UDP flood, ICMP flood, low-rate pulsing (Shrew).
+  \item \textbf{Giá trị sống còn}: \textbf{Đây là simulator mà paper của ta nên dùng} --- open-source, reproducible, có sẵn attack.
+\end{itemize}
+
+\subsection{``xeoverse: Real-Time Simulation Platform for Large LEO'', arXiv:2406.11366 (2024)}
+\begin{itemize}
+  \item Simulator nhanh hơn Hypatia 2.9x và StarryNet 40x.
+  \item Giá trị: Nếu cần scale lớn ($K > 500$), chuyển sang xeoverse.
+\end{itemize}
+
+%=========================================================
+\section{Tier 5 --- Federated Learning cho IDS \& NTN}
+%=========================================================
+
+\subsection{``FL in IDS'' Survey, Cluster Computing (Springer 2025)}
+\begin{itemize}
+  \item Survey mới nhất: taxonomy, datasets, metrics, open problems.
+  \item Giá trị: Reference framework tổng cho Related Work.
+\end{itemize}
+
+\subsection{``Paillier-Based FL-IDS cho STIN''}
+\begin{itemize}
+  \item Homomorphic encryption + CNN-IDS trong satellite-terrestrial integrated network.
+  \item \textbf{Giá trị}: Privacy-preserving baseline cho FL trong STIN.
+\end{itemize}
+
+\subsection{``Data-Efficient FL for Edge IDS'', Engineering Applications of AI (Elsevier 2025)}
+\begin{itemize}
+  \item Giảm communication cost FL cho edge IDS.
+\end{itemize}
+
+\subsection{``Deep Learning for Security in 6G TN-NTN'', J. Supercomputing (2025)}
+\begin{itemize}
+  \item Review deep learning cho security trong TN-NTN 6G.
+\end{itemize}
+
+\subsection{Do, Le et al., ``Horizontal FL Approach to IoT Malware Detection'', ICACT-TACT (2024)}
+\begin{itemize}
+  \item \textbf{Paper của chính tác giả}. Base cho federated angle.
+\end{itemize}
+
+\subsection{Do, Le et al., ``Optimizing FL Performance in GEO Satellite Networks using SCA'', ICICCC (2025)}
+\begin{itemize}
+  \item \textbf{Paper của chính tác giả}. Base cho FL-over-satellite. SCA framework có thể tái sử dụng cho QGNN federated.
+\end{itemize}
+
+%=========================================================
+\section{Tier 6 --- Lab GS Duong: QML cho wireless/6G}
+%=========================================================
+
+\subsection{Narottama, Shin, \textbf{Duong} et al., ``Non-Centralized QNN for Cell-Free MIMO'', IEEE TWC (2025)}
+\begin{itemize}
+  \item \textbf{Paper chủ lực}. Non-centralized (giống federated) QNN cho cell-free MIMO.
+  \item \textbf{Giá trị}: Framework ``non-centralized QNN'' có thể chuyển sang ``federated QGNN cho NTN''. Template chuẩn để bắt chước phong cách.
+\end{itemize}
+
+\subsection{Narottama, Paul, Singh, Cotton, Shin, \textbf{Duong}, ``Quantum Intelligence Networks'', IEEE Network (2026)}
+\begin{itemize}
+  \item Vision paper tầm nhìn: tích hợp QI vào learning cho communication.
+  \item \textbf{Giá trị}: Trích dẫn trong Introduction để ``đứng trên vai khổng lồ''.
+\end{itemize}
+
+\subsection{Recy, Narottama, \textbf{Duong}, ``Topology-Aware QGNN for Sum-Rate Max in Fluid Antenna'', IEEE Comm. Lett. (2026)}
+\begin{itemize}
+  \item \textbf{Rất quan trọng}: QGNN thực sự của lab, nhưng cho fluid antenna (không phải IDS). Chứng minh lab quan tâm QGNN.
+  \item \textbf{Giá trị}: Phải cite; có thể mượn encoding scheme.
+\end{itemize}
+
+\subsection{Duong et al., ``Quantum-Inspired ML for 6G: Fundamentals, Security, Resource Allocation'' (2022)}
+\begin{itemize}
+  \item Survey nền tảng của chính GS.
+  \item \textbf{Giá trị}: Must-cite để giới thiệu khái niệm.
+\end{itemize}
+
+\subsection{Duong et al., ``Quantum-Inspired Resource Optimization for 6G: A Survey'', IEEE COMST (2025)}
+\begin{itemize}
+  \item Survey mới nhất trên tạp chí mà GS làm EiC.
+  \item \textbf{Giá trị}: Cite đầu Introduction và Related Work.
+\end{itemize}
+
+\subsection{Duong et al., ``QML for 6G Network Intelligence and Adversarial Threats'', IEEE COMST (2025)}
+\begin{itemize}
+  \item \textbf{Đây là cái match sát nhất với paper của ta} --- QML + 6G + security/adversarial.
+  \item \textbf{Giá trị sống còn}: Phân tích kỹ từng section, positioning paper của ta là \textit{extension từ wireless-generic sang NTN-specific}.
+\end{itemize}
+
+\subsection{Prabhashana, Van Huynh, Dobre, Shin, \textbf{Duong}, ``Quantum DRL for Green UAV in 6G-SAGIN with Nano-Satellite'', GLOBECOM (2025)}
+\begin{itemize}
+  \item QDRL cho UAV trong SAGIN với nano-satellite cooperation.
+  \item \textbf{Giá trị cực lớn}: Đây là paper đầu tiên của lab touch SAGIN + quantum. Paper của ta \textbf{nối dài} đúng hướng này với góc security.
+\end{itemize}
+
+\subsection{Duong et al., ``RIS-NOMA 6G with CNN-Quantum LSTM'', IEEE VTC2024-Fall}
+\begin{itemize}
+  \item Hybrid CNN-Quantum LSTM cho channel estimation.
+  \item Giá trị: Template cho hybrid quantum architecture.
+\end{itemize}
+
+%=========================================================
+\section{Gap Matrix --- bản đồ đóng góp}
+%=========================================================
+
+Mã hoá: $\bullet$ = có đầy đủ; $\circ$ = có một phần; $-$ = không có.
+
+\begin{longtable}{@{}p{4.8cm} c c c c c c c@{}}
+\toprule
+\textbf{Paper / Dòng} & \textbf{QGNN} & \textbf{Graph-IDS} & \textbf{FL} & \textbf{STIN/NTN} & \textbf{Stealthy Attack} & \textbf{MINLP Formulation} & \textbf{Barren Plateau Treatment} \\
+\midrule
+\endhead
+Verdon 2019 (QGNN) & $\bullet$ & $-$ & $-$ & $-$ & $-$ & $-$ & $\circ$ \\
+Tüysüz 2024 (Review) & $\bullet$ & $-$ & $-$ & $-$ & $-$ & $-$ & $\bullet$ \\
+PGOA+QGNN DDoS 2025 & $\bullet$ & $\circ$ & $-$ & $-$ & $\circ$ & $-$ & $-$ \\
+QGAN-IDS 2025 & $\circ$ & $-$ & $-$ & $-$ & $\circ$ & $-$ & $-$ \\
+QuIDS 2024 & $\circ$ & $-$ & $-$ & $-$ & $-$ & $-$ & $-$ \\
+Fed QI-AD 2025 & $\circ$ & $-$ & $\bullet$ & $-$ & $-$ & $-$ & $-$ \\
+E-GraphSAGE 2021 & $-$ & $\bullet$ & $-$ & $-$ & $\circ$ & $-$ & N/A \\
+Anomal-E 2022 & $-$ & $\bullet$ & $-$ & $-$ & $\circ$ & $-$ & N/A \\
+LEOEdge JSAC 2024 & $-$ & $-$ & $\circ$ & $\bullet$ & $-$ & $-$ & N/A \\
+Paillier FL-IDS STIN & $-$ & $-$ & $\bullet$ & $\bullet$ & $-$ & $-$ & N/A \\
+Hypatia DoS ext. 2025 & $-$ & $-$ & $-$ & $\bullet$ & $\bullet$ & $-$ & N/A \\
+Narottama TWC 2025 (QNN) & $\bullet$ (QNN) & $-$ & $\bullet$ & $-$ & $-$ & $\circ$ & $\circ$ \\
+Recy QGNN Fluid 2026 & $\bullet$ & $-$ & $-$ & $-$ & $-$ & $\circ$ & $\circ$ \\
+Duong QML-6G Security 2025 & $\bullet$ & $-$ & $\circ$ & $\circ$ & $\circ$ & $\circ$ & $\circ$ \\
+Duong QDRL UAV-SAGIN 2025 & $\circ$ (QDRL) & $-$ & $-$ & $\bullet$ & $-$ & $\circ$ & $-$ \\
+Do QI-KAN NID 2025 & $\circ$ (QI) & $-$ & $-$ & $-$ & $\circ$ & $-$ & N/A \\
+Do Horizontal FL 2024 & $-$ & $-$ & $\bullet$ & $-$ & $\circ$ & $-$ & N/A \\
+Do FL-GEO SCA 2025 & $-$ & $-$ & $\bullet$ & $\bullet$ & $-$ & $\bullet$ & N/A \\
+\midrule
+\textbf{\color{accent} Paper đề xuất (ta)} & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ \\
+\bottomrule
+\end{longtable}
+
+\begin{goldbox}[Quan sát then chốt]
+\textbf{Không có paper hiện hữu phủ đủ 7 cột}. Các paper gần nhất:
+\begin{itemize}
+  \item \textbf{Duong QML-6G Security 2025 (COMST)}: 5/7 (chỉ thiếu Graph-IDS + Barren-plateau treatment đầy đủ).
+  \item \textbf{Duong QDRL UAV-SAGIN 2025}: 4/7 (thiếu Graph-IDS, QGNN, Stealthy attack, Barren-plateau).
+  \item \textbf{Recy QGNN Fluid 2026}: 4/7 (thiếu toàn bộ IDS + FL + NTN).
+\end{itemize}
+$\Rightarrow$ Khoảng trống \textbf{rõ rệt} và \textbf{phù hợp} với hồ sơ tác giả.
+\end{goldbox}
+
+%=========================================================
+\section{Ba đóng góp đề xuất của paper}
+%=========================================================
+
+Dựa trên Gap Matrix, đề xuất bộ 3 đóng góp (đảm bảo đủ cho paper Q1):
+
+\subsection{Đóng góp 1 --- Kiến trúc QGNN có nhận thức topology động cho NTN}
+
+\begin{itemize}
+  \item \textbf{Name}: \textit{DynaQGNN-IDS} (Dynamic Quantum Graph Neural Network for Intrusion Detection).
+  \item \textbf{Novelty}: Mở rộng QGNN (Verdon, Recy) bằng cơ chế \textbf{temporal encoding cho adjacency $\mathbf{A}_t$ thay đổi theo orbital dynamics}.
+  \item \textbf{Ansatz}: Amplitude encoding cho sub-graph + re-uploading theo slot + layer-wise training để né barren plateau (theo Cerezo 2021).
+  \item \textbf{Khác biệt với Recy 2026}: Họ làm QGNN cho fluid antenna (static geometry); ta cho LEO constellation động + stealthy attack.
+\end{itemize}
+
+\subsection{Đóng góp 2 --- Federated QGNN-IDS với SCA-based optimal aggregation}
+
+\begin{itemize}
+  \item Mở rộng Narottama et al. 2025 (non-centralized QNN) sang \textbf{federated QGNN có truyền thông NTN-aware}.
+  \item Tái sử dụng \textbf{SCA framework} từ paper FL-GEO của chính tác giả (2025) $\rightarrow$ đây là điểm nối tự nhiên.
+  \item Công thức $\mathbf{P_1}$ MINLP: cùng tối ưu (a) chọn satellite nào host detection, (b) aggregation weights, (c) circuit depth.
+  \item Chứng minh convergence dưới noise of NTN communication.
+\end{itemize}
+
+\subsection{Đóng góp 3 --- Bộ benchmark + reproducibility kit cho NTN-IDS}
+
+\begin{itemize}
+  \item Kịch bản hoá Hypatia-DoS extension (Int. J. Info. Security 2025) + mapping với dataset flow (CICIDS-2017, ToN-IoT, Bot-IoT) theo đồ thị NTN động.
+  \item Public dataset + code (theo reproducibility checklist của \texttt{00-methodology.tex}).
+  \item Baseline suite: random, E-GraphSAGE, Anomal-E, classical DQN-GNN, QSVC (QuIDS), QGNN vanilla (Recy-style), \textit{DynaQGNN} (của ta).
+\end{itemize}
+
+\begin{greenbox}[Đánh giá positioning]
+Ba đóng góp này phủ đều 3 khía cạnh mà reviewer Transactions quan tâm:
+(1) \textit{methodological novelty} (QGNN + temporal encoding),
+(2) \textit{theoretical rigor} (MINLP + SCA + convergence),
+(3) \textit{empirical contribution} (benchmark + reproducibility).
+\end{greenbox}
+
+%=========================================================
+\section{Chiến lược 2-paper (warm-up + full)}
+%=========================================================
+
+\subsection{Paper A --- Warm-up (6 tháng)}
+\begin{itemize}
+  \item \textbf{Target}: \textbf{IEEE Wireless Communications Letters (WCL)} hoặc \textbf{IEEE OJ-COMS}.
+  \item \textbf{Scope}: Chỉ đóng góp 1 (DynaQGNN-IDS, centralized), scale $K \leq 20$ satellites, 1 dataset.
+  \item \textbf{Độ dài}: 4--5 trang WCL / 8--10 trang OJ-COMS.
+  \item \textbf{Rủi ro}: Thấp --- chỉ cần show QGNN \textbf{vượt} classical GNN-IDS ở environment có topology động.
+\end{itemize}
+
+\subsection{Paper B --- Full (12 tháng)}
+\begin{itemize}
+  \item \textbf{Target}: \textbf{IEEE T-IFS} (security angle) hoặc \textbf{IEEE TWC} (wireless angle), \textbf{IEEE IoTJ} (IoT-NTN).
+  \item \textbf{Scope}: Cả 3 đóng góp --- Federated DynaQGNN + benchmark.
+  \item \textbf{Độ dài}: 12--14 trang (TWC) hoặc 14--16 trang (T-IFS).
+  \item \textbf{Rủi ro}: Trung bình, cần ablation + statistical significance đầy đủ.
+\end{itemize}
+
+%=========================================================
+\section{Những gì cần tra cứu thêm ở phiên sau}
+%=========================================================
+
+\begin{enumerate}
+  \item \textbf{Paper IEEE COMST 2025 của Duong về QML-6G-Adversarial}: cần đọc toàn văn để trích ``open problem'' làm nền cho contribution.
+  \item \textbf{LEOEdge JSAC 2024 (Liu et al.)}: deployment-level info để tham chiếu architecture.
+  \item \textbf{Cơ sở dữ liệu NTN-specific}: xem có dataset mới ngoài Hypatia-DoS không (ví dụ: Starlink traffic trace đã công khai?).
+  \item \textbf{Paper QFL-LSTM của lab GS (IoTJ 2026)}: để so sánh hướng QFL.
+  \item \textbf{Barren plateau mitigation techniques}: đọc đủ Cerezo 2021 + Skolik 2021 + Grant 2019.
+  \item \textbf{IEEE T-IFS các paper gần đây về graph IDS}: để biết style \& độ dài chuẩn.
+\end{enumerate}
+
+%=========================================================
+\section*{Phụ lục --- Nguồn tham chiếu chính}
+\addcontentsline{toc}{section}{Phụ lục --- Nguồn tham chiếu}
+%=========================================================
+
+\begin{itemize}\small
+  \item Verdon et al. 2019: \url{https://arxiv.org/abs/1909.12264}
+  \item Tüysüz 2024 Review: \url{https://arxiv.org/html/2408.06524v1}
+  \item Inductive QGNN 2025: \url{https://arxiv.org/html/2503.24111}
+  \item QGraphLIME 2025: \url{https://arxiv.org/html/2510.05683}
+  \item Duong QI-ML-6G Survey (CERC-NGCT): \url{https://cerc-ngct.ca/wp-content/uploads/2025/03/J-2025-IEEE-COMST-Quantum-Inspired-Resource-Optimization-for-6G-Networks-A-Survey.pdf}
+  \item Duong QML-6G Adversarial (CERC-NGCT): \url{https://cerc-ngct.ca/wp-content/uploads/2025/06/J-2025-IEEE-COMSTD-Quantum-Machine-Learning-for-6G-Network-Intelligence-and-Adversarial-Threats.pdf}
+  \item E-GraphSAGE: \url{https://arxiv.org/abs/2103.16329}
+  \item Anomal-E: \url{https://www.sciencedirect.com/science/article/abs/pii/S0950705122011236}
+  \item LEO Security Survey: \url{https://arxiv.org/pdf/2201.03063}
+  \item Hypatia simulator: \url{https://github.com/snkas/hypatia}
+  \item Hypatia-DoS extension: \url{https://link.springer.com/article/10.1007/s10207-025-01191-0}
+  \item xeoverse: \url{https://arxiv.org/html/2406.11366v1}
+  \item PGOA + QGNN DDoS IoT: \url{https://link.springer.com/article/10.1007/s40998-025-00868-5}
+  \item QGAN-IDS: \url{https://www.scitepress.org/Papers/2025/133978/133978.pdf}
+  \item Federated Quantum-Inspired AD: \url{https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2025.1648609/full}
+  \item FL-IDS Survey 2025: \url{https://link.springer.com/article/10.1007/s10586-025-05325-w}
+  \item LEOEdge JSAC 2024: \url{https://dl.acm.org/doi/10.1109/JSAC.2024.3460083}
+  \item Satellite Comm Security Survey 2024: \url{https://www.mdpi.com/1424-8220/24/9/2897}
+\end{itemize}
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.3cm}
+\textit{\small Phiên bản 0.1 --- 24/04/2026. Sau khi tra cứu đầy đủ 6 mục ở Mục 10, sẽ bump lên 0.2.}
+
+\end{document}

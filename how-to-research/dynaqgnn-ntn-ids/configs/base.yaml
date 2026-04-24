@@ -1,0 +1,72 @@
+# Base config for DynaQGNN-IDS experiments.
+# Specific experiments override these fields in their own config.yaml.
+
+project: dynaqgnn-ntn-ids
+run_name: base
+seed: 42
+
+# --- Dataset / simulator ---
+dataset:
+  flow_source: cicids2017         # cicids2017 | ton-iot | bot-iot
+  flow_path: data/cicids2017/
+  simulator: hypatia              # hypatia | xeoverse
+  constellation:
+    shell: starlink_shell1
+    num_planes: 4                 # paper A: small; paper B: up to 72
+    sats_per_plane: 5             # paper A: 20 total; paper B: 1584
+    altitude_km: 550
+    inclination_deg: 53
+  simulation_duration_s: 1800     # 30 min
+  snapshot_interval_s: 1.0
+  attack_types:
+    - tcp_syn_flood
+    - udp_flood
+    - shrew_low_rate
+
+# --- Graph construction ---
+graph:
+  node_types: [ue, sat, gateway]
+  edge_types: [uplink, isl, downlink]
+  temporal: true
+  window_slots: 5                 # W in paper
+
+# --- Model (overridden per experiment) ---
+model:
+  name: dynaqgnn                  # mlp | egraphsage | tgn | qsvc | dynaqgnn
+  n_qubits: 12
+  n_variational_layers: 4
+  encoding: angle                 # angle | amplitude | reuploading
+  ansatz: topology_aware          # hardware_efficient | topology_aware
+  barren_plateau_mitigation:
+    layer_wise_training: true
+    gaussian_init_std: 0.01
+    local_cost: true
+  classical_head:
+    hidden: [64, 32]
+    dropout: 0.2
+
+# --- Training ---
+training:
+  epochs: 50
+  batch_size: 64
+  optimizer: adam
+  lr: 0.001
+  weight_decay: 1.0e-4
+  scheduler: cosine
+  early_stopping_patience: 10
+  device: cuda                    # cuda | cpu
+  quantum_backend: lightning.gpu  # lightning.qubit | lightning.gpu | default.qubit
+
+# --- Logging ---
+logging:
+  wandb:
+    enabled: true
+    entity: null                  # fill in before running
+    project: dynaqgnn-ntn-ids
+  checkpoint_dir: results/checkpoints/
+  log_every_n_steps: 50
+
+# --- Evaluation ---
+eval:
+  metrics: [accuracy, precision, recall, f1, auc_roc, auc_pr, miss_rate, fa_rate]
+  seeds: [42, 43, 44, 45, 46]     # 5 seeds bat buoc cho publication

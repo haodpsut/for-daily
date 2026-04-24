@@ -1,0 +1,446 @@
+% !TEX program = xelatex
+% Biên dịch: xelatex 04-experiment-plan-niche1.tex
+% Tuân thủ 00-methodology.tex
+
+\documentclass[11pt,a4paper]{article}
+
+%=========================================================
+% PACKAGES
+%=========================================================
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{vietnamese}
+\setotherlanguage{english}
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable, listings}
+
+%=========================================================
+% STYLE
+%=========================================================
+\definecolor{accent}{HTML}{0B5FA5}
+\definecolor{accent2}{HTML}{B8860B}
+\definecolor{success}{HTML}{2E8B57}
+\definecolor{danger}{HTML}{B22222}
+\definecolor{soft}{HTML}{F4F6FA}
+\definecolor{softyellow}{HTML}{FFF8E1}
+\definecolor{softgreen}{HTML}{E8F5E9}
+\definecolor{codebg}{HTML}{F6F8FA}
+
+\hypersetup{colorlinks=true, linkcolor=accent, urlcolor=accent, citecolor=accent2,
+  pdftitle={04 - Experiment Plan Niche 1}, pdfauthor={TS. Do Phuc Hao}}
+
+\titleformat{\section}{\Large\bfseries\color{accent}}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\large\bfseries\color{accent}}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.5em}{}
+
+\setlist[itemize]{leftmargin=1.2em, itemsep=2pt, topsep=3pt}
+\setlist[enumerate]{leftmargin=1.4em, itemsep=2pt, topsep=3pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small\textit{Experiment Plan --- Niche 1}}
+\lhead{\small TS. Đỗ Phúc Hảo}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+\newtcolorbox{note}[1][]{enhanced, breakable, colback=soft, colframe=accent,
+  boxrule=0.4pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white, colbacktitle=accent}
+
+\newtcolorbox{greenbox}[1][]{enhanced, breakable, colback=softgreen, colframe=success,
+  boxrule=0.6pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white, colbacktitle=success}
+
+\newtcolorbox{goldbox}[1][]{enhanced, breakable, colback=softyellow, colframe=accent2,
+  boxrule=0.6pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white, colbacktitle=accent2}
+
+\lstdefinestyle{codestyle}{backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\small, breaklines=true, frame=single, framerule=0.3pt,
+  rulecolor=\color{gray!40}, xleftmargin=0.5em, xrightmargin=0.5em,
+  aboveskip=4pt, belowskip=4pt, numbers=none, tabsize=2, showstringspaces=false}
+\lstset{style=codestyle}
+
+%=========================================================
+% METADATA
+%=========================================================
+\title{\vspace{-1.5cm}\textbf{\color{accent} 04 --- Experiment Plan} \\[3pt]
+       \Large DynaQGNN-IDS cho NTN / 6G SAGIN \\[2pt]
+       \normalsize \textit{Dataset, Baselines, Metrics, Ablation, Compute Budget}}
+\author{TS. Đỗ Phúc Hảo \\ \small Khoa CNTT --- Đại học Kiến trúc Đà Nẵng}
+\date{Ngày 24 tháng 04 năm 2026 (phiên bản 0.1)}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{note}[Mục đích]
+Tài liệu cụ thể hoá \textbf{kế hoạch thực nghiệm} cho paper A (warm-up, WCL/OJ-COMS) và paper B (full, TWC/T-IFS). Bao phủ: dataset + simulator, baseline suite, metric, ablation matrix, compute budget (RTX 4090 + Colab Pro+), lộ trình chạy theo tuần. Tài liệu \textit{ràng buộc} đối với code repo sẽ tạo ở bước 5.
+\end{note}
+
+\tableofcontents
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+%=========================================================
+\section{Phạm vi thí nghiệm của paper A vs paper B}
+%=========================================================
+
+\begin{longtable}{@{}p{3.5cm} p{5.5cm} p{5.5cm}@{}}
+\toprule
+\textbf{Mục} & \textbf{Paper A (warm-up)} & \textbf{Paper B (full)} \\
+\midrule
+\endhead
+Target & IEEE WCL / OJ-COMS & IEEE T-IFS / TWC / IoTJ \\
+Đóng góp & Đóng góp 1 (DynaQGNN centralized) & Cả 3 đóng góp + federated + benchmark \\
+Scale satellite $K$ & $\leq 20$ & $20 \rightarrow 100 \rightarrow 500$ (scaling exp) \\
+Dataset & 1 (CICIDS2017 + NTN mapping) & 3 (CICIDS, ToN-IoT, Bot-IoT) $+$ Hypatia-DoS \\
+Baseline & 4 (Random, E-GraphSAGE, QSVC, QGNN-vanilla) & 8 (thêm Anomal-E, E-GRACL, GAT, QGAN-IDS) \\
+Ablation & 3 (qubits, depth, encoding) & 6 (thêm ansatz, noise, FL config) \\
+Qubits max & 16 & 24--28 \\
+Số seed & 3 (cho draft), 5 (cho submit) & 5 bắt buộc \\
+Wall-clock budget & $\leq$ 2 tuần RTX 4090 & $\leq$ 6 tuần RTX 4090 + Colab \\
+\bottomrule
+\end{longtable}
+
+%=========================================================
+\section{Dataset \& simulator}
+%=========================================================
+
+\subsection{Tầng 1 --- Flow dataset (nội dung traffic)}
+
+\begin{longtable}{@{}p{3cm} p{3cm} p{9cm}@{}}
+\toprule
+\textbf{Dataset} & \textbf{Size} & \textbf{Ghi chú sử dụng} \\
+\midrule
+\endhead
+CICIDS-2017 & $\sim$3M flows & Có 14 attack types. \textbf{Dataset chính paper A}. Preprocessing: Zeek/NetFlow features. \\
+ToN-IoT & $\sim$22M records & IoT-IIoT, có telemetry + network. \textbf{Dùng paper B} cho IoT angle. \\
+Bot-IoT & $\sim$73M records & Focus botnet + DDoS. \textbf{Dùng paper B} cho stealthy DDoS. \\
+CSE-CIC-IDS2018 & $\sim$16M & Thay thế tuỳ chọn CICIDS-2017 nếu reviewer yêu cầu dataset mới hơn. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Tầng 2 --- NTN simulator (topology \& attack injection)}
+
+\begin{longtable}{@{}p{3cm} p{12cm}@{}}
+\toprule
+\textbf{Tool} & \textbf{Vai trò} \\
+\midrule
+\endhead
+\textbf{Hypatia} & Base simulator (Rus et al.). Chạy ns-3 packet-level + quỹ đạo Kepler. \textbf{Constellation chuẩn}: Starlink shell-1 (72 plane $\times$ 22 sat = 1584 sat ở 550 km). Paper A chỉ dùng sub-constellation $K \leq 20$. \\
+\textbf{Hypatia-DoS ext. 2025} & Plugin mở rộng 4 attack: TCP SYN flood, UDP flood, ICMP flood, Shrew low-rate pulsing. \textbf{Dùng nguyên}. \\
+\textbf{xeoverse} & Dự phòng nếu cần scale $K > 500$ với real-time --- nhanh 2.9--40$\times$. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Pipeline dataset hoá}
+
+\begin{enumerate}
+  \item Chạy Hypatia + Hypatia-DoS trên constellation thu nhỏ ($K=20$) với 30 phút mô phỏng.
+  \item Xuất \textbf{packet trace} + \textbf{satellite-link topology theo thời gian}.
+  \item Gắn \textbf{flow-level features} từ CICIDS-2017 (resp. ToN-IoT) vào các \textit{luồng logic} giữa ground station $\rightarrow$ satellite $\rightarrow$ ground gateway.
+  \item Xây dựng \textbf{graph snapshot} mỗi $\Delta t = 1$ s: nodes = $\{$GS, sat, gateway$\}$, edges = ISL + uplink + downlink.
+  \item Nhãn: mỗi flow có nhãn (benign / attack type) kế thừa từ CICIDS-2017.
+  \item Chia train/val/test theo thời gian \textbf{không random} (time-split để tránh leakage).
+\end{enumerate}
+
+\begin{goldbox}[Quyết định quan trọng về graph construction]
+Graph của ta là \textbf{heterogeneous, temporal}:
+\begin{itemize}
+  \item Node types: $\{$UE, LEO-sat, gateway$\}$.
+  \item Edge types: $\{$uplink, ISL, downlink$\}$ --- có feature riêng (throughput, delay, SNR).
+  \item Adjacency $\mathbf{A}_t$ thay đổi theo orbital dynamics $\Rightarrow$ dùng \textbf{temporal snapshot sequence}.
+\end{itemize}
+Đây là điểm khác biệt so với E-GraphSAGE (static, homogeneous) $\Rightarrow$ phải làm nổi bật trong paper.
+\end{goldbox}
+
+%=========================================================
+\section{Baseline suite}
+%=========================================================
+
+\subsection{Nhóm 1 --- Trivial baselines}
+\begin{itemize}
+  \item Random classifier --- sanity check.
+  \item Logistic regression trên flow features --- lower bound.
+  \item MLP (2--3 layers) trên flow features --- tabular baseline.
+\end{itemize}
+
+\subsection{Nhóm 2 --- Classical GNN baselines}
+\begin{itemize}
+  \item \textbf{E-GraphSAGE} (Lo et al. 2021) --- SOTA graph IDS. Code: \url{https://github.com/waimorris/E-GraphSAGE}.
+  \item \textbf{Anomal-E} (Caville et al. 2022) --- self-supervised baseline.
+  \item \textbf{E-GRACL} (2024) --- contrastive GNN.
+  \item \textbf{GAT-IDS} (Nature SR 2025) --- attention mechanism.
+  \item \textbf{TGN} (Temporal Graph Networks, Rossi 2020) --- temporal baseline bắt buộc vì ta có temporal graph.
+\end{itemize}
+
+\subsection{Nhóm 3 --- Quantum baselines}
+\begin{itemize}
+  \item \textbf{QSVC / QuIDS} (4 qubits, 8 features) --- kernel method baseline.
+  \item \textbf{QGAN-IDS} (2025, NSL-KDD style) --- generative baseline.
+  \item \textbf{QGNN-vanilla} (Recy 2026-style) --- same QGNN but without temporal encoding.
+  \item \textbf{Quantum AE} (QMI 2024) --- unsupervised baseline.
+\end{itemize}
+
+\subsection{Nhóm 4 --- Proposed (ablation nội bộ)}
+\begin{itemize}
+  \item \textbf{DynaQGNN-IDS} (full) --- proposed.
+  \item \textbf{DynaQGNN without temporal encoding}.
+  \item \textbf{DynaQGNN without barren-plateau mitigation}.
+  \item \textbf{DynaQGNN with random ansatz (không problem-inspired)}.
+\end{itemize}
+
+%=========================================================
+\section{Metric}
+%=========================================================
+
+\subsection{Detection metrics}
+\begin{itemize}
+  \item \textbf{Binary}: Accuracy, Precision, Recall, F1, AUC-ROC, AUC-PR (ưu tiên PR vì lớp attack hiếm).
+  \item \textbf{Multiclass}: Macro-F1 + per-class F1 (đặc biệt cho Shrew low-rate).
+  \item \textbf{Miss / False Alarm}: $\mathbb{P}[\mathrm{miss}], \mathbb{P}[\mathrm{FA}]$ theo ngưỡng $\tau$.
+\end{itemize}
+
+\subsection{Efficiency metrics}
+\begin{itemize}
+  \item Wall-clock training time (s / epoch).
+  \item Inference latency (ms) trên 1 graph snapshot.
+  \item Peak GPU memory (GB).
+  \item Circuit depth + qubits + CNOT count.
+\end{itemize}
+
+\subsection{Robustness metrics}
+\begin{itemize}
+  \item Performance dưới CSI error $\sigma_e \in \{0.01, 0.05, 0.1, 0.2\}$.
+  \item Performance dưới attack burstiness $\pi_t$ khác nhau.
+  \item Performance khi $K$ thay đổi $\{5, 10, 20, 50, 100\}$ --- scalability.
+  \item Performance khi topology mutation rate tăng (satellite handover frequency).
+\end{itemize}
+
+\subsection{Quantum-specific diagnostics}
+\begin{itemize}
+  \item \textbf{Barren plateau}: variance of gradient $\mathrm{Var}(\partial_\theta \mathcal{L})$ theo số qubit.
+  \item \textbf{Expressibility}: KL divergence giữa distribution của circuit và Haar-random (Sim et al. 2019).
+  \item \textbf{Entanglement capability}: Meyer-Wallach measure.
+  \item \textbf{Noise resilience}: performance dưới depolarizing noise $p \in \{0, 0.001, 0.005, 0.01\}$.
+\end{itemize}
+
+%=========================================================
+\section{Ablation matrix}
+%=========================================================
+
+\begin{longtable}{@{}p{0.6cm} p{3.8cm} p{10.6cm}@{}}
+\toprule
+\textbf{\#} & \textbf{Yếu tố} & \textbf{Các giá trị / cấu hình} \\
+\midrule
+\endhead
+A1 & Số qubits & $\{4, 8, 12, 16, 20, 24\}$ --- paper A dừng ở 16, paper B đến 24 \\
+A2 & Circuit depth (variational layers) & $\{2, 4, 6, 8\}$ \\
+A3 & Encoding scheme & \{angle, amplitude, re-uploading\} \\
+A4 & Ansatz family & \{hardware-efficient, problem-inspired (topology-aware)\} \\
+A5 & Barren plateau mitigation & \{none, layer-wise training, local cost, Gaussian init\} \\
+A6 & Temporal encoding & \{disabled, 1-step, 3-step, RNN-style\} \\
+A7 & Noise model (paper B) & \{noiseless, depolarizing $p$, IBM realistic backend\} \\
+A8 & FL configuration (paper B) & \{centralized, FedAvg, FedProx, SCA-weighted\} \\
+\bottomrule
+\end{longtable}
+
+\textbf{Tổng số run ước tính paper A}: $(3 \text{ ablations chính} \times 5 \text{ values each}) \times 3 \text{ seeds} \approx 45$ runs. Mỗi run $\sim 30$ min on RTX 4090 $\Rightarrow$ $\approx 22$ GPU-hours. Khả thi trong 1 tuần.
+
+\textbf{Tổng số run ước tính paper B}: $\approx 250$ runs $\times 20$ min trung bình $\approx 83$ GPU-hours. Khả thi trong 4--5 tuần RTX 4090 + sweep trên Colab Pro+ song song.
+
+%=========================================================
+\section{Compute budget chi tiết}
+%=========================================================
+
+\subsection{RTX 4090 (máy chính)}
+\begin{itemize}
+  \item 24 GB VRAM, Ada Lovelace, cuQuantum compatible.
+  \item Chạy \texttt{pennylane-lightning-gpu}: simulator 24 qubits $\sim$5--10 s / forward pass (với 4--6 variational layers).
+  \item Training 1 epoch trên 100k graph snapshots: $\sim$15--20 min với 12 qubits.
+  \item Checkpoint mỗi 5 epoch, tổng epoch 30--50.
+  \item \textbf{Dùng cho}: Ablation chính, baseline chính, reproducibility cuối.
+\end{itemize}
+
+\subsection{Colab Pro+ (dự phòng)}
+\begin{itemize}
+  \item A100 40 GB khi may mắn (hoặc V100 16 GB).
+  \item \textbf{Dùng cho}: Hyperparameter sweep song song, quick sanity check khi không có access RTX 4090.
+  \item \textbf{Tránh dùng cho}: final numbers --- instability về GPU allocation.
+\end{itemize}
+
+\subsection{IBM Quantum Experience}
+\begin{itemize}
+  \item Free tier: 7 qubits Nairobi, Lagos; 127 qubits Sherbrooke (queue).
+  \item \textbf{Chỉ dùng}: Validation final trên 1--2 configuration nhỏ (4--8 qubits) để có ``real hardware'' bullet cho paper B.
+  \item \textbf{Không dùng cho}: training.
+\end{itemize}
+
+\subsection{Storage}
+\begin{itemize}
+  \item Dataset raw: $\sim$60 GB (CICIDS + ToN-IoT + Bot-IoT + Hypatia traces).
+  \item Checkpoints: $\sim$5 GB / 50 checkpoints.
+  \item W\&B artifacts: online.
+\end{itemize}
+
+%=========================================================
+\section{Lộ trình theo tuần (12 tuần cho paper A)}
+%=========================================================
+
+\begin{longtable}{@{}p{1.3cm} p{14cm}@{}}
+\toprule
+\textbf{Tuần} & \textbf{Nhiệm vụ} \\
+\midrule
+\endhead
+1 & Setup RTX 4090 env (conda, pennylane-lightning-gpu, cuQuantum). Tạo repo GitHub. \\
+2 & Chạy Hypatia + Hypatia-DoS; xuất sample dataset 1 hour constellation $K=10$. Sanity-check loader. \\
+3 & Implement classical baselines: Logistic, MLP, E-GraphSAGE. Chạy baseline 1 seed. \\
+4 & Implement Anomal-E, TGN (temporal). Chạy baseline 3 seeds. \\
+5 & Implement DynaQGNN v0 (centralized, 8 qubits, no barren mitigation). Chạy pilot. \\
+6 & Chạy ablation A1 (qubits 4--16) + A2 (depth 2--8). Phân tích kết quả. \\
+7 & Ablation A3 (encoding) + A5 (barren mitigation). Chọn cấu hình best. \\
+8 & Chạy main table với 3 seed, 5 seed cho top-3 cấu hình. \\
+9 & Draft paper v0.1: Abstract, Intro, Related Work, System Model, Problem Formulation. \\
+10 & Draft paper v0.2: Proposed Method, Experiments, Results. \\
+11 & Hoàn thiện figures (TikZ cho system model, convergence, ablation). Proofreading. \\
+12 & Iteration cuối + submit WCL / OJ-COMS. \\
+\bottomrule
+\end{longtable}
+
+Paper B bắt đầu ngay tuần 8 song song (federated + scaling experiment), dự kiến submit tháng 9--12.
+
+%=========================================================
+\section{Reproducibility checklist (bắt buộc theo 00-methodology)}
+%=========================================================
+
+\begin{itemize}
+  \item[$\square$] Random seed cố định trong config YAML.
+  \item[$\square$] 5 seed khác nhau cho số liệu công bố.
+  \item[$\square$] Git commit hash log vào W\&B mỗi run.
+  \item[$\square$] Config YAML full, no magic number trong code.
+  \item[$\square$] Dataset hash / DVC version.
+  \item[$\square$] Training time + GPU log.
+  \item[$\square$] Environment.yml pinned cho conda + requirements.txt cho pip.
+  \item[$\square$] Colab bootstrap notebook test được trên máy trống.
+  \item[$\square$] Code release link trong paper (GitHub public sau accept, anonymous github trong review).
+  \item[$\square$] Numerical results (CSV) release kèm figures để reviewer chạy lại plot.
+\end{itemize}
+
+%=========================================================
+\section{Rủi ro thực nghiệm và cách giảm}
+%=========================================================
+
+\begin{longtable}{@{}p{4.5cm} p{10.5cm}@{}}
+\toprule
+\textbf{Rủi ro} & \textbf{Cách giảm} \\
+\midrule
+\endhead
+QGNN không đánh bại classical GNN & Điều chỉnh regime: tăng topology mutation rate (nơi classical dễ fail); đo trên extreme non-IID / few-shot; tập trung vào \textit{parameter efficiency} thay vì raw accuracy. \\
+Barren plateau vô hiệu hoá training & Apply đầy đủ Cerezo 2021 + Grant 2019; dùng shallow ansatz (depth $\leq 4$); layer-wise training. \\
+Hypatia-DoS không có đủ attack variety & Bổ sung synthetic attack bằng GAN / rule-based trên dataset flow; hoặc inject malware flow từ ToN-IoT. \\
+Compute blow-up ở ablation A7 noise & Giới hạn noise study ở 12 qubits, 4 layers; ngoại suy phần còn lại. \\
+Reviewer đòi real-QPU validation & Dành 1 sub-experiment chạy IBM Nairobi 7 qubits / Sherbrooke --- chỉ cần 1 configuration. \\
+Thiếu time cho paper A (trễ timeline) & Scope paper A chỉ centralized + 1 dataset; paper B mở rộng; không trộn. \\
+\bottomrule
+\end{longtable}
+
+%=========================================================
+\section{Cấu trúc repo sẽ tạo ở bước 5}
+%=========================================================
+
+(Tham chiếu \texttt{00-methodology.tex} Section 7; đây là bản cụ thể hoá cho niche này)
+
+\begin{lstlisting}[language=bash]
+dynaqgnn-ntn-ids/
+|-- README.md
+|-- environment.yml
+|-- requirements.txt
+|-- Makefile
+|-- .gitignore
+|-- src/
+|   |-- data/
+|   |   |-- hypatia_pipeline.py     # chay Hypatia + extract
+|   |   |-- graph_builder.py        # build temporal graph
+|   |   `-- flow_mapper.py          # map CICIDS flows vao topology
+|   |-- models/
+|   |   |-- baselines_classical.py  # MLP, E-GraphSAGE, Anomal-E, TGN
+|   |   |-- baselines_quantum.py    # QSVC, QGAN, Quantum AE
+|   |   |-- dynaqgnn.py             # proposed
+|   |   `-- ansatz_library.py       # collection of ansatze
+|   |-- training/
+|   |   |-- trainer.py
+|   |   |-- callbacks.py
+|   |   `-- bp_mitigation.py        # barren plateau utilities
+|   `-- utils/
+|       |-- metrics.py              # all metrics in Section 5
+|       |-- expressibility.py
+|       `-- seeds.py
+|-- experiments/
+|   |-- exp01_classical_baselines/
+|   |-- exp02_quantum_baselines/
+|   |-- exp03_dynaqgnn_centralized/
+|   |-- exp04_ablation_qubits/
+|   |-- exp05_ablation_depth/
+|   |-- exp06_ablation_encoding/
+|   |-- exp07_ablation_bp/
+|   `-- exp08_main_table/
+|-- configs/
+|   |-- base.yaml
+|   |-- baselines/
+|   `-- dynaqgnn/
+|-- notebooks/
+|   |-- 01_explore_hypatia_output.ipynb
+|   |-- 02_graph_construction_demo.ipynb
+|   `-- colab_bootstrap.ipynb
+|-- data/        # gitignored
+|-- results/     # gitignored, W&B fallback
+`-- paper/
+    |-- main.tex
+    |-- refs.bib
+    `-- figures/
+\end{lstlisting}
+
+%=========================================================
+\section{Hành động ngay sau tài liệu này}
+%=========================================================
+
+\begin{enumerate}
+  \item \textbf{File 05}: \texttt{05-tier-a-reading-note.tex} --- tóm tắt 4 foundation paper (Biamonte 2017, Schuld 2021, Cerezo 2021, McClean 2018). Thời gian: $\approx 1$ phiên.
+  \item \textbf{Figures 1 + 2}: \texttt{figures/fig-system-model.tex} + \texttt{figures/fig-dynaqgnn-ansatz.tex} bằng TikZ (theo Gem 2).
+  \item \textbf{Repo skeleton}: \texttt{dynaqgnn-ntn-ids/} với cấu trúc trên, \texttt{environment.yml}, \texttt{Makefile}, \texttt{colab\_bootstrap.ipynb}, và \texttt{src/data/hypatia\_pipeline.py} ở mức stub.
+  \item \textbf{Push commit đầu tiên} lên GitHub repo (private ban đầu, public sau khi submit).
+\end{enumerate}
+
+\begin{greenbox}[Sẵn sàng bắt đầu code]
+Tới đây, chúng ta có đủ để chuyển từ ``giấy'' sang ``code'': mục tiêu rõ (3 đóng góp), dataset chọn (Hypatia + CICIDS), baseline liệt kê (13 biến thể), metric định nghĩa, compute budget biết, timeline 12 tuần.
+\end{greenbox}
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.3cm}
+\textit{\small Phiên bản 0.1 --- 24/04/2026. Cập nhật khi thay đổi scope hoặc compute budget.}
+
+\end{document}

@@ -1,0 +1,68 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+*.egg
+.eggs/
+build/
+dist/
+pip-wheel-metadata/
+
+# --- Environments ---
+.venv/
+venv/
+env/
+.env
+.envrc
+.conda/
+.python-version
+
+# --- IDE ---
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+
+# --- Experiment artifacts (large, not source of truth) ---
+data/raw/
+data/processed/
+data/hypatia_output/
+results/
+checkpoints/
+wandb/
+*.pt
+*.ckpt
+*.pkl
+*.npz
+*.h5
+*.hdf5
+
+# --- LaTeX (paper/) ---
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.bbl
+paper/*.blg
+paper/*.synctex.gz
+paper/*.fdb_latexmk
+paper/*.fls
+
+# --- Hypatia / ns-3 build artifacts (if user bundles sim sources) ---
+hypatia/
+ns-3*/
+
+# --- Misc ---
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.tmp
+tmp/

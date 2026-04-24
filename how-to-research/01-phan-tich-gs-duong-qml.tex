@@ -1,0 +1,477 @@
+% !TEX program = xelatex
+% Biên dịch: xelatex 01-phan-tich-gs-duong-qml.tex
+% Yêu cầu: XeLaTeX + polyglossia + font hỗ trợ tiếng Việt (Latin Modern / TeX Gyre)
+
+\documentclass[11pt,a4paper]{article}
+
+%=========================================================
+% PACKAGES
+%=========================================================
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{vietnamese}
+\setotherlanguage{english}
+
+% Fonts — mặc định Latin Modern (tương thích tiếng Việt). Nếu máy có Times New Roman hoặc Noto Serif thì đổi ở đây.
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{url}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+%=========================================================
+% STYLE
+%=========================================================
+\definecolor{accent}{HTML}{0B5FA5}
+\definecolor{accent2}{HTML}{B8860B}
+\definecolor{soft}{HTML}{F4F6FA}
+\definecolor{rulegray}{HTML}{C0C4CC}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=accent,
+  urlcolor=accent,
+  citecolor=accent2,
+  pdftitle={Phan tich huong nghien cuu GS Trung Q. Duong - Dinh huong QML/QI cho TS Do Phuc Hao},
+  pdfauthor={TS. Do Phuc Hao}
+}
+
+\titleformat{\section}{\Large\bfseries\color{accent}}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\large\bfseries\color{accent}}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.5em}{}
+
+\setlist[itemize]{leftmargin=1.2em, itemsep=2pt, topsep=3pt}
+\setlist[enumerate]{leftmargin=1.4em, itemsep=2pt, topsep=3pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small\textit{Phân tích hướng GS. T.Q. Duong}}
+\lhead{\small TS. Đỗ Phúc Hảo}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+% Hộp ghi chú
+\newtcolorbox{note}[1][]{
+  enhanced, breakable, colback=soft, colframe=accent,
+  boxrule=0.4pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white,
+  colbacktitle=accent
+}
+
+\newtcolorbox{keybox}[1][]{
+  enhanced, breakable, colback=white, colframe=accent2,
+  boxrule=0.6pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white,
+  colbacktitle=accent2
+}
+
+%=========================================================
+% METADATA
+%=========================================================
+\title{\vspace{-1.5cm}\textbf{\color{accent} Phân tích hướng nghiên cứu} \\[3pt]
+       \Large GS. Trung Q. Duong \\[2pt]
+       \large (Memorial University / Queen's Belfast) \\[8pt]
+       \normalsize \textit{Định hướng Quantum-Inspired \& Quantum Machine Learning}}
+\author{TS. Đỗ Phúc Hảo \\ \small Khoa CNTT --- Đại học Kiến trúc Đà Nẵng}
+\date{Ngày 24 tháng 04 năm 2026 (phiên bản 0.1)}
+
+%=========================================================
+% DOCUMENT
+%=========================================================
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{note}[Mục đích tài liệu]
+Đây là \textbf{working note} nội bộ, ghi lại trạng thái hiện tại sau phiên phân tích đầu tiên (24/04/2026). Tài liệu tóm tắt hồ sơ nghiên cứu của GS. Trung Q. Duong, đối chiếu với hồ sơ cá nhân, khảo lược kiến thức nền cần có để theo hướng QML/QI, và đề xuất lộ trình 6 tháng. Các phiên phân tích kế tiếp sẽ bổ sung thêm chương hoặc chỉnh sửa trực tiếp lên file này.
+\end{note}
+
+\tableofcontents
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+%=========================================================
+\section{Tóm tắt điều hành}
+%=========================================================
+
+GS. Trung Q. Duong là \textit{Canada Excellence Research Chair} (Memorial University, Canada) và Editor-in-Chief của tạp chí \textbf{IEEE Communications Surveys \& Tutorials} --- tạp chí có hệ số ảnh hưởng cao nhất trong ngành viễn thông. Hướng nghiên cứu của GS trong giai đoạn 2024--2026 đang \textbf{dịch chuyển mạnh} sang cụm chủ đề \textit{Quantum Machine Learning (QML), Reconfigurable Intelligent Surfaces (RIS), Digital Twin cho 6G, và SAGIN}.
+
+Hồ sơ cá nhân của người viết (TS. Đỗ Phúc Hảo, tốt nghiệp Tiến sĩ Viễn thông tại SPbSUT, Nga) có \textbf{độ giao thoa cao} với lab của GS Duong ở bốn điểm: (i) quantum-inspired KAN cho phát hiện xâm nhập, (ii) federated learning cho mạng vệ tinh GEO, (iii) hybrid quantum classifier, và (iv) quantum-safe cybersecurity. Đây là tiền đề tốt để chuyển hướng nghiên cứu chính thức sang QML/QI mà \textbf{không cần đổi trục}.
+
+Lộ trình đề xuất: \textbf{6 tháng} để làm chủ nền tảng QML + chuẩn bị bài báo đầu tiên ở nhánh \textit{Quantum-Inspired / Hybrid Intrusion Detection cho NTN/6G SAGIN} --- đây là \textit{sweet spot} hội tụ thế mạnh hiện có của tác giả và khoảng trống nghiên cứu trong lab GS.
+
+%=========================================================
+\section{Hồ sơ GS. Trung Q. Duong}
+%=========================================================
+
+\subsection{Vị trí và vị thế}
+
+\begin{longtable}{@{}p{4.5cm} p{11cm}@{}}
+\toprule
+\textbf{Mục} & \textbf{Nội dung} \\
+\midrule
+\endhead
+Vị trí hiện tại & Canada Excellence Research Chair (CERC) \& Full Professor, Memorial University of Newfoundland, Canada; Adjunct Professor, Queen's University Belfast, UK \\
+Danh hiệu & FIEEE, FEIC, FIET \\
+Chỉ số Scholar\footnote{Truy xuất 2026-04-24 từ \url{https://scholar.google.com/citations?user=PwsDdmEAAAAJ}} & h-index = \textbf{86}; i10-index = \textbf{399}; tổng citations \textbf{26.701} (5 năm gần: 14.885) \\
+Editor-in-Chief & \textbf{IEEE Communications Surveys \& Tutorials} (COMST) \\
+Editor & IEEE Network, IEEE Trans. on Network Science \& Engineering, IEEE Wireless Communications Letters \\
+\bottomrule
+\end{longtable}
+
+\subsection{Ba giai đoạn nghiên cứu --- bức tranh tiến hoá}
+
+\begin{description}[leftmargin=0.7cm, style=nextline]
+  \item[\textbf{Giai đoạn A (2009--2018) --- PHY-layer kinh điển}]
+  Relay networks (DF/AF), cognitive radio, NOMA, cooperative communications, physical-layer security, phân tích kênh Nakagami-m, SWIPT, cell-free massive MIMO. Công trình cao nhất: \textit{``On the total energy efficiency of cell-free massive MIMO''} (2017, 1.005 trích dẫn).
+
+  \item[\textbf{Giai đoạn B (2019--2023) --- Ứng dụng hoá \& AI hoá}]
+  UAV communications + NOMA/DRL, edge intelligence + URLLC cho metaverse/digital twin, loạt chủ đề ``AI for social good'' (disaster management, flood monitoring, healthcare resilience, smart agriculture, air-quality monitoring).
+
+  \item[\textbf{Giai đoạn C (2024--2026) --- QUANTUM + 6G + Digital Twin}] \hfill \textbf{\color{accent2} $\bigstar$ trọng tâm hiện tại}
+
+  Đây là giai đoạn GS đang \textbf{dồn lực} mạnh nhất. Xem bảng thống kê bên dưới.
+\end{description}
+
+\subsection{Thống kê chủ đề giai đoạn C (2024--2026)}
+
+\begin{longtable}{@{}p{6.5cm} c p{7cm}@{}}
+\toprule
+\textbf{Chủ đề} & \textbf{Cường độ} & \textbf{Ghi chú} \\
+\midrule
+\endhead
+Quantum ML / Quantum Optimization / QNN & \textbf{Rất cao} & $\geq 10$ paper 2025--2026; đã có survey trên ACM CSUR 2026 \\
+RIS / BD-RIS / STAR-RIS / near-field RIS & \textbf{Rất cao} & 6+ paper, nhiều paper ghép với quantum \\
+Integrated Sensing and Communication (ISAC) & Cao & Cell-free ISAC, metasurface-based ISAC \\
+Digital Twin cho 6G / network & Cao & DT-based traffic management, network DT evaluation \\
+UAV + SAGIN + NTN / satellite & Cao & ``Quantum DRL for Green UAV in 6G-SAGIN with nano-satellite constellations'' (GLOBECOM'25) \\
+Semantic communications & Trung bình & C-V2X với Transformer encoding \\
+Fluid antenna / Pinching antenna & Trung bình & Hướng mới nổi 2026 \\
+Federated learning + wearable IoT & Trung bình & Quantum Federated LSTM cho fall detection (IoTJ 2026) \\
+\bottomrule
+\end{longtable}
+
+\begin{keybox}[Pattern nhận diện]
+Hầu như mọi hướng \textbf{cổ điển} (RIS, UAV, cell-free MIMO, ISAC, V2X) đều đang được \textbf{``quantum-ize''} (bổ sung thành phần VQC, QNN, QGNN). Đây là \textit{signature move} của lab GS trong giai đoạn C.
+\end{keybox}
+
+\subsection{Mạng lưới cộng sự chủ chốt}
+
+\begin{itemize}
+  \item \textbf{Octavia A. Dobre} (Memorial University, Tier-1 CRC) --- partner chính
+  \item \textbf{H. Shin} (Kyung Hee Univ., Hàn Quốc) --- co-author chủ đạo về quantum
+  \item \textbf{B. Canberk} (Istanbul Technical University) --- digital twin, 6G
+  \item \textbf{S.\,L. Cotton} (Queen's Belfast) --- IoT sensing, channel modeling
+  \item \textbf{H.\,V. Poor} (Princeton), \textbf{G. Karagiannidis} (Aristotle), \textbf{L. Hanzo} (Southampton)
+  \item Nhóm Việt Nam: \textbf{L.\,D. Nguyen, D. Van Huynh, Q.\,N. Le, N.\,S. Vo, D.\,B. Ha} --- nhiều người đặt tại Duy Tân / Đà Nẵng, \textbf{thuận lợi kết nối địa lý}.
+\end{itemize}
+
+%=========================================================
+\section{Hồ sơ cá nhân và điểm giao thoa}
+%=========================================================
+
+\subsection{Tóm tắt hồ sơ TS. Đỗ Phúc Hảo}
+
+\begin{longtable}{@{}p{4.5cm} p{11cm}@{}}
+\toprule
+\textbf{Mục} & \textbf{Nội dung} \\
+\midrule
+\endhead
+Nơi tốt nghiệp TS & Bonch-Bruevich Saint-Petersburg State University of Telecommunications (SPbSUT), Nga \\
+Nơi công tác & Khoa CNTT, Đại học Kiến trúc Đà Nẵng \\
+Chỉ số Scholar & h-index = \textbf{7}; i10 = 5; tổng citations $\approx$ 143 (136 trong 5 năm gần) \\
+Từ khoá nghiên cứu đã công bố & Quantum-Inspired AI; 6G Non-Terrestrial Networks; Resilient Computing; Network Security \\
+Cộng sự chính (SPbSUT) & T.\,D. Le; V.\,D. Pham; A. Berezkin; R. Kirichek; V. Vishnevsky \\
+Dự án đang có & NAFOSTED (Vietnam-Russia) với SPbSUT về CII predictive security \\
+\bottomrule
+\end{longtable}
+
+\subsection{Các tuyến nghiên cứu đã có (giai đoạn 2020--2026)}
+
+\begin{enumerate}
+  \item \textbf{Phát hiện malware/botnet IoT}: KAN (IEEE Access 2025), GNN (Secure Health 2024), horizontal federated learning (ICACT 2024).
+  \item \textbf{Federated learning cho mạng vệ tinh / IoT}: GEO FL với Successive Convex Approximation (ICICCC 2025); TinyML đa cảm biến (IJPEDS 2025).
+  \item \textbf{Quantum-Inspired \& Hybrid Quantum}: ``Beyond the Black Box --- Quantum-inspired KAN for NID'' (2025); ``A Non-Monotonic Relationship: Hybrid Quantum Classifiers'' (2025); ``Challenges in applying Variational Quantum Algorithms'' (2025).
+  \item \textbf{Quantum-Safe Cybersecurity}: ``Are Enterprises Ready for Quantum-Safe Cybersecurity?'' (2025).
+  \item \textbf{Xử lý ảnh y sinh}: PBSNet cho phân loại u não trên MRI (Biomedical Signal Processing 2026).
+\end{enumerate}
+
+\subsection{Bảng đối chiếu --- bốn điểm giao thoa chính}
+
+\begin{longtable}{@{}p{6cm} p{9.5cm}@{}}
+\toprule
+\textbf{Thế mạnh cá nhân đã có} & \textbf{Kết nối với lab GS Duong} \\
+\midrule
+\endhead
+Quantum-Inspired KAN cho IDS & Lab đẩy VQC/QNN cho wireless --- có sẵn ``ngôn ngữ'' chung \\
+FL cho GEO satellite (SCA) & ``Quantum DRL for Green UAV in 6G-SAGIN with nano-satellite'' (GLOBECOM'25) \\
+Hybrid Quantum Classifier & ``Non-Centralized QNN for Cell-Free MIMO'' (IEEE TWC 2025) \\
+Quantum-Safe Cybersecurity & GS có truyền thống PLS 15 năm + covert comms 2025 \\
+NTN / Satellite Communication & Lab mở rộng sang SAGIN / NTN gần đây \\
+\bottomrule
+\end{longtable}
+
+\begin{keybox}[Kết luận bước 1]
+Có thể \textbf{giữ nguyên trục nghiên cứu} (security + NTN + QI), chỉ cần (1) nâng độ chín kỹ thuật và (2) chuyển hệ từ vựng sang cụm ``wireless/PHY/6G'' mà lab GS đang dùng. Không phải đổi hướng.
+\end{keybox}
+
+%=========================================================
+\section{Ba khái niệm then chốt cần phân biệt}
+%=========================================================
+
+Trước khi bắt đầu học, phải tách rõ ba khái niệm sau, vì trong literature ba nhóm này thường bị gộp chung:
+
+\subsection{Quantum-Inspired (QI)}
+\begin{itemize}
+  \item \textbf{Chạy trên máy tính cổ điển}, không cần QPU.
+  \item Mượn \textbf{ý tưởng / cấu trúc} từ lý thuyết lượng tử: superposition (tensor product), entanglement (correlation), amplitude encoding, Grover-like search, tensor network.
+  \item Ví dụ: Quantum-Inspired Evolutionary Algorithm (QIEA); Tensor Train / MPS networks; Quantum-Inspired Neural Networks; \textbf{Kolmogorov-Arnold Networks} (theo một số diễn giải).
+  \item Ưu điểm: reproducible, scalable, không vướng hardware noise, phản biện dễ chạy lại $\Rightarrow$ dễ công bố.
+\end{itemize}
+
+\subsection{Quantum Machine Learning (QML) --- thực sự lượng tử}
+\begin{itemize}
+  \item Chạy trên QPU (IBM Quantum, IonQ\dots) hoặc simulator.
+  \item Cấu trúc điển hình: \textbf{Variational Quantum Circuits (VQC) = Parameterized Quantum Circuits (PQC)}.
+  \item Ví dụ: QNN, Quantum Kernel Methods, Quantum GAN, Quantum Reinforcement Learning.
+  \item Giai đoạn hiện tại: \textbf{NISQ} (Noisy Intermediate-Scale Quantum) --- barren plateau, noise, decoherence là vấn đề mở.
+\end{itemize}
+
+\subsection{Quantum-Classical Hybrid}
+\begin{itemize}
+  \item Thành phần học được (parameterized) chạy trên QPU; phần tối ưu (gradient, loss) chạy cổ điển.
+  \item Đây là dạng \textbf{thực tế nhất} hiện nay, chiếm $\sim$90\% paper của lab GS Duong.
+  \item Ký hiệu chuẩn: \textit{variational hybrid quantum-classical algorithm}.
+\end{itemize}
+
+\begin{keybox}[Lộ trình nên đi]
+QI \textbf{trước} $\rightarrow$ Hybrid \textbf{sau} $\rightarrow$ QML thuần \textbf{sau cùng}. Các paper đã có của tác giả chủ yếu ở tầng QI + Hybrid --- chuẩn khởi điểm.
+\end{keybox}
+
+%=========================================================
+\section{Survey kiến thức nền theo tầng}
+%=========================================================
+
+\subsection{Tầng 1 --- Toán và cơ học lượng tử tối thiểu}
+
+Không cần học vật lý sâu, chỉ cần linear algebra với ký hiệu Dirac:
+\begin{itemize}
+  \item Hilbert space, complex vectors, inner product.
+  \item Ký hiệu ket/bra: $\ket{\psi}, \bra{\psi}, \braket{\psi|\phi}$.
+  \item Unitary operators ($U^\dagger U = I$) --- tất cả cổng lượng tử đều unitary.
+  \item Tensor product $\ket{\psi} \otimes \ket{\phi}$ --- kết hợp nhiều qubit.
+  \item Pauli matrices (X, Y, Z) và rotation gates ($R_x, R_y, R_z$).
+  \item Measurement --- xác suất, collapse.
+  \item Entanglement --- Bell states, bất đẳng thức CHSH (khái niệm).
+  \item No-cloning theorem (quan trọng cho hướng security).
+\end{itemize}
+\textbf{Tài liệu chính}: Nielsen \& Chuang, Ch.\,2 (40 trang đầu đủ dùng).
+
+\subsection{Tầng 2 --- Quantum Computing primitives}
+\begin{itemize}
+  \item Circuit model: qubit line, gates, measurement.
+  \item Common gates: H (Hadamard), CNOT, $R_X/R_Y/R_Z$, phase, SWAP.
+  \item Quantum Fourier Transform (QFT) --- nền của Shor, QPE.
+  \item Amplitude encoding vs angle encoding vs basis encoding --- ba cách nạp dữ liệu cổ điển vào qubit.
+  \item Grover search (chỉ cần hiểu lý thuyết).
+  \item Quantum Phase Estimation (QPE).
+  \item HHL algorithm --- giải hệ tuyến tính, nền cho nhiều thuật toán QML.
+  \item \textbf{VQE (Variational Quantum Eigensolver)} và \textbf{QAOA} --- hai thuật toán variational phổ biến; QAOA là \textit{xương sống} cho quantum optimization.
+\end{itemize}
+
+\subsection{Tầng 3 --- Quantum Machine Learning core}
+
+Đây là tầng cần làm chủ để ra paper với lab GS.
+
+\subsubsection{Variational Quantum Circuits (VQC/PQC)}
+\begin{itemize}
+  \item Cấu trúc: encoding layer $\rightarrow$ variational layer ($R_x/R_y/R_z$ + entanglement) $\rightarrow$ measurement.
+  \item \textbf{Ansatz design}: hardware-efficient ansatz (HEA), problem-inspired ansatz.
+  \item \textbf{Barren plateau problem}: gradient biến mất theo số qubit. Kỹ thuật né: local cost, layer-wise training, Gaussian initialization.
+\end{itemize}
+
+\subsubsection{Quantum Neural Networks (QNN)}
+\begin{itemize}
+  \item QNN = VQC + classical post-processing.
+  \item Quantum feature map (tương tự kernel trick).
+  \item Quantum Convolutional NN (QCNN).
+  \item \textbf{Quantum Graph NN (QGNN)} --- khớp trực tiếp với paper ``Topology-Aware Quantum GNN for Fluid Antenna'' (IEEE Comm. Lett. 2026) của nhóm GS.
+\end{itemize}
+
+\subsubsection{Quantum Kernel Methods}
+Quantum kernel estimation, Quantum SVM. Chứng minh có điều kiện quantum advantage (Havlíček et al.\ 2019).
+
+\subsubsection{Quantum Reinforcement Learning (QRL) / Quantum DRL}
+Thay Q-network bằng VQC. Có thể kết hợp MADRL --- khớp paper ``QNN for MADRL Resource Allocation in Vehicular'' (GLOBECOM'25) của lab GS.
+
+\subsubsection{Quantum Federated Learning (QFL)}
+Client local chạy VQC; server aggregate tham số theo kiểu cổ điển. Khớp với paper ``Quantum Federated LSTM for Fall Detection'' (IoTJ 2026). Tác giả có nền FL $\rightarrow$ dễ nối.
+
+\subsection{Tầng 4 --- Họ Quantum-Inspired}
+
+Đây là tầng tác giả đang đứng và có thể đào sâu:
+\begin{itemize}
+  \item Tensor networks (MPS, MERA, Tensor Train).
+  \item Quantum-inspired optimization: simulated bifurcation, coherent Ising machine.
+  \item Quantum-inspired neural architectures: KAN, quantum-inspired transformers.
+  \item Quantum-inspired evolutionary / genetic (QIEA).
+\end{itemize}
+
+\subsection{Tầng 5 --- Ứng dụng vào wireless/communications (nơi GS đứng)}
+Các bài toán wireless cốt lõi đang được áp QML:
+\begin{itemize}
+  \item Beamforming optimization (RIS, STAR-RIS, BD-RIS).
+  \item Resource allocation (power, spectrum, compute).
+  \item Channel estimation (THz, mmWave, RIS-NOMA).
+  \item UAV trajectory optimization.
+  \item PHY-layer security: secrecy capacity, covert communications.
+  \item ISAC --- joint sensing-communication beamforming.
+  \item \textbf{Network anomaly / intrusion detection} $\leftarrow$ đúng chỗ tác giả đã có paper.
+\end{itemize}
+
+%=========================================================
+\section{Reading list tối thiểu --- phân ba tầng}
+%=========================================================
+
+\subsection{Tier A --- Foundation (đọc trước bất cứ hành động nào)}
+\begin{enumerate}
+  \item Biamonte et al., ``Quantum Machine Learning'', \textit{Nature} (2017) --- survey đầu ngành, must-read.
+  \item Schuld \& Petruccione, \textit{Machine Learning with Quantum Computers}, Springer (2021) --- sách giáo khoa chuẩn.
+  \item Cerezo et al., ``Variational Quantum Algorithms'', \textit{Nature Reviews Physics} (2021) --- survey VQA nền tảng.
+  \item McClean et al., ``Barren plateaus in QNN training landscapes'', \textit{Nature Communications} (2018).
+\end{enumerate}
+
+\subsection{Tier B --- QML cho wireless (track GS Duong)}
+\begin{enumerate}\setcounter{enumi}{4}
+  \item GS Duong et al., ``Quantum Machine Learning for Drug Discovery: Taxonomy, Research Challenges, and the Road Ahead'', \textit{ACM Computing Surveys} 58(8), 2026 --- nắm \textit{style viết survey} của lab.
+  \item Narottama et al., ``Non-Centralized QNN for Cell-Free MIMO'', \textit{IEEE TWC} (2025) --- paper chủ lực.
+  \item Narottama, Paul, Singh, Cotton, Shin, \textbf{Duong}, ``Quantum Intelligence Networks: Integrating Communications Into Learning'', \textit{IEEE Network} (2026) --- vision paper.
+  \item Recy, Narottama, Duong, ``Topology-Aware Quantum GNN for Sum-Rate Maximization in Fluid Antenna Systems'', \textit{IEEE Comm. Lett.} (2026).
+  \item Khan, Khalid, Shin, \textbf{Duong}, ``Quantum Intelligence Meets BD-RIS-Enabled AmBC'', arXiv (2025).
+\end{enumerate}
+
+\subsection{Tier C --- Đồng nghiệp cùng chủ đề tác giả đang làm}
+\begin{enumerate}\setcounter{enumi}{9}
+  \item Các paper về Quantum-Inspired Intrusion Detection (nhóm Trung Quốc, Italy) --- sẽ cập nhật ở phiên khảo sát kế tiếp.
+  \item Chen et al., Chehimi \& Saad --- Quantum Federated Learning baseline.
+  \item Wang et al.\ 2024 --- Quantum for satellite communications.
+\end{enumerate}
+
+%=========================================================
+\section{Toolchain cần làm chủ}
+%=========================================================
+
+\begin{longtable}{@{}p{3.2cm} p{7.2cm} p{4.6cm}@{}}
+\toprule
+\textbf{Công cụ} & \textbf{Use case} & \textbf{Ưu tiên} \\
+\midrule
+\endhead
+\textbf{PennyLane} & Differentiable QML; tích hợp PyTorch / TensorFlow; auto-differentiation & \textbf{Ưu tiên 1} --- lab GS dùng nhiều \\
+\textbf{Qiskit} & IBM Quantum ecosystem; hardware access; đầy đủ transpiler & \textbf{Ưu tiên 1} \\
+TensorFlow Quantum & Khi đã quen TF & Tuỳ chọn \\
+Cirq & Google QPU & Tuỳ chọn \\
+Qulacs & Fast simulator, C++ backend & Khi cần scale \\
+IBM Quantum Experience & Chạy thật trên QPU (free tier) & Tạo tài khoản sớm \\
+\bottomrule
+\end{longtable}
+
+\begin{note}[Đề xuất]
+Chọn \textbf{PennyLane} làm công cụ chính (tích hợp PyTorch --- đã quen), \textbf{Qiskit} làm phụ để truy cập phần cứng IBM và đọc được codebase của cộng đồng.
+\end{note}
+
+%=========================================================
+\section{Lộ trình 3--6 tháng đề xuất}
+%=========================================================
+
+\begin{longtable}{@{}p{1.2cm} p{14cm}@{}}
+\toprule
+\textbf{Tháng} & \textbf{Công việc chính} \\
+\midrule
+\endhead
+1 & Ôn linear algebra + Nielsen \& Chuang Ch.\,2. Cài PennyLane. Chạy lại 5--10 tutorial chính thức (VQE, VQC classifier, QAOA đơn giản). \\
+2 & Đọc toàn bộ Tier A (4 paper). Viết tóm tắt 2 trang/paper. Chạy lại 1 codebase QNN hoặc QGNN trên dataset đang có (IoT botnet hoặc NSL-KDD). \\
+3 & Đọc Tier B (5 paper lab GS). Ghi chú cho mỗi paper: (a) bài toán wireless, (b) ansatz sử dụng, (c) baseline cổ điển, (d) gap/limitation mà tác giả tự nêu. Đây là \textit{vàng} để tìm topic. \\
+4 & Chọn 1 bài toán thử. Gợi ý: \textbf{Quantum GNN cho IoT-NTN Anomaly Detection} --- ghép thẳng thế mạnh vào hệ từ vựng GS. Viết code, so sánh với classical baseline. \\
+5 & Draft short paper (4--6 trang), nhắm hội nghị \textit{ICC / GLOBECOM / WCNC workshop} trước. \\
+6 & Sau feedback, mở rộng thành journal: \textbf{IEEE OJ-COMS, IEEE IoTJ, IEEE TNSE, IEEE WCL} --- toàn các tạp chí GS đang làm editor. \\
+\bottomrule
+\end{longtable}
+
+%=========================================================
+\section{Ba niche đề xuất --- sweet spot cá nhân}
+%=========================================================
+
+\subsection{Niche 1 --- Quantum-Inspired / Hybrid Intrusion Detection cho NTN/6G SAGIN}
+\textbf{\color{accent2}$\bigstar$ Phù hợp nhất}
+\begin{itemize}
+  \item \textit{Thế mạnh đã có}: KAN + QI-KAN + IoT botnet + GEO FL.
+  \item \textit{Gap của lab GS}: thiếu security angle trong SAGIN (mới có 1 paper về covert comms).
+  \item \textit{Câu hỏi nghiên cứu mẫu}: ``Quantum Graph Neural Intrusion Detection under NTN Traffic with Limited Qubit Budget''.
+\end{itemize}
+
+\subsection{Niche 2 --- Quantum Federated Learning cho Resource-Constrained IoT}
+\begin{itemize}
+  \item \textit{Thế mạnh đã có}: Horizontal FL cho IoT malware, TinyML multi-modal.
+  \item \textit{Lab GS}: QFL-LSTM cho fall detection (mới 2026, còn non trẻ).
+  \item \textit{Câu hỏi nghiên cứu mẫu}: ``Communication-Efficient QFL under Non-IID Medical IoT Data with Barren Plateau Mitigation''.
+\end{itemize}
+
+\subsection{Niche 3 --- Quantum-Safe \& QI cho Critical Infrastructure}
+\begin{itemize}
+  \item \textit{Thế mạnh đã có}: Quantum-Safe Cyber readiness + dự án viet-nga về CII predictive security.
+  \item \textit{Lab GS}: PLS truyền thống 15 năm.
+  \item \textit{Câu hỏi nghiên cứu mẫu}: ``Post-Quantum Resilience in CII: a QI-Enhanced Anomaly Detector Framework''.
+\end{itemize}
+
+%=========================================================
+\section{Bước tiếp theo}
+%=========================================================
+
+\begin{enumerate}
+  \item Chốt niche ưu tiên trong ba niche ở Mục 9.
+  \item Phiên phân tích kế tiếp sẽ đào sâu niche đã chọn:
+    \begin{itemize}
+      \item Liệt kê 15--20 paper liên quan trực tiếp.
+      \item Đánh dấu state-of-the-art và gap cụ thể (có bảng so sánh).
+      \item Đề xuất 1--2 câu hỏi nghiên cứu cụ thể + outline paper.
+    \end{itemize}
+  \item Song song: hoàn thành \textit{Tier A reading note} (4 note, mỗi note 2 trang).
+  \item Tạo \textit{PennyLane playground repository} cá nhân để tập các tutorial cơ bản.
+\end{enumerate}
+
+%=========================================================
+\section*{Phụ lục --- Nguồn tham chiếu}
+\addcontentsline{toc}{section}{Phụ lục --- Nguồn tham chiếu}
+%=========================================================
+
+\begin{itemize}
+  \item Website cá nhân GS: \url{https://sites.google.com/site/trungqduong/}
+  \item Google Scholar GS: \url{https://scholar.google.com/citations?user=PwsDdmEAAAAJ&hl=vi}
+  \item IEEE journal page (punumber 9739): \url{https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=9739}
+  \item Google Scholar tác giả: \url{https://scholar.google.com.sg/citations?hl=vi&user=IfpzzeoAAAAJ}
+\end{itemize}
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+\textit{\small Phiên bản 0.1 --- 24/04/2026. Các phiên kế tiếp sẽ bổ sung Mục 10 (đào sâu niche), Mục 11 (reading note Tier A), và Mục 12 (ghi chú VQC đầu tiên).}
+
+\end{document}

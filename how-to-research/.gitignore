@@ -1,0 +1,18 @@
+# LaTeX build artifacts (keep .tex sources + .pdf outputs)
+*.aux
+*.log
+*.toc
+*.out
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.bbl
+*.blg
+
+# Editor / OS junk
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Empty placeholder
+test

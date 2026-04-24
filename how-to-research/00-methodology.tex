@@ -1,0 +1,687 @@
+% !TEX program = xelatex
+% Biên dịch: xelatex 00-methodology.tex
+% Yêu cầu: XeLaTeX + polyglossia + Latin Modern
+
+\documentclass[11pt,a4paper]{article}
+
+%=========================================================
+% PACKAGES
+%=========================================================
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{vietnamese}
+\setotherlanguage{english}
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable, listings}
+
+%=========================================================
+% STYLE
+%=========================================================
+\definecolor{accent}{HTML}{0B5FA5}
+\definecolor{accent2}{HTML}{B8860B}
+\definecolor{danger}{HTML}{B22222}
+\definecolor{soft}{HTML}{F4F6FA}
+\definecolor{softyellow}{HTML}{FFF8E1}
+\definecolor{softred}{HTML}{FDECEC}
+\definecolor{codebg}{HTML}{F6F8FA}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=accent,
+  urlcolor=accent,
+  citecolor=accent2,
+  pdftitle={00 - Methodology va Working Protocol - Quantum ML Research},
+  pdfauthor={TS. Do Phuc Hao}
+}
+
+\titleformat{\section}{\Large\bfseries\color{accent}}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\large\bfseries\color{accent}}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.5em}{}
+
+\setlist[itemize]{leftmargin=1.2em, itemsep=2pt, topsep=3pt}
+\setlist[enumerate]{leftmargin=1.4em, itemsep=2pt, topsep=3pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small\textit{Methodology \& Working Protocol}}
+\lhead{\small TS. Đỗ Phúc Hảo}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+% Hộp ghi chú
+\newtcolorbox{note}[1][]{
+  enhanced, breakable, colback=soft, colframe=accent,
+  boxrule=0.4pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white,
+  colbacktitle=accent
+}
+
+\newtcolorbox{rulebox}[1][]{
+  enhanced, breakable, colback=softyellow, colframe=accent2,
+  boxrule=0.6pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white,
+  colbacktitle=accent2
+}
+
+\newtcolorbox{warnbox}[1][]{
+  enhanced, breakable, colback=softred, colframe=danger,
+  boxrule=0.6pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries\color{white}, coltitle=white,
+  colbacktitle=danger
+}
+
+% Listings setup
+\lstdefinestyle{codestyle}{
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  framerule=0.3pt,
+  rulecolor=\color{gray!40},
+  xleftmargin=0.5em,
+  xrightmargin=0.5em,
+  aboveskip=4pt,
+  belowskip=4pt,
+  numbers=none,
+  tabsize=2,
+  showstringspaces=false
+}
+\lstset{style=codestyle}
+
+%=========================================================
+% METADATA
+%=========================================================
+\title{\vspace{-1.5cm}\textbf{\color{accent} 00 --- Methodology \& Working Protocol} \\[3pt]
+       \Large Hiến pháp dự án nghiên cứu \\[2pt]
+       \normalsize \textit{Quantum-Inspired / Quantum Machine Learning} \\[2pt]
+       \normalsize \textit{cho Wireless / 6G / NTN Security}}
+\author{TS. Đỗ Phúc Hảo \\ \small Khoa CNTT --- Đại học Kiến trúc Đà Nẵng}
+\date{Ngày 24 tháng 04 năm 2026 (phiên bản 0.1 --- living document)}
+
+%=========================================================
+% DOCUMENT
+%=========================================================
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{note}[Quy ước đọc tài liệu này]
+Đây là \textbf{tài liệu ràng buộc} (\textit{binding document}) cho mọi phiên làm việc sau này. Mỗi file phân tích, stress test, deep-dive, hay bản thảo paper đều phải \textbf{tuân theo các quy ước} được đặt ra ở đây. Tài liệu sẽ được cập nhật liên tục (\textit{living document}) khi có thay đổi --- mỗi thay đổi kèm theo bump số hiệu phiên bản ở phụ lục.
+\end{note}
+
+\tableofcontents
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+%=========================================================
+\section{Mục đích và phạm vi}
+%=========================================================
+
+Tài liệu này quy định \textbf{triết lý nghiên cứu, quy trình phân tích, chuẩn trình bày, chuẩn thực nghiệm, và pipeline tính toán} cho dự án chuyển hướng sang Quantum-Inspired / Quantum Machine Learning (QI/QML) cho wireless / 6G / NTN security.
+
+Ba đối tượng sử dụng tài liệu:
+\begin{itemize}
+  \item \textbf{TS. Đỗ Phúc Hảo} --- tác giả chính, người ra quyết định cuối.
+  \item \textbf{Trợ lý nghiên cứu AI} --- mọi phiên làm việc phải tra cứu file này trước khi sinh nội dung.
+  \item \textbf{Cộng sự tương lai} --- sinh viên hoặc đồng nghiệp tham gia dự án sau này.
+\end{itemize}
+
+Các quy ước được \textbf{extract từ hai ``gems''}:
+\begin{itemize}
+  \item \textit{Gem 1 --- The Transactions Architect} (triết lý \& output format).
+  \item \textit{Gem 2 --- The TikZ Architect} (chuẩn hình vẽ).
+\end{itemize}
+
+%=========================================================
+\section{Triết lý nghiên cứu (Research Philosophy)}
+%=========================================================
+
+\subsection{Paradigm: Optimization $\rightarrow$ Learning}
+
+Mọi bài báo chất lượng IEEE Transactions (TWC, JSAC, T-IFS, IoTJ\dots) mà dự án nhắm đến \textbf{phải} có ba trụ cột sau, \textit{không được thiếu}:
+
+\begin{enumerate}
+  \item \textbf{Rigorous Mathematical Foundation.} \\
+        Công thức hoá bài toán dưới dạng tối ưu hoá có chứng minh (optimization problem). Trình bày thuật toán cổ điển trước: Block Coordinate Descent (BCD), Majorization-Minimization (MM), Lagrangian Dual, Successive Convex Approximation (SCA), hoặc Alternating Optimization.
+  \item \textbf{Realistic Handle on Uncertainty.} \\
+        Bất định phải được mô hình hoá tường minh: phân phối xác suất (Gamma, Poisson, Rayleigh, Rician), ước lượng kênh không hoàn hảo ($\hat{\mathbf{h}} = \mathbf{h} + \boldsymbol{\Delta h}$), mobility/Doppler.
+  \item \textbf{Justifiable Transition to AI/Quantum.} \\
+        Chuyển sang DRL, KAN, QNN, QGNN \textit{chỉ khi} có lý lẽ chính đáng (thường là scale $N > 1000$, real-time constraint, hoặc non-stationary environment). Không bao giờ dùng AI/Quantum vì \textit{``fancy''}.
+\end{enumerate}
+
+\subsection{Ba câu hỏi tự vấn trước mọi ý tưởng}
+
+\begin{rulebox}[Checklist trước khi ngồi viết bất kỳ ý tưởng nào]
+\begin{enumerate}
+  \item Bài toán có thể viết thành optimization $\mathbf{P_1}$ với objective và constraints rõ ràng không? Nếu \textbf{không}: chưa sẵn sàng.
+  \item Tôi đã có classical baseline không tầm thường (BCD / SCA / heuristic tốt) trước khi gọi AI/Quantum không? Nếu \textbf{không}: làm nó trước.
+  \item Tôi có số liệu / kịch bản cho thấy classical \textit{fail} ở scale lớn hay constraint khắc nghiệt không? Nếu \textbf{không}: AI/Quantum chưa justified.
+\end{enumerate}
+\end{rulebox}
+
+%=========================================================
+\section{The Anti-Toy Filter (Stress Test)}
+%=========================================================
+
+Mọi ý tưởng nghiên cứu khi mới đặt ra đều là \textbf{``toy problem''}. Nhiệm vụ đầu tiên là \textit{nâng cấp} nó lên tầm Transactions.
+
+\subsection{Bốn bộ lọc bắt buộc}
+
+\begin{longtable}{@{}p{0.6cm} p{3.5cm} p{10.4cm}@{}}
+\toprule
+\textbf{\#} & \textbf{Filter} & \textbf{Thao tác áp dụng} \\
+\midrule
+\endhead
+1 & \textbf{Kill Idealism} &
+Perfect CSI $\rightarrow$ channel estimation error $\Delta h \sim \mathcal{CN}(0, \sigma^2_e)$;
+static nodes $\rightarrow$ high-mobility + Doppler shift;
+fixed workload $\rightarrow$ stochastic arrival (Poisson $\lambda$, Gamma service time);
+known environment $\rightarrow$ unknown / non-stationary. \\
+2 & \textbf{Inject Conflict} &
+Bắt buộc có \textit{trade-off không thể né}. Ví dụ: maximize throughput thì phải thêm strict energy budget $E_{\max}$ HOẶC jitter constraint $\sigma_\tau \leq \tau_{\max}$ HOẶC secrecy constraint $R_s \geq R_{s,\min}$. \\
+3 & \textbf{Complexity Injection} &
+Bài toán phải là \textbf{MINLP} hoặc \textbf{non-convex}: kết hợp biến rời rạc (association, selection, discrete phase shift) với biến liên tục (power, beamforming). Chứng minh NP-hard hoặc ít nhất non-convex. \\
+4 & \textbf{Scale Justification} &
+Nếu bài gốc nhỏ ($N < 100$), phải mở rộng lên $N > 1000$ (số users, IoT devices, subcarriers, qubits logic, satellite beams\dots) để AI/Quantum là lựa chọn \textit{duy nhất hợp lý}. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Reviewer-2 lens}
+
+Trước khi submit, tự đóng vai \textbf{Reviewer 2 khắc nghiệt nhất}. Các câu hỏi phải trả lời được:
+
+\begin{itemize}
+  \item ``Assumption về Perfect CSI này không đứng được --- đã có paper nào thả assumption này chưa?''
+  \item ``Baseline cổ điển của các anh chỉ là random search? Đó là straw-man, reject.''
+  \item ``Scale $N = 10$ thì AI/Quantum có gì đặc biệt? Exhaustive search còn nhanh hơn. Reject.''
+  \item ``Quantum advantage ở đâu? Số liệu đâu? Reject.''
+\end{itemize}
+
+\begin{warnbox}[Cấm kỵ --- sẽ bị reject ngay vòng đầu]
+\begin{itemize}
+  \item Perfect CSI + không nhắc đến channel estimation.
+  \item Single-user scenario mà đi bàn ``massive connectivity''.
+  \item Baseline chỉ có random / uniform power allocation.
+  \item Quantum circuit 4 qubits trên toy dataset 50 mẫu.
+  \item Không có phân tích độ phức tạp / barren plateau / noise resilience.
+\end{itemize}
+\end{warnbox}
+
+%=========================================================
+\section{Output Format cho Problem Formulation}
+%=========================================================
+
+Mọi file phân tích niche / stress test sau này phải tuân theo \textbf{cấu trúc 4 mục} sau (lấy từ Gem 1):
+
+\subsection{Mục 1 --- Critique of Original Idea}
+\begin{itemize}
+  \item Nêu rõ ý tưởng ban đầu (raw idea, 2--3 câu).
+  \item \textbf{Reviewer-2 lens}: liệt kê tối thiểu 3 điểm yếu khiến bị reject.
+  \item Xác định \textit{toy assumptions} cần loại bỏ.
+\end{itemize}
+
+\subsection{Mục 2 --- Upgraded System Model}
+\begin{itemize}
+  \item Tập hợp (sets): $\mathcal{M}$ (ví dụ: tập users), $\mathcal{N}$ (tập subcarriers), $\mathcal{T}$ (time slots), $\mathcal{K}$ (tập satellites)\dots
+  \item Indices: $m, n, t, k$.
+  \item Stochastic element: phân phối rõ ràng, tham số bất định.
+  \item Channel / traffic / energy / security model: công thức đầy đủ.
+\end{itemize}
+
+\subsection{Mục 3 --- The ``Hard'' Problem Formulation}
+
+Trình bày bài toán $\mathbf{P_1}$ bằng LaTeX chuẩn:
+
+\begin{lstlisting}
+$$
+\begin{aligned}
+\mathbf{P_1}: \quad
+& \underset{\{x_{m,n}\}, \{p_{m,t}\}}{\text{maximize}}
+  && \sum_{m \in \mathcal{M}} \sum_{t \in \mathcal{T}} R_{m,t}(\mathbf{p}, \mathbf{x}) \\
+& \text{s.t.}
+  && \sum_{t} p_{m,t} \leq E_{\max}, \quad \forall m \in \mathcal{M}, \\
+&  && R_{m,t}^{\text{sec}} \geq R_{s,\min}, \quad \forall m, t, \\
+&  && x_{m,n} \in \{0, 1\}, \quad \forall m, n, \\
+&  && \sum_{m} x_{m,n} \leq 1, \quad \forall n. \quad \text{(coupling)}
+\end{aligned}
+$$
+\end{lstlisting}
+
+Yêu cầu:
+\begin{itemize}
+  \item Objective \textbf{non-convex hoặc multi-objective}.
+  \item Ít nhất \textbf{một coupling constraint} (chọn $x$ giới hạn feasible region của $p$).
+  \item Ít nhất \textbf{một biến rời rạc} $\rightarrow$ MINLP.
+\end{itemize}
+
+\subsection{Mục 4 --- Dual-Approach Roadmap}
+
+\textbf{Step 1 (The Math)} --- Simplified case (thả 1--2 assumption):
+\begin{itemize}
+  \item BCD: chia $\mathbf{P_1}$ thành $\mathbf{P_{1a}}$ (fix $x$, tối ưu $p$) và $\mathbf{P_{1b}}$ (fix $p$, tối ưu $x$).
+  \item SCA / MM: ghi rõ surrogate function.
+  \item Lagrangian Dual: viết dual problem và KKT.
+  \item Chứng minh convergence đến stationary point.
+\end{itemize}
+
+\textbf{Step 2 (The AI/Quantum)} --- Why classical fails at scale:
+\begin{itemize}
+  \item Độ phức tạp $\mathcal{O}(N^3)$ hay tệ hơn $\rightarrow$ không chạy real-time.
+  \item Non-stationary channel $\rightarrow$ phải re-solve mỗi $T_c$ ms.
+  \item Proposed weapon: QGNN / QNN / QDRL / QFL --- nói rõ \textbf{ansatz}, \textbf{encoding}, \textbf{training loss}, \textbf{expected advantage}.
+\end{itemize}
+
+%=========================================================
+\section{Quy ước LaTeX \& Notation}
+%=========================================================
+
+\subsection{Math notation}
+
+\begin{longtable}{@{}p{5cm} p{10cm}@{}}
+\toprule
+\textbf{Yếu tố} & \textbf{Quy ước} \\
+\midrule
+\endhead
+Inline math & Dùng \texttt{\$...\$}, KHÔNG dùng \texttt{\$\$...\$\$} inline. \\
+Display math (1 dòng) & \texttt{\textbackslash[...\textbackslash]}. \\
+Display math optimization & \texttt{\$\$\textbackslash begin\{aligned\}...\textbackslash end\{aligned\}\$\$}. \\
+Sets (tập hợp) & \texttt{\textbackslash mathcal\{M\}, \textbackslash mathcal\{N\}}. \\
+Matrices / vectors & \texttt{\textbackslash mathbf\{H\}, \textbackslash mathbf\{p\}} (bold thẳng). \\
+Random variables & \texttt{\textbackslash mathsf\{X\}} hoặc in hoa thường --- thống nhất trong 1 paper. \\
+Kỳ vọng / xác suất & \texttt{\textbackslash mathbb\{E\}[\textbackslash cdot], \textbackslash mathbb\{P\}(\textbackslash cdot)}. \\
+Complex normal & \texttt{\textbackslash mathcal\{CN\}(0, \textbackslash sigma\textasciicircum 2)}. \\
+Quantum states & \texttt{\textbackslash ket\{\textbackslash psi\}, \textbackslash bra\{\textbackslash psi\}, \textbackslash braket\{\textbackslash psi|\textbackslash phi\}} (package \texttt{physics}). \\
+Optimization label & \texttt{\textbackslash mathbf\{P\_1\}, \textbackslash mathbf\{P\_\{1a\}\}}. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Engine LaTeX}
+
+\begin{itemize}
+  \item \textbf{File phân tích tiếng Việt} (00, 01, 02\dots): \textbf{XeLaTeX + polyglossia}, font Latin Modern. Header chuẩn: xem file 01.
+  \item \textbf{File hình vẽ standalone} (TikZ): \textbf{pdflatex + standalone class} theo Gem 2 (để dễ copy-paste sang Overleaf nếu cần).
+  \item \textbf{Paper bản thảo IEEE}: \textbf{pdflatex + IEEEtran.cls}. Không trộn với tiếng Việt.
+\end{itemize}
+
+\subsection{Quy ước trích dẫn}
+
+\begin{itemize}
+  \item File phân tích: footnote URL là đủ cho phiên khởi đầu; sau này chuyển sang BibTeX.
+  \item File paper: BibTeX riêng, format IEEE (\texttt{IEEEtran.bst}).
+  \item Tên file bib: \texttt{refs.bib}, dùng key \texttt{<firstauthor><year><keyword>}, ví dụ \texttt{duong2025nonCentralizedQNN}.
+\end{itemize}
+
+%=========================================================
+\section{Quy ước hình vẽ (Gem 2 --- TikZ Architect)}
+%=========================================================
+
+\subsection{Nguyên tắc chung}
+
+\begin{itemize}
+  \item Mỗi hình là \textbf{một file \texttt{.tex} standalone riêng} trong thư mục \texttt{figures/}.
+  \item Biên dịch bằng \textbf{pdflatex}, xuất PDF, include vào văn bản chính bằng \texttt{\textbackslash includegraphics}.
+  \item \textbf{KHÔNG} hard-code toạ độ; dùng \texttt{positioning} (\texttt{below=of NodeA}, \texttt{right=1.5cm of NodeB}).
+  \item Tên file: \texttt{fig-<short-slug>.tex} $\rightarrow$ output \texttt{fig-<short-slug>.pdf}.
+\end{itemize}
+
+\subsection{Palette chuẩn dự án}
+
+\begin{lstlisting}[language=TeX]
+\definecolor{primary}{RGB}{11, 95, 165}     % accent blue
+\definecolor{secondary}{RGB}{184, 134, 11}  % accent gold
+\definecolor{success}{RGB}{46, 139, 87}     % green
+\definecolor{danger}{RGB}{178, 34, 34}      % red
+\definecolor{neutral}{RGB}{96, 106, 115}    % gray
+\end{lstlisting}
+
+\subsection{Thư viện TikZ bắt buộc load}
+
+\begin{lstlisting}[language=TeX]
+\usetikzlibrary{arrows.meta, positioning, calc, shapes,
+                fit, backgrounds, shadows.blur, decorations.pathreplacing}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\end{lstlisting}
+
+\subsection{Node styles tiêu chuẩn}
+
+\begin{itemize}
+  \item \texttt{process}: hình chữ nhật bo góc, fill trắng, viền xám.
+  \item \texttt{decision}: kim cương, fill \texttt{secondary!10}.
+  \item \texttt{quantum}: hình chữ nhật đậm viền, fill \texttt{primary!10}, biểu thị khối lượng tử.
+  \item \texttt{classical}: tương tự quantum nhưng fill \texttt{success!10}.
+  \item \texttt{data}: hình parallelogram, fill \texttt{neutral!10}.
+\end{itemize}
+
+\subsection{Danh mục hình dự kiến cho mỗi paper}
+
+\begin{enumerate}
+  \item System model (kiến trúc tổng thể).
+  \item Pipeline / data flow (end-to-end).
+  \item Proposed ansatz / architecture (circuit + NN).
+  \item Convergence curve (loss vs epoch / iteration).
+  \item Performance comparison (bar chart / line chart).
+  \item Ablation heatmap (2D hyperparameter sweep).
+  \item Complexity / scalability plot (log-log).
+\end{enumerate}
+
+%=========================================================
+\section{Pipeline tính toán \& tái sản xuất (Reproducibility)}
+%=========================================================
+
+\subsection{Phần cứng dự án}
+
+\begin{longtable}{@{}p{4cm} p{11cm}@{}}
+\toprule
+\textbf{Nguồn} & \textbf{Chi tiết} \\
+\midrule
+\endhead
+RTX 4090 server & 24 GB VRAM, Ada Lovelace --- máy chạy chính cho training dài, simulation $\leq 30$ qubits (state vector). \\
+Google Colab Pro+ & A100 (40 GB khi may mắn), T4/V100 mặc định --- dùng cho hyperparameter sweep và bản trình diễn. \\
+IBM Quantum Experience & Free tier để chạy thật trên QPU thực (verify, không training). \\
+\bottomrule
+\end{longtable}
+
+\subsection{Budget qubit logic (quan trọng)}
+
+Bộ nhớ state vector: $16 \cdot 2^N$ byte (double precision complex).
+
+\begin{longtable}{@{}c c p{10cm}@{}}
+\toprule
+\textbf{Qubits} & \textbf{VRAM} & \textbf{Ghi chú} \\
+\midrule
+\endhead
+$\leq 20$ & $\leq 16$ MB & Bất cứ đâu, CPU là đủ. \\
+24 & 256 MB & Colab free / RTX 4090 mượt. \\
+28 & 4 GB & Colab Pro+ / RTX 4090. \\
+30 & 16 GB & \textbf{Giới hạn an toàn trên RTX 4090}. \\
+32 & 64 GB & Vượt RTX 4090 $\rightarrow$ cần cluster / tensor network approximation. \\
+\bottomrule
+\end{longtable}
+
+\textbf{Sweet spot thực nghiệm cho paper Q1}: \textbf{12--24 qubits} với mở rộng \textbf{đến 28--30 qubits} ở phần scalability experiment.
+
+\subsection{Software stack cố định}
+
+\begin{lstlisting}[language=bash]
+# Core
+python==3.11
+pytorch==2.3.x  (with CUDA 12.1)
+pennylane==0.36.x
+pennylane-lightning-gpu==0.36.x   # cuQuantum backend
+qiskit==1.1.x
+qiskit-aer==0.14.x
+
+# Supporting
+numpy==1.26.x
+scipy==1.13.x
+scikit-learn==1.5.x
+matplotlib==3.9.x
+seaborn==0.13.x
+
+# Experiment tracking
+wandb==0.17.x
+
+# Optim (cho baseline)
+cvxpy==1.5.x
+gurobipy  # nếu có license
+\end{lstlisting}
+
+\subsection{Repo structure chuẩn}
+
+\begin{lstlisting}[language=bash]
+quantum-research-<niche>/
+|-- README.md
+|-- LICENSE
+|-- environment.yml       # conda env (pinned)
+|-- requirements.txt      # pip fallback
+|-- Makefile              # make setup | train | eval | figures
+|-- .gitignore            # data/, results/, *.pt, *.ckpt
+|-- src/
+|   |-- __init__.py
+|   |-- models/           # qnn.py, qgnn.py, qfl.py, baselines.py
+|   |-- data/             # loaders, transforms
+|   |-- training/         # trainer, callbacks, scheduler
+|   |-- ansatz/           # VQC ansatz library
+|   `-- utils/            # metrics, logging, seeds
+|-- experiments/
+|   |-- exp01_classical_baseline/
+|   |   |-- config.yaml
+|   |   `-- run.py
+|   `-- exp02_quantum_main/
+|-- configs/              # YAML configs gốc
+|-- notebooks/
+|   `-- colab_bootstrap.ipynb
+|-- data/                 # .gitignore, symlink / download script
+|-- results/              # .gitignore
+|   |-- checkpoints/
+|   |-- metrics/
+|   `-- figures/
+|-- paper/                # LaTeX source
+|   |-- main.tex
+|   |-- refs.bib
+|   `-- figures/
+`-- tests/                # pytest
+\end{lstlisting}
+
+\subsection{Workflow ``code local $\rightarrow$ GitHub $\rightarrow$ compute''}
+
+\begin{enumerate}
+  \item Code \& test trên máy local (CPU / laptop).
+  \item Commit + push lên GitHub (repo private).
+  \item Trên Colab Pro+: mở \texttt{colab\_bootstrap.ipynb} $\rightarrow$ clone + \texttt{pip install -r requirements.txt} $\rightarrow$ \texttt{python experiments/expXX/run.py --config ...}
+  \item Trên RTX 4090 server: \texttt{git pull \&\& conda activate qml \&\& make train EXP=exp02}
+  \item W\&B tự log tất cả; checkpoint về \texttt{results/checkpoints/<exp\_name>/<run\_id>/}.
+  \item Sau mỗi exp: \texttt{git pull} kết quả về local $\rightarrow$ phân tích $\rightarrow$ vẽ hình $\rightarrow$ viết paper.
+\end{enumerate}
+
+\subsection{Reproducibility checklist (bắt buộc cho mỗi exp)}
+
+\begin{itemize}
+  \item Random seed cố định, log ra config.
+  \item Tối thiểu \textbf{5 seeds khác nhau} cho mỗi số liệu công bố $\rightarrow$ báo cáo $\text{mean} \pm \text{std}$.
+  \item Config YAML full, không có hard-code magic number trong code.
+  \item Git commit hash log vào W\&B mỗi run.
+  \item Dataset version (DVC hoặc hash file).
+  \item Training time + GPU model log vào W\&B.
+\end{itemize}
+
+%=========================================================
+\section{Quy ước đặt tên file}
+%=========================================================
+
+\begin{longtable}{@{}p{5.5cm} p{9.5cm}@{}}
+\toprule
+\textbf{File} & \textbf{Nội dung} \\
+\midrule
+\endhead
+\texttt{00-methodology.tex} & Hiến pháp (file này). \\
+\texttt{01-phan-tich-gs-duong-qml.tex} & Phân tích profile GS + 3 niche + survey kiến thức nền. \\
+\texttt{02-stress-test-<niche>.tex} & Áp Anti-Toy Filter + 4-part formulation cho niche đã chọn. \\
+\texttt{03-sota-<niche>.tex} & Literature deep-dive 15--20 paper, bảng SOTA, gap matrix. \\
+\texttt{04-experiment-plan-<niche>.tex} & Dataset, baselines, metrics, ablation, compute budget. \\
+\texttt{05-tier-a-reading-note.tex} & Tóm tắt Tier A (4 foundation paper). \\
+\texttt{06-tier-b-reading-note.tex} & Tóm tắt Tier B (paper lab GS Duong). \\
+\texttt{figures/fig-<slug>.tex} & Hình standalone TikZ, pdflatex. \\
+\texttt{paper/draft-v0.1.tex} & Bản thảo paper đầu tiên. \\
+\bottomrule
+\end{longtable}
+
+%=========================================================
+\section{Chuẩn thực nghiệm cho Transactions-grade paper}
+%=========================================================
+
+\subsection{Baselines bắt buộc}
+
+Mọi paper QML/QI phải có \textbf{tối thiểu 4 nhóm baseline}:
+
+\begin{enumerate}
+  \item \textbf{Classical naive}: random / uniform / greedy --- để thấy non-triviality.
+  \item \textbf{Classical optimization mạnh}: BCD / SCA / CVX exact solver cho simplified case.
+  \item \textbf{Classical deep learning mạnh}: DNN / GNN / DRL state-of-the-art (cùng kiến trúc tổng thể, chỉ thay phần quantum bằng classical tương đương).
+  \item \textbf{Ablations nội bộ}: các biến thể của đề xuất để cô lập đóng góp (xem Mục \ref{subsec:ablation}).
+\end{enumerate}
+
+\subsection{Metrics bắt buộc}
+
+\begin{itemize}
+  \item \textbf{Performance metric chính}: tùy bài toán (throughput, secrecy rate, F1, accuracy, AUC, loss).
+  \item \textbf{Convergence}: loss vs iteration / epoch.
+  \item \textbf{Robustness}: performance dưới channel error $\Delta h$ biến thiên, noise level khác nhau.
+  \item \textbf{Complexity}: số FLOPs, wall-clock time, số qubit \& circuit depth.
+  \item \textbf{Quantum-specific}: expressibility, entanglement capability, barren plateau diagnostic (variance of gradient).
+\end{itemize}
+
+\subsection{Ablation study (quan trọng)}
+\label{subsec:ablation}
+
+Tối thiểu:
+\begin{enumerate}
+  \item Số qubits: $\{4, 8, 12, 16, 20\}$.
+  \item Circuit depth / số variational layers: $\{2, 4, 6, 8\}$.
+  \item Encoding scheme: angle vs amplitude vs re-uploading.
+  \item Ansatz family: hardware-efficient vs problem-inspired.
+  \item Noise model: noiseless vs depolarizing vs realistic IBM backend.
+  \item Training hyperparameters: learning rate, optimizer (Adam, SPSA).
+\end{enumerate}
+
+\subsection{Thống kê}
+
+\begin{itemize}
+  \item 5 seeds tối thiểu, báo cáo mean $\pm$ std.
+  \item Với so sánh: paired t-test hoặc Wilcoxon signed-rank, báo cáo $p$-value.
+  \item Confidence interval 95\% trên hình nếu khả thi.
+\end{itemize}
+
+%=========================================================
+\section{Chuẩn viết bài theo IEEE Transactions}
+%=========================================================
+
+\subsection{Cấu trúc paper chuẩn}
+
+\begin{enumerate}
+  \item \textbf{Abstract} (200--250 từ): vấn đề, đóng góp (3 bullet), kết quả số.
+  \item \textbf{Introduction}: (a) bối cảnh, (b) literature gap rõ ràng, (c) đóng góp 3--5 bullet, (d) tổ chức paper.
+  \item \textbf{Related Work}: chia theo nhóm chủ đề, bảng so sánh với các paper gần nhất.
+  \item \textbf{System Model}: nêu giả thuyết + notation + channel/traffic model.
+  \item \textbf{Problem Formulation}: $\mathbf{P_1}$ với objective + constraints + chứng minh non-convex.
+  \item \textbf{Proposed Approach}:
+    \begin{itemize}
+      \item Classical warm-up (BCD / SCA) cho simplified case.
+      \item Proposed QNN / QGNN / QDRL với architecture + encoding + loss + training.
+      \item Complexity analysis.
+    \end{itemize}
+  \item \textbf{Simulation Results}: setup + baselines + main result + ablation + robustness.
+  \item \textbf{Conclusion \& Future Work}.
+  \item \textbf{References}: IEEE format.
+\end{enumerate}
+
+\subsection{Ngôn ngữ \& văn phong}
+
+\begin{itemize}
+  \item Viết \textbf{ngắn, chủ động, khẳng định}. Tránh ``it is believed that'', ``one might consider''.
+  \item Dùng thì hiện tại cho mô tả phương pháp, quá khứ cho thí nghiệm đã chạy.
+  \item Công thức phải được giải thích \textit{bằng lời} trước khi viết ra.
+  \item Mỗi hình có caption tự đủ (đọc mình nó hiểu được).
+  \item Mỗi bảng có tiêu đề rõ + chú thích dưới bảng.
+\end{itemize}
+
+\subsection{Danh sách tạp chí mục tiêu (xếp theo ưu tiên)}
+
+\begin{enumerate}
+  \item \textbf{IEEE Transactions on Wireless Communications (TWC)} --- flagship wireless, GS Duong cộng tác thường xuyên.
+  \item \textbf{IEEE Journal on Selected Areas in Communications (JSAC)} --- chuyên đề.
+  \item \textbf{IEEE Transactions on Information Forensics and Security (T-IFS)} --- hướng security.
+  \item \textbf{IEEE Internet of Things Journal (IoTJ)} --- hướng IoT/NTN.
+  \item \textbf{IEEE Transactions on Network Science and Engineering (TNSE)} --- GS đang edit.
+  \item \textbf{IEEE Open Journal of the Communications Society (OJ-COMS)} --- open access, fast review, là ``cửa vào'' tốt cho paper đầu tiên.
+  \item \textbf{IEEE Wireless Communications Letters (WCL)} --- letter 4--5 trang, cho kết quả nhỏ gọn nhưng có điểm.
+\end{enumerate}
+
+\textbf{Chiến lược đề xuất}: Paper 1 nhắm \textbf{WCL hoặc OJ-COMS} để có entry point nhanh, paper 2 nhắm \textbf{TWC / JSAC}.
+
+%=========================================================
+\section{Nguyên tắc làm việc với trợ lý AI}
+%=========================================================
+
+\subsection{Mỗi phiên bắt đầu}
+\begin{itemize}
+  \item Trợ lý \textbf{phải tra cứu} file này (\texttt{00-methodology.tex}) trước khi sinh nội dung mới.
+  \item Nếu có conflict giữa yêu cầu mới và quy ước ở đây: \textbf{hỏi tác giả} trước khi override.
+  \item Mọi ý tưởng mới phải đi qua Anti-Toy Filter (Section 3).
+\end{itemize}
+
+\subsection{Mỗi output bắt buộc}
+\begin{itemize}
+  \item Tuân thủ 4-part format (Section 4) nếu là problem formulation.
+  \item Tuân thủ LaTeX conventions (Section 5).
+  \item Hình vẽ tuân thủ Gem 2 (Section 6).
+  \item Trích dẫn đầy đủ khi nêu paper cụ thể.
+\end{itemize}
+
+\subsection{Cấm}
+\begin{itemize}
+  \item Cấm sinh code không chạy / không kiểm thử logic.
+  \item Cấm đưa ra công thức mà không giải thích ký hiệu.
+  \item Cấm sinh số liệu giả (fake results) --- chỉ placeholder rõ ràng đánh dấu \texttt{[TBD]}.
+  \item Cấm dùng emoji trong file LaTeX cuối cùng (dùng \texttt{\textbackslash bigstar} thay thế).
+\end{itemize}
+
+%=========================================================
+\section*{Phụ lục A --- Lịch sử phiên bản}
+\addcontentsline{toc}{section}{Phụ lục A --- Lịch sử phiên bản}
+%=========================================================
+
+\begin{longtable}{@{}p{2cm} p{3cm} p{10cm}@{}}
+\toprule
+\textbf{Version} & \textbf{Ngày} & \textbf{Thay đổi} \\
+\midrule
+\endhead
+0.1 & 2026-04-24 & Phiên bản đầu. Extract từ Gem 1 + Gem 2. Định nghĩa Anti-Toy Filter, 4-part output, LaTeX conventions, compute pipeline, repo structure, reproducibility checklist, writing standards. \\
+\bottomrule
+\end{longtable}
+
+%=========================================================
+\section*{Phụ lục B --- Checklist nhanh trước khi commit một file phân tích}
+\addcontentsline{toc}{section}{Phụ lục B --- Checklist nhanh}
+%=========================================================
+
+\begin{itemize}
+  \item[$\square$] Anti-Toy Filter đã áp đủ 4 bước?
+  \item[$\square$] Có ít nhất 1 coupling constraint?
+  \item[$\square$] Có biến rời rạc $\rightarrow$ MINLP?
+  \item[$\square$] Có classical baseline mạnh ngoài random?
+  \item[$\square$] Có lý do cụ thể tại sao cần AI/Quantum (scale, non-stationary, real-time)?
+  \item[$\square$] Notation tuân thủ Section 5?
+  \item[$\square$] Danh sách hình dự kiến đã liệt kê?
+  \item[$\square$] File biên dịch sạch bằng xelatex?
+\end{itemize}
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.3cm}
+\textit{\small Phiên bản 0.1 --- 24/04/2026. Mọi phiên bản kế tiếp phải ghi rõ trong Phụ lục A.}
+
+\end{document}
