@@ -1,0 +1,184 @@
+{
+  "workspaces": [
+    {
+      "id": 1,
+      "name": "CSGD 2026",
+      "type": "CSGD",
+      "law": "TT26/2026 BGDĐT",
+      "description": "Kiểm định Cơ sở Giáo dục — 15 tiêu chuẩn / 60 tiêu chí",
+      "active": true,
+      "created_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 2,
+      "name": "CTĐT CNTT 2025-2026",
+      "type": "CTDT",
+      "law": "TT04/2025 BGDĐT",
+      "description": "Pilot kiểm định CTĐT Công nghệ Thông tin theo TT04/2025 — dữ liệu năm học 2025-2026",
+      "active": true,
+      "created_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 3,
+      "name": "CTĐT Kiến trúc 2025-2026",
+      "type": "CTDT",
+      "law": "TT04/2025 BGDĐT",
+      "description": "Pilot kiểm định CTĐT Kiến trúc — dữ liệu năm học 2025-2026",
+      "active": true,
+      "created_at": "09:00:00 1/4/2026"
+    }
+  ],
+  "nextWorkspaceId": 4,
+
+  "evidence": [],
+  "nextId": 1,
+
+  "assessments": [],
+  "nextAssessId": 1,
+
+  "kpi_data": [
+    {
+      "id": 1,
+      "workspace_id": 1,
+      "nam_hoc": "2024-2025",
+      "created_at": "09:00:00 1/4/2026",
+      "updated_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 2,
+      "workspace_id": 1,
+      "nam_hoc": "2025-2026",
+      "so_gv_co_huu": 185,
+      "pct_gv_ts": 35,
+      "pct_tot_nghiep": 86,
+      "pct_viec_lam_12t": 78,
+      "so_bao_isi_scopus": 42,
+      "so_nguoi_hoc_dh": 3200,
+      "created_at": "09:00:00 1/4/2026",
+      "updated_at": "09:00:00 1/4/2026"
+    }
+  ],
+  "nextKpiId": 3,
+
+  "school_info": {
+    "1": {
+      "ten_truong": "Đại học Kiến trúc Đà Nẵng",
+      "ma_truong": "DAU"
+    }
+  },
+
+  "tdg_plans": [],
+  "nextTdgId": 1,
+  "nextTaskId": 1,
+
+  "surveys": [],
+  "nextSurveyId": 1,
+  "nextResponseId": 1,
+
+  "reports": [],
+  "nextReportId": 1,
+
+  "peos": [
+    {
+      "id": 1,
+      "workspace_id": 2,
+      "code": "PEO1",
+      "content": "Người tốt nghiệp vận dụng kiến thức CNTT để giải quyết các bài toán thực tiễn trong doanh nghiệp.",
+      "created_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 2,
+      "workspace_id": 2,
+      "code": "PEO2",
+      "content": "Người tốt nghiệp thể hiện năng lực học tập suốt đời và trách nhiệm đạo đức nghề nghiệp.",
+      "created_at": "09:00:00 1/4/2026"
+    }
+  ],
+  "nextPeoId": 3,
+
+  "plos": [
+    {
+      "id": 1,
+      "workspace_id": 2,
+      "code": "PLO1",
+      "content": "Phân tích một bài toán tính toán phức tạp và xác định giải pháp phần mềm phù hợp.",
+      "bloom_level": "analyze",
+      "type": "knowledge",
+      "created_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 2,
+      "workspace_id": 2,
+      "code": "PLO2",
+      "content": "Thiết kế và hiện thực một giải pháp phần mềm đáp ứng yêu cầu.",
+      "bloom_level": "create",
+      "type": "skill",
+      "created_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 3,
+      "workspace_id": 2,
+      "code": "PLO3",
+      "content": "Giao tiếp hiệu quả trong các tình huống kỹ thuật chuyên môn.",
+      "bloom_level": "apply",
+      "type": "skill",
+      "created_at": "09:00:00 1/4/2026"
+    }
+  ],
+  "nextPloId": 4,
+
+  "courses": [
+    {
+      "id": 1,
+      "workspace_id": 2,
+      "code": "CS101",
+      "name": "Nhập môn lập trình",
+      "credits": 3,
+      "semester": 1,
+      "type": "core",
+      "created_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 2,
+      "workspace_id": 2,
+      "code": "CS201",
+      "name": "Cấu trúc dữ liệu & Giải thuật",
+      "credits": 4,
+      "semester": 2,
+      "type": "core",
+      "created_at": "09:00:00 1/4/2026"
+    },
+    {
+      "id": 3,
+      "workspace_id": 2,
+      "code": "CS301",
+      "name": "Công nghệ phần mềm",
+      "credits": 3,
+      "semester": 4,
+      "type": "core",
+      "created_at": "09:00:00 1/4/2026"
+    }
+  ],
+  "nextCourseId": 4,
+
+  "clos": [],
+  "nextCloId": 1,
+
+  "course_plo_map": [],
+  "clo_plo_map": [],
+
+  "rubrics": [],
+  "nextRubricId": 1,
+
+  "assessment_plans": [],
+  "nextPlanId": 1,
+
+  "assessment_items": [],
+  "nextItemId": 1,
+
+  "plan_students": [],
+  "nextPlanStudentId": 1,
+
+  "scores": [],
+  "nextScoreId": 1
+}

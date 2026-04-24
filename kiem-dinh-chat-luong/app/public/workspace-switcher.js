@@ -231,8 +231,19 @@
     };
   }
 
+  function injectDemoBannerIfVercel() {
+    if (!location.hostname.endsWith('.vercel.app')) return;
+    if (document.getElementById('vercel-demo-banner')) return;
+    const b = document.createElement('div');
+    b.id = 'vercel-demo-banner';
+    b.style.cssText = 'background:#3b2f1a;border-bottom:1px solid #e0a847;color:#f0d97a;padding:6px 16px;font-size:11px;text-align:center;';
+    b.innerHTML = '⚠️ <b>Chế độ demo trên Vercel</b> — dữ liệu mới thêm có thể reset sau ~15 phút không hoạt động (serverless <code>/tmp</code> là ephemeral). Dữ liệu mẫu sẽ được khôi phục tự động. Production cần DB ngoài (Supabase/Neon/MongoDB).';
+    document.body.insertBefore(b, document.body.firstChild);
+  }
+
   async function init() {
     injectStyles();
+    injectDemoBannerIfVercel();
     try {
       const data = await loadWorkspaces();
       if (!data.items || data.items.length === 0) return;

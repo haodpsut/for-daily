@@ -13,9 +13,18 @@ const UPLOADS_DIR = IS_VERCEL ? '/tmp/uploads'  : path.join(__dirname, 'uploads'
 if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 
 // ─── JSON Database ────────────────────────────────────────────────────────────
+// On Vercel, /tmp is ephemeral — gone on cold start. To give visitors a stable
+// demo (stable workspaces + sample data), if /tmp/db.json is absent we copy
+// from the bundled db.seed.json. Writes still go to /tmp and persist only
+// within the same Lambda instance.
 function loadDB() {
   if (!fs.existsSync(DB_FILE)) {
-    fs.writeFileSync(DB_FILE, JSON.stringify({ evidence: [], assessments: [], kpi_data: [], school_info: {}, nextId: 1, nextAssessId: 1, nextKpiId: 1 }, null, 2), 'utf8');
+    const seedFile = path.join(__dirname, 'db.seed.json');
+    if (fs.existsSync(seedFile)) {
+      fs.copyFileSync(seedFile, DB_FILE);
+    } else {
+      fs.writeFileSync(DB_FILE, JSON.stringify({ evidence: [], assessments: [], kpi_data: [], school_info: {}, nextId: 1, nextAssessId: 1, nextKpiId: 1 }, null, 2), 'utf8');
+    }
   }
   const db = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
   if (!db.assessments)  db.assessments  = [];
