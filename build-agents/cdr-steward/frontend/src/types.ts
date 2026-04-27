@@ -94,3 +94,35 @@ export interface ImpactReport {
   program_templates: TemplateImpact[];
   decuong_templates: TemplateImpact[];
 }
+
+export type IRMALevel = 'I' | 'R' | 'M' | 'A' | '';
+
+export interface PIInGroup {
+  id: string;
+  code: string;
+  text_vn: string;
+}
+
+export interface PLOPIGroup {
+  plo_code: string;
+  plo_text: string;
+  pis: PIInGroup[];
+}
+
+export interface CourseDetail {
+  id: string;
+  code: string;
+  name_vn: string;
+  name_en: string | null;
+  credits: number;
+  hours_lt: number;
+  hours_th: number;
+  hours_self: number;
+  knowledge_group: string;
+  semester_default: number | null;
+  description: string | null;
+  program_code: string;
+  clos: CLO[];
+  pi_groups: PLOPIGroup[];
+  clo_pi_levels: Record<string, Record<string, string>>;  // clo_code -> { pi_code: level }
+}

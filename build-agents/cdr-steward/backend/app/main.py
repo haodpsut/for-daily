@@ -9,6 +9,7 @@ from .routers import imports as imports_router
 from .routers import programs as programs_router
 from .routers import render as render_router
 from .routers import plos as plos_router
+from .routers import courses as courses_router
 
 app = FastAPI(title="CĐR Steward", version="0.2.0")
 
@@ -38,3 +39,4 @@ app.include_router(imports_router.router, prefix="/api/import", tags=["import"])
 app.include_router(programs_router.router, prefix="/api/programs", tags=["programs"])
 app.include_router(render_router.router, prefix="/api/render", tags=["render"])
 app.include_router(plos_router.router, prefix="/api", tags=["plos+pis"])
+app.include_router(courses_router.router, prefix="/api", tags=["courses+clos"])
