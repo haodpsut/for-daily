@@ -96,12 +96,39 @@ docker run -p 8000:8000 cdr-steward
 
 ## Demo data flow
 
-- Container start → `seed_demo.py` chạy → SQLite `/tmp/cdr_steward.db` có sẵn 7480201 + 6PO + 9PLO + 25PI + 3 courses
-- User upload Excel mới → ghi đè program 7480201
+- Container start → `seed_demo.py` chạy (idempotent — chỉ seed nếu Program 7480201 chưa tồn tại)
+- User upload Excel mới hoặc edit qua UI → ghi vào DB
 - Render PDF → `/tmp/output/...` (ephemeral, regenerate mỗi lần)
-- Container restart (Render free tier sleep) → **data reset về demo seed**
 
-→ Production cần Postgres (Neon, Supabase, Render PG). Schema không đổi, chỉ cần đổi `DATABASE_URL`.
+**SQLite (default, ephemeral):**
+- Container restart → /tmp wipe → seed_demo seed lại data demo
+- User edits LOST khi container sleep ≥15 phút (free tier)
+- OK cho demo nhanh, KHÔNG OK cho POC dài hơn
+
+**Postgres (Neon free tier — recommend):**
+- Data survive container restart + region close to VN
+- Free tier: 0.5GB storage, 191 compute hours/tháng — đủ demo
+
+## Setup Postgres trên Neon (5 phút)
+
+1. https://console.neon.tech → Sign up (Google/GitHub OAuth)
+2. **Create Project:**
+   - Name: `cdr-steward`
+   - Postgres version: 16 (default)
+   - Region: **Singapore** (gần VN nhất)
+3. Sau khi tạo xong, copy **Connection String** từ dashboard:
+   - Format: `postgresql://user:pass@ep-xxx-pooler.region.neon.tech/cdr_steward?sslmode=require`
+   - **DÙNG ENDPOINT POOLED** (có chữ `-pooler`) — quan trọng vì Render free tier có thể tạo nhiều connection
+4. Render dashboard → service `cdr-steward-api` → tab **Environment** → edit `DATABASE_URL`:
+   - Paste connection string copied
+   - Save → Render auto re-deploy ~3 phút
+5. Container start lần đầu → `Base.metadata.create_all()` tạo tables → `seed_demo` seed → API live với data persisted
+
+**Verify:** Sau khi deploy xong, sửa 1 PLO qua UI → đóng tab → đợi Render sleep (15 phút) → mở lại → data PLO vẫn còn.
+
+**Force reseed (khi muốn wipe data về initial):**
+- Render dashboard → service → tab **Shell** → `python scripts/seed_demo.py --force`
+- Hoặc xóa Program 7480201 qua API/SQL rồi restart service
 
 ## Chi phí ước tính (production)
 

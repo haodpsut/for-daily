@@ -1,14 +1,21 @@
 """Seed DB với dữ liệu CTĐT CNTT 7480201 của DAU.
 
 Trích thủ công từ CT_CDR.pdf của DAU (build-agents/university/chuontrinhdaotao/CT_CDR.pdf).
-Gồm: 1 Program + 6 PO + 9 PLO + 21 PI + ma trận PLO×PO.
+Gồm: 1 Program + 6 PO + 9 PLO + 25 PI + ma trận PLO×PO + 15 VQF + 3 demo courses.
+
+Idempotent behavior (cho production Postgres):
+- Tables không tồn tại → tạo (create_all)
+- Program 7480201 đã tồn tại → SKIP (giữ nguyên data user đã sửa)
+- Program 7480201 chưa tồn tại → full seed
+- `--force` → xóa program 7480201 (cascade) rồi seed lại
 
 Run:
-    cd backend
-    python scripts/seed_demo.py
+    python scripts/seed_demo.py           # idempotent (default)
+    python scripts/seed_demo.py --force   # wipe + reseed
 """
 from __future__ import annotations
 
+import argparse
 import sys
 from datetime import date
 from pathlib import Path
@@ -238,12 +245,26 @@ PLO_PO_MATRIX = {
 
 
 def main():
-    # Drop & recreate (idempotent for dev)
-    Base.metadata.drop_all(bind=engine)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--force", action="store_true",
+                        help="Xóa Program 7480201 (cascade) rồi seed lại từ đầu")
+    args = parser.parse_args()
+
+    # Idempotent: chỉ tạo tables thiếu, không touch tables đã có
     Base.metadata.create_all(bind=engine)
 
     db = SessionLocal()
     try:
+        existing = db.query(Program).filter_by(code=PROGRAM["code"]).first()
+        if existing:
+            if args.force:
+                print(f"[force] Xóa Program {PROGRAM['code']} (cascade PO/PLO/PI/Course/CLO/...)")
+                db.delete(existing)
+                db.commit()
+            else:
+                print(f"[skip] Program {PROGRAM['code']} đã tồn tại. Dùng --force để re-seed.")
+                return
+
         program = Program(**PROGRAM)
         db.add(program)
         db.flush()
@@ -273,12 +294,16 @@ def main():
                 po = next(p for p in po_by_code.values() if p.order == po_order)
                 db.add(PLO_PO(plo_id=plo.id, po_id=po.id))
 
-        # VQF items + PLO_VQF
+        # VQF items (Khung trình độ QG VN) — global reference, idempotent insert
         vqf_by_code = {}
         for code, domain, text in VQF_ITEMS:
-            v = VQFItem(code=code, domain=domain, text_vn=text)
-            db.add(v)
-            vqf_by_code[code] = v
+            existing_v = db.query(VQFItem).filter_by(code=code).first()
+            if existing_v:
+                vqf_by_code[code] = existing_v
+            else:
+                v = VQFItem(code=code, domain=domain, text_vn=text)
+                db.add(v)
+                vqf_by_code[code] = v
         db.flush()
 
         for plo_code, vqf_codes in PLO_VQF_MATRIX.items():
