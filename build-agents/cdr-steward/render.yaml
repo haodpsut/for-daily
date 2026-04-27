@@ -1,0 +1,23 @@
+# Render.com Infrastructure-as-Code
+# Auto-deploy backend khi push GitHub. Để dùng:
+#   1. Vào https://dashboard.render.com → New → Blueprint
+#   2. Connect GitHub repo
+#   3. Render đọc file này, tự setup service
+
+services:
+  - type: web
+    name: cdr-steward-api
+    env: docker
+    plan: free                   # 512MB RAM, sleep sau 15 phút inactivity
+    region: singapore            # gần VN, latency thấp
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: LATEX_FONT
+        value: Liberation Serif
+      - key: DATABASE_URL
+        value: sqlite:////tmp/cdr_steward.db
+      - key: ALLOWED_ORIGINS
+        value: https://cdr-steward.vercel.app
+        # → đổi thành domain Vercel thật sau khi deploy

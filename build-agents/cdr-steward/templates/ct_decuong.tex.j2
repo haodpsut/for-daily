@@ -1,0 +1,233 @@
+%% CT_DECUONG — Đề cương chi tiết học phần (per-course Syllabus)
+\documentclass[12pt,a4paper]{article}
+\usepackage{fontspec}
+\setmainfont{\VAR{font_name}}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{tabularx,longtable,multirow,array,ragged2e}
+\usepackage{titlesec,enumitem,fancyhdr}
+\usepackage{graphicx}
+\usepackage{pdflscape}
+
+\newcommand{\rothead}[1]{\rotatebox{90}{\small\textbf{#1}\hspace{0.3em}}}
+
+\titleformat{\section}{\bfseries}{}{0pt}{}
+\titleformat{\subsection}{\bfseries\itshape}{}{0pt}{}
+\titlespacing{\section}{0pt}{1em}{0.5em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[R]{\small \VAR{course.code|latex} — \VAR{course.name_vn|latex}}
+\fancyfoot[L]{\small Đề cương chi tiết}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+\renewcommand{\arraystretch}{1.25}
+
+\begin{document}
+
+{\small
+\noindent
+\begin{minipage}[t]{0.5\textwidth}\centering
+\VAR{inst.ministry|latex}\\
+\textbf{\VAR{inst.name_short_upper|latex}}\\[-0.3em]\rule{0.55\textwidth}{0.4pt}
+\end{minipage}%
+\begin{minipage}[t]{0.5\textwidth}\centering
+\textbf{\VAR{inst.country_line1|latex}}\\
+\textbf{\VAR{inst.country_line2|latex}}\\[-0.3em]\rule{0.45\textwidth}{0.4pt}
+\end{minipage}}
+
+\vspace{1.5em}
+\begin{center}
+{\Large\textbf{ĐỀ CƯƠNG CHI TIẾT HỌC PHẦN}}\\[0.3em]
+\textit{(Syllabus)}\\[0.5em]
+\textit{(Ban hành kèm theo Quyết định số \VAR{program.decision_no|latex} ngày \VAR{program.decision_date_vn|latex}\\
+của \VAR{program.issuing_authority|latex})}
+\end{center}
+
+%% ───────── SECTION 1 ─────────
+\section*{1. Thông tin chung \textnormal{\textit{(General Information)}}}
+
+\textbf{1.1. Trình độ đào tạo} \textit{(Level)}: \VAR{program.level_text|latex} (Undergraduate)\\
+\textbf{1.2. Chương trình đào tạo} \textit{(Program)}: \VAR{program.name_vn|latex} (\textit{\VAR{program.name_en|latex}})
+
+%% ───────── SECTION 2 ─────────
+\section*{2. Thông tin chung học phần \textnormal{\textit{(Course Information)}}}
+
+\begin{tabular}{|p{5.5cm}|p{10.5cm}|}
+\hline
+\textbf{2.1. Tên học phần} (Course Name) & \\
+\quad - Tiếng Việt & \VAR{course.name_vn|latex} \\
+\quad - Tiếng Anh & \textit{\VAR{course.name_en|latex}} \\\hline
+\textbf{2.2. Mã học phần} (Course Code) & \VAR{course.code|latex} \\\hline
+\textbf{2.3. Nhóm học phần} (Course Group) & \VAR{course.knowledge_group_label|latex} \\\hline
+\textbf{2.4. Số tín chỉ} (Course Credits) & \VAR{course.credits|latex} \\\hline
+\textbf{2.5. Phân phối thời gian} (Time Allocation) & LT: \VAR{course.hours_lt|latex} tiết, TH: \VAR{course.hours_th|latex} tiết, Tự học: \VAR{course.hours_self|latex} tiết \\\hline
+\textbf{2.6. Ngôn ngữ giảng dạy} & \VAR{course.language|latex} \\\hline
+\textbf{2.7. Học phần tiên quyết} (Prerequisites) & \VAR{course.prerequisites|latex} \\\hline
+\textbf{2.8. Học phần song hành} (Corequisites) & \VAR{course.corequisites|latex} \\\hline
+\end{tabular}
+
+%% ───────── SECTION 3 ─────────
+\section*{3. Mô tả vắn tắt học phần \textnormal{\textit{(Course Description)}}}
+
+\VAR{course.description|latex}
+
+%% ───────── SECTION 4: COs ─────────
+\section*{4. Mục tiêu học phần \textnormal{\textit{(Course Objectives - COs)}}}
+
+\begin{center}\textbf{Bảng 1: Mục tiêu của học phần (COs)}\end{center}
+
+\begin{tabular}{|c|p{14cm}|}
+\hline
+\textbf{COs} & \textbf{Mô tả \textit{(Description)}} \\\hline
+\BLOCK{for co in cos}
+\textbf{\VAR{co.code|latex}} & \VAR{co.text_vn|latex} \\\hline
+\BLOCK{endfor}
+\BLOCK{if cos|length == 0}
+\multicolumn{2}{|c|}{\textit{(Chưa có CO)}} \\\hline
+\BLOCK{endif}
+\end{tabular}
+
+%% ───────── SECTION 5: CLOs × COs ─────────
+\section*{5. Chuẩn đầu ra (CĐR) của học phần \textnormal{\textit{(CLOs)}}}
+
+\begin{center}\textbf{Bảng 2: Chuẩn đầu ra của học phần (CLOs)}\end{center}
+
+\begin{tabular}{|c|p{10cm}|\BLOCK{for co in cos}c|\BLOCK{endfor}}
+\hline
+\multirow{2}{*}{\textbf{CLOs}} & \multirow{2}{*}{\textbf{Mô tả}} & \multicolumn{\VAR{cos|length}}{c|}{\textbf{Mục tiêu HP}} \\
+\cline{3-\VAR{2 + cos|length}}
+ & \BLOCK{for co in cos} & \VAR{co.code|latex}\BLOCK{endfor} \\
+\hline
+\BLOCK{for clo in clos}
+\textbf{\VAR{clo.code|latex}} & \VAR{clo.text_vn|latex}\BLOCK{for co in cos} & \BLOCK{if clo.co_marks[co.code]}X\BLOCK{endif}\BLOCK{endfor} \\
+\hline
+\BLOCK{endfor}
+\BLOCK{if clos|length == 0}
+\multicolumn{\VAR{2 + cos|length}}{|c|}{\textit{(Chưa có CLO)}} \\\hline
+\BLOCK{endif}
+\end{tabular}
+
+%% ───────── SECTION 6: CLO × PLO matrix (landscape — future-proof cho nhiều PLO) ─────────
+\section*{6. Mối liên hệ giữa CLO và PLO \textnormal{\textit{(CLO – PLO Mapping)}}}
+
+\textit{Chú thích thang đóng góp (lấy mức cao nhất khi CLO map nhiều PI cùng PLO):}
+\begin{itemize}[leftmargin=2em,topsep=0em,itemsep=0em]
+\BLOCK{for row in irma_legend}
+\item \textbf{\VAR{row[0]|latex}} \textit{(\VAR{row[1]|latex})}: \VAR{row[2]|latex}
+\BLOCK{endfor}
+\end{itemize}
+
+\begin{landscape}
+\begin{center}
+\textbf{\large Bảng 3: Đóng góp của CLO vào CĐR Chương trình đào tạo (PLO)}\\[0.7em]
+\renewcommand{\arraystretch}{1.4}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{|c|p{12cm}|*{\VAR{plo_codes_ordered|length}}{>{\centering\arraybackslash}p{0.7cm}|}}
+\hline
+\rule{0pt}{1.5cm}\textbf{CLOs} & \textbf{Mô tả}\BLOCK{for pc in plo_codes_ordered} & \rothead{\VAR{pc|latex}}\BLOCK{endfor} \\
+\hline
+\BLOCK{for clo in clos}
+\textbf{\VAR{clo.code|latex}} & \VAR{clo.text_vn|latex}\BLOCK{for lvl in clo.plo_levels} & \VAR{lvl|latex}\BLOCK{endfor} \\
+\hline
+\BLOCK{endfor}
+\BLOCK{if clos|length == 0}
+\multicolumn{\VAR{2 + plo_codes_ordered|length}}{|c|}{\textit{(Chưa có CLO)}} \\
+\hline
+\BLOCK{endif}
+\end{tabular}
+
+\vspace{1em}
+
+{\footnotesize
+\textbf{Chi tiết PI kích hoạt} \textit{(audit trail — truy vết PI đóng góp cho mỗi (CLO, PLO))}\\[0.3em]
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{|c|c|p{14cm}|}
+\hline
+\textbf{CLO} & \textbf{PLO} & \textbf{PI đã kích hoạt} \\
+\hline
+\BLOCK{set ns_pi = namespace(any=False)}
+\BLOCK{for clo in clos}
+\BLOCK{for pc in plo_codes_ordered}
+\BLOCK{if clo.plo_pis[loop.index0]}
+\BLOCK{set ns_pi.any = True}
+\VAR{clo.code|latex} & \VAR{pc|latex} & \VAR{clo.plo_pis[loop.index0]|latex} \\
+\hline
+\BLOCK{endif}
+\BLOCK{endfor}
+\BLOCK{endfor}
+\BLOCK{if not ns_pi.any}
+\multicolumn{3}{|c|}{\textit{(Chưa có mapping CLO → PI)}} \\
+\hline
+\BLOCK{endif}
+\end{tabular}
+}
+\end{center}
+\end{landscape}
+
+%% ───────── SECTION 7: ASSESSMENT ─────────
+\section*{7. Đánh giá học phần \textnormal{\textit{(Assessment)}}}
+
+\subsection*{7.1. Thang điểm đánh giá \textnormal{\textit{(Grading Scale)}}}
+
+Sử dụng thang điểm 10, lấy đến hàng thập phân; chuyển sang thang chữ A-F và thang 4.
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{STT} & \textbf{Xếp loại} & \textbf{Điểm 10} & \textbf{Chữ} & \textbf{Điểm 4} \\\hline
+\BLOCK{for row in grade_scale}
+\VAR{loop.index} & \VAR{row[0]|latex} & \VAR{row[1]|latex} & \VAR{row[2]|latex} & \VAR{row[3]|latex} \\\hline
+\BLOCK{endfor}
+\end{tabular}
+\end{center}
+
+\subsection*{7.2. Kế hoạch đánh giá \textnormal{\textit{(Assessment Plan)}}}
+
+\begin{center}\textbf{Bảng 5: Phương pháp, hình thức kiểm tra - đánh giá}\end{center}
+
+\begin{tabular}{|p{4.5cm}|c|p{4cm}|p{4cm}|}
+\hline
+\textbf{Thành phần / Phương pháp} & \textbf{Trọng số (\%)} & \textbf{CLO đo được} & \textbf{Phương pháp} \\\hline
+\BLOCK{for a in assessments}
+\VAR{a.name|latex} & \VAR{a.weight|latex} & \VAR{a.clo_codes|latex} & \VAR{a.method|latex} \\\hline
+\BLOCK{endfor}
+\BLOCK{if assessments|length == 0}
+\multicolumn{4}{|c|}{\textit{(Chưa có kế hoạch đánh giá)}} \\\hline
+\BLOCK{endif}
+\end{tabular}
+
+\subsection*{7.3. Rubric đánh giá}
+\textit{(Chi tiết rubrics cho từng cấu phần — sẽ cập nhật)}
+
+%% ───────── SECTION 8: WEEKLY PLAN ─────────
+\section*{8. Kế hoạch và nội dung giảng dạy \textnormal{\textit{(Course Schedule)}}}
+
+\begin{longtable}{|c|p{8cm}|c|c|p{2.5cm}|}
+\hline
+\textbf{Tuần} & \textbf{Nội dung} & \textbf{LT} & \textbf{TH} & \textbf{CLOs} \\
+\hline\endhead
+\BLOCK{for w in weeks}
+\VAR{w.week|latex} & \VAR{w.topic|latex} & \VAR{w.lt|latex} & \VAR{w.th|latex} & \VAR{w.clo_codes|latex} \\\hline
+\BLOCK{endfor}
+\BLOCK{if weeks|length == 0}
+\multicolumn{5}{|c|}{\textit{(Chưa có kế hoạch giảng dạy theo tuần)}} \\\hline
+\BLOCK{endif}
+\end{longtable}
+
+%% ───────── SECTION 9 ─────────
+\section*{9. Học liệu \textnormal{\textit{(Materials)}}}
+\textit{(Danh mục học liệu sẽ cập nhật)}
+
+\vspace{2em}
+\begin{flushright}
+\begin{minipage}{0.4\textwidth}\centering
+\textbf{\VAR{inst.dept_head_title|latex}}\\
+\textit{Head of Department}\\[3em]
+\textbf{\VAR{inst.dept_head_name|latex}}
+\end{minipage}
+\end{flushright}
+
+\end{document}

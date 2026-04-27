@@ -1,0 +1,39 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+*.db
+*.sqlite
+*.sqlite3
+backend/uploads/
+backend/output/
+.pytest_cache/
+.coverage
+.idea/
+.vscode/
+
+# Frontend (Vite/Node)
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.vercel/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local Excel data (sensitive: real CTĐT của trường)
+import_templates/*.xlsx
+!import_templates/*template*.xlsx
+
+# Generated PDFs (regenerate on demand)
+backend/output/*/
+
+# LaTeX aux
+*.aux
+*.log
+*.toc
+*.out

@@ -1,0 +1,223 @@
+%% CT_CTDT — Chương trình đào tạo
+\documentclass[12pt,a4paper]{article}
+\usepackage{fontspec}
+\setmainfont{\VAR{font_name}}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{tabularx,longtable,multirow,array,ragged2e}
+\usepackage{titlesec,enumitem}
+
+\titleformat{\section}{\bfseries}{}{0pt}{}
+\titleformat{\subsection}{\bfseries\itshape}{}{0pt}{}
+\titlespacing{\section}{0pt}{1em}{0.5em}
+\titlespacing{\subsection}{0pt}{0.7em}{0.3em}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+\renewcommand{\arraystretch}{1.25}
+
+\newcolumntype{C}{>{\centering\arraybackslash}m{0.7cm}}
+\newcolumntype{P}{>{\RaggedRight\arraybackslash}m{8.5cm}}
+\newcolumntype{L}{>{\centering\arraybackslash}m{1.4cm}}
+
+\begin{document}
+
+%% ───────── HEADER ─────────
+{\small
+\noindent
+\begin{minipage}[t]{0.5\textwidth}\centering
+\VAR{inst.ministry|latex}\\
+\textbf{\VAR{inst.name_short_upper|latex}}\\[-0.3em]\rule{0.55\textwidth}{0.4pt}
+\end{minipage}%
+\begin{minipage}[t]{0.5\textwidth}\centering
+\textbf{\VAR{inst.country_line1|latex}}\\
+\textbf{\VAR{inst.country_line2|latex}}\\[-0.3em]\rule{0.45\textwidth}{0.4pt}
+\end{minipage}}
+
+\vspace{1.5em}
+\begin{center}
+{\Large\textbf{CHƯƠNG TRÌNH ĐÀO TẠO}}\\[0.3em]
+\textit{(PROGRAM)}\\[0.5em]
+\textit{(Ban hành kèm theo Quyết định số \VAR{program.decision_no|latex} ngày \VAR{program.decision_date_vn|latex}\\
+của \VAR{program.issuing_authority|latex})}
+\end{center}
+
+\vspace{0.6em}
+\textbf{Tên chương trình} \textit{(Program Title)}
+\begin{itemize}[leftmargin=2em,topsep=0.1em,itemsep=0em]
+\item Tiếng Việt: \textbf{\VAR{program.name_vn_upper|latex}}
+\item Tiếng Anh: \textbf{\VAR{program.name_en_upper|latex}}
+\end{itemize}
+\textbf{Trình độ đào tạo} \textit{(Program Level)}: \VAR{program.level_text|latex}\\
+\textbf{Ngành đào tạo} \textit{(Program)}: \VAR{program.name_vn|latex}\\
+\textbf{Mã ngành} \textit{(Program Code)}: \VAR{program.code|latex}\\
+\textbf{Loại hình đào tạo} \textit{(Mode of Study)}: Chính quy
+
+%% ───────── SECTION 1: PO ─────────
+\section*{1. Mục tiêu đào tạo \textnormal{\textit{(Program Objectives - POs)}}}
+\BLOCK{for po in pos}
+\textbf{\VAR{po.code|latex}:} \VAR{po.text_vn|latex}
+
+\BLOCK{endfor}
+
+%% ───────── SECTION 2: PLO/PI MATRIX ─────────
+\section*{2. Chuẩn đầu ra chương trình đào tạo \textnormal{\textit{(Program Learning Outcomes)}}}
+
+\begin{center}
+\begin{longtable}{|L|P|C|C|C|C|C|C|}
+\hline
+\multirow{2}{*}{\textbf{PLOs}} & \multirow{2}{*}{\textbf{Mô tả \textit{(Description)}}} & \multicolumn{6}{c|}{\textbf{Mục tiêu (PO)}} \\
+\cline{3-8}
+ & & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5} & \textbf{6} \\
+\hline\endfirsthead
+\hline
+\multirow{2}{*}{\textbf{PLOs}} & \multirow{2}{*}{\textbf{Mô tả}} & \multicolumn{6}{c|}{\textbf{Mục tiêu (PO)}} \\
+\cline{3-8}
+ & & 1 & 2 & 3 & 4 & 5 & 6 \\
+\hline\endhead
+\hline\endfoot
+\BLOCK{for plo in plos}
+\textbf{\VAR{plo.code|latex}} & \textbf{\VAR{plo.text_vn|latex}}\BLOCK{for i in [1,2,3,4,5,6]} & \BLOCK{if i in plo.po_indices}\textbf{X}\BLOCK{endif}\BLOCK{endfor} \\
+\hline
+\BLOCK{for pi in plo.pis}
+\VAR{pi.code|latex} & \VAR{pi.text_vn|latex} & & & & & & \\
+\hline
+\BLOCK{endfor}
+\BLOCK{endfor}
+\end{longtable}
+\end{center}
+
+%% ───────── SECTION 3 ─────────
+\section*{3. Vị trí làm việc - Khả năng học tập của người học sau khi tốt nghiệp \textnormal{\textit{(Job Opportunities and Postgraduate Study Opportunities)}}}
+\subsection*{3.1. Vị trí việc làm \textnormal{\textit{(Job Opportunities)}}}
+\subsection*{3.2. Khả năng học tập, nâng cao trình độ \textnormal{\textit{(Postgraduate Study Opportunities)}}}
+
+%% ───────── SECTION 4 ─────────
+\section*{4. Thời gian đào tạo \textnormal{\textit{(Training Duration)}}: \VAR{program.duration_years|latex} năm}
+
+%% ───────── SECTION 5: CURRICULUM STRUCTURE ─────────
+\section*{5. Cấu trúc và nội dung chương trình đào tạo \textnormal{\textit{(Structure and Content)}}}
+
+Tổng số tín chỉ phải tích lũy tối thiểu là: \textbf{\VAR{program.total_credits|latex} TC}
+
+\begin{center}
+\textbf{Bảng 1: Khung chương trình đào tạo}\\
+\textit{Table 1: Program Structure}
+\end{center}
+
+\begin{longtable}{|c|l|p{4.5cm}|p{4.5cm}|c|}
+\hline
+\textbf{TT} & \textbf{Mã HP} & \textbf{Tên học phần (VN)} & \textbf{Course Name (EN)} & \textbf{TC} \\
+\hline\endhead
+\BLOCK{set ns = namespace(idx=0)}
+\BLOCK{for grp in course_groups}
+\multicolumn{5}{|l|}{\textbf{\VAR{grp.label|latex}}} \\
+\hline
+\BLOCK{for c in grp.courses}
+\BLOCK{set ns.idx = ns.idx + 1}
+\VAR{ns.idx} & \VAR{c.code|latex} & \VAR{c.name_vn|latex} & \VAR{c.name_en|latex} & \VAR{c.credits|latex} \\
+\hline
+\BLOCK{endfor}
+\BLOCK{endfor}
+\BLOCK{if ns.idx == 0}
+\multicolumn{5}{|c|}{\textit{(Chưa có học phần nào — vui lòng import qua Excel template)}} \\
+\hline
+\BLOCK{endif}
+\end{longtable}
+
+%% ───────── SECTION 6-8 ─────────
+\section*{6. Chuẩn đầu vào của chương trình đào tạo \textnormal{\textit{(Program Learning Incomes)}}}
+\section*{7. Quy trình đào tạo, điều kiện tốt nghiệp \textnormal{\textit{(Training Process - Graduation Conditions)}}}
+\section*{8. Phương pháp giảng dạy và đánh giá \textnormal{\textit{(Teaching Methods and Assessment)}}}
+
+Trong giảng dạy, kết hợp giữa phương pháp giảng dạy truyền thống và những phương pháp mới: nghiên cứu tài liệu; học đi đôi với hành; tổ chức nhóm học tập; tổ chức nhận xét, đánh giá để phát huy tính chủ động, tích cực và sáng tạo của sinh viên.
+
+%% ───────── SECTION 9: GRADE SCALE ─────────
+\section*{9. Thang điểm \textnormal{\textit{(Grade Scale)}}}
+
+Sử dụng thang điểm 10, lấy đến một chữ số sau dấu phẩy, chuyển sang thang điểm chữ A, B, C, D, F và thang điểm 4.
+
+\begin{center}
+\textbf{Bảng 2: Thang điểm đánh giá}\\
+\textit{Table 2: Grade Scale}
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{STT} & \textbf{Xếp loại} & \textbf{Điểm thang 10} & \textbf{Điểm chữ} & \textbf{Điểm thang 4} \\
+\hline
+\BLOCK{for row in grade_scale}
+\VAR{loop.index} & \VAR{row[0]|latex} & \VAR{row[1]|latex} & \VAR{row[2]|latex} & \VAR{row[3]|latex} \\
+\hline
+\BLOCK{endfor}
+\end{tabular}
+\end{center}
+
+%% ───────── SECTION 10: TEACHING PLAN ─────────
+\section*{10. Kế hoạch giảng dạy (dự kiến) \textnormal{\textit{(Teaching Program)}}}
+
+\begin{center}
+\textbf{Bảng 3: Kế hoạch giảng dạy dự kiến}\\
+\textit{Table 3: Teaching Program (tentative)}
+\end{center}
+
+\begin{longtable}{|c|l|p{5cm}|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{\textbf{TT}} & \multirow{2}{*}{\textbf{Mã HP}} & \multirow{2}{*}{\textbf{Tên học phần}} & \multirow{2}{*}{\textbf{TC}} & \multicolumn{10}{c|}{\textbf{Học kỳ}} \\
+\cline{5-14}
+ & & & & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+\hline\endhead
+\hline\endfoot
+\BLOCK{set ns2 = namespace(idx=0)}
+\BLOCK{for grp in course_groups}
+\BLOCK{for c in grp.courses}
+\BLOCK{set ns2.idx = ns2.idx + 1}
+\VAR{ns2.idx} & \VAR{c.code|latex} & \VAR{c.name_vn|latex} & \VAR{c.credits|latex}\BLOCK{for sem in [1,2,3,4,5,6,7,8,9,10]} & \BLOCK{if sem == c.semester}\VAR{c.credits|latex}\BLOCK{endif}\BLOCK{endfor} \\
+\hline
+\BLOCK{endfor}
+\BLOCK{endfor}
+\BLOCK{if ns2.idx == 0}
+\multicolumn{14}{|c|}{\textit{(Chưa có học phần)}} \\
+\hline
+\BLOCK{endif}
+\end{longtable}
+
+%% ───────── SECTION 11-12: GUIDE + ENDORSEMENT ─────────
+\section*{11. Hướng dẫn thực hiện chương trình \textnormal{\textit{(Guide to Information)}}}
+
+\section*{12. Duyệt chương trình \textnormal{\textit{(Endorsement)}}}
+
+\vspace{1em}
+\begin{flushright}
+\textit{\VAR{inst.city|latex}, ngày \VAR{program.decision_date_vn|latex}}
+\end{flushright}
+
+\vspace{0.5em}
+\noindent
+\begin{minipage}[t]{0.48\textwidth}\centering
+\textbf{Thông qua \VAR{inst.dean_title|latex}}\\
+\textit{Dean}\\[3em]
+\textbf{\VAR{inst.dean_name|latex}}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}\centering
+\textbf{\VAR{inst.dept_head_title|latex}}\\
+\textit{Head of Department}\\[3em]
+\textbf{\VAR{inst.dept_head_name|latex}}
+\end{minipage}
+
+\vspace{2em}
+\begin{center}
+\textbf{Duyệt ban hành}\\
+Chương trình đào tạo này để thực hiện\\
+\textit{Approval issued this training program to perform}
+\end{center}
+
+\vspace{1em}
+\begin{flushright}
+\begin{minipage}{0.45\textwidth}\centering
+\textbf{\VAR{inst.president_title|latex}}\\
+\textit{\VAR{inst.president_title_en|latex}}\\[0.3em]
+(Đã ký)\\[2em]
+\textbf{\VAR{inst.president_name_with_degree|latex}}
+\end{minipage}
+\end{flushright}
+
+\end{document}

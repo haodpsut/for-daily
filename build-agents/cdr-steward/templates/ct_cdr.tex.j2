@@ -1,0 +1,148 @@
+%% CT_CDR — Chuẩn đầu ra Chương trình đào tạo
+%% Render bằng xelatex (Vietnamese Unicode via fontspec)
+%% Jinja2 delimiters configured in render.py service
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{fontspec}
+\setmainfont{\VAR{font_name}}
+
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+%% Section formatting — manual numbering, no auto-numbering
+\titleformat{\section}{\bfseries}{}{0pt}{}
+\titleformat{\subsection}{\bfseries\itshape}{}{0pt}{}
+\titlespacing{\section}{0pt}{1em}{0.5em}
+\titlespacing{\subsection}{0pt}{0.7em}{0.3em}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+\renewcommand{\arraystretch}{1.35}
+
+\newcolumntype{C}{>{\centering\arraybackslash}m{0.7cm}}
+\newcolumntype{P}{>{\RaggedRight\arraybackslash}m{8.5cm}}
+\newcolumntype{L}{>{\centering\arraybackslash}m{1.4cm}}
+
+\begin{document}
+
+%% ═════════════════ HEADER (2 cột) ═════════════════
+{\small
+\noindent
+\begin{minipage}[t]{0.5\textwidth}
+\centering
+\VAR{inst.ministry|latex}\\
+\textbf{\VAR{inst.name_short_upper|latex}}\\[-0.3em]
+\rule{0.55\textwidth}{0.4pt}
+\end{minipage}%
+\begin{minipage}[t]{0.5\textwidth}
+\centering
+\textbf{\VAR{inst.country_line1|latex}}\\
+\textbf{\VAR{inst.country_line2|latex}}\\[-0.3em]
+\rule{0.45\textwidth}{0.4pt}
+\end{minipage}
+}
+
+\vspace{1.5em}
+
+%% ═════════════════ TITLE ═════════════════
+\begin{center}
+{\Large\textbf{CHUẨN ĐẦU RA}}\\[0.2em]
+{\Large\textbf{CHƯƠNG TRÌNH ĐÀO TẠO TRÌNH ĐỘ \VAR{program.level_text_upper|latex}}}\\[0.7em]
+\textbf{Hệ chính quy theo hệ thống tín chỉ ngành \VAR{program.name_vn|latex}}\\
+\textit{(Ban hành kèm theo Quyết định số \VAR{program.decision_no|latex} ngày \VAR{program.decision_date_vn|latex}\\
+của \VAR{program.issuing_authority|latex})}\\[0.4em]
+\textit{(PROGRAM LEARNING OUTCOMES)}
+\end{center}
+
+\vspace{0.8em}
+
+%% ═════════════════ ID BLOCK ═════════════════
+\textbf{Ngành} \textit{(Program)}: \VAR{program.name_vn|latex}\\
+\textbf{Mã ngành} \textit{(Program Code)}: \VAR{program.code|latex}\\
+\textbf{Chuyên ngành} \textit{(Major)}: \VAR{program.name_vn|latex}
+
+%% ═════════════════ SECTION 1 ═════════════════
+\section*{1. Giới thiệu chương trình đào tạo \textnormal{\textit{(Program Information)}}}
+
+\subsection*{1.1. Tên chương trình đào tạo \textnormal{\textit{(Program Title)}}}
+\begin{itemize}[leftmargin=2em,topsep=0.2em,itemsep=0.1em]
+\item Tiếng Việt: \textbf{\VAR{program.name_vn_upper|latex}}
+\item Tiếng Anh: \textbf{\VAR{program.name_en_upper|latex}}
+\end{itemize}
+
+\subsection*{1.2. Trình độ đào tạo \textnormal{\textit{(Program Level)}}: \VAR{program.level_text|latex}}
+
+\subsection*{1.3. Khối lượng kiến thức \textnormal{\textit{(Total Credits)}}: \VAR{program.total_credits|latex} tín chỉ}
+
+\subsection*{1.4. Thời gian đào tạo \textnormal{\textit{(Training Duration)}}: \VAR{program.duration_years|latex} năm}
+
+%% ═════════════════ SECTION 2 ═════════════════
+\section*{2. Mục tiêu đào tạo \textnormal{\textit{(Program Objectives)}}}
+
+\BLOCK{for po in pos}
+\textbf{\VAR{po.code|latex}:} \VAR{po.text_vn|latex}
+
+\BLOCK{endfor}
+
+%% ═════════════════ SECTION 3 — PLO/PI MATRIX ═════════════════
+\section*{3. Chuẩn đầu ra chương trình đào tạo \textnormal{\textit{(Program Learning Outcomes)}}}
+
+\begin{center}
+\begin{longtable}{|L|P|C|C|C|C|C|C|}
+\hline
+\multirow{2}{*}{\textbf{PLOs}} & \multirow{2}{*}{\textbf{Mô tả \textit{(Description)}}} & \multicolumn{6}{c|}{\textbf{Mục tiêu (PO)}} \\
+\cline{3-8}
+ & & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5} & \textbf{6} \\
+\hline
+\endfirsthead
+
+\hline
+\multirow{2}{*}{\textbf{PLOs}} & \multirow{2}{*}{\textbf{Mô tả \textit{(Description)}}} & \multicolumn{6}{c|}{\textbf{Mục tiêu (PO)}} \\
+\cline{3-8}
+ & & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5} & \textbf{6} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+
+\BLOCK{for plo in plos}
+\textbf{\VAR{plo.code|latex}} & \textbf{\VAR{plo.text_vn|latex}}\BLOCK{for i in [1,2,3,4,5,6]} & \BLOCK{if i in plo.po_indices}\textbf{X}\BLOCK{endif}\BLOCK{endfor} \\
+\hline
+\BLOCK{for pi in plo.pis}
+\VAR{pi.code|latex} & \VAR{pi.text_vn|latex} & & & & & & \\
+\hline
+\BLOCK{endfor}
+\BLOCK{endfor}
+\end{longtable}
+\end{center}
+
+%% ═════════════════ SECTION 4 ═════════════════
+\section*{4. Vị trí làm việc - Khả năng học tập của người học sau khi tốt nghiệp \textnormal{\textit{(Job Opportunities and Postgraduate Study Opportunities)}}}
+
+\subsection*{4.1. Vị trí việc làm \textnormal{\textit{(Job Opportunities)}}}
+
+\subsection*{4.2. Khả năng học tập, nâng cao trình độ \textnormal{\textit{(Postgraduate Study Opportunities)}}}
+
+%% ═════════════════ SECTION 5 ═════════════════
+\section*{5. Chuẩn đầu ra tham khảo \textnormal{\textit{(References)}}}
+
+\vspace{2em}
+
+%% ═════════════════ FOOTER (chữ ký) ═════════════════
+\begin{flushright}
+\begin{minipage}{0.4\textwidth}
+\centering
+\textbf{\VAR{inst.president_title|latex}}\\
+\textit{\VAR{inst.president_title_en|latex}}\\[4em]
+\textbf{\VAR{inst.president_name|latex}}
+\end{minipage}
+\end{flushright}
+
+\end{document}

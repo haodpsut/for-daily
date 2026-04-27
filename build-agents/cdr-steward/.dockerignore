@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local DB & outputs (will be regenerated)
+*.db
+*.sqlite*
+backend/output/
+backend/uploads/
+backend/cdr_steward.db
+
+# Frontend (deployed separately to Vercel)
+frontend/
+
+# Local artifacts
+import_templates/*.xlsx
+*.log
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Git
+.git/
+.gitignore

@@ -1,0 +1,207 @@
+%% CT_MOTA — Bản mô tả chương trình đào tạo
+\documentclass[12pt,a4paper]{article}
+\usepackage{fontspec}
+\setmainfont{\VAR{font_name}}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{tabularx,longtable,multirow,array,ragged2e}
+\usepackage{titlesec,enumitem}
+\usepackage{pdflscape}
+\usepackage{graphicx}
+
+\newcommand{\rothead}[1]{\rotatebox{90}{\tiny\textbf{#1}\hspace{0.3em}}}
+
+\titleformat{\section}{\bfseries}{}{0pt}{}
+\titleformat{\subsection}{\bfseries}{}{0pt}{}
+\titlespacing{\section}{0pt}{1em}{0.5em}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+\renewcommand{\arraystretch}{1.2}
+
+\newcolumntype{C}{>{\centering\arraybackslash}m{0.55cm}}
+\newcolumntype{P}{>{\RaggedRight\arraybackslash}m{8.5cm}}
+\newcolumntype{L}{>{\centering\arraybackslash}m{1.3cm}}
+
+\begin{document}
+
+{\small
+\noindent
+\begin{minipage}[t]{0.5\textwidth}\centering
+\VAR{inst.ministry|latex}\\
+\textbf{\VAR{inst.name_short_upper|latex}}\\[-0.3em]\rule{0.55\textwidth}{0.4pt}
+\end{minipage}%
+\begin{minipage}[t]{0.5\textwidth}\centering
+\textbf{\VAR{inst.country_line1|latex}}\\
+\textbf{\VAR{inst.country_line2|latex}}\\[-0.3em]\rule{0.45\textwidth}{0.4pt}
+\end{minipage}}
+
+\vspace{1.5em}
+\begin{center}
+{\Large\textbf{BẢN MÔ TẢ CHƯƠNG TRÌNH ĐÀO TẠO}}\\[0.3em]
+\textit{(PROGRAM DESCRIPTION)}\\[0.5em]
+\textit{(Ban hành kèm theo Quyết định số \VAR{program.decision_no|latex} ngày \VAR{program.decision_date_vn|latex}\\
+của \VAR{program.issuing_authority|latex})}
+\end{center}
+
+\vspace{0.6em}
+\textbf{Tên chương trình:} \VAR{program.name_vn|latex} (\textit{\VAR{program.name_en|latex}})\\
+\textbf{Mã ngành:} \VAR{program.code|latex} \quad \textbf{Trình độ:} \VAR{program.level_text|latex}
+
+%% ───────── SECTION 1: DESCRIPTION ─────────
+\section*{1. Mô tả chương trình đào tạo \textnormal{\textit{(Description of Training Program)}}}
+
+\subsection*{1.1. Giới thiệu \textnormal{\textit{(Introduction)}}}
+
+\subsection*{1.2. Thông tin chung \textnormal{\textit{(General Information)}}}
+
+\begin{tabular}{|c|p{5cm}|p{8cm}|}
+\hline
+1 & Tên chương trình & \VAR{program.name_vn|latex} \\\hline
+2 & Mã ngành đào tạo & \VAR{program.code|latex} \\\hline
+3 & Trường cấp bằng & \VAR{inst.name_short|latex} \\\hline
+4 & Tên gọi văn bằng & Kỹ sư \\\hline
+5 & Trình độ đào tạo & \VAR{program.level_text|latex} \\\hline
+6 & Số tín chỉ yêu cầu & \VAR{program.total_credits|latex} \\\hline
+7 & Khoa quản lý & Khoa Công nghệ Thông tin \\\hline
+8 & Hình thức đào tạo & Chính quy \\\hline
+9 & Thời gian đào tạo & \VAR{program.duration_years|latex} năm \\\hline
+10 & Đối tượng tuyển sinh & Theo quy định BGDĐT \\\hline
+11 & Thang điểm đánh giá & 10 / chữ A-F / 4.0 \\\hline
+\end{tabular}
+
+\subsection*{1.3. Sứ mạng – Tầm nhìn – Triết lý giáo dục}
+
+\textit{Sứ mạng:} \VAR{inst.name_short|latex} phát triển thành đại học thông minh theo định hướng ứng dụng.
+
+\textit{Tầm nhìn 2030:} Phát triển thành đại học ứng dụng đào tạo đa ngành ở trình độ đại học và sau đại học, đạt trình độ khu vực.
+
+\textit{Triết lý giáo dục:} Hội nhập - Sáng tạo - Đạo đức - Phát triển - Trách nhiệm.
+
+\subsection*{1.4. Mục tiêu đào tạo \textnormal{\textit{(Program Objectives - POs)}}}
+\BLOCK{for po in pos}
+\textbf{\VAR{po.code|latex}:} \VAR{po.text_vn|latex}
+
+\BLOCK{endfor}
+
+\subsection*{1.5. Chuẩn đầu ra chương trình đào tạo \textnormal{\textit{(Program Learning Outcomes)}}}
+
+\begin{center}
+\begin{longtable}{|L|P|C|C|C|C|C|C|}
+\hline
+\multirow{2}{*}{\textbf{PLOs}} & \multirow{2}{*}{\textbf{Mô tả}} & \multicolumn{6}{c|}{\textbf{PO}} \\
+\cline{3-8}
+ & & 1 & 2 & 3 & 4 & 5 & 6 \\
+\hline\endhead\hline\endfoot
+\BLOCK{for plo in plos}
+\textbf{\VAR{plo.code|latex}} & \textbf{\VAR{plo.text_vn|latex}}\BLOCK{for i in [1,2,3,4,5,6]} & \BLOCK{if i in plo.po_indices}\textbf{X}\BLOCK{endif}\BLOCK{endfor} \\
+\hline
+\BLOCK{for pi in plo.pis}
+\VAR{pi.code|latex} & \VAR{pi.text_vn|latex} & & & & & & \\
+\hline
+\BLOCK{endfor}
+\BLOCK{endfor}
+\end{longtable}
+\end{center}
+
+\subsection*{1.6. Ma trận PLO × VQF}
+
+\begin{center}
+\begin{tabular}{|l|\BLOCK{for c in vqf.all_codes}c|\BLOCK{endfor}}
+\hline
+\textbf{PLOs}\BLOCK{for c in vqf.all_codes} & \textbf{\VAR{c|latex}}\BLOCK{endfor} \\
+\hline
+\BLOCK{for row in vqf.matrix}
+\textbf{\VAR{row.code|latex}}\BLOCK{for c in vqf.all_codes} & \BLOCK{if row.marks[c]}X\BLOCK{endif}\BLOCK{endfor} \\
+\hline
+\BLOCK{endfor}
+\end{tabular}
+\end{center}
+
+\subsection*{1.7. Phương pháp giảng dạy \textnormal{\textit{(Teaching Methods)}}}
+\subsection*{1.8. Hoạt động học tập \textnormal{\textit{(Learning Activities)}}}
+\subsection*{1.9. Phương pháp kiểm tra đánh giá \textnormal{\textit{(Assessment Methods)}}}
+
+%% ───────── SECTION 2 ─────────
+\section*{2. Mô tả chương trình dạy học}
+
+\subsection*{2.1. Cấu trúc chương trình}
+Tổng tín chỉ: \textbf{\VAR{program.total_credits|latex}}
+
+\begin{longtable}{|c|l|p{5cm}|p{5cm}|c|}
+\hline
+\textbf{TT} & \textbf{Mã HP} & \textbf{Tên VN} & \textbf{Course Name (EN)} & \textbf{TC} \\
+\hline\endhead
+\BLOCK{set ns = namespace(idx=0)}
+\BLOCK{for grp in course_groups}
+\multicolumn{5}{|l|}{\textbf{\VAR{grp.label|latex}}} \\\hline
+\BLOCK{for c in grp.courses}
+\BLOCK{set ns.idx = ns.idx + 1}
+\VAR{ns.idx} & \VAR{c.code|latex} & \VAR{c.name_vn|latex} & \VAR{c.name_en|latex} & \VAR{c.credits|latex} \\\hline
+\BLOCK{endfor}
+\BLOCK{endfor}
+\BLOCK{if ns.idx == 0}
+\multicolumn{5}{|c|}{\textit{(Chưa có học phần)}} \\\hline
+\BLOCK{endif}
+\end{longtable}
+
+\subsection*{2.2. Mối quan hệ học phần × CLO × PLO/PI}
+
+{\small \textit{I=Introduce, R=Reinforce, M=Mastery, A=Assessment}}
+
+\begin{landscape}
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{2pt}
+\begin{longtable}{|p{1.5cm}|p{4.5cm}|p{1cm}|*{\VAR{pi_codes_ordered|length}}{>{\centering\arraybackslash}p{0.5cm}|}}
+\hline
+\rule{0pt}{1.4cm}\textbf{Mã HP} & \textbf{Tên HP} & \textbf{CLO}\BLOCK{for pc in pi_codes_ordered} & \rothead{\VAR{pc|latex}}\BLOCK{endfor} \\
+\hline\endhead\hline\endfoot
+\BLOCK{for cb in course_pi_matrix}
+\multirow{\VAR{cb.clos|length}}{*}{\VAR{cb.code|latex}} & \multirow{\VAR{cb.clos|length}}{*}{\parbox{4.3cm}{\VAR{cb.name_vn|latex}}}
+\BLOCK{for clo in cb.clos}
+\BLOCK{if not loop.first}
+ &
+\BLOCK{endif}
+& \VAR{clo.code|latex}\BLOCK{for lvl in clo.levels} & \VAR{lvl|latex}\BLOCK{endfor} \\
+\BLOCK{endfor}
+\hline
+\BLOCK{endfor}
+\BLOCK{if course_pi_matrix|length == 0}
+\multicolumn{\VAR{3 + pi_codes_ordered|length}}{|c|}{\textit{(Chưa có CLO)}} \\\hline
+\BLOCK{endif}
+\end{longtable}
+\end{center}
+\end{landscape}
+
+%% ───────── SECTION 3 ─────────
+\section*{3. Mô tả vắn tắt nội dung và khối lượng các học phần}
+
+\BLOCK{for c in courses_brief}
+\textbf{\VAR{c.code|latex} — \VAR{c.name_vn|latex} (\VAR{c.credits|latex} TC):} \VAR{c.description|latex}
+
+\BLOCK{endfor}
+\BLOCK{if courses_brief|length == 0}
+\textit{(Chưa có mô tả học phần)}
+\BLOCK{endif}
+
+%% ───────── SECTION 4-5 ─────────
+\section*{4. Danh sách đội ngũ giảng viên}
+\textit{(Sẽ cập nhật)}
+
+\section*{5. Cơ sở vật chất, công nghệ và học liệu}
+\subsection*{5.1. Cơ sở vật chất, công nghệ}
+\subsection*{5.2. Học liệu}
+
+%% ───────── SECTION 6 ─────────
+\section*{6. Duyệt chương trình}
+
+\vspace{1em}
+\begin{flushright}
+\begin{minipage}{0.45\textwidth}\centering
+\textbf{\VAR{inst.president_title|latex}}\\
+\textit{\VAR{inst.president_title_en|latex}}\\[3em]
+\textbf{\VAR{inst.president_name|latex}}
+\end{minipage}
+\end{flushright}
+
+\end{document}
