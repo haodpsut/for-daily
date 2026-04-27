@@ -73,3 +73,24 @@ export interface RenderResult {
   pdf_filename: string;
   pdf_url: string;
 }
+
+export type TemplateStatus = 'fresh' | 'stale' | 'missing';
+
+export interface TemplateImpact {
+  name: string;
+  status: TemplateStatus;
+  rendered_at: string | null;
+  pdf_url: string | null;
+}
+
+export interface ImpactReport {
+  program_code: string;
+  program_version: number;
+  program_updated_at: string;
+  last_rendered_version: number | null;
+  last_rendered_at: string | null;
+  is_stale_overall: boolean;
+  counts: { fresh: number; stale: number; missing: number };
+  program_templates: TemplateImpact[];
+  decuong_templates: TemplateImpact[];
+}

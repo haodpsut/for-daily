@@ -1,5 +1,5 @@
 import { api } from './client';
-import type { ProgramDetail, RenderResult } from '../types';
+import type { ProgramDetail, RenderResult, ImpactReport } from '../types';
 
 export const getProgram = async (code: string): Promise<ProgramDetail> => {
   const { data } = await api.get(`/programs/${code}`);
@@ -13,5 +13,10 @@ export const renderAll = async (code: string): Promise<RenderResult[]> => {
 
 export const listPrograms = async (): Promise<{ code: string; name_vn: string }[]> => {
   const { data } = await api.get('/programs');
+  return data;
+};
+
+export const getImpact = async (code: string): Promise<ImpactReport> => {
+  const { data } = await api.get(`/programs/${code}/impact`);
   return data;
 };

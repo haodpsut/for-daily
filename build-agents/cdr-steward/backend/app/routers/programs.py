@@ -1,11 +1,16 @@
-"""Router: GET program detail + list."""
+"""Router: GET program detail + list + impact (staleness detection)."""
 from __future__ import annotations
+
+from datetime import datetime
+from pathlib import Path
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from ..db import get_db
 from ..models import Program, PLO_PO, PO, PLO, CLO
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent  # cdr-steward/
 
 router = APIRouter()
 
@@ -97,4 +102,67 @@ def get_program(code: str, db: Session = Depends(get_db)):
             "courses": len(courses_sorted),
             "clos": sum(clo_count_map.values()),
         },
+    }
+
+
+@router.get("/{code}/impact")
+def get_impact(code: str, db: Session = Depends(get_db)):
+    """Detect which templates are stale (need re-render) since last render_all.
+
+    Logic:
+    - program.version bumps on every PLO/PI mutation (see plos.py router)
+    - program.last_rendered_version snapshots program.version after render_all
+    - Stale = current version > last_rendered_version OR PDF file missing
+    """
+    program = db.query(Program).filter_by(code=code).first()
+    if not program:
+        raise HTTPException(404, f"Program {code} not found")
+
+    output_dir = PROJECT_ROOT / "backend" / "output" / program.code
+
+    program_level = ["CT_CDR", "CT_CTDT", "CT_CTDH", "CT_MOTA"]
+    decuong = sorted(
+        f"CT_DECUONG_{c.code}"
+        for c in program.courses
+        if c.clos
+    )
+
+    last_rv = program.last_rendered_version
+
+    def _status(name: str) -> dict:
+        pdf = output_dir / f"{name}.pdf"
+        if not pdf.exists():
+            return {
+                "name": name,
+                "status": "missing",
+                "rendered_at": None,
+                "pdf_url": None,
+            }
+        rendered_at = datetime.fromtimestamp(pdf.stat().st_mtime)
+        is_stale = last_rv is None or program.version > last_rv
+        return {
+            "name": name,
+            "status": "stale" if is_stale else "fresh",
+            "rendered_at": rendered_at.isoformat(),
+            "pdf_url": f"/api/render/{code}/files/{name}.pdf",
+        }
+
+    program_templates = [_status(n) for n in program_level]
+    decuong_templates = [_status(n) for n in decuong]
+    all_templates = program_templates + decuong_templates
+
+    counts = {"fresh": 0, "stale": 0, "missing": 0}
+    for t in all_templates:
+        counts[t["status"]] += 1
+
+    return {
+        "program_code": program.code,
+        "program_version": program.version,
+        "program_updated_at": program.updated_at.isoformat(),
+        "last_rendered_version": program.last_rendered_version,
+        "last_rendered_at": program.last_rendered_at.isoformat() if program.last_rendered_at else None,
+        "is_stale_overall": counts["stale"] + counts["missing"] > 0,
+        "counts": counts,
+        "program_templates": program_templates,
+        "decuong_templates": decuong_templates,
     }

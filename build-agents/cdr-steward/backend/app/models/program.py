@@ -39,6 +39,8 @@ class Program(Base):
     decision_date: Mapped[date | None] = mapped_column(Date, nullable=True)
     issuing_authority: Mapped[str | None] = mapped_column(String(255), nullable=True)
     version: Mapped[int] = mapped_column(Integer, default=1)
+    last_rendered_version: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    last_rendered_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

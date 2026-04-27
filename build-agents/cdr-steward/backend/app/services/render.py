@@ -461,6 +461,8 @@ def render_ct_decuong(db, program, course: Course, template_dir, output_dir):
 # ─────────────────────────────────────────────────────────────
 
 def render_all(db: Session, program_code: str, project_root: Path) -> dict[str, Path]:
+    from datetime import datetime as _dt
+
     program = db.query(Program).filter_by(code=program_code).first()
     if not program:
         raise ValueError(f"Program with code {program_code} not found")
@@ -480,9 +482,14 @@ def render_all(db: Session, program_code: str, project_root: Path) -> dict[str, 
 
     # CT_DECUONG: render for each course
     for course in sorted(program.courses, key=lambda c: c.code):
-        if course.clos:  # only render if has CLOs
+        if course.clos:
             _, pdf = render_ct_decuong(db, program, course, template_dir, output_dir)
             results[f"CT_DECUONG_{course.code}"] = pdf
+
+    # Mark snapshot — used by /impact endpoint to detect staleness
+    program.last_rendered_version = program.version
+    program.last_rendered_at = _dt.utcnow()
+    db.commit()
 
     return results
 

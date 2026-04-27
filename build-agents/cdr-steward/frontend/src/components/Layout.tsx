@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
+import { getImpact } from '../api/programs';
 
 const navItems = [
   { to: '/', label: 'Tổng quan', icon: '◐' },
@@ -6,10 +8,23 @@ const navItems = [
   { to: '/plos', label: 'Chuẩn đầu ra (PLO)', icon: '◨' },
   { to: '/courses', label: 'Học phần', icon: '◰' },
   { to: '/import', label: 'Import Excel', icon: '⬆' },
+  { to: '/impact', label: 'Tác động thay đổi', icon: '⚡', badge: true },
   { to: '/outputs', label: 'Tài liệu sinh ra', icon: '◳' },
 ];
 
 export default function Layout() {
+  const [staleCount, setStaleCount] = useState<number>(0);
+
+  useEffect(() => {
+    const tick = () =>
+      getImpact('7480201')
+        .then((r) => setStaleCount(r.counts.stale + r.counts.missing))
+        .catch(() => setStaleCount(0));
+    tick();
+    const id = setInterval(tick, 30000); // refresh every 30s
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <div className="flex h-screen">
       <aside className="w-64 bg-brand-900 text-white flex flex-col">
@@ -32,12 +47,17 @@ export default function Layout() {
               }
             >
               <span className="text-base opacity-70">{item.icon}</span>
-              {item.label}
+              <span className="flex-1">{item.label}</span>
+              {item.badge && staleCount > 0 && (
+                <span className="bg-amber-500 text-white text-xs px-1.5 py-0.5 rounded-full font-bold">
+                  {staleCount}
+                </span>
+              )}
             </NavLink>
           ))}
         </nav>
         <div className="p-4 border-t border-brand-700 text-xs text-brand-100">
-          v0.2 — DAU CNTT 7480201
+          v0.3 — DAU CNTT 7480201
         </div>
       </aside>
       <main className="flex-1 overflow-auto">
