@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { getProgram } from '../api/programs';
+import { useProgram } from '../contexts/ProgramContext';
 import type { ProgramDetail } from '../types';
 
 export default function POs() {
+  const { currentCode } = useProgram();
   const [program, setProgram] = useState<ProgramDetail | null>(null);
 
   useEffect(() => {
-    getProgram('7480201').then(setProgram);
-  }, []);
+    if (!currentCode) return;
+    getProgram(currentCode).then(setProgram);
+  }, [currentCode]);
 
   if (!program) return <div className="text-gray-500">Đang tải...</div>;
 

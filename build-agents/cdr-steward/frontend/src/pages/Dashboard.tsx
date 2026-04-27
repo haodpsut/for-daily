@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { getProgram, renderAll } from '../api/programs';
+import { useProgram } from '../contexts/ProgramContext';
 import type { ProgramDetail, RenderResult } from '../types';
 
-const PROGRAM_CODE = '7480201';
-
 export default function Dashboard() {
+  const { currentCode } = useProgram();
   const [program, setProgram] = useState<ProgramDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -12,17 +12,21 @@ export default function Dashboard() {
   const [renderResults, setRenderResults] = useState<RenderResult[] | null>(null);
 
   useEffect(() => {
-    getProgram(PROGRAM_CODE)
+    if (!currentCode) return;
+    setLoading(true);
+    setError(null);
+    setRenderResults(null);
+    getProgram(currentCode)
       .then(setProgram)
       .catch((e) => setError(String(e.response?.data?.detail || e.message)))
       .finally(() => setLoading(false));
-  }, []);
+  }, [currentCode]);
 
   const handleRender = async () => {
     setRendering(true);
     setRenderResults(null);
     try {
-      const results = await renderAll(PROGRAM_CODE);
+      const results = await renderAll(currentCode);
       setRenderResults(results);
     } catch (e: any) {
       setError(String(e.response?.data?.detail || e.message));

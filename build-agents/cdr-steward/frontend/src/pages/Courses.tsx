@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getProgram } from '../api/programs';
 import { createCourse } from '../api/courses';
+import { useProgram } from '../contexts/ProgramContext';
 import type { ProgramDetail } from '../types';
 
 const KG_LABEL: Record<string, string> = {
@@ -15,15 +16,17 @@ const KG_LABEL: Record<string, string> = {
 const KG_OPTIONS = Object.entries(KG_LABEL).map(([value, label]) => ({ value, label }));
 
 export default function Courses() {
+  const { currentCode } = useProgram();
   const [program, setProgram] = useState<ProgramDetail | null>(null);
   const [showAdd, setShowAdd] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const refetch = () => getProgram('7480201').then(setProgram);
+  const refetch = () => getProgram(currentCode).then(setProgram);
 
   useEffect(() => {
+    if (!currentCode) return;
     refetch();
-  }, []);
+  }, [currentCode]);
 
   if (!program) return <div className="text-gray-500">Đang tải...</div>;
 
@@ -52,7 +55,7 @@ export default function Courses() {
           onSave={async (body) => {
             setError(null);
             try {
-              await createCourse('7480201', body);
+              await createCourse(currentCode, body);
               setShowAdd(false);
               await refetch();
             } catch (e: any) {

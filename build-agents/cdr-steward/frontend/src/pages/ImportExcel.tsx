@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { importExcel } from '../api/plos';
+import { useProgram } from '../contexts/ProgramContext';
 
 interface ImportResult {
   imported?: Record<string, number>;
@@ -8,6 +9,7 @@ interface ImportResult {
 }
 
 export default function ImportExcel() {
+  const { refreshPrograms } = useProgram();
   const [file, setFile] = useState<File | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [result, setResult] = useState<ImportResult | null>(null);
@@ -27,6 +29,8 @@ export default function ImportExcel() {
     try {
       const r = await importExcel(file);
       setResult(r);
+      // CTĐT mới có thể đã được tạo qua import → refresh dropdown sidebar
+      await refreshPrograms();
     } catch (e: any) {
       setResult({
         warnings: [],

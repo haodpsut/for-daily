@@ -1,24 +1,77 @@
 """Router: GET program detail + list + impact (staleness detection)."""
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 
 from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from ..db import get_db
-from ..models import Program, PLO_PO, PO, PLO, CLO
+from ..models import Program, PLO_PO, PO, PLO, CLO, ProgramLevel
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent  # cdr-steward/
 
 router = APIRouter()
 
 
+class ProgramCreate(BaseModel):
+    code: str
+    name_vn: str
+    name_en: str | None = None
+    level: str = "DAI_HOC"
+    duration_years: int = 4
+    total_credits: int | None = None
+    decision_no: str | None = None
+    decision_date: str | None = None  # ISO YYYY-MM-DD
+    issuing_authority: str | None = None
+    language: str = "Tiếng Việt"
+
+
 @router.get("")
 def list_programs(db: Session = Depends(get_db)):
     rows = db.query(Program).order_by(Program.code).all()
     return [{"code": p.code, "name_vn": p.name_vn, "level": p.level.value} for p in rows]
+
+
+@router.post("")
+def create_program(body: ProgramCreate, db: Session = Depends(get_db)):
+    if db.query(Program).filter_by(code=body.code).first():
+        raise HTTPException(409, f"Program {body.code} already exists")
+    try:
+        level_enum = ProgramLevel(body.level)
+    except ValueError:
+        raise HTTPException(400, f"Invalid level: {body.level}")
+
+    parsed_date = None
+    if body.decision_date:
+        try:
+            parsed_date = date.fromisoformat(body.decision_date)
+        except ValueError:
+            raise HTTPException(400, f"Invalid date: {body.decision_date} (need YYYY-MM-DD)")
+
+    program = Program(
+        code=body.code, name_vn=body.name_vn, name_en=body.name_en,
+        level=level_enum, duration_years=body.duration_years,
+        total_credits=body.total_credits, decision_no=body.decision_no,
+        decision_date=parsed_date, issuing_authority=body.issuing_authority,
+        language=body.language,
+    )
+    db.add(program)
+    db.commit()
+    db.refresh(program)
+    return {"code": program.code, "name_vn": program.name_vn, "level": program.level.value}
+
+
+@router.delete("/{code}")
+def delete_program(code: str, db: Session = Depends(get_db)):
+    program = db.query(Program).filter_by(code=code).first()
+    if not program:
+        raise HTTPException(404, f"Program {code} not found")
+    db.delete(program)
+    db.commit()
+    return {"ok": True, "deleted_code": code}
 
 
 @router.get("/{code}")
@@ -39,13 +92,14 @@ def get_program(code: str, db: Session = Depends(get_db)):
     for plo_id, po_code in plo_po_rows:
         plo_po_map.setdefault(plo_id, []).append(po_code)
 
-    # CLO counts per course
-    clo_count_rows = (
-        db.query(CLO.course_id, CLO.id).all()
-    )
+    # CLO counts per course (filter by this program's courses only)
+    program_course_ids = {c.id for c in program.courses}
     clo_count_map: dict[str, int] = {}
-    for course_id, _ in clo_count_rows:
-        clo_count_map[course_id] = clo_count_map.get(course_id, 0) + 1
+    if program_course_ids:
+        for course_id, _ in db.query(CLO.course_id, CLO.id).filter(
+            CLO.course_id.in_(program_course_ids)
+        ).all():
+            clo_count_map[course_id] = clo_count_map.get(course_id, 0) + 1
 
     pos_sorted = sorted(program.pos, key=lambda x: x.order)
     plos_sorted = sorted(program.plos, key=lambda x: x.order)
@@ -100,7 +154,7 @@ def get_program(code: str, db: Session = Depends(get_db)):
             "plos": len(plos_sorted),
             "pis": sum(len(p.pis) for p in plos_sorted),
             "courses": len(courses_sorted),
-            "clos": sum(clo_count_map.values()),
+            "clos": sum(clo_count_map.get(c.id, 0) for c in courses_sorted),
         },
     }
 

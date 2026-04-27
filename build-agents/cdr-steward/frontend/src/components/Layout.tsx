@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { getImpact } from '../api/programs';
+import { useProgram } from '../contexts/ProgramContext';
+import CreateProgramModal from './CreateProgramModal';
 
 const navItems = [
   { to: '/', label: 'Tổng quan', icon: '◐' },
@@ -13,17 +15,20 @@ const navItems = [
 ];
 
 export default function Layout() {
+  const { programs, currentCode, setCurrentCode, loading } = useProgram();
   const [staleCount, setStaleCount] = useState<number>(0);
+  const [showCreate, setShowCreate] = useState(false);
 
   useEffect(() => {
+    if (!currentCode) return;
     const tick = () =>
-      getImpact('7480201')
+      getImpact(currentCode)
         .then((r) => setStaleCount(r.counts.stale + r.counts.missing))
         .catch(() => setStaleCount(0));
     tick();
-    const id = setInterval(tick, 30000); // refresh every 30s
+    const id = setInterval(tick, 30000);
     return () => clearInterval(id);
-  }, []);
+  }, [currentCode]);
 
   return (
     <div className="flex h-screen">
@@ -32,7 +37,36 @@ export default function Layout() {
           <div className="text-lg font-bold">CĐR Steward</div>
           <div className="text-xs text-brand-100 mt-1">Single source of truth — CTĐT</div>
         </div>
-        <nav className="flex-1 py-4">
+
+        {/* Program switcher */}
+        <div className="p-3 border-b border-brand-700 space-y-2">
+          <label className="text-xs text-brand-100 px-1">Chương trình đào tạo</label>
+          {loading ? (
+            <div className="text-xs text-brand-100 italic px-1">Đang tải...</div>
+          ) : programs.length === 0 ? (
+            <div className="text-xs text-amber-300 italic px-1">Chưa có CTĐT — tạo mới ↓</div>
+          ) : (
+            <select
+              value={currentCode}
+              onChange={(e) => setCurrentCode(e.target.value)}
+              className="w-full bg-brand-700 text-white border border-brand-600 rounded px-2 py-1.5 text-sm"
+            >
+              {programs.map((p) => (
+                <option key={p.code} value={p.code}>
+                  {p.code} — {p.name_vn}
+                </option>
+              ))}
+            </select>
+          )}
+          <button
+            onClick={() => setShowCreate(true)}
+            className="w-full text-xs bg-brand-700 hover:bg-brand-600 px-2 py-1.5 rounded border border-brand-600 transition"
+          >
+            + Tạo CTĐT mới
+          </button>
+        </div>
+
+        <nav className="flex-1 py-4 overflow-auto">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -56,15 +90,42 @@ export default function Layout() {
             </NavLink>
           ))}
         </nav>
+
         <div className="p-4 border-t border-brand-700 text-xs text-brand-100">
-          v0.3 — DAU CNTT 7480201
+          v0.4 — Multi-program
         </div>
       </aside>
+
       <main className="flex-1 overflow-auto">
         <div className="max-w-6xl mx-auto px-8 py-6">
-          <Outlet />
+          {programs.length === 0 && !loading ? (
+            <EmptyState onCreate={() => setShowCreate(true)} />
+          ) : (
+            <Outlet />
+          )}
         </div>
       </main>
+
+      {showCreate && <CreateProgramModal onClose={() => setShowCreate(false)} />}
+    </div>
+  );
+}
+
+function EmptyState({ onCreate }: { onCreate: () => void }) {
+  return (
+    <div className="bg-white border border-dashed border-gray-300 rounded-lg p-16 text-center">
+      <div className="text-5xl mb-4">📚</div>
+      <h2 className="text-xl font-semibold mb-2">Chưa có Chương trình đào tạo nào</h2>
+      <p className="text-gray-500 mb-6 max-w-md mx-auto">
+        Tạo CTĐT đầu tiên để bắt đầu — sau đó thêm Mục tiêu, Chuẩn đầu ra, Học phần,
+        hoặc upload Excel template có sẵn.
+      </p>
+      <button
+        onClick={onCreate}
+        className="bg-brand-600 hover:bg-brand-700 text-white px-6 py-2.5 rounded font-medium"
+      >
+        + Tạo CTĐT đầu tiên
+      </button>
     </div>
   );
 }

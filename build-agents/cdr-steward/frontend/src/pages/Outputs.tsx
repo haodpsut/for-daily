@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { renderAll } from '../api/programs';
+import { useProgram } from '../contexts/ProgramContext';
 import type { RenderResult } from '../types';
 
 export default function Outputs() {
+  const { currentCode } = useProgram();
   const [results, setResults] = useState<RenderResult[] | null>(null);
   const [rendering, setRendering] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -11,7 +13,7 @@ export default function Outputs() {
     setRendering(true);
     setError(null);
     try {
-      const r = await renderAll('7480201');
+      const r = await renderAll(currentCode);
       setResults(r);
     } catch (e: any) {
       setError(String(e.response?.data?.detail || e.message));

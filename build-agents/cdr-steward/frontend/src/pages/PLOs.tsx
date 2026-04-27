@@ -5,11 +5,11 @@ import {
   updatePI, deletePI, createPI,
   updatePLOPOMapping,
 } from '../api/plos';
+import { useProgram } from '../contexts/ProgramContext';
 import type { ProgramDetail, PLO, PI } from '../types';
 
-const PROGRAM_CODE = '7480201';
-
 export default function PLOs() {
+  const { currentCode } = useProgram();
   const [program, setProgram] = useState<ProgramDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [editingPloId, setEditingPloId] = useState<string | null>(null);
@@ -18,11 +18,13 @@ export default function PLOs() {
   const [addPiForPlo, setAddPiForPlo] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const refetch = () => getProgram(PROGRAM_CODE).then(setProgram);
+  const refetch = () => getProgram(currentCode).then(setProgram);
 
   useEffect(() => {
+    if (!currentCode) return;
+    setLoading(true);
     refetch().finally(() => setLoading(false));
-  }, []);
+  }, [currentCode]);
 
   const wrap = async (fn: () => Promise<unknown>) => {
     setError(null);
@@ -64,7 +66,7 @@ export default function PLOs() {
           nextCode={`PLO${program.plos.length + 1}`}
           onSave={async (body) => {
             await wrap(async () => {
-              await createPLO(PROGRAM_CODE, body);
+              await createPLO(currentCode, body);
               setShowAddPlo(false);
             });
           }}

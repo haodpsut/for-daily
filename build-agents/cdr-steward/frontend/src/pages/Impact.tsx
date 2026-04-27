@@ -1,26 +1,28 @@
 import { useEffect, useState } from 'react';
 import { getImpact, renderAll } from '../api/programs';
+import { useProgram } from '../contexts/ProgramContext';
 import type { ImpactReport, TemplateImpact, TemplateStatus } from '../types';
 
-const PROGRAM_CODE = '7480201';
-
 export default function Impact() {
+  const { currentCode } = useProgram();
   const [report, setReport] = useState<ImpactReport | null>(null);
   const [loading, setLoading] = useState(true);
   const [rendering, setRendering] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const refetch = () => getImpact(PROGRAM_CODE).then(setReport);
+  const refetch = () => getImpact(currentCode).then(setReport);
 
   useEffect(() => {
+    if (!currentCode) return;
+    setLoading(true);
     refetch().finally(() => setLoading(false));
-  }, []);
+  }, [currentCode]);
 
   const handleRender = async () => {
     setRendering(true);
     setError(null);
     try {
-      await renderAll(PROGRAM_CODE);
+      await renderAll(currentCode);
       await refetch();
     } catch (e: any) {
       setError(String(e.response?.data?.detail || e.message));
