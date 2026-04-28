@@ -85,9 +85,10 @@ def _run_xelatex(tex_path: Path, runs: int = 2) -> Path:
     cwd = tex_path.parent
 
     if shutil.which("tectonic"):
+        # Syntax: `tectonic -X compile [OPTIONS] <file>` (flags AFTER compile)
         result = subprocess.run(
-            ["tectonic", "--keep-logs", "--keep-intermediates",
-             "-X", "compile", tex_path.name],
+            ["tectonic", "-X", "compile", "--keep-logs", "--keep-intermediates",
+             tex_path.name],
             cwd=str(cwd), capture_output=True, text=True,
             encoding="utf-8", errors="replace",
         )
