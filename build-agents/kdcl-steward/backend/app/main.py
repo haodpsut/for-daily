@@ -41,14 +41,14 @@ app.add_middleware(
 
 @app.on_event("startup")
 def on_startup():
-    """Tạo CHỈ các bảng `meas_*` — ref tables đã do cdr-steward tạo.
+    """Idempotent table create.
 
-    Filter theo prefix tên bảng → tránh xung đột schema với cdr-steward.
+    - Shared DB với cdr (Postgres): user/program/course/... đã có → SQLAlchemy skip,
+      chỉ tạo meas_* mới.
+    - Standalone (SQLite ephemeral container): DB rỗng → tạo TẤT CẢ tables (cả ref
+      lẫn meas_*) để app boot được. Data trống cho đến khi user import qua UI.
     """
-    meas_tables = [
-        t for name, t in Base.metadata.tables.items() if name.startswith("meas_")
-    ]
-    Base.metadata.create_all(bind=engine, tables=meas_tables)
+    Base.metadata.create_all(bind=engine)
 
 
 @app.get("/health")
