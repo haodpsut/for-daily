@@ -124,15 +124,21 @@ Ngưỡng đạt CLO: & \VAR{clo_threshold_pct}\% (mặc định 50\%) \\
 % ─────────────── SECTION 4: NHẬN ĐỊNH ───────────────
 \section{Nhận định \& Đề xuất}
 
+\BLOCK{ if clo_results }
 \begin{itemize}
 \BLOCK{ for clo in clo_results }
 \BLOCK{ if clo.pct_achieved | float < 70 }
 \item CLO \textbf{\VAR{clo.clo_code | latex}} chỉ đạt \VAR{clo.pct_achieved}\% -- \textbf{cần điều chỉnh phương pháp giảng dạy / đề thi} cho kỳ tới.
 \BLOCK{ elif clo.pct_achieved | float >= 90 }
 \item CLO \textbf{\VAR{clo.clo_code | latex}} đạt cao \VAR{clo.pct_achieved}\% -- xem xét nâng độ khó hoặc bổ sung mức Bloom cao hơn.
+\BLOCK{ else }
+\item CLO \textbf{\VAR{clo.clo_code | latex}} đạt \VAR{clo.pct_achieved}\% -- mức ổn định, duy trì phương pháp hiện tại.
 \BLOCK{ endif }
 \BLOCK{ endfor }
 \end{itemize}
+\BLOCK{ else }
+\textit{(Chưa có dữ liệu CLO — cần chạy Compute Session trước khi sinh báo cáo.)}
+\BLOCK{ endif }
 
 % ─────────────── CHỮ KÝ ───────────────
 \vspace{2em}
