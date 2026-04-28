@@ -11,6 +11,7 @@ from .routers import programs as programs_router
 from .routers import render as render_router
 from .routers import plos as plos_router
 from .routers import courses as courses_router
+from .routers import measurement as measurement_router
 
 app = FastAPI(title="CĐR Steward", version="0.2.0")
 
@@ -42,3 +43,4 @@ app.include_router(programs_router.router, prefix="/api/programs", tags=["progra
 app.include_router(render_router.router, prefix="/api/render", tags=["render"])
 app.include_router(plos_router.router, prefix="/api", tags=["plos+pis"])
 app.include_router(courses_router.router, prefix="/api", tags=["courses+clos"])
+app.include_router(measurement_router.router, prefix="/api/measurement", tags=["measurement"])

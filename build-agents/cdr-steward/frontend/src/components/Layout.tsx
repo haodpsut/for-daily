@@ -12,6 +12,7 @@ const navItems = [
   { to: '/courses', label: 'Học phần', icon: '◰' },
   { to: '/import', label: 'Import Excel', icon: '⬆' },
   { to: '/impact', label: 'Tác động thay đổi', icon: '⚡', badge: true },
+  { to: '/measurement', label: 'Đo lường CĐR', icon: '◉' },
   { to: '/outputs', label: 'Tài liệu sinh ra', icon: '◳' },
 ];
 

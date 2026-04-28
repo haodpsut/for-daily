@@ -11,6 +11,8 @@ import CourseDetail from './pages/CourseDetail';
 import Outputs from './pages/Outputs';
 import ImportExcel from './pages/ImportExcel';
 import Impact from './pages/Impact';
+import Measurement from './pages/Measurement';
+import MeasurementDetail from './pages/MeasurementDetail';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
@@ -53,6 +55,8 @@ export default function App() {
             <Route path="courses/:id" element={<CourseDetail />} />
             <Route path="import" element={<ImportExcel />} />
             <Route path="impact" element={<Impact />} />
+            <Route path="measurement" element={<Measurement />} />
+            <Route path="measurement/:id" element={<MeasurementDetail />} />
             <Route path="outputs" element={<Outputs />} />
           </Route>
         </Routes>
