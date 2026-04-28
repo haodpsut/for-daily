@@ -2,27 +2,34 @@
 
 Convention:
 - `Base` = declarative base CHO TẤT CẢ models (cả ref và meas_*).
-- Ref models (Program, Course, CLO, PLO, PI, User) dùng `extend_existing=True` để không
-  conflict với cdr-steward khi 2 app cùng connect 1 DB.
-- Chỉ `meas_*` tables được tự tạo bởi `Base.metadata.create_all()` ở app này — ref tables
-  đã được cdr-steward tạo trước.
-
-Postgres (Neon) connection drops handling — pool_pre_ping + recycle + TCP keepalive.
+- Chỉ `meas_*` tables được tạo bởi kdcl; ref tables do cdr quản lý.
+- SQLite WAL mode → 2 backend đồng thời đọc/ghi 1 file an toàn.
+- Postgres pool_pre_ping + recycle → handle Neon serverless connection drops.
 """
 import os
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, event
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///../cdr-steward/backend/cdr_steward.db")
+IS_SQLITE = DATABASE_URL.startswith("sqlite")
 
-if DATABASE_URL.startswith("sqlite"):
+if IS_SQLITE:
     engine = create_engine(
         DATABASE_URL,
         connect_args={"check_same_thread": False},
         future=True,
     )
+
+    @event.listens_for(engine, "connect")
+    def _enable_wal(dbapi_conn, conn_record):
+        cursor = dbapi_conn.cursor()
+        cursor.execute("PRAGMA journal_mode=WAL")
+        cursor.execute("PRAGMA synchronous=NORMAL")
+        cursor.execute("PRAGMA cache_size=-64000")
+        cursor.execute("PRAGMA temp_store=MEMORY")
+        cursor.execute("PRAGMA busy_timeout=5000")
+        cursor.close()
 else:
-    # Postgres (Neon serverless) — connections get killed when idle.
     engine = create_engine(
         DATABASE_URL,
         future=True,

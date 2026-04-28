@@ -1,21 +1,31 @@
-"""Database engine setup — handle Neon serverless connection drops."""
+"""Database engine setup — Postgres (Neon) hoặc SQLite (local/VPS shared)."""
 import os
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, event
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./cdr_steward.db")
+IS_SQLITE = DATABASE_URL.startswith("sqlite")
 
-if DATABASE_URL.startswith("sqlite"):
+if IS_SQLITE:
     engine = create_engine(
         DATABASE_URL,
         connect_args={"check_same_thread": False},
         future=True,
     )
+
+    @event.listens_for(engine, "connect")
+    def _enable_wal(dbapi_conn, conn_record):
+        """SQLite WAL mode: cho phép concurrent readers + 1 writer.
+        Cần thiết khi 2 backend (cdr + kdcl) cùng đọc/ghi 1 file."""
+        cursor = dbapi_conn.cursor()
+        cursor.execute("PRAGMA journal_mode=WAL")
+        cursor.execute("PRAGMA synchronous=NORMAL")
+        cursor.execute("PRAGMA cache_size=-64000")  # 64MB
+        cursor.execute("PRAGMA temp_store=MEMORY")
+        cursor.execute("PRAGMA busy_timeout=5000")  # đợi tối đa 5s nếu lock
+        cursor.close()
 else:
-    # Postgres (Neon serverless) — connections get killed when idle.
-    # pool_pre_ping=True does SELECT 1 before each use → reconnect if dead.
-    # pool_recycle=300 forces fresh connection every 5 min (Neon idle limit).
-    # keepalive connect_args keep TCP socket alive between Render & Neon.
+    # Postgres (Neon serverless) — connections get killed when idle
     engine = create_engine(
         DATABASE_URL,
         future=True,

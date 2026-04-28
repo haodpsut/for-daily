@@ -10,6 +10,7 @@
 from __future__ import annotations
 
 import os
+import shutil
 import subprocess
 from datetime import date
 from pathlib import Path
@@ -126,23 +127,43 @@ def make_jinja_env(template_dir: Path) -> Environment:
 
 
 def _run_xelatex(tex_path: Path, runs: int = 2) -> Path:
+    """Compile TeX → PDF. Tự detect Tectonic (modern, conda) vs xelatex (TeX Live)."""
     cwd = tex_path.parent
-    for i in range(runs):
+
+    if shutil.which("tectonic"):
+        # Tectonic: 1-pass, auto-download package từ CTAN, fast
         result = subprocess.run(
-            ["xelatex", "-interaction=nonstopmode", "-halt-on-error", tex_path.name],
+            ["tectonic", "--keep-logs", "--keep-intermediates",
+             "-X", "compile", tex_path.name],
             cwd=str(cwd), capture_output=True, text=True,
             encoding="utf-8", errors="replace",
         )
         if result.returncode != 0:
             log_path = cwd / (tex_path.stem + ".log")
-            log_excerpt = log_path.read_text(encoding="utf-8", errors="replace")[-3000:] if log_path.exists() else ""
+            log_excerpt = (log_path.read_text(encoding="utf-8", errors="replace")[-3000:]
+                           if log_path.exists() else result.stderr[-3000:])
             raise RuntimeError(
-                f"xelatex failed (run {i+1}/{runs}, returncode={result.returncode}).\n"
-                f"--- last 3KB of {log_path.name} ---\n{log_excerpt}"
+                f"tectonic failed (returncode={result.returncode}).\n"
+                f"--- last 3KB of log ---\n{log_excerpt}"
             )
+    else:
+        # XeLaTeX: 2-pass cho longtable cross-refs
+        for i in range(runs):
+            result = subprocess.run(
+                ["xelatex", "-interaction=nonstopmode", "-halt-on-error", tex_path.name],
+                cwd=str(cwd), capture_output=True, text=True,
+                encoding="utf-8", errors="replace",
+            )
+            if result.returncode != 0:
+                log_path = cwd / (tex_path.stem + ".log")
+                log_excerpt = log_path.read_text(encoding="utf-8", errors="replace")[-3000:] if log_path.exists() else ""
+                raise RuntimeError(
+                    f"xelatex failed (run {i+1}/{runs}, returncode={result.returncode}).\n"
+                    f"--- last 3KB of {log_path.name} ---\n{log_excerpt}"
+                )
     pdf_path = cwd / (tex_path.stem + ".pdf")
     if not pdf_path.exists():
-        raise RuntimeError(f"xelatex finished but PDF not found: {pdf_path}")
+        raise RuntimeError(f"LaTeX engine finished but PDF not found: {pdf_path}")
     return pdf_path
 
 
