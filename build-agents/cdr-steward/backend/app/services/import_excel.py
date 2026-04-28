@@ -96,22 +96,34 @@ def _split_codes(v) -> list[str]:
 # Main import
 # ─────────────────────────────────────────────────────────────
 
-def import_excel(db: Session, xlsx_path: Path, owner_id: str | None = None) -> dict:
-    wb = load_workbook(xlsx_path, data_only=True)
+EXPECTED_SHEETS = [
+    "00_Program", "01_PO", "02_PLO", "03_PI",
+    "04_PLO_PO_matrix", "05_PLO_VQF_matrix",
+    "06_Course", "07_CLO", "08_CLO_PI_matrix",
+    "09_Assessment", "10_WeeklyPlan",
+]
 
-    # 1) Read all sheets (skip README)
+
+def import_excel(db: Session, xlsx_path: Path, owner_id: str | None = None) -> dict:
+    """Read xlsx → dict of sheets → import_sheets()."""
+    wb = load_workbook(xlsx_path, data_only=True)
     sheets: dict[str, list[dict]] = {}
-    expected = [
-        "00_Program", "01_PO", "02_PLO", "03_PI",
-        "04_PLO_PO_matrix", "05_PLO_VQF_matrix",
-        "06_Course", "07_CLO", "08_CLO_PI_matrix",
-        "09_Assessment", "10_WeeklyPlan",
-    ]
-    for name in expected:
+    for name in EXPECTED_SHEETS:
         if name in wb.sheetnames:
             sheets[name] = _read_sheet(wb[name])
         else:
             sheets[name] = []
+    return import_sheets(db, sheets, owner_id=owner_id)
+
+
+def import_sheets(db: Session, sheets: dict[str, list[dict]], owner_id: str | None = None) -> dict:
+    """Import từ dict sheets (dùng chung cho Excel + Word import).
+
+    sheets must have keys matching EXPECTED_SHEETS; missing keys default to [].
+    """
+    # Ensure all expected keys exist
+    for name in EXPECTED_SHEETS:
+        sheets.setdefault(name, [])
 
     # 2) Validate
     errors: list[str] = []

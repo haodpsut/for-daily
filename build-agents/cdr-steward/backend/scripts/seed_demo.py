@@ -42,6 +42,235 @@ DEMO_USER_EMAIL = "demo@cdr-steward.com"
 DEMO_USER_PASSWORD = "demo1234"
 
 
+# ════════════════════════════════════════════════════════════════════
+# CTĐT 2: 7340101 — QUẢN TRỊ KINH DOANH (cho thấy hệ thống generic)
+# ════════════════════════════════════════════════════════════════════
+
+PROGRAM_QTKD = {
+    "code": "7340101",
+    "name_vn": "Quản trị kinh doanh",
+    "name_en": "Business Administration",
+    "level": ProgramLevel.DAI_HOC,
+    "duration_years": 4,
+    "total_credits": 132,
+    "language": "Tiếng Việt",
+    "decision_no": "412/QĐ-ĐHKTĐN",
+    "decision_date": date(2024, 7, 15),
+    "issuing_authority": "Hiệu trưởng Trường Đại học Kiến trúc Đà Nẵng",
+}
+
+POS_QTKD = [
+    ("PO1", 1, "Đào tạo nguồn nhân lực có phẩm chất chính trị, đạo đức, ý thức phục vụ cộng đồng và trách nhiệm xã hội."),
+    ("PO2", 2, "Cung cấp kiến thức nền tảng và chuyên sâu về quản trị kinh doanh, marketing, tài chính, nhân sự, vận hành."),
+    ("PO3", 3, "Phát triển kỹ năng phân tích dữ liệu, ra quyết định chiến lược và lãnh đạo trong môi trường kinh doanh biến động."),
+    ("PO4", 4, "Xây dựng tinh thần khởi nghiệp, sáng tạo và năng lực thích ứng với chuyển đổi số trong doanh nghiệp."),
+    ("PO5", 5, "Đáp ứng yêu cầu hội nhập quốc tế, phát triển bền vững và đạo đức kinh doanh hiện đại."),
+]
+
+PLOS_QTKD = [
+    ("PLO1", 1, "Áp dụng kiến thức nền tảng về kinh tế, tài chính, marketing, nhân sự và vận hành doanh nghiệp."),
+    ("PLO2", 2, "Phân tích thông tin, dữ liệu kinh doanh để hỗ trợ ra quyết định chiến lược và tác nghiệp."),
+    ("PLO3", 3, "Lập kế hoạch và triển khai các dự án kinh doanh hiệu quả, tối ưu nguồn lực."),
+    ("PLO4", 4, "Thực hiện kỹ năng giao tiếp, đàm phán, làm việc nhóm và lãnh đạo đa văn hóa."),
+    ("PLO5", 5, "Vận dụng công nghệ và các phương pháp số (digital tools, BI, AI) trong quản trị doanh nghiệp."),
+    ("PLO6", 6, "Thể hiện đạo đức kinh doanh, trách nhiệm xã hội của doanh nghiệp và tinh thần khởi nghiệp đổi mới."),
+    ("PLO7", 7, "Đạt chuẩn ngoại ngữ và CNTT cơ bản theo quy định để hội nhập môi trường làm việc quốc tế."),
+]
+
+PIS_QTKD = [
+    ("PI1.1", "PLO1", 1, "Trình bày được các nguyên lý kinh tế vi mô, vĩ mô và quản trị căn bản."),
+    ("PI1.2", "PLO1", 2, "Vận dụng các nguyên lý tài chính, kế toán, marketing trong tình huống thực tế."),
+    ("PI1.3", "PLO1", 3, "Áp dụng kiến thức quản trị nhân sự và quản trị vận hành để giải quyết bài toán doanh nghiệp."),
+    ("PI2.1", "PLO2", 1, "Sử dụng các công cụ phân tích thống kê và kinh tế lượng để khai thác dữ liệu."),
+    ("PI2.2", "PLO2", 2, "Diễn giải kết quả phân tích thành insight kinh doanh có giá trị ra quyết định."),
+    ("PI3.1", "PLO3", 1, "Lập kế hoạch dự án kinh doanh: scope, timeline, ngân sách, KPIs."),
+    ("PI3.2", "PLO3", 2, "Triển khai và giám sát dự án theo chuẩn quản trị dự án (PMI/Agile)."),
+    ("PI4.1", "PLO4", 1, "Giao tiếp đa kênh hiệu quả với khách hàng, đối tác, đồng nghiệp."),
+    ("PI4.2", "PLO4", 2, "Lãnh đạo nhóm đa chức năng, giải quyết xung đột và xây dựng văn hóa hợp tác."),
+    ("PI5.1", "PLO5", 1, "Sử dụng phần mềm văn phòng nâng cao (Excel/PowerBI) để xử lý dữ liệu kinh doanh."),
+    ("PI5.2", "PLO5", 2, "Áp dụng công cụ chuyển đổi số (CRM, ERP, e-commerce) trong vận hành doanh nghiệp."),
+    ("PI5.3", "PLO5", 3, "Đánh giá và lựa chọn giải pháp công nghệ phù hợp với chiến lược doanh nghiệp."),
+    ("PI6.1", "PLO6", 1, "Tuân thủ pháp luật, đạo đức nghề nghiệp và chuẩn mực kinh doanh quốc tế."),
+    ("PI6.2", "PLO6", 2, "Đề xuất và triển khai sáng kiến CSR, ESG trong hoạt động doanh nghiệp."),
+    ("PI6.3", "PLO6", 3, "Xây dựng và bảo vệ ý tưởng khởi nghiệp với mô hình kinh doanh khả thi."),
+    ("PI7.1", "PLO7", 1, "Đạt chuẩn ngoại ngữ bậc 3/6 hoặc tương đương."),
+    ("PI7.2", "PLO7", 2, "Đạt chuẩn kỹ năng CNTT cơ bản theo Thông tư 03/2014/TT-BTTTT."),
+]
+
+PLO_PO_MATRIX_QTKD = {
+    "PLO1": [2],
+    "PLO2": [2, 3],
+    "PLO3": [3],
+    "PLO4": [3, 5],
+    "PLO5": [4],
+    "PLO6": [1, 5],
+    "PLO7": [5],
+}
+
+PLO_VQF_MATRIX_QTKD = {
+    "PLO1": ["K1", "K3"],
+    "PLO2": ["K1", "K4", "S1"],
+    "PLO3": ["K4", "K5", "S1", "A4"],
+    "PLO4": ["S2", "S5", "A1", "A2"],
+    "PLO5": ["K3", "S1"],
+    "PLO6": ["K2", "A3"],
+    "PLO7": ["K3", "S6"],
+}
+
+DEMO_COURSES_QTKD = [
+    {
+        "code": "BAS101",
+        "name_vn": "Nguyên lý kinh tế học",
+        "name_en": "Principles of Economics",
+        "credits": 3, "hours_lt": 45, "hours_th": 0, "hours_self": 90,
+        "knowledge_group": KnowledgeGroup.DAI_CUONG,
+        "semester_default": 1,
+        "description": "Cung cấp các khái niệm cơ bản về kinh tế vi mô và vĩ mô, quy luật cung cầu, vai trò của thị trường và chính phủ.",
+        "cos": [
+            ("CO1", "Hiểu các khái niệm cơ bản và mô hình kinh tế."),
+            ("CO2", "Phân tích hành vi của người tiêu dùng và doanh nghiệp."),
+            ("CO3", "Đánh giá tác động của chính sách vĩ mô lên nền kinh tế."),
+        ],
+        "clos": [
+            ("CLO1", "Mô tả được các nguyên lý cung cầu và cân bằng thị trường.", ["CO1"], [("PI1.1", "I")]),
+            ("CLO2", "Phân tích hành vi tối ưu của người tiêu dùng và doanh nghiệp trong các cấu trúc thị trường.", ["CO2"], [("PI1.1", "R"), ("PI2.1", "I")]),
+            ("CLO3", "Đánh giá ảnh hưởng của chính sách tài khoá và tiền tệ lên các biến vĩ mô (GDP, lạm phát).", ["CO3"], [("PI1.1", "M"), ("PI2.2", "I")]),
+        ],
+        "assessments": [
+            ("Chuyên cần", 10, "Điểm danh + tham gia lớp", "CLO1"),
+            ("Bài tập + Quiz", 30, "Bài tập tuần + 2 quiz", "CLO1,CLO2"),
+            ("Thi cuối kỳ", 60, "Tự luận 90 phút", "CLO1,CLO2,CLO3"),
+        ],
+        "weeks": [
+            (1, "Giới thiệu kinh tế học, tư duy kinh tế", 3, 0, "CLO1"),
+            (2, "Cung, cầu và cân bằng thị trường", 3, 0, "CLO1,CLO2"),
+            (3, "Hành vi người tiêu dùng và lý thuyết doanh nghiệp", 3, 0, "CLO2"),
+            (4, "Cấu trúc thị trường: cạnh tranh, độc quyền", 3, 0, "CLO2"),
+        ],
+    },
+    {
+        "code": "ACC201",
+        "name_vn": "Nguyên lý kế toán",
+        "name_en": "Accounting Principles",
+        "credits": 3, "hours_lt": 30, "hours_th": 30, "hours_self": 90,
+        "knowledge_group": KnowledgeGroup.CO_SO,
+        "semester_default": 2,
+        "description": "Trang bị kiến thức và kỹ năng cơ bản về kế toán tài chính: nguyên tắc kế toán, hệ thống tài khoản, lập báo cáo tài chính.",
+        "cos": [
+            ("CO1", "Hiểu nguyên tắc và phương pháp kế toán cơ bản."),
+            ("CO2", "Vận dụng quy trình ghi sổ và lập báo cáo tài chính."),
+            ("CO3", "Phân tích báo cáo tài chính cơ bản phục vụ ra quyết định."),
+        ],
+        "clos": [
+            ("CLO1", "Trình bày được các nguyên tắc kế toán cơ bản và hệ thống tài khoản.", ["CO1"], [("PI1.2", "I")]),
+            ("CLO2", "Thực hiện ghi sổ kế toán cho các nghiệp vụ kinh tế thông dụng.", ["CO2"], [("PI1.2", "R"), ("PI5.1", "I")]),
+            ("CLO3", "Lập và đọc hiểu Bảng cân đối kế toán, Báo cáo kết quả kinh doanh, Báo cáo lưu chuyển tiền tệ.", ["CO2", "CO3"], [("PI1.2", "M"), ("PI2.1", "R")]),
+        ],
+        "assessments": [
+            ("Bài tập + Thực hành", 30, "Bài tập ghi sổ hàng tuần + thực hành lập báo cáo", "CLO1,CLO2"),
+            ("Kiểm tra giữa kỳ", 20, "Tự luận 60 phút", "CLO1,CLO2"),
+            ("Thi cuối kỳ", 50, "Tự luận + bài tập 90 phút", "CLO2,CLO3"),
+        ],
+        "weeks": [
+            (1, "Tổng quan về kế toán, đối tượng và phương pháp kế toán", 2, 2, "CLO1"),
+            (2, "Hệ thống tài khoản và ghi sổ kép", 2, 2, "CLO1,CLO2"),
+            (3, "Kế toán tài sản ngắn hạn và dài hạn", 2, 2, "CLO2"),
+            (4, "Lập Bảng cân đối kế toán", 2, 2, "CLO3"),
+        ],
+    },
+    {
+        "code": "MKT301",
+        "name_vn": "Marketing căn bản",
+        "name_en": "Marketing Fundamentals",
+        "credits": 3, "hours_lt": 30, "hours_th": 30, "hours_self": 90,
+        "knowledge_group": KnowledgeGroup.CHUYEN_NGANH,
+        "semester_default": 3,
+        "description": "Giới thiệu các khái niệm marketing hiện đại: nghiên cứu thị trường, hành vi khách hàng, marketing mix 4P/7P, digital marketing.",
+        "cos": [
+            ("CO1", "Hiểu khái niệm và vai trò của marketing trong doanh nghiệp."),
+            ("CO2", "Phân tích thị trường và hành vi khách hàng."),
+            ("CO3", "Xây dựng kế hoạch marketing mix cho sản phẩm/dịch vụ cụ thể."),
+        ],
+        "clos": [
+            ("CLO1", "Mô tả vai trò marketing và các khái niệm cốt lõi (STP, 4P/7P, digital).", ["CO1"], [("PI1.2", "I"), ("PI5.2", "I")]),
+            ("CLO2", "Phân tích hành vi khách hàng và phân khúc thị trường mục tiêu.", ["CO2"], [("PI2.1", "R"), ("PI2.2", "R")]),
+            ("CLO3", "Thiết kế kế hoạch marketing tích hợp cho 1 sản phẩm cụ thể, có chỉ số đo lường.", ["CO3"], [("PI3.1", "M"), ("PI3.2", "R"), ("PI5.2", "M")]),
+        ],
+        "assessments": [
+            ("Tham gia lớp + Quiz", 20, "Quiz tuần + thuyết trình tình huống", "CLO1,CLO2"),
+            ("Đồ án giữa kỳ", 30, "Phân tích case study marketing thực tế", "CLO2,CLO3"),
+            ("Đồ án cuối kỳ", 50, "Lập kế hoạch marketing cho 1 sản phẩm, thuyết trình", "CLO1,CLO2,CLO3"),
+        ],
+        "weeks": [
+            (1, "Tổng quan về marketing và xu hướng marketing 4.0", 2, 2, "CLO1"),
+            (2, "Phân tích môi trường marketing và hành vi khách hàng", 2, 2, "CLO1,CLO2"),
+            (3, "Phân khúc, lựa chọn thị trường mục tiêu và định vị (STP)", 2, 2, "CLO2"),
+            (4, "Marketing mix 4P/7P và digital marketing", 2, 2, "CLO3"),
+        ],
+    },
+    {
+        "code": "HRM301",
+        "name_vn": "Quản trị nhân sự",
+        "name_en": "Human Resource Management",
+        "credits": 3, "hours_lt": 45, "hours_th": 0, "hours_self": 90,
+        "knowledge_group": KnowledgeGroup.CHUYEN_NGANH,
+        "semester_default": 4,
+        "description": "Quản trị nguồn nhân lực hiện đại: hoạch định, tuyển dụng, đào tạo, đánh giá, đãi ngộ, phát triển nhân viên.",
+        "cos": [
+            ("CO1", "Hiểu các chức năng cốt lõi của quản trị nhân sự."),
+            ("CO2", "Áp dụng các công cụ tuyển dụng, đánh giá và phát triển nhân viên."),
+            ("CO3", "Thiết kế chính sách nhân sự phù hợp chiến lược doanh nghiệp."),
+        ],
+        "clos": [
+            ("CLO1", "Mô tả các chức năng cốt lõi của HRM trong doanh nghiệp hiện đại.", ["CO1"], [("PI1.3", "I")]),
+            ("CLO2", "Áp dụng quy trình tuyển dụng, phỏng vấn, đánh giá năng lực nhân viên.", ["CO2"], [("PI1.3", "R"), ("PI4.1", "R"), ("PI4.2", "I")]),
+            ("CLO3", "Thiết kế hệ thống KPI, lương thưởng và lộ trình phát triển nhân viên cho 1 phòng ban.", ["CO3"], [("PI1.3", "M"), ("PI4.2", "M"), ("PI3.1", "R")]),
+        ],
+        "assessments": [
+            ("Bài tập + Tham gia", 20, "Phân tích tình huống + thảo luận", "CLO1,CLO2"),
+            ("Bài kiểm tra giữa kỳ", 30, "Tự luận tình huống 60 phút", "CLO1,CLO2"),
+            ("Đồ án cuối kỳ", 50, "Thiết kế hệ thống nhân sự cho 1 phòng ban thực tế", "CLO2,CLO3"),
+        ],
+        "weeks": [
+            (1, "Tổng quan HRM và xu hướng HR 4.0", 3, 0, "CLO1"),
+            (2, "Hoạch định và tuyển dụng nhân lực", 3, 0, "CLO2"),
+            (3, "Đào tạo, đánh giá và phát triển", 3, 0, "CLO2,CLO3"),
+            (4, "Lương thưởng, đãi ngộ và giữ chân nhân tài", 3, 0, "CLO3"),
+        ],
+    },
+    {
+        "code": "ETR401",
+        "name_vn": "Khởi nghiệp và đổi mới sáng tạo",
+        "name_en": "Entrepreneurship and Innovation",
+        "credits": 3, "hours_lt": 30, "hours_th": 30, "hours_self": 90,
+        "knowledge_group": KnowledgeGroup.CHUYEN_NGANH,
+        "semester_default": 6,
+        "description": "Trang bị tư duy khởi nghiệp, lập kế hoạch kinh doanh, gọi vốn, và quản trị startup giai đoạn đầu.",
+        "cos": [
+            ("CO1", "Hiểu các mô hình kinh doanh và quy trình khởi nghiệp."),
+            ("CO2", "Phân tích thị trường và xác định cơ hội khởi nghiệp."),
+            ("CO3", "Lập kế hoạch khởi nghiệp khả thi với pitch deck."),
+        ],
+        "clos": [
+            ("CLO1", "Phân tích các mô hình kinh doanh phổ biến (Lean Canvas, Business Model Canvas).", ["CO1"], [("PI6.3", "I")]),
+            ("CLO2", "Xác định pain point thị trường, đề xuất giải pháp khởi nghiệp khả thi.", ["CO2"], [("PI2.2", "M"), ("PI6.3", "R")]),
+            ("CLO3", "Trình bày pitch deck đầu tư cho 1 ý tưởng khởi nghiệp + bảo vệ trước hội đồng.", ["CO3"], [("PI3.1", "M"), ("PI4.1", "M"), ("PI6.3", "A")]),
+        ],
+        "assessments": [
+            ("Bài tập + Thuyết trình tuần", 20, "Phân tích case startup VN + thuyết trình", "CLO1,CLO2"),
+            ("Đồ án Lean Canvas", 30, "Lập Lean Canvas cho 1 ý tưởng khởi nghiệp", "CLO2"),
+            ("Pitch cuối kỳ", 50, "Pitch 10 phút + Q&A trước hội đồng GV+nhà đầu tư mời", "CLO2,CLO3"),
+        ],
+        "weeks": [
+            (1, "Tư duy khởi nghiệp, mô hình kinh doanh", 2, 2, "CLO1"),
+            (2, "Phân tích thị trường, customer discovery", 2, 2, "CLO2"),
+            (3, "Lean Canvas và MVP", 2, 2, "CLO2,CLO3"),
+            (4, "Pitch deck và gọi vốn", 2, 2, "CLO3"),
+        ],
+    },
+]
+
+
 # ────────────────────────────────────────────────────────
 # Dữ liệu CNTT 7480201 — trích từ CT_CDR.pdf của DAU
 # ────────────────────────────────────────────────────────
@@ -249,18 +478,142 @@ PLO_PO_MATRIX = {
 }
 
 
+def _ensure_vqf(db) -> dict:
+    """Idempotent VQF seed (global reference). Returns {code → VQFItem}."""
+    out = {}
+    for code, domain, text in VQF_ITEMS:
+        existing_v = db.query(VQFItem).filter_by(code=code).first()
+        if existing_v:
+            out[code] = existing_v
+        else:
+            v = VQFItem(code=code, domain=domain, text_vn=text)
+            db.add(v)
+            out[code] = v
+    db.flush()
+    return out
+
+
+def _seed_program(db, owner_id, program_dict, pos, plos, pis,
+                  plo_po_matrix, plo_vqf_matrix, courses, vqf_by_code,
+                  force: bool):
+    """Seed 1 program (idempotent: skip if exists, force để wipe)."""
+    code = program_dict["code"]
+    existing = db.query(Program).filter_by(owner_id=owner_id, code=code).first()
+    if existing:
+        if force:
+            print(f"  [force] Xóa Program {code} cũ (cascade)")
+            db.delete(existing)
+            db.commit()
+        else:
+            print(f"  [skip] Program {code} đã tồn tại — dùng --force để re-seed")
+            return None
+
+    program = Program(owner_id=owner_id, **program_dict)
+    db.add(program)
+    db.flush()
+
+    po_by_code = {}
+    for c, order, text in pos:
+        po = PO(program_id=program.id, code=c, order=order, text_vn=text)
+        db.add(po)
+        po_by_code[c] = po
+    db.flush()
+
+    plo_by_code = {}
+    for c, order, text in plos:
+        plo = PLO(program_id=program.id, code=c, order=order, text_vn=text)
+        db.add(plo)
+        plo_by_code[c] = plo
+    db.flush()
+
+    pi_by_code = {}
+    for pi_code, plo_code, order, text in pis:
+        pi = PI(plo_id=plo_by_code[plo_code].id, code=pi_code, order=order, text_vn=text)
+        db.add(pi)
+        pi_by_code[pi_code] = pi
+    db.flush()
+
+    for plo_code, po_orders in plo_po_matrix.items():
+        plo = plo_by_code[plo_code]
+        for po_order in po_orders:
+            po = next(p for p in po_by_code.values() if p.order == po_order)
+            db.add(PLO_PO(plo_id=plo.id, po_id=po.id))
+
+    for plo_code, vqf_codes in plo_vqf_matrix.items():
+        plo = plo_by_code[plo_code]
+        for vc in vqf_codes:
+            db.add(PLO_VQF(plo_id=plo.id, vqf_item_id=vqf_by_code[vc].id))
+
+    for c_data in courses:
+        course = Course(
+            program_id=program.id,
+            code=c_data["code"], name_vn=c_data["name_vn"], name_en=c_data["name_en"],
+            credits=c_data["credits"],
+            hours_lt=c_data["hours_lt"], hours_th=c_data["hours_th"],
+            hours_self=c_data["hours_self"],
+            knowledge_group=c_data["knowledge_group"],
+            semester_default=c_data["semester_default"],
+            description=c_data["description"],
+        )
+        db.add(course)
+        db.flush()
+
+        co_by_code = {}
+        for i, (co_code, co_text) in enumerate(c_data["cos"], 1):
+            co = CO(course_id=course.id, code=co_code, text_vn=co_text, order=i)
+            db.add(co)
+            co_by_code[co_code] = co
+        db.flush()
+
+        clo_by_code = {}
+        for i, (clo_code, clo_text, co_codes, pi_levels) in enumerate(c_data["clos"], 1):
+            clo = CLO(course_id=course.id, code=clo_code, text_vn=clo_text, order=i)
+            db.add(clo)
+            clo_by_code[clo_code] = clo
+            db.flush()
+            for co_code in co_codes:
+                db.add(CLO_CO(clo_id=clo.id, co_id=co_by_code[co_code].id))
+            for pi_code, level in pi_levels:
+                pi = pi_by_code.get(pi_code)
+                if pi:
+                    db.add(CLO_PI(clo_id=clo.id, pi_id=pi.id, level=IRMALevel(level)))
+
+        for i, (name, weight, method, clo_codes_str) in enumerate(c_data["assessments"], 1):
+            asmt = Assessment(course_id=course.id, component_name=name,
+                              weight_pct=weight, method=method, order=i)
+            db.add(asmt)
+            db.flush()
+            for cc in clo_codes_str.split(","):
+                if cc.strip() in clo_by_code:
+                    db.add(Assessment_CLO(assessment_id=asmt.id,
+                                          clo_id=clo_by_code[cc.strip()].id))
+
+        for week, topic, lt, th, clo_codes_str in c_data["weeks"]:
+            wp = WeeklyPlan(course_id=course.id, week=week, topic=topic,
+                            hours_lt=lt, hours_th=th)
+            db.add(wp)
+            db.flush()
+            for cc in clo_codes_str.split(","):
+                if cc.strip() in clo_by_code:
+                    db.add(WeeklyPlan_CLO(weekly_plan_id=wp.id,
+                                          clo_id=clo_by_code[cc.strip()].id))
+
+    db.commit()
+    print(f"  [OK] {code} ({program_dict['name_vn']}): "
+          f"{len(pos)} POs / {len(plos)} PLOs / {len(pis)} PIs / {len(courses)} courses")
+    return program
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--force", action="store_true",
-                        help="Xóa Program 7480201 (cascade) rồi seed lại từ đầu")
+                        help="Xóa các program demo (cascade) rồi seed lại từ đầu")
     args = parser.parse_args()
 
-    # Idempotent: chỉ tạo tables thiếu, không touch tables đã có
     Base.metadata.create_all(bind=engine)
 
     db = SessionLocal()
     try:
-        # Demo user — idempotent
         demo_user = db.query(User).filter_by(email=DEMO_USER_EMAIL).first()
         if not demo_user:
             demo_user = User(
@@ -275,129 +628,23 @@ def main():
         else:
             print(f"[skip] Demo user {DEMO_USER_EMAIL} đã tồn tại")
 
-        existing = db.query(Program).filter_by(
-            owner_id=demo_user.id, code=PROGRAM["code"]
-        ).first()
-        if existing:
-            if args.force:
-                print(f"[force] Xóa Program {PROGRAM['code']} của demo user (cascade)")
-                db.delete(existing)
-                db.commit()
-            else:
-                print(f"[skip] Program {PROGRAM['code']} đã tồn tại. Dùng --force để re-seed.")
-                return
+        vqf_by_code = _ensure_vqf(db)
+        print(f"[VQF] {len(vqf_by_code)} items ready")
 
-        program = Program(owner_id=demo_user.id, **PROGRAM)
-        db.add(program)
-        db.flush()
+        # ─── Program 1: CNTT 7480201 ───
+        print(f"\n[Program 1] CNTT 7480201:")
+        _seed_program(db, demo_user.id, PROGRAM, POS, PLOS, PIS,
+                      PLO_PO_MATRIX, PLO_VQF_MATRIX, DEMO_COURSES,
+                      vqf_by_code, args.force)
 
-        po_by_code = {}
-        for code, order, text in POS:
-            po = PO(program_id=program.id, code=code, order=order, text_vn=text)
-            db.add(po)
-            po_by_code[code] = po
-        db.flush()
+        # ─── Program 2: QTKD 7340101 ───
+        print(f"\n[Program 2] QTKD 7340101:")
+        _seed_program(db, demo_user.id, PROGRAM_QTKD, POS_QTKD, PLOS_QTKD, PIS_QTKD,
+                      PLO_PO_MATRIX_QTKD, PLO_VQF_MATRIX_QTKD, DEMO_COURSES_QTKD,
+                      vqf_by_code, args.force)
 
-        plo_by_code = {}
-        for code, order, text in PLOS:
-            plo = PLO(program_id=program.id, code=code, order=order, text_vn=text)
-            db.add(plo)
-            plo_by_code[code] = plo
-        db.flush()
-
-        for pi_code, plo_code, order, text in PIS:
-            pi = PI(plo_id=plo_by_code[plo_code].id, code=pi_code, order=order, text_vn=text)
-            db.add(pi)
-        db.flush()
-
-        for plo_code, po_orders in PLO_PO_MATRIX.items():
-            plo = plo_by_code[plo_code]
-            for po_order in po_orders:
-                po = next(p for p in po_by_code.values() if p.order == po_order)
-                db.add(PLO_PO(plo_id=plo.id, po_id=po.id))
-
-        # VQF items (Khung trình độ QG VN) — global reference, idempotent insert
-        vqf_by_code = {}
-        for code, domain, text in VQF_ITEMS:
-            existing_v = db.query(VQFItem).filter_by(code=code).first()
-            if existing_v:
-                vqf_by_code[code] = existing_v
-            else:
-                v = VQFItem(code=code, domain=domain, text_vn=text)
-                db.add(v)
-                vqf_by_code[code] = v
-        db.flush()
-
-        for plo_code, vqf_codes in PLO_VQF_MATRIX.items():
-            plo = plo_by_code[plo_code]
-            for vc in vqf_codes:
-                db.add(PLO_VQF(plo_id=plo.id, vqf_item_id=vqf_by_code[vc].id))
-
-        # Demo courses + CLO/CO/Assessment/WeeklyPlan
-        for c_data in DEMO_COURSES:
-            course = Course(
-                program_id=program.id,
-                code=c_data["code"],
-                name_vn=c_data["name_vn"],
-                name_en=c_data["name_en"],
-                credits=c_data["credits"],
-                hours_lt=c_data["hours_lt"],
-                hours_th=c_data["hours_th"],
-                hours_self=c_data["hours_self"],
-                knowledge_group=c_data["knowledge_group"],
-                semester_default=c_data["semester_default"],
-                description=c_data["description"],
-            )
-            db.add(course)
-            db.flush()
-
-            co_by_code = {}
-            for i, (co_code, co_text) in enumerate(c_data["cos"], 1):
-                co = CO(course_id=course.id, code=co_code, text_vn=co_text, order=i)
-                db.add(co)
-                co_by_code[co_code] = co
-            db.flush()
-
-            clo_by_code = {}
-            for i, (clo_code, clo_text, co_codes, pi_levels) in enumerate(c_data["clos"], 1):
-                clo = CLO(course_id=course.id, code=clo_code, text_vn=clo_text, order=i)
-                db.add(clo)
-                clo_by_code[clo_code] = clo
-                db.flush()
-                for co_code in co_codes:
-                    db.add(CLO_CO(clo_id=clo.id, co_id=co_by_code[co_code].id))
-                for pi_code, level in pi_levels:
-                    pi = next((p for p in db.query(PI).filter_by(code=pi_code).all()), None)
-                    if pi:
-                        db.add(CLO_PI(clo_id=clo.id, pi_id=pi.id, level=IRMALevel(level)))
-
-            for i, (name, weight, method, clo_codes_str) in enumerate(c_data["assessments"], 1):
-                asmt = Assessment(course_id=course.id, component_name=name,
-                                  weight_pct=weight, method=method, order=i)
-                db.add(asmt)
-                db.flush()
-                for clo_code in clo_codes_str.split(","):
-                    if clo_code.strip() in clo_by_code:
-                        db.add(Assessment_CLO(assessment_id=asmt.id,
-                                              clo_id=clo_by_code[clo_code.strip()].id))
-
-            for week, topic, lt, th, clo_codes_str in c_data["weeks"]:
-                wp = WeeklyPlan(course_id=course.id, week=week, topic=topic,
-                                hours_lt=lt, hours_th=th)
-                db.add(wp)
-                db.flush()
-                for clo_code in clo_codes_str.split(","):
-                    if clo_code.strip() in clo_by_code:
-                        db.add(WeeklyPlan_CLO(weekly_plan_id=wp.id,
-                                              clo_id=clo_by_code[clo_code.strip()].id))
-
-        db.commit()
-        print(f"[OK] Seeded program {program.code} ({program.name_vn}) for {DEMO_USER_EMAIL}")
-        print(f"  - {len(POS)} POs, {len(PLOS)} PLOs, {len(PIS)} PIs")
-        print(f"  - {sum(len(v) for v in PLO_PO_MATRIX.values())} PLO_PO mappings")
-        print(f"  - {len(VQF_ITEMS)} VQF items, {sum(len(v) for v in PLO_VQF_MATRIX.values())} PLO_VQF mappings")
-        print(f"  - {len(DEMO_COURSES)} courses")
-        print(f"\n  → Login với: {DEMO_USER_EMAIL} / {DEMO_USER_PASSWORD}")
+        print(f"\n→ Login: {DEMO_USER_EMAIL} / {DEMO_USER_PASSWORD}")
+        print(f"→ Sidebar dropdown sẽ thấy 2 CTĐT để switch giữa")
     finally:
         db.close()
 

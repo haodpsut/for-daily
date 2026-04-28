@@ -49,14 +49,25 @@ export const updatePLOPOMapping = async (
   return data;
 };
 
-export const importExcel = async (file: File): Promise<{
+export interface ImportResult {
   imported?: Record<string, number>;
   warnings: string[];
   errors: string[];
-}> => {
+}
+
+export const importExcel = async (file: File): Promise<ImportResult> => {
   const fd = new FormData();
   fd.append('file', file);
   const { data } = await api.post('/import/excel', fd, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return data;
+};
+
+export const importDocx = async (file: File): Promise<ImportResult> => {
+  const fd = new FormData();
+  fd.append('file', file);
+  const { data } = await api.post('/import/docx', fd, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
   return data;

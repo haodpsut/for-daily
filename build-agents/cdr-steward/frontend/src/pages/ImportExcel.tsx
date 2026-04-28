@@ -1,35 +1,54 @@
 import { useState, useCallback } from 'react';
-import { importExcel } from '../api/plos';
+import { importExcel, importDocx } from '../api/plos';
 import { useProgram } from '../contexts/ProgramContext';
+import type { ImportResult } from '../api/plos';
 
-interface ImportResult {
-  imported?: Record<string, number>;
-  warnings: string[];
-  errors: string[];
-}
+type Format = 'xlsx' | 'docx';
+
+const FORMAT_CONFIG: Record<Format, {
+  label: string;
+  icon: string;
+  ext: string;
+  mime: string;
+  fn: (f: File) => Promise<ImportResult>;
+  templateName: string;
+}> = {
+  xlsx: {
+    label: 'Excel (.xlsx)', icon: '📊', ext: '.xlsx',
+    mime: '.xlsx', fn: importExcel,
+    templateName: 'CNTT_7480201_template.xlsx',
+  },
+  docx: {
+    label: 'Word (.docx)', icon: '📝', ext: '.docx',
+    mime: '.docx', fn: importDocx,
+    templateName: 'CTDT_template.docx',
+  },
+};
 
 export default function ImportExcel() {
   const { refreshPrograms } = useProgram();
+  const [format, setFormat] = useState<Format>('xlsx');
   const [file, setFile] = useState<File | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [result, setResult] = useState<ImportResult | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const config = FORMAT_CONFIG[format];
+
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setDragOver(false);
     const f = e.dataTransfer.files[0];
-    if (f && f.name.endsWith('.xlsx')) setFile(f);
-  }, []);
+    if (f && f.name.toLowerCase().endsWith(config.ext)) setFile(f);
+  }, [config.ext]);
 
   const handleUpload = async () => {
     if (!file) return;
     setLoading(true);
     setResult(null);
     try {
-      const r = await importExcel(file);
+      const r = await config.fn(file);
       setResult(r);
-      // CTĐT mới có thể đã được tạo qua import → refresh dropdown sidebar
       await refreshPrograms();
     } catch (e: any) {
       setResult({
@@ -44,16 +63,38 @@ export default function ImportExcel() {
     }
   };
 
+  const switchFormat = (f: Format) => {
+    setFormat(f);
+    setFile(null);
+    setResult(null);
+  };
+
   return (
     <div className="space-y-6">
       <header>
-        <h1 className="text-2xl font-bold">Import dữ liệu từ Excel</h1>
+        <h1 className="text-2xl font-bold">Import dữ liệu CTĐT</h1>
         <p className="text-sm text-gray-500 mt-1">
-          Upload file <code className="text-xs bg-gray-100 px-1 rounded">.xlsx</code> theo format template
-          (sinh bởi <code className="text-xs bg-gray-100 px-1 rounded">scripts/gen_import_template.py</code>).
-          Hệ thống sẽ <strong>thay thế toàn bộ</strong> chương trình có cùng mã.
+          Hỗ trợ Excel hoặc Word. Hệ thống sẽ <strong>thay thế toàn bộ</strong> chương trình
+          trong tài khoản của bạn nếu mã CTĐT đã tồn tại.
         </p>
       </header>
+
+      {/* Format tabs */}
+      <div className="flex gap-2 border-b border-gray-200">
+        {(Object.keys(FORMAT_CONFIG) as Format[]).map((f) => (
+          <button
+            key={f}
+            onClick={() => switchFormat(f)}
+            className={`px-4 py-2 text-sm font-medium border-b-2 transition ${
+              format === f
+                ? 'border-brand-600 text-brand-700'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            {FORMAT_CONFIG[f].icon} {FORMAT_CONFIG[f].label}
+          </button>
+        ))}
+      </div>
 
       <div
         onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
@@ -67,7 +108,7 @@ export default function ImportExcel() {
       >
         {file ? (
           <div className="space-y-3">
-            <div className="text-3xl">📄</div>
+            <div className="text-3xl">{config.icon}</div>
             <div className="font-medium">{file.name}</div>
             <div className="text-xs text-gray-500">{(file.size / 1024).toFixed(1)} KB</div>
             <div className="flex gap-2 justify-center">
@@ -88,13 +129,13 @@ export default function ImportExcel() {
           </div>
         ) : (
           <div className="space-y-3">
-            <div className="text-3xl text-gray-400">⬆</div>
-            <div className="text-gray-600">Kéo thả file .xlsx vào đây</div>
+            <div className="text-3xl text-gray-400">{config.icon}</div>
+            <div className="text-gray-600">Kéo thả file {config.ext} vào đây</div>
             <label className="cursor-pointer text-brand-600 hover:underline text-sm">
               hoặc chọn từ máy
               <input
                 type="file"
-                accept=".xlsx"
+                accept={config.mime}
                 onChange={(e) => setFile(e.target.files?.[0] || null)}
                 className="hidden"
               />
@@ -142,15 +183,22 @@ export default function ImportExcel() {
       <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm">
         <div className="font-semibold mb-2">📋 Sinh template trống (CLI)</div>
         <pre className="bg-white border border-gray-200 rounded p-3 text-xs overflow-x-auto">
-{`cd backend
-python scripts/gen_import_template.py \\
-    --program-code 7480201 \\
-    --out ../import_templates/CNTT_template.xlsx`}
+{format === 'xlsx'
+  ? `cd backend
+python scripts/gen_import_template.py --out ../import_templates/CNTT_template.xlsx`
+  : `cd backend
+python scripts/gen_word_template.py --out ../import_templates/CTDT_template.docx`}
         </pre>
         <p className="text-xs text-gray-500 mt-2">
-          Template gồm 11 sheet: 00_Program · 01_PO · 02_PLO · 03_PI · 04_PLO_PO_matrix ·
+          Template gồm 11 sheet/bảng: 00_Program · 01_PO · 02_PLO · 03_PI · 04_PLO_PO_matrix ·
           05_PLO_VQF_matrix · 06_Course · 07_CLO · 08_CLO_PI_matrix · 09_Assessment · 10_WeeklyPlan
         </p>
+        {format === 'docx' && (
+          <p className="text-xs text-amber-700 mt-2">
+            ⚠️ Word: parser đọc tables theo <strong>thứ tự</strong> (không theo tiêu đề), nên
+            không được đảo vị trí hay xóa bảng trong template.
+          </p>
+        )}
       </div>
     </div>
   );
