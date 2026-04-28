@@ -45,3 +45,31 @@ export const getImpact = async (code: string): Promise<ImpactReport> => {
   const { data } = await api.get(`/programs/${code}/impact`);
   return data;
 };
+
+// PDF download helpers — backend yêu cầu Bearer token (anchor tag không gửi),
+// nên fetch via axios + blob URL.
+
+const _fetchPdfBlob = async (pdfUrl: string): Promise<string> => {
+  // pdfUrl từ backend dạng "/api/render/{code}/files/{name}.pdf"
+  // axios baseURL đã là "/api" hoặc "https://...onrender.com/api" → strip "/api" prefix
+  const path = pdfUrl.startsWith('/api') ? pdfUrl.slice(4) : pdfUrl;
+  const { data } = await api.get(path, { responseType: 'blob' });
+  return URL.createObjectURL(new Blob([data], { type: 'application/pdf' }));
+};
+
+export const openPdf = async (pdfUrl: string): Promise<void> => {
+  const blobUrl = await _fetchPdfBlob(pdfUrl);
+  window.open(blobUrl, '_blank');
+  setTimeout(() => URL.revokeObjectURL(blobUrl), 60_000);
+};
+
+export const downloadPdf = async (pdfUrl: string, filename: string): Promise<void> => {
+  const blobUrl = await _fetchPdfBlob(pdfUrl);
+  const a = document.createElement('a');
+  a.href = blobUrl;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(blobUrl), 5_000);
+};

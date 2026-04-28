@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getImpact, renderAll } from '../api/programs';
+import { getImpact, renderAll, openPdf } from '../api/programs';
 import { useProgram } from '../contexts/ProgramContext';
 import type { ImpactReport, TemplateImpact, TemplateStatus } from '../types';
 
@@ -147,14 +147,12 @@ function TemplateTable({ items }: { items: TemplateImpact[] }) {
               </td>
               <td className="px-4 py-3 text-right">
                 {t.pdf_url ? (
-                  <a
-                    href={t.pdf_url}
-                    target="_blank"
-                    rel="noreferrer"
+                  <button
+                    onClick={() => openPdf(t.pdf_url!).catch(() => {})}
                     className="text-brand-600 hover:underline"
                   >
                     Mở
-                  </a>
+                  </button>
                 ) : (
                   <span className="text-gray-300">—</span>
                 )}

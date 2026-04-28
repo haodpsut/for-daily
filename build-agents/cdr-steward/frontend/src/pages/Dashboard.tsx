@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getProgram, renderAll } from '../api/programs';
+import { getProgram, renderAll, openPdf } from '../api/programs';
 import { useProgram } from '../contexts/ProgramContext';
 import type { ProgramDetail, RenderResult } from '../types';
 
@@ -84,14 +84,12 @@ export default function Dashboard() {
               {renderResults.map((r) => (
                 <li key={r.template} className="flex items-center justify-between text-sm py-1">
                   <span className="font-mono text-gray-700">{r.template}</span>
-                  <a
-                    href={r.pdf_url}
-                    target="_blank"
-                    rel="noreferrer"
+                  <button
+                    onClick={() => openPdf(r.pdf_url).catch((e) => setError(String(e.message)))}
                     className="text-brand-600 hover:underline"
                   >
                     Mở PDF →
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>

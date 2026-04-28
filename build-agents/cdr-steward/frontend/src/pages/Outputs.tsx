@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { renderAll } from '../api/programs';
+import { renderAll, openPdf, downloadPdf } from '../api/programs';
 import { useProgram } from '../contexts/ProgramContext';
 import type { RenderResult } from '../types';
 
@@ -64,21 +64,18 @@ export default function Outputs() {
                   <td className="px-4 py-3 font-medium">{r.template}</td>
                   <td className="px-4 py-3 font-mono text-xs text-gray-500">{r.pdf_filename}</td>
                   <td className="px-4 py-3 text-right">
-                    <a
-                      href={r.pdf_url}
-                      target="_blank"
-                      rel="noreferrer"
+                    <button
+                      onClick={() => openPdf(r.pdf_url).catch((e) => setError(String(e.message)))}
                       className="text-brand-600 hover:underline mr-3"
                     >
                       Mở
-                    </a>
-                    <a
-                      href={r.pdf_url}
-                      download
+                    </button>
+                    <button
+                      onClick={() => downloadPdf(r.pdf_url, r.pdf_filename).catch((e) => setError(String(e.message)))}
                       className="text-brand-600 hover:underline"
                     >
                       Tải
-                    </a>
+                    </button>
                   </td>
                 </tr>
               ))}
