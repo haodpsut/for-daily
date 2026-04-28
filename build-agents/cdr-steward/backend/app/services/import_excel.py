@@ -96,7 +96,7 @@ def _split_codes(v) -> list[str]:
 # Main import
 # ─────────────────────────────────────────────────────────────
 
-def import_excel(db: Session, xlsx_path: Path) -> dict:
+def import_excel(db: Session, xlsx_path: Path, owner_id: str | None = None) -> dict:
     wb = load_workbook(xlsx_path, data_only=True)
 
     # 1) Read all sheets (skip README)
@@ -170,14 +170,21 @@ def import_excel(db: Session, xlsx_path: Path) -> dict:
     if errors:
         return {"imported": {}, "warnings": warnings, "errors": errors}
 
-    # 3) Write to DB (transactional)
+    # 3) Write to DB (transactional) — scoped to owner
     try:
-        existing = db.query(Program).filter_by(code=program_row["code"]).first()
+        # Find existing program for THIS owner only (different users can have same code)
+        q = db.query(Program).filter_by(code=program_row["code"])
+        if owner_id is not None:
+            q = q.filter_by(owner_id=owner_id)
+        else:
+            q = q.filter(Program.owner_id.is_(None))
+        existing = q.first()
         if existing:
             db.delete(existing)
             db.flush()
 
         program = Program(
+            owner_id=owner_id,
             code=str(program_row["code"]).strip(),
             name_vn=_str(program_row.get("name_vn")) or "",
             name_en=_str(program_row.get("name_en")),

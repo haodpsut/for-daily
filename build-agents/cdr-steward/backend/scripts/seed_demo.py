@@ -29,12 +29,17 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.db import Base, SessionLocal, engine
 from app import models
+from app.auth import hash_password
 from app.models import (
+    User,
     Program, PO, PLO, PI, PLO_PO, ProgramLevel,
     VQFItem, PLO_VQF, VQFDomain,
     Course, CO, CLO, CLO_CO, CLO_PI, IRMALevel, KnowledgeGroup,
     Assessment, Assessment_CLO, WeeklyPlan, WeeklyPlan_CLO,
 )
+
+DEMO_USER_EMAIL = "demo@cdr-steward.com"
+DEMO_USER_PASSWORD = "demo1234"
 
 
 # ────────────────────────────────────────────────────────
@@ -255,17 +260,34 @@ def main():
 
     db = SessionLocal()
     try:
-        existing = db.query(Program).filter_by(code=PROGRAM["code"]).first()
+        # Demo user — idempotent
+        demo_user = db.query(User).filter_by(email=DEMO_USER_EMAIL).first()
+        if not demo_user:
+            demo_user = User(
+                email=DEMO_USER_EMAIL,
+                password_hash=hash_password(DEMO_USER_PASSWORD),
+                full_name="Demo Account",
+                institution_name="Trường Đại học Kiến trúc Đà Nẵng",
+            )
+            db.add(demo_user)
+            db.commit()
+            print(f"[OK] Created demo user: {DEMO_USER_EMAIL} / {DEMO_USER_PASSWORD}")
+        else:
+            print(f"[skip] Demo user {DEMO_USER_EMAIL} đã tồn tại")
+
+        existing = db.query(Program).filter_by(
+            owner_id=demo_user.id, code=PROGRAM["code"]
+        ).first()
         if existing:
             if args.force:
-                print(f"[force] Xóa Program {PROGRAM['code']} (cascade PO/PLO/PI/Course/CLO/...)")
+                print(f"[force] Xóa Program {PROGRAM['code']} của demo user (cascade)")
                 db.delete(existing)
                 db.commit()
             else:
                 print(f"[skip] Program {PROGRAM['code']} đã tồn tại. Dùng --force để re-seed.")
                 return
 
-        program = Program(**PROGRAM)
+        program = Program(owner_id=demo_user.id, **PROGRAM)
         db.add(program)
         db.flush()
 
@@ -370,11 +392,12 @@ def main():
                                               clo_id=clo_by_code[clo_code.strip()].id))
 
         db.commit()
-        print(f"[OK] Seeded program {program.code} ({program.name_vn})")
+        print(f"[OK] Seeded program {program.code} ({program.name_vn}) for {DEMO_USER_EMAIL}")
         print(f"  - {len(POS)} POs, {len(PLOS)} PLOs, {len(PIS)} PIs")
         print(f"  - {sum(len(v) for v in PLO_PO_MATRIX.values())} PLO_PO mappings")
         print(f"  - {len(VQF_ITEMS)} VQF items, {sum(len(v) for v in PLO_VQF_MATRIX.values())} PLO_VQF mappings")
         print(f"  - {len(DEMO_COURSES)} courses")
+        print(f"\n  → Login với: {DEMO_USER_EMAIL} / {DEMO_USER_PASSWORD}")
     finally:
         db.close()
 

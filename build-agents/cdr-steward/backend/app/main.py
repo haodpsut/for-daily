@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .db import Base, engine
 from . import models  # noqa: F401 — register models
+from .routers import auth as auth_router
 from .routers import imports as imports_router
 from .routers import programs as programs_router
 from .routers import render as render_router
@@ -35,6 +36,7 @@ def health():
     return {"status": "ok", "version": "0.2.0"}
 
 
+app.include_router(auth_router.router, prefix="/api/auth", tags=["auth"])
 app.include_router(imports_router.router, prefix="/api/import", tags=["import"])
 app.include_router(programs_router.router, prefix="/api/programs", tags=["programs"])
 app.include_router(render_router.router, prefix="/api/render", tags=["render"])

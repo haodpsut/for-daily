@@ -1,4 +1,6 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import type { ReactNode } from 'react';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ProgramProvider } from './contexts/ProgramContext';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
@@ -9,13 +11,41 @@ import CourseDetail from './pages/CourseDetail';
 import Outputs from './pages/Outputs';
 import ImportExcel from './pages/ImportExcel';
 import Impact from './pages/Impact';
+import Login from './pages/Login';
+import Register from './pages/Register';
+
+function ProtectedRoute({ children }: { children: ReactNode }) {
+  const { user, loading } = useAuth();
+  const location = useLocation();
+  if (loading) return <div className="p-8 text-gray-500">Đang xác thực...</div>;
+  if (!user) return <Navigate to="/login" state={{ from: location }} replace />;
+  return <>{children}</>;
+}
+
+function PublicOnlyRoute({ children }: { children: ReactNode }) {
+  const { user, loading } = useAuth();
+  if (loading) return null;
+  if (user) return <Navigate to="/" replace />;
+  return <>{children}</>;
+}
 
 export default function App() {
   return (
-    <ProgramProvider>
+    <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path="/login" element={<PublicOnlyRoute><Login /></PublicOnlyRoute>} />
+          <Route path="/register" element={<PublicOnlyRoute><Register /></PublicOnlyRoute>} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <ProgramProvider>
+                  <Layout />
+                </ProgramProvider>
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Dashboard />} />
             <Route path="pos" element={<POs />} />
             <Route path="plos" element={<PLOs />} />
@@ -27,6 +57,6 @@ export default function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </ProgramProvider>
+    </AuthProvider>
   );
 }

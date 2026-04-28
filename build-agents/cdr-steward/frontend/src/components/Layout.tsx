@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { getImpact } from '../api/programs';
 import { useProgram } from '../contexts/ProgramContext';
+import { useAuth } from '../contexts/AuthContext';
 import CreateProgramModal from './CreateProgramModal';
 
 const navItems = [
@@ -15,12 +16,17 @@ const navItems = [
 ];
 
 export default function Layout() {
+  const { user, logout } = useAuth();
   const { programs, currentCode, setCurrentCode, loading } = useProgram();
+  const navigate = useNavigate();
   const [staleCount, setStaleCount] = useState<number>(0);
   const [showCreate, setShowCreate] = useState(false);
 
   useEffect(() => {
-    if (!currentCode) return;
+    if (!currentCode || programs.length === 0) {
+      setStaleCount(0);
+      return;
+    }
     const tick = () =>
       getImpact(currentCode)
         .then((r) => setStaleCount(r.counts.stale + r.counts.missing))
@@ -28,7 +34,14 @@ export default function Layout() {
     tick();
     const id = setInterval(tick, 30000);
     return () => clearInterval(id);
-  }, [currentCode]);
+  }, [currentCode, programs.length]);
+
+  const handleLogout = () => {
+    if (confirm('Đăng xuất?')) {
+      logout();
+      navigate('/login');
+    }
+  };
 
   return (
     <div className="flex h-screen">
@@ -38,13 +51,30 @@ export default function Layout() {
           <div className="text-xs text-brand-100 mt-1">Single source of truth — CTĐT</div>
         </div>
 
+        {/* User info */}
+        {user && (
+          <div className="p-3 border-b border-brand-700 text-xs text-brand-100">
+            <div className="truncate font-medium text-white">{user.full_name || user.email}</div>
+            <div className="truncate opacity-70">{user.email}</div>
+            {user.institution_name && (
+              <div className="truncate opacity-70 mt-1">{user.institution_name}</div>
+            )}
+            <button
+              onClick={handleLogout}
+              className="mt-2 w-full text-xs bg-brand-700 hover:bg-red-700 px-2 py-1 rounded transition"
+            >
+              Đăng xuất
+            </button>
+          </div>
+        )}
+
         {/* Program switcher */}
         <div className="p-3 border-b border-brand-700 space-y-2">
           <label className="text-xs text-brand-100 px-1">Chương trình đào tạo</label>
           {loading ? (
             <div className="text-xs text-brand-100 italic px-1">Đang tải...</div>
           ) : programs.length === 0 ? (
-            <div className="text-xs text-amber-300 italic px-1">Chưa có CTĐT — tạo mới ↓</div>
+            <div className="text-xs text-amber-300 italic px-1">Chưa có CTĐT</div>
           ) : (
             <select
               value={currentCode}
@@ -92,7 +122,7 @@ export default function Layout() {
         </nav>
 
         <div className="p-4 border-t border-brand-700 text-xs text-brand-100">
-          v0.4 — Multi-program
+          v0.5 — Multi-tenant
         </div>
       </aside>
 

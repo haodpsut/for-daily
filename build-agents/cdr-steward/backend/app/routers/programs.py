@@ -1,4 +1,7 @@
-"""Router: GET program detail + list + impact (staleness detection)."""
+"""Router: GET program detail + list + impact (staleness detection).
+
+All endpoints require authentication. Programs are filtered by owner_id.
+"""
 from __future__ import annotations
 
 from datetime import date, datetime
@@ -9,7 +12,8 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from ..db import get_db
-from ..models import Program, PLO_PO, PO, PLO, CLO, ProgramLevel
+from ..dependencies import get_current_user, get_user_program
+from ..models import Program, PLO_PO, PO, PLO, CLO, ProgramLevel, User
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent  # cdr-steward/
 
@@ -24,21 +28,28 @@ class ProgramCreate(BaseModel):
     duration_years: int = 4
     total_credits: int | None = None
     decision_no: str | None = None
-    decision_date: str | None = None  # ISO YYYY-MM-DD
+    decision_date: str | None = None
     issuing_authority: str | None = None
     language: str = "Tiếng Việt"
 
 
 @router.get("")
-def list_programs(db: Session = Depends(get_db)):
-    rows = db.query(Program).order_by(Program.code).all()
+def list_programs(
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    rows = db.query(Program).filter_by(owner_id=user.id).order_by(Program.code).all()
     return [{"code": p.code, "name_vn": p.name_vn, "level": p.level.value} for p in rows]
 
 
 @router.post("")
-def create_program(body: ProgramCreate, db: Session = Depends(get_db)):
-    if db.query(Program).filter_by(code=body.code).first():
-        raise HTTPException(409, f"Program {body.code} already exists")
+def create_program(
+    body: ProgramCreate,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    if db.query(Program).filter_by(owner_id=user.id, code=body.code).first():
+        raise HTTPException(409, f"Bạn đã có CTĐT mã {body.code}")
     try:
         level_enum = ProgramLevel(body.level)
     except ValueError:
@@ -52,6 +63,7 @@ def create_program(body: ProgramCreate, db: Session = Depends(get_db)):
             raise HTTPException(400, f"Invalid date: {body.decision_date} (need YYYY-MM-DD)")
 
     program = Program(
+        owner_id=user.id,
         code=body.code, name_vn=body.name_vn, name_en=body.name_en,
         level=level_enum, duration_years=body.duration_years,
         total_credits=body.total_credits, decision_no=body.decision_no,
@@ -65,22 +77,25 @@ def create_program(body: ProgramCreate, db: Session = Depends(get_db)):
 
 
 @router.delete("/{code}")
-def delete_program(code: str, db: Session = Depends(get_db)):
-    program = db.query(Program).filter_by(code=code).first()
-    if not program:
-        raise HTTPException(404, f"Program {code} not found")
+def delete_program(
+    code: str,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    program = get_user_program(code, user, db)
     db.delete(program)
     db.commit()
     return {"ok": True, "deleted_code": code}
 
 
 @router.get("/{code}")
-def get_program(code: str, db: Session = Depends(get_db)):
-    program = db.query(Program).filter_by(code=code).first()
-    if not program:
-        raise HTTPException(status_code=404, detail=f"Program {code} not found")
+def get_program(
+    code: str,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    program = get_user_program(code, user, db)
 
-    # Build PLO → list of PO codes map
     plo_po_rows = (
         db.query(PLO_PO.plo_id, PO.code)
           .join(PO, PLO_PO.po_id == PO.id)
@@ -92,7 +107,6 @@ def get_program(code: str, db: Session = Depends(get_db)):
     for plo_id, po_code in plo_po_rows:
         plo_po_map.setdefault(plo_id, []).append(po_code)
 
-    # CLO counts per course (filter by this program's courses only)
     program_course_ids = {c.id for c in program.courses}
     clo_count_map: dict[str, int] = {}
     if program_course_ids:
@@ -123,11 +137,8 @@ def get_program(code: str, db: Session = Depends(get_db)):
         ],
         "plos": [
             {
-                "id": plo.id,
-                "code": plo.code,
-                "text_vn": plo.text_vn,
-                "text_en": plo.text_en,
-                "order": plo.order,
+                "id": plo.id, "code": plo.code, "text_vn": plo.text_vn,
+                "text_en": plo.text_en, "order": plo.order,
                 "po_codes": sorted(plo_po_map.get(plo.id, [])),
                 "pis": [
                     {"id": pi.id, "code": pi.code, "text_vn": pi.text_vn,
@@ -160,17 +171,12 @@ def get_program(code: str, db: Session = Depends(get_db)):
 
 
 @router.get("/{code}/impact")
-def get_impact(code: str, db: Session = Depends(get_db)):
-    """Detect which templates are stale (need re-render) since last render_all.
-
-    Logic:
-    - program.version bumps on every PLO/PI mutation (see plos.py router)
-    - program.last_rendered_version snapshots program.version after render_all
-    - Stale = current version > last_rendered_version OR PDF file missing
-    """
-    program = db.query(Program).filter_by(code=code).first()
-    if not program:
-        raise HTTPException(404, f"Program {code} not found")
+def get_impact(
+    code: str,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    program = get_user_program(code, user, db)
 
     output_dir = PROJECT_ROOT / "backend" / "output" / program.code
 
@@ -187,16 +193,13 @@ def get_impact(code: str, db: Session = Depends(get_db)):
         pdf = output_dir / f"{name}.pdf"
         if not pdf.exists():
             return {
-                "name": name,
-                "status": "missing",
-                "rendered_at": None,
-                "pdf_url": None,
+                "name": name, "status": "missing",
+                "rendered_at": None, "pdf_url": None,
             }
         rendered_at = datetime.fromtimestamp(pdf.stat().st_mtime)
         is_stale = last_rv is None or program.version > last_rv
         return {
-            "name": name,
-            "status": "stale" if is_stale else "fresh",
+            "name": name, "status": "stale" if is_stale else "fresh",
             "rendered_at": rendered_at.isoformat(),
             "pdf_url": f"/api/render/{code}/files/{name}.pdf",
         }

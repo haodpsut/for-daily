@@ -1,15 +1,4 @@
-"""Router: CRUD cho Course + CLO + CLO×PI mapping.
-
-Endpoints:
-- POST   /api/programs/{code}/courses   → tạo Course
-- GET    /api/courses/{id}              → chi tiết Course + CLOs + PI mapping
-- PUT    /api/courses/{id}              → cập nhật Course metadata
-- DELETE /api/courses/{id}              → xóa Course (cascade CO/CLO/Assessment/WeeklyPlan)
-- POST   /api/courses/{id}/clos         → thêm CLO
-- PUT    /api/clos/{id}                 → cập nhật CLO
-- DELETE /api/clos/{id}                 → xóa CLO
-- PUT    /api/clos/{id}/pi-mapping      → set CLO×PI levels (replace all)
-"""
+"""Router: CRUD cho Course + CLO + CLO×PI mapping — with ownership checks."""
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -17,15 +6,17 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from ..db import get_db
+from ..dependencies import (
+    get_current_user, get_user_program,
+    assert_course_owner, assert_clo_owner,
+)
 from ..models import (
     Program, Course, CLO, PI, PLO, CLO_PI,
-    IRMALevel, KnowledgeGroup,
+    IRMALevel, KnowledgeGroup, User,
 )
 
 router = APIRouter()
 
-
-# ────────────── schemas ──────────────
 
 class CourseCreate(BaseModel):
     code: str
@@ -67,11 +58,8 @@ class CLOUpdate(BaseModel):
 
 
 class CLOPIMapping(BaseModel):
-    """Map of pi_code → level. Pass empty value or omit to remove the mapping."""
     levels: dict[str, str]
 
-
-# ────────────── helpers ──────────────
 
 def _course_dict(c: Course) -> dict:
     return {
@@ -91,15 +79,15 @@ def _clo_dict(clo: CLO) -> dict:
     }
 
 
-# ────────────── Course endpoints ──────────────
-
 @router.post("/programs/{program_code}/courses")
-def create_course(program_code: str, body: CourseCreate, db: Session = Depends(get_db)):
-    program = db.query(Program).filter_by(code=program_code).first()
-    if not program:
-        raise HTTPException(404, f"Program {program_code} not found")
+def create_course(
+    program_code: str, body: CourseCreate,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    program = get_user_program(program_code, user, db)
     if any(c.code == body.code for c in program.courses):
-        raise HTTPException(409, f"Course {body.code} already exists")
+        raise HTTPException(409, f"Course {body.code} đã tồn tại")
 
     try:
         kg = KnowledgeGroup(body.knowledge_group)
@@ -123,31 +111,30 @@ def create_course(program_code: str, body: CourseCreate, db: Session = Depends(g
 
 
 @router.get("/courses/{course_id}")
-def get_course(course_id: str, db: Session = Depends(get_db)):
-    course = db.query(Course).filter_by(id=course_id).first()
-    if not course:
-        raise HTTPException(404, "Course not found")
+def get_course(
+    course_id: str,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    course = assert_course_owner(course_id, user, db)
 
     program = course.program
     clos = sorted(course.clos, key=lambda x: x.order)
 
-    # All PIs of program (for matrix editor)
     plos = sorted(program.plos, key=lambda p: p.order)
     pi_groups = []
     for plo in plos:
         pi_groups.append({
-            "plo_code": plo.code,
-            "plo_text": plo.text_vn,
+            "plo_code": plo.code, "plo_text": plo.text_vn,
             "pis": [{"id": pi.id, "code": pi.code, "text_vn": pi.text_vn}
                     for pi in sorted(plo.pis, key=lambda x: x.order)],
         })
 
-    # Current CLO×PI mappings
     clo_pi_rows = (db.query(CLO_PI, PI.code)
                      .join(PI, CLO_PI.pi_id == PI.id)
                      .join(CLO, CLO_PI.clo_id == CLO.id)
                      .filter(CLO.course_id == course.id).all())
-    clo_pi_levels: dict[str, dict[str, str]] = {}  # clo_code -> {pi_code: level}
+    clo_pi_levels: dict[str, dict[str, str]] = {}
     clo_id_to_code = {c.id: c.code for c in clos}
     for cp, pi_code in clo_pi_rows:
         clo_code = clo_id_to_code.get(cp.clo_id)
@@ -164,14 +151,16 @@ def get_course(course_id: str, db: Session = Depends(get_db)):
 
 
 @router.put("/courses/{course_id}")
-def update_course(course_id: str, body: CourseUpdate, db: Session = Depends(get_db)):
-    course = db.query(Course).filter_by(id=course_id).first()
-    if not course:
-        raise HTTPException(404, "Course not found")
+def update_course(
+    course_id: str, body: CourseUpdate,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    course = assert_course_owner(course_id, user, db)
 
     if body.code is not None and body.code != course.code:
         if any(c.code == body.code for c in course.program.courses if c.id != course.id):
-            raise HTTPException(409, f"Course code {body.code} already used")
+            raise HTTPException(409, f"Course code {body.code} đã được dùng")
         course.code = body.code
 
     for field in ["name_vn", "name_en", "credits", "hours_lt", "hours_th",
@@ -193,10 +182,12 @@ def update_course(course_id: str, body: CourseUpdate, db: Session = Depends(get_
 
 
 @router.delete("/courses/{course_id}")
-def delete_course(course_id: str, db: Session = Depends(get_db)):
-    course = db.query(Course).filter_by(id=course_id).first()
-    if not course:
-        raise HTTPException(404, "Course not found")
+def delete_course(
+    course_id: str,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    course = assert_course_owner(course_id, user, db)
     program = course.program
     db.delete(course)
     program.version += 1
@@ -204,15 +195,15 @@ def delete_course(course_id: str, db: Session = Depends(get_db)):
     return {"ok": True, "deleted_id": course_id}
 
 
-# ────────────── CLO endpoints ──────────────
-
 @router.post("/courses/{course_id}/clos")
-def create_clo(course_id: str, body: CLOCreate, db: Session = Depends(get_db)):
-    course = db.query(Course).filter_by(id=course_id).first()
-    if not course:
-        raise HTTPException(404, "Course not found")
+def create_clo(
+    course_id: str, body: CLOCreate,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    course = assert_course_owner(course_id, user, db)
     if any(c.code == body.code for c in course.clos):
-        raise HTTPException(409, f"CLO {body.code} already exists in {course.code}")
+        raise HTTPException(409, f"CLO {body.code} đã tồn tại")
 
     order = body.order if body.order is not None else (
         max((c.order for c in course.clos), default=0) + 1
@@ -230,14 +221,16 @@ def create_clo(course_id: str, body: CLOCreate, db: Session = Depends(get_db)):
 
 
 @router.put("/clos/{clo_id}")
-def update_clo(clo_id: str, body: CLOUpdate, db: Session = Depends(get_db)):
-    clo = db.query(CLO).filter_by(id=clo_id).first()
-    if not clo:
-        raise HTTPException(404, "CLO not found")
+def update_clo(
+    clo_id: str, body: CLOUpdate,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    clo = assert_clo_owner(clo_id, user, db)
 
     if body.code is not None and body.code != clo.code:
         if any(c.code == body.code for c in clo.course.clos if c.id != clo.id):
-            raise HTTPException(409, f"CLO code {body.code} already used in this course")
+            raise HTTPException(409, f"CLO code {body.code} đã được dùng")
         clo.code = body.code
     if body.text_vn is not None:
         clo.text_vn = body.text_vn
@@ -251,10 +244,12 @@ def update_clo(clo_id: str, body: CLOUpdate, db: Session = Depends(get_db)):
 
 
 @router.delete("/clos/{clo_id}")
-def delete_clo(clo_id: str, db: Session = Depends(get_db)):
-    clo = db.query(CLO).filter_by(id=clo_id).first()
-    if not clo:
-        raise HTTPException(404, "CLO not found")
+def delete_clo(
+    clo_id: str,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    clo = assert_clo_owner(clo_id, user, db)
     program = clo.course.program
     db.delete(clo)
     program.version += 1
@@ -263,25 +258,19 @@ def delete_clo(clo_id: str, db: Session = Depends(get_db)):
 
 
 @router.put("/clos/{clo_id}/pi-mapping")
-def set_clo_pi_mapping(clo_id: str, body: CLOPIMapping, db: Session = Depends(get_db)):
-    """Replace ALL CLO_PI rows for this CLO with the new set.
-
-    body.levels = { "PI1.1": "I", "PI3.2": "M", ... }
-    Empty string or absent → removed.
-    """
-    clo = db.query(CLO).filter_by(id=clo_id).first()
-    if not clo:
-        raise HTTPException(404, "CLO not found")
-
+def set_clo_pi_mapping(
+    clo_id: str, body: CLOPIMapping,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    clo = assert_clo_owner(clo_id, user, db)
     program = clo.course.program
 
-    # Build lookup: pi_code → PI object (only PIs of this program)
     program_pis: dict[str, PI] = {}
     for plo in program.plos:
         for pi in plo.pis:
             program_pis[pi.code] = pi
 
-    # Validate
     invalid_pis = [c for c in body.levels.keys() if c not in program_pis]
     if invalid_pis:
         raise HTTPException(400, f"Unknown PI codes: {invalid_pis}")
@@ -290,15 +279,13 @@ def set_clo_pi_mapping(clo_id: str, body: CLOPIMapping, db: Session = Depends(ge
     if invalid_levels:
         raise HTTPException(400, f"Invalid levels (must be I/R/M/A): {invalid_levels}")
 
-    # Replace
     db.query(CLO_PI).filter_by(clo_id=clo.id).delete()
     count = 0
     for pi_code, level in body.levels.items():
         if not level:
             continue
         db.add(CLO_PI(
-            clo_id=clo.id,
-            pi_id=program_pis[pi_code].id,
+            clo_id=clo.id, pi_id=program_pis[pi_code].id,
             level=IRMALevel(level),
         ))
         count += 1

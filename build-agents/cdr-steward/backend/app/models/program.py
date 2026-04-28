@@ -26,9 +26,13 @@ class VQFDomain(str, enum.Enum):
 
 class Program(Base):
     __tablename__ = "program"
+    __table_args__ = (UniqueConstraint("owner_id", "code", name="uq_program_owner_code"),)
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
-    code: Mapped[str] = mapped_column(String(20), unique=True, index=True)
+    owner_id: Mapped[str | None] = mapped_column(
+        ForeignKey("user.id", ondelete="CASCADE"), nullable=True, index=True
+    )
+    code: Mapped[str] = mapped_column(String(20), index=True)
     name_vn: Mapped[str] = mapped_column(String(255))
     name_en: Mapped[str | None] = mapped_column(String(255), nullable=True)
     level: Mapped[ProgramLevel] = mapped_column(Enum(ProgramLevel), default=ProgramLevel.DAI_HOC)
@@ -44,6 +48,7 @@ class Program(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+    owner: Mapped["User | None"] = relationship(back_populates="programs")  # type: ignore  # noqa: F821
     pos: Mapped[list["PO"]] = relationship(back_populates="program", cascade="all, delete-orphan")
     plos: Mapped[list["PLO"]] = relationship(back_populates="program", cascade="all, delete-orphan")
     courses: Mapped[list["Course"]] = relationship(back_populates="program", cascade="all, delete-orphan")  # type: ignore

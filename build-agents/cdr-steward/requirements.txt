@@ -12,5 +12,9 @@ python-multipart==0.0.12
 # Postgres driver (production). Local dev defaults to SQLite (no driver needed).
 psycopg2-binary==2.9.10
 
+# Auth (JWT + bcrypt password hashing)
+bcrypt==4.2.1
+PyJWT==2.10.1
+
 # System requirement: XeLaTeX (TeX Live 2023+ or MiKTeX) for PDF rendering.
 # Vietnamese Unicode requires fontspec + a Unicode font (Times New Roman default).
