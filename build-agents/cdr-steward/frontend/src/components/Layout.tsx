@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { getImpact } from '../api/programs';
-import { kdclApi } from '../api/client';
 import { useProgram } from '../contexts/ProgramContext';
 import { useAuth } from '../contexts/AuthContext';
 import CreateProgramModal from './CreateProgramModal';
@@ -38,16 +37,8 @@ export default function Layout() {
     return () => clearInterval(id);
   }, [currentCode, programs.length]);
 
-  // Pre-warm kdcl backend mỗi 10 phút để tránh sleep (Render free tier sleep
-  // sau 15 phút idle). Không có pre-warm thì click /measurement lần đầu sau
-  // khi sleep sẽ phải đợi 50s cold start + xelatex render → vượt timeout.
-  useEffect(() => {
-    if (!user) return;
-    const ping = () => kdclApi.get('/health').catch(() => {});
-    ping();
-    const id = setInterval(ping, 10 * 60 * 1000);
-    return () => clearInterval(id);
-  }, [user]);
+  // Pre-warm bỏ — VPS server luôn warm, không cần ping. Layout's getImpact poll
+  // 30s đã keep cdr alive, kdcl chỉ cần on-demand khi click /measurement.
 
   const handleLogout = () => {
     if (confirm('Đăng xuất?')) {
