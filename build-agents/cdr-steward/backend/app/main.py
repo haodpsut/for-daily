@@ -28,7 +28,12 @@ app.add_middleware(
 
 @app.on_event("startup")
 def on_startup():
-    Base.metadata.create_all(bind=engine)
+    """Wrapped trong try/except — race với seed_demo (background) có thể gây
+    DuplicateTable error mặc dù SQLAlchemy default checkfirst=True. Bỏ qua được."""
+    try:
+        Base.metadata.create_all(bind=engine)
+    except Exception as e:
+        print(f"[on_startup] create_all warning (continuing): {e!r}")
 
 
 @app.get("/health")

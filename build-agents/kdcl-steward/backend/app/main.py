@@ -41,14 +41,14 @@ app.add_middleware(
 
 @app.on_event("startup")
 def on_startup():
-    """Idempotent table create.
-
-    - Shared DB với cdr (Postgres): user/program/course/... đã có → SQLAlchemy skip,
-      chỉ tạo meas_* mới.
-    - Standalone (SQLite ephemeral container): DB rỗng → tạo TẤT CẢ tables (cả ref
-      lẫn meas_*) để app boot được. Data trống cho đến khi user import qua UI.
+    """Idempotent table create. Wrapped in try/except vì có thể race với seed_demo
+    chạy background — cả 2 cùng gọi create_all → một bên thấy table tồn tại sau khi
+    bên kia vừa tạo → DuplicateTable. Bỏ qua được vì tables đã có, app vẫn chạy OK.
     """
-    Base.metadata.create_all(bind=engine)
+    try:
+        Base.metadata.create_all(bind=engine)
+    except Exception as e:
+        print(f"[on_startup] create_all warning (continuing): {e!r}")
 
 
 @app.get("/health")
