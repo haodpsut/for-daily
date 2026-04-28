@@ -44,8 +44,10 @@ function attachAuthInterceptors(instance: AxiosInstance) {
   );
 }
 
-export const api = axios.create({ baseURL: cdrBase, timeout: 90000 });
-export const kdclApi = axios.create({ baseURL: kdclBase, timeout: 90000 });
+// cdr: 90s đủ cho mọi PLO/Course CRUD + render 5 PDF
+// kdcl: 240s vì TT04 PDF render qua xelatex có thể mất 30-60s + cold start ~50s
+export const api = axios.create({ baseURL: cdrBase, timeout: 90_000 });
+export const kdclApi = axios.create({ baseURL: kdclBase, timeout: 240_000 });
 
 attachAuthInterceptors(api);
 attachAuthInterceptors(kdclApi);
