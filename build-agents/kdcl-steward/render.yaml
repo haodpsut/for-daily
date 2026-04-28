@@ -1,0 +1,29 @@
+# Render.com IaC cho kdcl-steward (đo CĐR thực tế)
+# Setup:
+#   1. New → Web Service trên https://dashboard.render.com
+#   2. Connect repo haodpsut/for-daily
+#   3. Root Directory: build-agents/kdcl-steward
+#   4. Runtime: Docker
+#   5. Set env vars (xem dưới)
+
+services:
+  - type: web
+    name: kdcl-steward-api
+    env: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: LATEX_FONT
+        value: Liberation Serif
+      # ⚠️ MUST share JWT_SECRET với cdr-steward để token compatible giữa 2 app
+      # Set giống env JWT_SECRET của cdr-steward-api service
+      - key: JWT_SECRET
+        sync: false  # manual entry trên Render dashboard
+      # ⚠️ MUST cùng DATABASE_URL với cdr-steward để share user + program tables
+      - key: DATABASE_URL
+        sync: false  # manual entry — paste Neon Postgres URL giống cdr
+      - key: ALLOWED_ORIGINS
+        value: https://cdr-steward.vercel.app

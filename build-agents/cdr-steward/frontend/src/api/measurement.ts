@@ -1,8 +1,9 @@
 /**
  * Measurement API — đo CLO/PLO từ điểm sinh viên.
- * Backend prefix: /measurement (sau /api → đầy đủ /api/measurement/...)
+ * Backend: kdcl-steward (separate service from cdr-steward).
+ * URL pattern: <VITE_KDCL_API_URL>/sessions/...
  */
-import { api } from './client';
+import { kdclApi as api } from './client';
 
 // ─────────────────────────────────────────────────────────
 // Types
@@ -134,45 +135,45 @@ export const listSessions = async (params?: {
   program_id?: string;
   course_id?: string;
 }): Promise<MeasSessionListItem[]> => {
-  const { data } = await api.get('/measurement/sessions', { params });
+  const { data } = await api.get('/sessions', { params });
   return data;
 };
 
 export const getSession = async (id: string): Promise<MeasSessionDetail> => {
-  const { data } = await api.get(`/measurement/sessions/${id}`);
+  const { data } = await api.get(`/sessions/${id}`);
   return data;
 };
 
 export const createSession = async (
   body: MeasSessionCreate,
 ): Promise<MeasSessionDetail> => {
-  const { data } = await api.post('/measurement/sessions', body);
+  const { data } = await api.post('/sessions', body);
   return data;
 };
 
 export const deleteSession = async (id: string): Promise<void> => {
-  await api.delete(`/measurement/sessions/${id}`);
+  await api.delete(`/sessions/${id}`);
 };
 
 export const listQuestions = async (sessionId: string): Promise<MeasQuestion[]> => {
-  const { data } = await api.get(`/measurement/sessions/${sessionId}/questions`);
+  const { data } = await api.get(`/sessions/${sessionId}/questions`);
   return data;
 };
 
 export const listSessionStudents = async (
   sessionId: string,
 ): Promise<MeasStudent[]> => {
-  const { data } = await api.get(`/measurement/sessions/${sessionId}/students`);
+  const { data } = await api.get(`/sessions/${sessionId}/students`);
   return data;
 };
 
 export const computeSession = async (id: string): Promise<ComputeResponse> => {
-  const { data } = await api.post(`/measurement/sessions/${id}/compute`);
+  const { data } = await api.post(`/sessions/${id}/compute`);
   return data;
 };
 
 export const getCachedResults = async (id: string): Promise<ComputeResponse> => {
-  const { data } = await api.get(`/measurement/sessions/${id}/results`);
+  const { data } = await api.get(`/sessions/${id}/results`);
   return data;
 };
 
@@ -182,7 +183,7 @@ export const importGradebook = async (
 ): Promise<ImportSummary> => {
   const fd = new FormData();
   fd.append('file', file);
-  const { data } = await api.post(`/measurement/sessions/${sessionId}/import`, fd, {
+  const { data } = await api.post(`/sessions/${sessionId}/import`, fd, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
   return data;
@@ -202,19 +203,19 @@ async function _downloadAs(path: string, filename: string): Promise<void> {
 }
 
 export const downloadScoresCsv = (sid: string, fname = 'scores.csv') =>
-  _downloadAs(`/measurement/sessions/${sid}/export/scores.csv`, fname);
+  _downloadAs(`/sessions/${sid}/export/scores.csv`, fname);
 export const downloadCloMasteryCsv = (sid: string, fname = 'clo_mastery.csv') =>
-  _downloadAs(`/measurement/sessions/${sid}/export/clo_mastery.csv`, fname);
+  _downloadAs(`/sessions/${sid}/export/clo_mastery.csv`, fname);
 export const downloadEvidenceCsv = (sid: string, fname = 'evidence.csv') =>
-  _downloadAs(`/measurement/sessions/${sid}/export/evidence.csv`, fname);
+  _downloadAs(`/sessions/${sid}/export/evidence.csv`, fname);
 
 export const generateTt04Report = async (sid: string) => {
-  const { data } = await api.post(`/measurement/sessions/${sid}/report/tt04`);
+  const { data } = await api.post(`/sessions/${sid}/report/tt04`);
   return data as { session_id: string; tex_path: string; pdf_path: string | null; pdf_available: boolean };
 };
 
 export const downloadTt04Pdf = (sid: string, fname = 'tt04_report.pdf') =>
-  _downloadAs(`/measurement/sessions/${sid}/report/tt04.pdf`, fname);
+  _downloadAs(`/sessions/${sid}/report/tt04.pdf`, fname);
 
 export const downloadTt04Tex = (sid: string, fname = 'tt04_report.tex') =>
-  _downloadAs(`/measurement/sessions/${sid}/report/tt04.tex`, fname);
+  _downloadAs(`/sessions/${sid}/report/tt04.tex`, fname);

@@ -1,0 +1,150 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese]{babel}
+\usepackage{fontspec}
+\setmainfont{\VAR{font_name}}
+\usepackage[margin=2cm]{geometry}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{multicol}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep, topsep=0pt}
+\setlist[enumerate]{noitemsep, topsep=0pt}
+
+\definecolor{headBlue}{RGB}{0,70,140}
+\definecolor{rowAlt}{RGB}{240,245,255}
+\definecolor{achievedGreen}{RGB}{60,140,60}
+\definecolor{warnRed}{RGB}{180,40,40}
+
+\titleformat{\section}{\Large\bfseries\color{headBlue}}{\thesection.}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+
+\begin{document}
+
+% ─────────────── HEADER ───────────────
+\begin{minipage}[t]{0.55\textwidth}
+\centering
+\textbf{\VAR{institution.ministry}} \\
+\textbf{\VAR{institution.name_short_upper}}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.43\textwidth}
+\centering
+\textbf{\VAR{institution.country_line1}} \\
+\textbf{\VAR{institution.country_line2}}
+\end{minipage}
+
+\vspace{1.5em}
+
+\begin{center}
+{\LARGE\bfseries BÁO CÁO ĐO LƯỜNG CHUẨN ĐẦU RA HỌC PHẦN} \\[0.3em]
+{\large (Theo Thông tư 04/2025/TT-BGDĐT)}
+\end{center}
+
+\vspace{1em}
+
+% ─────────────── METADATA ───────────────
+\begin{tabular}{>{\bfseries}p{4.5cm} p{11cm}}
+Học phần: & \VAR{course.code | latex} -- \VAR{course.name_vn | latex} \\
+Mã CTĐT: & \VAR{program.code | latex} -- \VAR{program.name_vn | latex} \\
+Học kỳ: & \VAR{session.semester | latex} \\
+Lớp: & \VAR{session.cohort_code | latex} \\
+Ngày thi: & \VAR{session.exam_date_vn | latex} \\
+Số sinh viên: & \VAR{n_students_total} \\
+Số câu hỏi đo: & \VAR{n_questions_total} \\
+Ngưỡng đạt CLO: & \VAR{clo_threshold_pct}\% (mặc định 50\%) \\
+\end{tabular}
+
+\vspace{1em}
+
+% ─────────────── SECTION 1: KẾT QUẢ ĐO CLO ───────────────
+\section{Kết quả đo Chuẩn đầu ra Học phần (CLO)}
+
+\BLOCK{ if clo_results }
+\begin{center}
+\begin{tabular}{|c|p{8cm}|c|c|c|c|}
+\hline
+\rowcolor{headBlue!20}
+\textbf{CLO} & \textbf{Mô tả} & \textbf{N SV} & \textbf{Đạt} & \textbf{\% đạt} & \textbf{Avg \%} \\
+\hline
+\BLOCK{ for r in clo_results }
+\BLOCK{ if loop.index is even }\rowcolor{rowAlt}\BLOCK{ endif }
+\textbf{\VAR{r.clo_code | latex}} & \VAR{r.clo_text | latex} & \VAR{r.n_students} & \VAR{r.n_achieved} & \VAR{r.pct_achieved}\% & \VAR{r.avg_score_pct}\% \\
+\hline
+\BLOCK{ endfor }
+\end{tabular}
+\end{center}
+\BLOCK{ else }
+\textit{Chưa có CLO nào được đo trong session này.}
+\BLOCK{ endif }
+
+\vspace{0.6em}
+
+\textit{Ghi chú: Một SV được tính \textbf{đạt CLO} nếu \% điểm trong các câu đo CLO đó $\geq$ \VAR{clo_threshold_pct}\%.}
+
+% ─────────────── SECTION 2: ROLL-UP PLO ───────────────
+\section{Tổng hợp đo Chuẩn đầu ra CTĐT (PLO)}
+
+\BLOCK{ if plo_results }
+\begin{center}
+\begin{tabular}{|c|p{9cm}|c|c|}
+\hline
+\rowcolor{headBlue!20}
+\textbf{PLO} & \textbf{Mô tả} & \textbf{Số PI đo} & \textbf{\% đạt} \\
+\hline
+\BLOCK{ for r in plo_results }
+\BLOCK{ if loop.index is even }\rowcolor{rowAlt}\BLOCK{ endif }
+\textbf{\VAR{r.plo_code | latex}} & \VAR{r.plo_text | latex} & \VAR{r.pi_count} & \VAR{r.pct_achieved}\% \\
+\hline
+\BLOCK{ endfor }
+\end{tabular}
+\end{center}
+\BLOCK{ else }
+\textit{Không có PLO nào được roll-up từ session này (CLO chưa map ở level Master/Assess).}
+\BLOCK{ endif }
+
+\vspace{0.6em}
+
+\textit{Roll-up: \% PLO = trung bình \% đạt của các CLO ở level (M, A) thuộc các PI dưới PLO đó.}
+
+% ─────────────── SECTION 3: WARNINGS ───────────────
+\BLOCK{ if warnings }
+\section{Cảnh báo dữ liệu}
+\begin{itemize}
+\BLOCK{ for w in warnings }
+\item {\color{warnRed}\VAR{w | latex}}
+\BLOCK{ endfor }
+\end{itemize}
+\BLOCK{ endif }
+
+% ─────────────── SECTION 4: NHẬN ĐỊNH ───────────────
+\section{Nhận định \& Đề xuất}
+
+\begin{itemize}
+\BLOCK{ for clo in clo_results }
+\BLOCK{ if clo.pct_achieved | float < 70 }
+\item CLO \textbf{\VAR{clo.clo_code | latex}} chỉ đạt \VAR{clo.pct_achieved}\% -- \textbf{cần điều chỉnh phương pháp giảng dạy / đề thi} cho kỳ tới.
+\BLOCK{ elif clo.pct_achieved | float >= 90 }
+\item CLO \textbf{\VAR{clo.clo_code | latex}} đạt cao \VAR{clo.pct_achieved}\% -- xem xét nâng độ khó hoặc bổ sung mức Bloom cao hơn.
+\BLOCK{ endif }
+\BLOCK{ endfor }
+\end{itemize}
+
+% ─────────────── CHỮ KÝ ───────────────
+\vspace{2em}
+\begin{tabular}{>{\centering\arraybackslash}p{6.5cm} p{1cm} >{\centering\arraybackslash}p{6.5cm}}
+Cán bộ chấm điểm & & Trưởng bộ môn \\[3em]
+\textit{(Ký, ghi rõ họ tên)} & & \textit{(Ký, ghi rõ họ tên)} \\
+\end{tabular}
+
+\vspace{1em}
+
+\begin{flushright}
+\VAR{institution.city | latex}, ngày \VAR{report_date_vn | latex}.
+\end{flushright}
+
+\end{document}
