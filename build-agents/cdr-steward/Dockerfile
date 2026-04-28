@@ -26,6 +26,6 @@ ENV DATABASE_URL="sqlite:////tmp/cdr_steward.db"
 # Render.com / Railway / Fly inject PORT env. Local default 8000.
 EXPOSE 8000
 
-# Seed-on-start (idempotent — nếu data đã tồn tại sẽ skip, không phá user edit)
-# Để wipe + reseed: vào Render Shell chạy `python scripts/seed_demo.py --force`
-CMD ["sh", "-c", "python scripts/seed_demo.py && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+# Seed background (idempotent) — uvicorn start ngay không bị block
+# Để wipe + reseed: redeploy + bypass DB (tạm xóa DATABASE_URL → seed full)
+CMD ["sh", "-c", "python -u scripts/seed_demo.py & exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]

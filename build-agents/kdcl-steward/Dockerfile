@@ -26,9 +26,7 @@ ENV DATABASE_URL="sqlite:////tmp/kdcl_steward.db"
 
 EXPOSE 8001
 
-# Auto-seed measurement demo trên startup (idempotent + graceful):
-# - Khi share Postgres với cdr-steward: tìm thấy demo user + Program QTKD → seed Session/Q/SV/Score.
-#   Restart sau đó: data đã có → seed skip.
-# - Nếu cdr chưa seed: seed_demo print warning + return → uvicorn vẫn start (app boot OK, empty UI).
-# Dùng `;` (không phải `&&`) để uvicorn chạy bất kể seed exit code.
-CMD ["sh", "-c", "python scripts/seed_demo.py ; uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8001}"]
+# Seed chạy BACKGROUND — uvicorn start ngay (cold-start chỉ ~5s, không phải 60s).
+# Seed log → /tmp/seed.log (xem qua Render Logs sau khi service Live).
+# `exec` thay shell bằng uvicorn để signals (SIGTERM) deliver đúng.
+CMD ["sh", "-c", "python -u scripts/seed_demo.py & exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8001}"]
