@@ -62,7 +62,7 @@ def main() -> None:
         user = db.query(User).filter_by(email="demo@cdr-steward.com").first()
         if not user:
             print("✗ Demo user not found. Run cdr-steward/backend/scripts/seed_demo.py first.")
-            sys.exit(1)
+            return  # graceful — let uvicorn start anyway
         print(f"✓ Demo user: {user.email}")
 
         # 2. Tìm program QTKD + course BAS101
@@ -73,13 +73,13 @@ def main() -> None:
         )
         if not program:
             print("✗ Program 7340101 (QTKD) not found.")
-            sys.exit(1)
+            return  # graceful — let uvicorn start anyway
         course = (
             db.query(Course).filter_by(code="BAS101", program_id=program.id).first()
         )
         if not course:
             print("✗ Course BAS101 not found.")
-            sys.exit(1)
+            return  # graceful — let uvicorn start anyway
         print(f"✓ Course: {course.code} -- {course.name_vn}")
 
         clos = sorted(
@@ -88,7 +88,7 @@ def main() -> None:
         )
         if len(clos) < 3:
             print(f"✗ BAS101 expected 3 CLOs, found {len(clos)}.")
-            sys.exit(1)
+            return  # graceful — let uvicorn start anyway
         clo1, clo2, clo3 = clos[0], clos[1], clos[2]
         print(f"✓ CLOs: {clo1.code}, {clo2.code}, {clo3.code}")
 
