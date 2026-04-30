@@ -17,14 +17,17 @@
     "import": "tsx scripts/import.ts"
   },
   "dependencies": {
+    "@types/leaflet": "^1.9.21",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.45.2",
+    "leaflet": "^1.9.4",
     "lucide-react": "^0.577.0",
     "lunar-javascript": "^1.7.7",
     "next": "^16.2.4",
     "postgres": "^3.4.5",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "react-leaflet": "^5.0.0",
     "react-zoom-pan-pinch": "^3.7.0"
   },
   "devDependencies": {
