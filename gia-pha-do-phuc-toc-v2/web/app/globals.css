@@ -27,3 +27,12 @@ html, body {
 h1, h2, h3, .serif {
   font-family: var(--font-serif);
 }
+
+/* Slow pulse for branch-root emphasis in family tree */
+@keyframes pulse-slow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+  50%      { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
+}
+.animate-pulse-slow {
+  animation: pulse-slow 2s ease-in-out infinite;
+}

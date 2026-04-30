@@ -153,11 +153,25 @@ export default function FamilyTree({
   function setAsBranchRoot(id: string) {
     setBranchRootId(id);
     setSearch("");
-    setHighlightId(null);
-    // Khi đổi nhánh, mở hết để dễ nhìn từ đầu
-    setCollapsed(new Set());
-    // Reset zoom
-    setTimeout(() => transformRef.current?.resetTransform(), 50);
+    setHighlightId(id);          // also pulse-highlight the new root
+    setCollapsed(new Set());      // mở hết khi đổi nhánh
+    // After re-render with new root, center+zoom on it (2 RAFs to wait for DOM)
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const el = document.getElementById(`node-${id}`);
+        const tr = transformRef.current;
+        if (!el || !tr) return;
+        const wrapper = tr.instance.contentComponent;
+        if (!wrapper) return;
+        const wrapperRect = wrapper.getBoundingClientRect();
+        const elRect = el.getBoundingClientRect();
+        const dx = wrapperRect.width / 2 - (elRect.left - wrapperRect.left + elRect.width / 2);
+        const dy = wrapperRect.height / 2 - (elRect.top - wrapperRect.top + elRect.height / 2);
+        const s = tr.state;
+        // Reset to a comfortable zoom (1.0) and center the new root
+        tr.setTransform(s.positionX + dx, s.positionY + dy, 1.0, 600);
+      });
+    });
   }
 
   // Find subtree rooted at branchRootId (treats it as new top of tree)
@@ -328,6 +342,7 @@ export default function FamilyTree({
                       node={root}
                       orientation={orientation}
                       highlightId={highlightId}
+                      branchRootId={branchRootId}
                       collapsed={collapsed}
                       toggleCollapsed={toggleCollapsed}
                       siblingsExpanded={siblingsExpanded}
@@ -369,6 +384,7 @@ function TreeBranch({
   node,
   orientation,
   highlightId,
+  branchRootId,
   collapsed,
   toggleCollapsed,
   siblingsExpanded,
@@ -378,6 +394,7 @@ function TreeBranch({
   node: TreeNode;
   orientation: "vertical" | "horizontal";
   highlightId: string | null;
+  branchRootId: string | null;
   collapsed: Set<string>;
   toggleCollapsed: (id: string) => void;
   siblingsExpanded: Set<string>;
@@ -395,6 +412,7 @@ function TreeBranch({
   const childProps = {
     orientation,
     highlightId,
+    branchRootId,
     collapsed,
     toggleCollapsed,
     siblingsExpanded,
@@ -430,6 +448,7 @@ function TreeBranch({
           person={node.person}
           spouse={node.spouse}
           highlightId={highlightId}
+          branchRootId={branchRootId}
           hasChildren={hasChildren}
           isCollapsed={isCollapsed}
           onToggle={() => toggleCollapsed(node.person.id)}
@@ -474,6 +493,7 @@ function TreeBranch({
         person={node.person}
         spouse={node.spouse}
         highlightId={highlightId}
+        branchRootId={branchRootId}
         hasChildren={hasChildren}
         isCollapsed={isCollapsed}
         onToggle={() => toggleCollapsed(node.person.id)}
@@ -516,6 +536,7 @@ function PersonPair({
   person,
   spouse,
   highlightId,
+  branchRootId,
   hasChildren,
   isCollapsed,
   onToggle,
@@ -525,6 +546,7 @@ function PersonPair({
   person: PersonNode;
   spouse: PersonNode | null;
   highlightId: string | null;
+  branchRootId: string | null;
   hasChildren: boolean;
   isCollapsed: boolean;
   onToggle: () => void;
@@ -533,11 +555,21 @@ function PersonPair({
 }) {
   return (
     <div className="relative flex items-center gap-2">
-      <PersonCard person={person} highlight={highlightId === person.id} compact={compact} />
+      <PersonCard
+        person={person}
+        highlight={highlightId === person.id}
+        isBranchRoot={branchRootId === person.id}
+        compact={compact}
+      />
       {spouse && (
         <>
           <span className="select-none text-amber-600 text-xl font-bold">⚭</span>
-          <PersonCard person={spouse} highlight={highlightId === spouse.id} compact={compact} />
+          <PersonCard
+            person={spouse}
+            highlight={highlightId === spouse.id}
+            isBranchRoot={branchRootId === spouse.id}
+            compact={compact}
+          />
         </>
       )}
       {hasChildren && (
@@ -560,10 +592,12 @@ function PersonPair({
 function PersonCard({
   person,
   highlight,
+  isBranchRoot,
   compact,
 }: {
   person: PersonNode;
   highlight?: boolean;
+  isBranchRoot?: boolean;
   compact: boolean;
 }) {
   const isMale = person.gender === "male";
@@ -573,34 +607,55 @@ function PersonCard({
       ? "border-sky-300 bg-gradient-to-br from-sky-50 to-sky-100 text-sky-950"
       : "border-rose-300 bg-gradient-to-br from-rose-50 to-rose-100 text-rose-950";
 
+  // Branch root: bold ring + scale + pulse glow. Highlight (search): amber ring.
+  const emphasis = isBranchRoot
+    ? "ring-4 ring-emerald-500 ring-offset-2 scale-110 shadow-xl shadow-emerald-200 animate-pulse-slow"
+    : highlight
+      ? "ring-4 ring-amber-400 ring-offset-2 scale-105"
+      : "";
+
   if (compact) {
     return (
-      <Link
-        id={`node-${person.id}`}
-        href={`/dashboard/phahe/${person.id}`}
-        onClick={(e) => e.stopPropagation()}
-        className={`block min-w-[80px] max-w-[110px] rounded-lg border px-2 py-1 text-center shadow-sm transition hover:shadow-md ${colorClass} ${highlight ? "ring-2 ring-amber-400 ring-offset-1 scale-105" : ""}`}
-      >
-        <div className="serif text-[11px] font-semibold leading-tight truncate">{person.fullName}</div>
-      </Link>
+      <div className="relative">
+        <Link
+          id={`node-${person.id}`}
+          href={`/dashboard/phahe/${person.id}`}
+          onClick={(e) => e.stopPropagation()}
+          className={`block min-w-[80px] max-w-[110px] rounded-lg border px-2 py-1 text-center shadow-sm transition hover:shadow-md ${colorClass} ${emphasis}`}
+        >
+          <div className="serif text-[11px] font-semibold leading-tight truncate">{person.fullName}</div>
+        </Link>
+        {isBranchRoot && (
+          <span className="absolute -top-2 -right-2 rounded-full bg-emerald-600 px-1.5 py-0.5 text-[9px] font-bold text-white shadow">
+            🌿
+          </span>
+        )}
+      </div>
     );
   }
 
   return (
-    <Link
-      id={`node-${person.id}`}
-      href={`/dashboard/phahe/${person.id}`}
-      onClick={(e) => e.stopPropagation()}
-      className={`block min-w-[120px] max-w-[160px] rounded-xl border-2 px-3 py-2.5 text-center shadow-sm transition hover:shadow-md ${colorClass} ${highlight ? "ring-4 ring-amber-400 ring-offset-2 scale-105" : ""}`}
-    >
-      <div className="serif text-sm font-semibold leading-tight">{person.fullName}</div>
-      <div className="mt-1 text-[10px] opacity-75">
-        {person.birthYear ?? "?"}
-        {person.isDeceased && person.deathYear && ` – ${person.deathYear}`}
-      </div>
-      {person.generation && (
-        <div className="mt-0.5 text-[10px] font-medium opacity-60">Đời {person.generation}</div>
+    <div className="relative">
+      <Link
+        id={`node-${person.id}`}
+        href={`/dashboard/phahe/${person.id}`}
+        onClick={(e) => e.stopPropagation()}
+        className={`block min-w-[120px] max-w-[160px] rounded-xl border-2 px-3 py-2.5 text-center shadow-sm transition hover:shadow-md ${colorClass} ${emphasis}`}
+      >
+        <div className="serif text-sm font-semibold leading-tight">{person.fullName}</div>
+        <div className="mt-1 text-[10px] opacity-75">
+          {person.birthYear ?? "?"}
+          {person.isDeceased && person.deathYear && ` – ${person.deathYear}`}
+        </div>
+        {person.generation && (
+          <div className="mt-0.5 text-[10px] font-medium opacity-60">Đời {person.generation}</div>
+        )}
+      </Link>
+      {isBranchRoot && (
+        <span className="absolute -top-2 -right-2 rounded-full bg-emerald-600 px-2 py-0.5 text-[10px] font-bold text-white shadow-md">
+          🌿 Gốc
+        </span>
       )}
-    </Link>
+    </div>
   );
 }
