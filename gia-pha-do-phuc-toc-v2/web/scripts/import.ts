@@ -8,7 +8,10 @@
  *   - Skips files that don't exist (e.g. older bundles without media tables).
  *   - Validates manifest.json bundleVersion compatibility.
  */
-import "dotenv/config";
+import { config } from "dotenv";
+config({ path: ".env.local" });
+config();
+
 import { readFile, access } from "node:fs/promises";
 import path from "node:path";
 import { sql } from "drizzle-orm";

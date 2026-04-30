@@ -13,7 +13,10 @@
  *     ... (one JSON per table)
  *     media/                  (copied from STORAGE_LOCAL_PATH if exists — S2+)
  */
-import "dotenv/config";
+import { config } from "dotenv";
+config({ path: ".env.local" });
+config();
+
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { db, schema } from "../lib/db/client";

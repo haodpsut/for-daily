@@ -4,7 +4,10 @@
  * Usage: npm run seed
  * WARNING: Destroys ALL data. Run `npm run export ./data/backups/<name>` first if you have real data.
  */
-import "dotenv/config";
+import { config } from "dotenv";
+config({ path: ".env.local" });
+config();
+
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { sql } from "drizzle-orm";
