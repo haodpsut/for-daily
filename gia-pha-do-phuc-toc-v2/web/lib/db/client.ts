@@ -1,6 +1,6 @@
-import { config } from "dotenv";
-config({ path: ".env.local" });
-config();
+// Next.js auto-loads .env.local for app routes. CLI scripts (seed/export/import)
+// load dotenv themselves at the top of each script. We do NOT import dotenv here
+// because middleware (Edge Runtime) cannot use Node APIs like process.cwd().
 
 import { drizzle, type PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
@@ -14,9 +14,7 @@ function initDb(): Db {
   const url = process.env.DATABASE_URL;
   if (!url) {
     throw new Error(
-      "DATABASE_URL is required (set in .env.local). " +
-        "If you see this during 'next build', set DATABASE_URL even to a stub — " +
-        "next build evaluates server modules eagerly.",
+      "DATABASE_URL is required. Set in .env.local for Next.js, or pass as env var for CLI scripts.",
     );
   }
   const isProduction = process.env.NODE_ENV === "production";
@@ -28,8 +26,7 @@ function initDb(): Db {
   return drizzle(client, { schema });
 }
 
-// Lazy proxy — defers DB init until first query so 'next build' doesn't crash
-// when DATABASE_URL is missing at build time (build doesn't run queries).
+// Lazy proxy — defers DB init until first query
 export const db = new Proxy({} as Db, {
   get(_target, prop) {
     if (!_db) _db = initDb();

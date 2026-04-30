@@ -1,11 +1,14 @@
-import { auth } from "@/auth";
+import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
+import authConfig from "./auth.config";
+
+// Edge-safe: only validates JWT, no DB. Full auth (with DB lookup) is in auth.ts.
+const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
   const isLoggedIn = !!req.auth;
   const path = req.nextUrl.pathname;
 
-  // Public routes
   const isPublic =
     path === "/" ||
     path === "/about" ||
@@ -13,7 +16,6 @@ export default auth((req) => {
     path === "/register" ||
     path.startsWith("/api/auth");
 
-  // Logged-in users visiting login/register → redirect to dashboard
   if (isLoggedIn && (path === "/login" || path === "/register")) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
@@ -29,7 +31,6 @@ export default auth((req) => {
 
 export const config = {
   matcher: [
-    // Match all paths except static assets
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|svg|ico|webp)).*)",
   ],
 };
