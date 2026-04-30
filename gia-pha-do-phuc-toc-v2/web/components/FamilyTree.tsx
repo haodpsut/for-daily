@@ -30,6 +30,7 @@ export default function FamilyTree({
   const [compact, setCompact] = useState(false);
   const [search, setSearch] = useState("");
   const [highlightId, setHighlightId] = useState<string | null>(null);
+  const [branchRootId, setBranchRootId] = useState<string | null>(null);
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
   const [siblingsExpanded, setSiblingsExpanded] = useState<Set<string>>(new Set());
   const [hasInitCollapse, setHasInitCollapse] = useState(false);
@@ -149,6 +150,36 @@ export default function FamilyTree({
     }, 100);
   }
 
+  function setAsBranchRoot(id: string) {
+    setBranchRootId(id);
+    setSearch("");
+    setHighlightId(null);
+    // Khi đổi nhánh, mở hết để dễ nhìn từ đầu
+    setCollapsed(new Set());
+    // Reset zoom
+    setTimeout(() => transformRef.current?.resetTransform(), 50);
+  }
+
+  // Find subtree rooted at branchRootId (treats it as new top of tree)
+  const displayRoots = useMemo<TreeNode[]>(() => {
+    if (!branchRootId) return roots;
+    const find = (node: TreeNode): TreeNode | null => {
+      if (node.person.id === branchRootId) return node;
+      for (const c of node.children) {
+        const found = find(c);
+        if (found) return found;
+      }
+      return null;
+    };
+    for (const r of roots) {
+      const found = find(r);
+      if (found) return [found];
+    }
+    return roots;
+  }, [roots, branchRootId]);
+
+  const branchRootPerson = branchRootId ? persons.find((p) => p.id === branchRootId) : null;
+
   return (
     <div className="space-y-3">
       {/* Toolbar */}
@@ -164,16 +195,31 @@ export default function FamilyTree({
           {searchResults.length > 0 && (
             <ul className="absolute left-0 right-0 top-full mt-1 z-30 max-h-72 overflow-y-auto rounded-md border border-stone-200 bg-white shadow-lg">
               {searchResults.map((p) => (
-                <li key={p.id}>
-                  <button
-                    onClick={() => focusPerson(p.id)}
-                    className="block w-full px-3 py-2 text-left text-sm hover:bg-stone-100"
-                  >
-                    <span className="font-medium text-stone-900">{p.fullName}</span>
-                    <span className="ml-2 text-xs text-stone-500">
-                      Đời {p.generation}{p.isInLaw && " · Dâu/Rể"}
-                    </span>
-                  </button>
+                <li key={p.id} className="border-b border-stone-100 last:border-b-0">
+                  <div className="flex items-center justify-between px-3 py-2 hover:bg-stone-50">
+                    <div className="min-w-0 flex-1">
+                      <div className="text-sm font-medium text-stone-900">{p.fullName}</div>
+                      <div className="text-xs text-stone-500">
+                        Đời {p.generation}{p.isInLaw && " · Dâu/Rể"}{p.birthYear && ` · ${p.birthYear}`}
+                      </div>
+                    </div>
+                    <div className="flex shrink-0 gap-1">
+                      <button
+                        onClick={() => focusPerson(p.id)}
+                        className="rounded bg-stone-100 px-2 py-1 text-xs text-stone-700 hover:bg-stone-200"
+                        title="Highlight + zoom đến người này"
+                      >
+                        🎯 Đến
+                      </button>
+                      <button
+                        onClick={() => setAsBranchRoot(p.id)}
+                        className="rounded bg-amber-100 px-2 py-1 text-xs text-amber-800 hover:bg-amber-200"
+                        title="Lọc cây — chỉ xem nhánh con cháu của người này"
+                      >
+                        🌿 Lọc
+                      </button>
+                    </div>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -220,9 +266,28 @@ export default function FamilyTree({
         </button>
       </div>
 
+      {/* Branch breadcrumb */}
+      {branchRootPerson && (
+        <div className="flex items-center justify-between rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-sm">
+          <div>
+            <span className="text-amber-900">🌿 Đang xem nhánh từ: </span>
+            <strong className="serif text-amber-900">{branchRootPerson.fullName}</strong>
+            <span className="ml-2 text-xs text-amber-700">
+              (đời {branchRootPerson.generation} · chỉ con cháu)
+            </span>
+          </div>
+          <button
+            onClick={() => setBranchRootId(null)}
+            className="rounded border border-amber-400 bg-white px-2 py-1 text-xs text-amber-800 hover:bg-amber-100"
+          >
+            ← Toàn bộ cây
+          </button>
+        </div>
+      )}
+
       {/* Help text */}
       <p className="text-xs text-stone-500">
-        💡 Kéo để di chuyển · Cuộn / pinch để zoom · Click <strong>+/−</strong> trên card để mở/đóng nhánh
+        💡 Kéo để di chuyển · Cuộn / pinch để zoom · Tìm tên rồi <strong>🌿 Lọc</strong> để xem nhánh con cháu của 1 người
       </p>
 
       {/* Tree with pan-zoom */}
@@ -257,7 +322,7 @@ export default function FamilyTree({
                       : "flex flex-row items-start gap-16 p-12"
                   }
                 >
-                  {roots.map((root) => (
+                  {displayRoots.map((root) => (
                     <TreeBranch
                       key={root.person.id}
                       node={root}

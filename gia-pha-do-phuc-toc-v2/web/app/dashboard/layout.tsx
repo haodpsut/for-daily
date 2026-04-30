@@ -5,11 +5,12 @@ import UserMenu from "@/components/UserMenu";
 const SITE_NAME = process.env.SITE_NAME ?? "Đỗ Phúc Tộc";
 
 const TABS = [
-  { href: "/dashboard",          label: "Tổng quan" },
-  { href: "/dashboard/phahe",    label: "Phả hệ" },
-  { href: "/dashboard/tu-duong", label: "Từ đường" },
-  { href: "/dashboard/di-san",   label: "Di sản" },
-  { href: "/dashboard/mo-ma",    label: "Mồ mả" },
+  { href: "/dashboard",          label: "Tổng quan", adminOnly: false },
+  { href: "/dashboard/phahe",    label: "Phả hệ",    adminOnly: false },
+  { href: "/dashboard/tu-duong", label: "Từ đường",  adminOnly: false },
+  { href: "/dashboard/di-san",   label: "Di sản",    adminOnly: false },
+  { href: "/dashboard/mo-ma",    label: "Mồ mả",     adminOnly: false },
+  { href: "/dashboard/admin",    label: "Quản trị",  adminOnly: true },
 ];
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -37,11 +38,13 @@ export default async function DashboardLayout({ children }: { children: React.Re
             )}
           </div>
           <nav className="flex gap-1 overflow-x-auto">
-            {TABS.map((t) => (
+            {TABS.filter((t) => !t.adminOnly || user?.role === "admin").map((t) => (
               <Link
                 key={t.href}
                 href={t.href}
-                className="border-b-2 border-transparent px-4 py-2 text-sm font-medium text-stone-600 transition hover:border-stone-300 hover:text-stone-900"
+                className={`border-b-2 border-transparent px-4 py-2 text-sm font-medium transition hover:border-stone-300 ${
+                  t.adminOnly ? "text-rose-700 hover:text-rose-900" : "text-stone-600 hover:text-stone-900"
+                }`}
               >
                 {t.label}
               </Link>
