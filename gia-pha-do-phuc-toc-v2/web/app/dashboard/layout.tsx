@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { auth } from "@/auth";
+import UserMenu from "@/components/UserMenu";
 
 const SITE_NAME = process.env.SITE_NAME ?? "Đỗ Phúc Tộc";
 
@@ -10,16 +12,29 @@ const TABS = [
   { href: "/dashboard/mo-ma",    label: "Mồ mả" },
 ];
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const session = await auth();
+  const user = session?.user;
+
+  // Use empty-string fallbacks so types stay narrow (string, not string | null | undefined)
+  const displayName: string = user?.name || user?.email || "Thành viên";
+  const email: string = user?.email || "";
+
   return (
     <div className="min-h-screen">
       <header className="border-b border-stone-200 bg-white">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="flex items-center justify-between py-4">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="flex items-center justify-between gap-4 py-4">
             <Link href="/" className="serif text-xl font-bold text-stone-900">
               {SITE_NAME}
             </Link>
-            <span className="text-xs text-stone-500">Sprint 1 — read-only demo</span>
+            {user ? (
+              <UserMenu name={displayName} email={email} role={user.role} />
+            ) : (
+              <Link href="/login" className="text-xs text-stone-500 hover:text-stone-900">
+                Đăng nhập
+              </Link>
+            )}
           </div>
           <nav className="flex gap-1 overflow-x-auto">
             {TABS.map((t) => (
