@@ -1,94 +1,41 @@
 [
-  {
-    "id": "00000000-0000-0000-0000-000000001001",
-    "fullName": "Đỗ Phúc Tổ",
-    "otherNames": "Cụ Tổ",
-    "gender": "male",
-    "birthYear": 1820, "deathYear": 1890,
-    "deathMonth": 8, "deathDay": 15, "deathIsLunar": true,
-    "isDeceased": true, "generation": 1,
-    "biography": "Tổ khai sinh họ Đỗ Phúc Tộc (mẫu)."
-  },
-  {
-    "id": "00000000-0000-0000-0000-000000001002",
-    "fullName": "Trần Thị Mẫu",
-    "otherNames": "Cụ Bà",
-    "gender": "female",
-    "birthYear": 1825, "deathYear": 1895,
-    "deathMonth": 3, "deathDay": 10, "deathIsLunar": true,
-    "isDeceased": true, "isInLaw": true, "generation": 1
-  },
-  {
-    "id": "00000000-0000-0000-0000-000000001003",
-    "fullName": "Đỗ Phúc Trưởng",
-    "gender": "male",
-    "birthYear": 1850, "deathYear": 1925,
-    "deathMonth": 11, "deathDay": 20, "deathIsLunar": true,
-    "isDeceased": true, "generation": 2, "birthOrder": 1
-  },
-  {
-    "id": "00000000-0000-0000-0000-000000001004",
-    "fullName": "Nguyễn Thị Thuần",
-    "gender": "female",
-    "birthYear": 1855, "deathYear": 1928,
-    "isDeceased": true, "isInLaw": true, "generation": 2
-  },
-  {
-    "id": "00000000-0000-0000-0000-000000001005",
-    "fullName": "Đỗ Phúc Nhị",
-    "gender": "male",
-    "birthYear": 1853, "deathYear": 1920,
-    "deathMonth": 5, "deathDay": 5, "deathIsLunar": true,
-    "isDeceased": true, "generation": 2, "birthOrder": 2
-  },
-  {
-    "id": "00000000-0000-0000-0000-000000001006",
-    "fullName": "Lê Thị Hoa",
-    "gender": "female",
-    "birthYear": 1858, "deathYear": 1922,
-    "isDeceased": true, "isInLaw": true, "generation": 2
-  },
-  {
-    "id": "00000000-0000-0000-0000-000000001007",
-    "fullName": "Đỗ Thị Tam",
-    "gender": "female",
-    "birthYear": 1857, "deathYear": 1930,
-    "isDeceased": true, "generation": 2, "birthOrder": 3
-  },
-  {
-    "id": "00000000-0000-0000-0000-000000001008",
-    "fullName": "Phan Văn Phúc",
-    "gender": "male", "birthYear": 1855,
-    "isDeceased": true, "isInLaw": true, "generation": 2,
-    "note": "Rể họ Đỗ — chồng cô Đỗ Thị Tam."
-  },
-  {
-    "id": "00000000-0000-0000-0000-000000001009",
-    "fullName": "Đỗ Văn Hùng",
-    "gender": "male",
-    "birthYear": 1955,
-    "generation": 3, "birthOrder": 1,
-    "note": "Trưởng tộc đương nhiệm (mẫu)."
-  },
-  {
-    "id": "00000000-0000-0000-0000-000000001010",
-    "fullName": "Lê Thị Lan",
-    "gender": "female",
-    "birthYear": 1958,
-    "isInLaw": true, "generation": 3
-  },
-  {
-    "id": "00000000-0000-0000-0000-000000001011",
-    "fullName": "Đỗ Văn Cường",
-    "gender": "male",
-    "birthYear": 1960,
-    "generation": 3, "birthOrder": 1
-  },
-  {
-    "id": "00000000-0000-0000-0000-000000001012",
-    "fullName": "Đỗ Phúc Bảo",
-    "gender": "male",
-    "birthYear": 1985,
-    "generation": 4, "birthOrder": 1
-  }
+  { "id": "00000000-0000-0000-0000-000000001001", "fullName": "Đỗ Phúc Tổ",         "otherNames": "Cụ Tổ", "gender": "male",   "birthYear": 1820, "deathYear": 1890, "deathMonth": 8,  "deathDay": 15, "deathIsLunar": true, "isDeceased": true,                       "generation": 1, "biography": "Tổ khai sinh họ Đỗ Phúc Tộc (mẫu)." },
+  { "id": "00000000-0000-0000-0000-000000001002", "fullName": "Trần Thị Mẫu",       "otherNames": "Cụ Bà", "gender": "female", "birthYear": 1825, "deathYear": 1895, "deathMonth": 3,  "deathDay": 10, "deathIsLunar": true, "isDeceased": true, "isInLaw": true,      "generation": 1 },
+
+  { "id": "00000000-0000-0000-0000-000000001003", "fullName": "Đỗ Phúc Trưởng",                          "gender": "male",   "birthYear": 1850, "deathYear": 1925, "deathMonth": 11, "deathDay": 20, "deathIsLunar": true, "isDeceased": true,                       "generation": 2, "birthOrder": 1 },
+  { "id": "00000000-0000-0000-0000-000000001004", "fullName": "Nguyễn Thị Thuần",                        "gender": "female", "birthYear": 1855, "deathYear": 1928,                                                       "isDeceased": true, "isInLaw": true,      "generation": 2 },
+  { "id": "00000000-0000-0000-0000-000000001005", "fullName": "Đỗ Phúc Nhị",                             "gender": "male",   "birthYear": 1853, "deathYear": 1920, "deathMonth": 5,  "deathDay": 5,  "deathIsLunar": true, "isDeceased": true,                       "generation": 2, "birthOrder": 2 },
+  { "id": "00000000-0000-0000-0000-000000001006", "fullName": "Lê Thị Hoa",                              "gender": "female", "birthYear": 1858, "deathYear": 1922,                                                       "isDeceased": true, "isInLaw": true,      "generation": 2 },
+  { "id": "00000000-0000-0000-0000-000000001007", "fullName": "Đỗ Thị Tam",                              "gender": "female", "birthYear": 1857, "deathYear": 1930, "deathMonth": 7,  "deathDay": 12, "deathIsLunar": true, "isDeceased": true,                       "generation": 2, "birthOrder": 3 },
+  { "id": "00000000-0000-0000-0000-000000001008", "fullName": "Phan Văn Phúc",                           "gender": "male",   "birthYear": 1855, "deathYear": 1935,                                                       "isDeceased": true, "isInLaw": true,      "generation": 2, "note": "Rể họ Đỗ — chồng cô Đỗ Thị Tam." },
+
+  { "id": "00000000-0000-0000-0000-000000001009", "fullName": "Đỗ Văn Hùng",                             "gender": "male",   "birthYear": 1880, "deathYear": 1955, "deathMonth": 9,  "deathDay": 8,  "deathIsLunar": true, "isDeceased": true,                       "generation": 3, "birthOrder": 1 },
+  { "id": "00000000-0000-0000-0000-00000000100a", "fullName": "Lê Thị Lan",                              "gender": "female", "birthYear": 1885, "deathYear": 1960,                                                       "isDeceased": true, "isInLaw": true,      "generation": 3 },
+  { "id": "00000000-0000-0000-0000-00000000100b", "fullName": "Đỗ Thị Mai",                              "gender": "female", "birthYear": 1882, "deathYear": 1950,                                                       "isDeceased": true,                       "generation": 3, "birthOrder": 2 },
+  { "id": "00000000-0000-0000-0000-00000000100c", "fullName": "Đỗ Văn Cường",                            "gender": "male",   "birthYear": 1885, "deathYear": 1958, "deathMonth": 4,  "deathDay": 18, "deathIsLunar": true, "isDeceased": true,                       "generation": 3, "birthOrder": 1 },
+  { "id": "00000000-0000-0000-0000-00000000100d", "fullName": "Phạm Thị Hương",                          "gender": "female", "birthYear": 1890, "deathYear": 1965,                                                       "isDeceased": true, "isInLaw": true,      "generation": 3 },
+  { "id": "00000000-0000-0000-0000-00000000100e", "fullName": "Đỗ Văn Dũng",                             "gender": "male",   "birthYear": 1888, "deathYear": 1962,                                                       "isDeceased": true,                       "generation": 3, "birthOrder": 2 },
+
+  { "id": "00000000-0000-0000-0000-00000000100f", "fullName": "Đỗ Phúc Bảo",                             "gender": "male",   "birthYear": 1908, "deathYear": 1985, "deathMonth": 6,  "deathDay": 14, "deathIsLunar": true, "isDeceased": true,                       "generation": 4, "birthOrder": 1 },
+  { "id": "00000000-0000-0000-0000-000000001010", "fullName": "Vũ Thị Ngân",                             "gender": "female", "birthYear": 1912, "deathYear": 1990,                                                       "isDeceased": true, "isInLaw": true,      "generation": 4 },
+  { "id": "00000000-0000-0000-0000-000000001011", "fullName": "Đỗ Phúc Long",                            "gender": "male",   "birthYear": 1912, "deathYear": 1988,                                                       "isDeceased": true,                       "generation": 4, "birthOrder": 2 },
+  { "id": "00000000-0000-0000-0000-000000001012", "fullName": "Đỗ Văn Khang",                            "gender": "male",   "birthYear": 1915, "deathYear": 1990,                                                       "isDeceased": true,                       "generation": 4, "birthOrder": 1 },
+  { "id": "00000000-0000-0000-0000-000000001013", "fullName": "Bùi Thị Thanh",                           "gender": "female", "birthYear": 1920, "deathYear": 1995,                                                       "isDeceased": true, "isInLaw": true,      "generation": 4 },
+
+  { "id": "00000000-0000-0000-0000-000000001014", "fullName": "Đỗ Văn Minh",                             "gender": "male",   "birthYear": 1935, "deathYear": 2010, "deathMonth": 10, "deathDay": 22, "deathIsLunar": true, "isDeceased": true,                       "generation": 5, "birthOrder": 1, "note": "Trưởng tộc đã khuất." },
+  { "id": "00000000-0000-0000-0000-000000001015", "fullName": "Nguyễn Thị Hồng",                         "gender": "female", "birthYear": 1938,                                                                                                "isInLaw": true,      "generation": 5 },
+  { "id": "00000000-0000-0000-0000-000000001016", "fullName": "Đỗ Thị Hương",                            "gender": "female", "birthYear": 1940,                                                                                                                       "generation": 5, "birthOrder": 2 },
+  { "id": "00000000-0000-0000-0000-000000001017", "fullName": "Đỗ Văn Thắng",                            "gender": "male",   "birthYear": 1945,                                                                                                                       "generation": 5, "birthOrder": 1 },
+  { "id": "00000000-0000-0000-0000-000000001018", "fullName": "Phạm Thị Linh",                           "gender": "female", "birthYear": 1948,                                                                                                "isInLaw": true,      "generation": 5 },
+
+  { "id": "00000000-0000-0000-0000-000000001019", "fullName": "Đỗ Phúc Tâm",                             "gender": "male",   "birthYear": 1965,                                                                                                                       "generation": 6, "birthOrder": 1, "note": "Trưởng tộc đương nhiệm (mẫu)." },
+  { "id": "00000000-0000-0000-0000-00000000101a", "fullName": "Hoàng Thị Hà",                            "gender": "female", "birthYear": 1968,                                                                                                "isInLaw": true,      "generation": 6 },
+  { "id": "00000000-0000-0000-0000-00000000101b", "fullName": "Đỗ Văn Trường",                           "gender": "male",   "birthYear": 1970,                                                                                                                       "generation": 6, "birthOrder": 2 },
+  { "id": "00000000-0000-0000-0000-00000000101c", "fullName": "Đỗ Thị Hiền",                             "gender": "female", "birthYear": 1975,                                                                                                                       "generation": 6, "birthOrder": 1 },
+
+  { "id": "00000000-0000-0000-0000-00000000101d", "fullName": "Đỗ Phúc Anh",                             "gender": "male",   "birthYear": 1995,                                                                                                                       "generation": 7, "birthOrder": 1 },
+  { "id": "00000000-0000-0000-0000-00000000101e", "fullName": "Lê Thị Vy",                               "gender": "female", "birthYear": 1998,                                                                                                "isInLaw": true,      "generation": 7 },
+  { "id": "00000000-0000-0000-0000-00000000101f", "fullName": "Đỗ Văn Đức",                              "gender": "male",   "birthYear": 2000,                                                                                                                       "generation": 7, "birthOrder": 2 },
+
+  { "id": "00000000-0000-0000-0000-000000001020", "fullName": "Đỗ Phúc Khang",                           "gender": "male",   "birthYear": 2022,                                                                                                                       "generation": 8, "birthOrder": 1 }
 ]
