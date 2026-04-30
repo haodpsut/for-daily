@@ -1,0 +1,39 @@
+# Local dev only — run Postgres + Adminer (DB GUI) on your machine.
+#
+# Usage:
+#   docker compose up -d        # start in background
+#   docker compose down         # stop (data persists in ./.docker-data/)
+#   docker compose down -v      # stop + WIPE all data
+#
+# After starting:
+#   - Postgres: postgres://postgres:postgres@localhost:5432/giapha
+#   - Adminer GUI: http://localhost:8080 (server=db, user=postgres, pass=postgres, db=giapha)
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: giapha-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: giapha
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.docker-data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d giapha"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  adminer:
+    image: adminer:latest
+    container_name: giapha-adminer
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy

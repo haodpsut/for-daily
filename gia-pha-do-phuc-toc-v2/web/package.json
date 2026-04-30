@@ -1,0 +1,41 @@
+{
+  "name": "gia-pha-do-phuc-toc-v2",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Gia Phả Đỗ Phúc Tộc v2 — Hệ thống số hoá Từ đường (self-hosted Postgres + Next.js)",
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "seed": "tsx scripts/seed.ts",
+    "export": "tsx scripts/export.ts",
+    "import": "tsx scripts/import.ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.36.4",
+    "lucide-react": "^0.577.0",
+    "lunar-javascript": "^1.7.7",
+    "next": "16.1.6",
+    "postgres": "^3.4.5",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.1",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "drizzle-kit": "^0.30.0",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "16.1.6",
+    "tailwindcss": "^4.2.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.9.3"
+  }
+}

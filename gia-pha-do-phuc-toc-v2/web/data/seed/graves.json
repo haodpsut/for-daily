@@ -1,0 +1,46 @@
+[
+  {
+    "id": "00000000-0000-0000-0000-000000009001",
+    "personId": "00000000-0000-0000-0000-000000001001",
+    "cemeteryName": "Nghĩa trang dòng họ Đỗ Phúc",
+    "addressText": "Đồi Nam, thôn ABC, xã DEF",
+    "geoLat": 16.0560,
+    "geoLng": 108.2050,
+    "locationDescription": "Mộ trung tâm khu nghĩa trang, hướng Đông Nam, có bia đá lớn.",
+    "status": "kien_co",
+    "builtOn": "1890-12-01",
+    "lastReinterredOn": "2010-03-15",
+    "inscription": "Đỗ Phúc Tổ chi mộ (1820-1890)"
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000009002",
+    "personId": "00000000-0000-0000-0000-000000001002",
+    "cemeteryName": "Nghĩa trang dòng họ Đỗ Phúc",
+    "addressText": "Đồi Nam, thôn ABC, xã DEF",
+    "geoLat": 16.0561,
+    "geoLng": 108.2051,
+    "locationDescription": "Bên cạnh mộ Cụ Tổ.",
+    "status": "kien_co",
+    "builtOn": "1895-05-20",
+    "inscription": "Trần Thị Mẫu (1825-1895)"
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000009003",
+    "personId": "00000000-0000-0000-0000-000000001003",
+    "cemeteryName": "Nghĩa trang dòng họ Đỗ Phúc",
+    "geoLat": 16.0562,
+    "geoLng": 108.2052,
+    "locationDescription": "Hàng 2, từ trên xuống.",
+    "status": "kien_co",
+    "builtOn": "1925-12-15"
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000009004",
+    "personId": "00000000-0000-0000-0000-000000001005",
+    "cemeteryName": "Nghĩa trang dòng họ Đỗ Phúc",
+    "geoLat": 16.0563,
+    "geoLng": 108.2053,
+    "status": "kien_co",
+    "builtOn": "1920-06-10"
+  }
+]

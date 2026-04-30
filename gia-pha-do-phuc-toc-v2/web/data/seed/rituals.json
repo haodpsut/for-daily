@@ -1,0 +1,33 @@
+[
+  {
+    "id": "00000000-0000-0000-0000-000000004001",
+    "name": "Lễ Giỗ Tổ",
+    "kind": "gio_to",
+    "purpose": "Tưởng nhớ Cụ Tổ Đỗ Phúc Tổ — người khai sinh dòng họ.",
+    "fixedLunarMonth": 8, "fixedLunarDay": 15,
+    "ritualScript": "**VĂN CÚNG GIỖ TỔ (MẪU)**\n\nNam mô A Di Đà Phật! (3 lần)\n\nKính lạy:\n- Đức Tổ khai sinh dòng họ Đỗ Phúc...\n- Liệt vị Tiên tổ trong nội ngoại tộc...\n\nHôm nay là ngày Rằm tháng Tám, năm ..., con cháu trong dòng tộc tề tựu...\n\n*(Vui lòng thay nội dung văn cúng thật của họ.)*",
+    "offeringList": [
+      { "name": "Mâm cỗ chay/mặn", "qty": 3, "note": "Tuỳ truyền thống" },
+      { "name": "Hương, đèn", "qty": 1 },
+      { "name": "Trầu cau", "qty": 1 },
+      { "name": "Rượu", "qty": 1, "note": "1 chai" },
+      { "name": "Hoa quả ngũ quả", "qty": 1 }
+    ],
+    "procedure": "1. **Sắp lễ** (sáng sớm)\n2. **Khấn vái** — trưởng tộc đọc văn cúng\n3. **Dâng hương** — con cháu lần lượt theo thứ bậc\n4. **Hoá vàng** sau khi tàn hương\n5. **Thụ lộc** — bữa cơm gia tộc"
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000004002",
+    "name": "Lễ Tảo Mộ Thanh Minh",
+    "kind": "le_thanh_minh",
+    "purpose": "Tảo mộ tổ tiên trong tiết Thanh Minh.",
+    "fixedLunarMonth": 3, "fixedLunarDay": 3,
+    "procedure": "1. Tập trung tại Từ đường\n2. Đi viếng từng mộ — dọn cỏ, sơn lại bia, thắp hương\n3. Quay về Từ đường thắp hương báo cáo Tổ"
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000004003",
+    "name": "Lễ Chạp Tổ cuối năm",
+    "kind": "le_chap_tu",
+    "purpose": "Tổng kết năm, báo cáo Tổ về con cháu trong tộc.",
+    "fixedLunarMonth": 12, "fixedLunarDay": 25
+  }
+]

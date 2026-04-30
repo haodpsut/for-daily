@@ -1,0 +1,38 @@
+[
+  {
+    "id": "00000000-0000-0000-0000-000000008001",
+    "type": "di_huan",
+    "title": "Di huấn Cụ Tổ (mẫu)",
+    "content": "**Năm điều dạy con cháu** (mẫu, vui lòng thay):\n\n1. Hiếu thảo với cha mẹ, kính trọng người trên.\n2. Hoà thuận với anh em, đùm bọc lẫn nhau.\n3. Học hành chăm chỉ, lập thân chính trực.\n4. Cần kiệm trong sinh hoạt, không xa hoa lãng phí.\n5. Giữ gìn nề nếp tổ tiên, không để mai một.",
+    "sourcePersonId": "00000000-0000-0000-0000-000000001001",
+    "sourceNote": "Truyền miệng, ghi lại bởi đời 3.",
+    "yearComposed": 1885,
+    "displayOrder": 1
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000008002",
+    "type": "cau_doi",
+    "title": "Câu đối Từ đường",
+    "content": "祖德流芳千古在 / 宗功貽厚萬年存",
+    "transliteration": "Tổ đức lưu phương thiên cổ tại / Tông công di hậu vạn niên tồn",
+    "translation": "Đức Tổ lưu hương thơm muôn đời còn đó / Công ơn dòng tộc để lại vạn năm trường tồn",
+    "sourceNote": "Treo trước cửa Từ đường (mẫu).",
+    "displayOrder": 2
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000008003",
+    "type": "hoanh_phi",
+    "title": "Hoành phi chính giữa",
+    "content": "饮 水 思 源",
+    "transliteration": "Ẩm thuỷ tư nguyên",
+    "translation": "Uống nước nhớ nguồn",
+    "displayOrder": 3
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000008004",
+    "type": "gia_phong",
+    "title": "Nề nếp họ Đỗ Phúc",
+    "content": "**Quy ước dòng tộc (mẫu):**\n\n- Mỗi năm họp tộc 1 lần vào lễ Chạp Tổ.\n- Mỗi gia đình đóng góp tối thiểu 500.000đ/năm cho quỹ Từ đường.\n- Mọi quyết định lớn (trùng tu, đặt lại bia, ...) phải có sự đồng thuận của Hội đồng trưởng tộc.",
+    "displayOrder": 4
+  }
+]

@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+:root {
+  --background: 252 248 240;     /* Warm cream */
+  --foreground: 30 24 16;         /* Near-black warm */
+  --accent: 154 47 47;            /* Đỏ son truyền thống */
+  --accent-soft: 198 124 78;      /* Vàng đồng */
+  --muted: 245 240 230;
+}
+
+@theme inline {
+  --color-background: rgb(var(--background));
+  --color-foreground: rgb(var(--foreground));
+  --color-accent: rgb(var(--accent));
+  --color-accent-soft: rgb(var(--accent-soft));
+  --color-muted: rgb(var(--muted));
+  --font-serif: "Noto Serif", "Times New Roman", Georgia, serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+html, body {
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground));
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, .serif {
+  font-family: var(--font-serif);
+}
