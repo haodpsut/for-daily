@@ -39,8 +39,8 @@ export default async function Dashboard() {
           {hall.address && <p className="mt-2 text-sm text-stone-600">{hall.address}</p>}
           {hall.contactInfo && typeof hall.contactInfo === "object" && (
             <div className="mt-4 grid gap-2 text-sm text-stone-700 md:grid-cols-3">
-              {Object.entries(hall.contactInfo as Record<string, string>).map(([k, v]) => (
-                <div key={k}><span className="text-stone-500">{k}:</span> {v}</div>
+              {Object.entries(hall.contactInfo as Record<string, unknown>).map(([k, v]) => (
+                <div key={k}><span className="text-stone-500">{k}:</span> {String(v)}</div>
               ))}
             </div>
           )}
