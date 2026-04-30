@@ -3,6 +3,8 @@ import { persons, relationships, deathAnniversaries, graves } from "@/lib/db/sch
 import { eq, or, asc, inArray } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { auth } from "@/auth";
+import RelationshipManager, { type RelEntry } from "@/components/RelationshipManager";
 
 export const dynamic = "force-dynamic";
 
@@ -13,6 +15,9 @@ const GEN_LABELS: Record<number, string> = {
 export default async function PersonDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
+  const session = await auth();
+  const isAdmin = session?.user?.role === "admin";
+
   const person = await db.select().from(persons).where(eq(persons.id, id)).then((r) => r[0]);
   if (!person) notFound();
 
@@ -21,32 +26,28 @@ export default async function PersonDetailPage({ params }: { params: Promise<{ i
     .from(relationships)
     .where(or(eq(relationships.personA, id), eq(relationships.personB, id)));
 
-  // Cha mẹ = ai có relationship type='biological_child' đến person này
-  const parentIds = allRels
-    .filter((r) => (r.type === "biological_child" || r.type === "adopted_child") && r.personB === id)
-    .map((r) => r.personA);
+  // Build entries with relationship metadata for the manager
+  const parentRels = allRels.filter(
+    (r) => (r.type === "biological_child" || r.type === "adopted_child") && r.personB === id,
+  );
+  const spouseRels = allRels.filter((r) => r.type === "marriage");
+  const childRels = allRels.filter(
+    (r) => (r.type === "biological_child" || r.type === "adopted_child") && r.personA === id,
+  );
 
-  // Vợ/chồng
-  const spouseIds = allRels
-    .filter((r) => r.type === "marriage")
-    .map((r) => (r.personA === id ? r.personB : r.personA));
+  const parentIds = parentRels.map((r) => r.personA);
+  const spouseIds = spouseRels.map((r) => (r.personA === id ? r.personB : r.personA));
+  const childIds = childRels.map((r) => r.personB);
 
-  // Con cái
-  const childIds = allRels
-    .filter((r) => (r.type === "biological_child" || r.type === "adopted_child") && r.personA === id)
-    .map((r) => r.personB);
-
-  // Anh chị em ruột = con của cùng cha mẹ
+  // Siblings = children of my parents (exclude self)
   let siblingIds: string[] = [];
   if (parentIds.length > 0) {
-    const parentRels = await db
+    const parentRelRows = await db
       .select()
       .from(relationships)
-      .where(
-        inArray(relationships.personA, parentIds),
-      );
+      .where(inArray(relationships.personA, parentIds));
     const sibSet = new Set<string>();
-    for (const r of parentRels) {
+    for (const r of parentRelRows) {
       if ((r.type === "biological_child" || r.type === "adopted_child") && r.personB !== id) {
         sibSet.add(r.personB);
       }
@@ -65,7 +66,42 @@ export default async function PersonDetailPage({ params }: { params: Promise<{ i
     db.select().from(graves).where(eq(graves.personId, id)).then((r) => r[0]),
   ]);
 
-  const lookup = (ids: string[]) => ids.map((i) => relMap.get(i)).filter((p): p is NonNullable<typeof p> => p != null);
+  const lookup = (ids: string[]) =>
+    ids.map((i) => relMap.get(i)).filter((p): p is NonNullable<typeof p> => p != null);
+
+  // Build RelEntry lists for the manager (admin)
+  function buildEntries(rels: typeof parentRels, getOtherId: (r: (typeof parentRels)[number]) => string): RelEntry[] {
+    return rels
+      .map((r) => {
+        const otherId = getOtherId(r);
+        const p = relMap.get(otherId);
+        if (!p) return null;
+        return {
+          relationshipId: r.id,
+          type: r.type as "marriage" | "biological_child" | "adopted_child",
+          person: {
+            id: p.id, fullName: p.fullName, gender: p.gender,
+            birthYear: p.birthYear, isInLaw: p.isInLaw, generation: p.generation,
+          },
+        };
+      })
+      .filter((e): e is RelEntry => e != null);
+  }
+
+  const parentEntries = buildEntries(parentRels, (r) => r.personA);
+  const spouseEntries = buildEntries(spouseRels, (r) => (r.personA === id ? r.personB : r.personA));
+  const childEntries = buildEntries(childRels, (r) => r.personB);
+
+  // For the picker: all persons except self (already excluded in client via usedIds)
+  const allPersonsForPicker = isAdmin
+    ? await db
+        .select({
+          id: persons.id, fullName: persons.fullName, gender: persons.gender,
+          birthYear: persons.birthYear, isInLaw: persons.isInLaw, generation: persons.generation,
+        })
+        .from(persons)
+        .orderBy(asc(persons.generation), asc(persons.fullName))
+    : [];
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-10">
@@ -100,6 +136,14 @@ export default async function PersonDetailPage({ params }: { params: Promise<{ i
               )}
             </p>
           </div>
+          {isAdmin && (
+            <Link
+              href={`/dashboard/admin/persons/${id}`}
+              className="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-xs text-stone-700 hover:bg-stone-100"
+            >
+              ✎ Sửa thông tin
+            </Link>
+          )}
         </div>
 
         {person.biography && (
@@ -114,8 +158,22 @@ export default async function PersonDetailPage({ params }: { params: Promise<{ i
         )}
       </header>
 
-      {/* Family relations */}
-      <section className="mt-8 grid gap-4 md:grid-cols-2">
+      {/* Relationship manager (admin) */}
+      {isAdmin && (
+        <div className="mt-6">
+          <RelationshipManager
+            personId={id}
+            personFullName={person.fullName}
+            allPersons={allPersonsForPicker}
+            parents={parentEntries}
+            spouses={spouseEntries}
+            children={childEntries}
+          />
+        </div>
+      )}
+
+      {/* Read-only family relations (always visible) */}
+      <section className="mt-6 grid gap-4 md:grid-cols-2">
         <RelGroup title="Cha/Mẹ" people={lookup(parentIds)} />
         <RelGroup title="Vợ/Chồng" people={lookup(spouseIds)} />
         <RelGroup title="Anh/Chị/Em ruột" people={lookup(siblingIds)} />
@@ -154,7 +212,7 @@ export default async function PersonDetailPage({ params }: { params: Promise<{ i
         </section>
       )}
 
-      <div className="mt-8 flex justify-center">
+      <div className="mt-8 flex justify-center gap-3">
         <Link
           href={`/dashboard/phahe/xung-ho?a=${person.id}`}
           className="rounded-md border border-stone-300 bg-white px-4 py-2 text-sm text-stone-700 hover:bg-stone-100"
@@ -166,7 +224,16 @@ export default async function PersonDetailPage({ params }: { params: Promise<{ i
   );
 }
 
-function RelGroup({ title, people }: { title: string; people: Array<{ id: string; fullName: string; gender: string; isInLaw: boolean; birthYear: number | null; deathYear: number | null }> }) {
+function RelGroup({
+  title,
+  people,
+}: {
+  title: string;
+  people: Array<{
+    id: string; fullName: string; gender: string; isInLaw: boolean;
+    birthYear: number | null; deathYear: number | null;
+  }>;
+}) {
   if (people.length === 0) {
     return (
       <div className="rounded-lg border border-stone-200 bg-stone-50 p-4">
@@ -189,7 +256,7 @@ function RelGroup({ title, people }: { title: string; people: Array<{ id: string
             >
               <span className="font-medium text-stone-900">{p.fullName}</span>
               <span className="ml-2 text-xs text-stone-500">
-                {p.birthYear ?? "?"}–{p.deathYear ?? (p.isInLaw ? "" : "")}
+                {p.birthYear ?? "?"}–{p.deathYear ?? ""}
                 {p.isInLaw && " · Dâu/Rể"}
               </span>
             </Link>
