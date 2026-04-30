@@ -18,6 +18,13 @@ conda activate "$GIAPHA_ENV_NAME"
 echo "→ Auto-backup before update..."
 bash "$REPO_DIR/gia-pha-do-phuc-toc-v2/deploy/backup.sh" || echo "  (backup failed, continuing)"
 
+# Reset files that npm install + next build auto-modify locally on VPS but
+# stay clean in git. Without this the next pull fails with merge conflict.
+echo "→ Resetting auto-modified files..."
+git -C "$REPO_DIR" checkout -- gia-pha-do-phuc-toc-v2/web/package-lock.json 2>/dev/null || true
+git -C "$REPO_DIR" checkout -- gia-pha-do-phuc-toc-v2/web/tsconfig.json 2>/dev/null || true
+git -C "$REPO_DIR" checkout -- gia-pha-do-phuc-toc-v2/web/next-env.d.ts 2>/dev/null || true
+
 echo "→ Pulling code..."
 git -C "$REPO_DIR" fetch origin "$GIAPHA_BRANCH"
 git -C "$REPO_DIR" checkout "$GIAPHA_BRANCH"
