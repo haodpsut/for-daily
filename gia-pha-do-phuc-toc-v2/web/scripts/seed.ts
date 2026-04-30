@@ -15,10 +15,21 @@ import { db, schema } from "../lib/db/client";
 
 const SEED_DIR = path.resolve(process.cwd(), "data/seed");
 
+// Drizzle timestamp columns expect Date objects, but JSON only has strings.
+// Auto-convert any ISO 8601 datetime string (with time component) to Date.
+// Plain `YYYY-MM-DD` strings (date columns) are left untouched.
+const ISO_DATETIME_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})$/;
+function dateReviver(_key: string, value: unknown): unknown {
+  if (typeof value === "string" && ISO_DATETIME_REGEX.test(value)) {
+    return new Date(value);
+  }
+  return value;
+}
+
 async function loadJson<T>(filename: string): Promise<T[]> {
   const p = path.join(SEED_DIR, filename);
   const raw = await readFile(p, "utf-8");
-  return JSON.parse(raw) as T[];
+  return JSON.parse(raw, dateReviver) as T[];
 }
 
 async function seed() {

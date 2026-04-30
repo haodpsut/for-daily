@@ -47,9 +47,19 @@ async function fileExists(p: string): Promise<boolean> {
   }
 }
 
+// Auto-convert ISO datetime strings (timestamp columns) → Date.
+// Plain YYYY-MM-DD (date columns) are left as strings.
+const ISO_DATETIME_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})$/;
+function dateReviver(_key: string, value: unknown): unknown {
+  if (typeof value === "string" && ISO_DATETIME_REGEX.test(value)) {
+    return new Date(value);
+  }
+  return value;
+}
+
 async function loadJson<T>(p: string): Promise<T[]> {
   const raw = await readFile(p, "utf-8");
-  return JSON.parse(raw) as T[];
+  return JSON.parse(raw, dateReviver) as T[];
 }
 
 async function run() {
