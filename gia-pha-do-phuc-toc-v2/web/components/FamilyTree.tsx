@@ -53,7 +53,7 @@ export default function FamilyTree({
       const person = personsMap.get(id);
       if (!person) return null;
       const spouseId = spouseOf.get(id);
-      const spouse = (spouseId && personsMap.get(spouseId)) ?? null;
+      const spouse: PersonNode | null = spouseId ? (personsMap.get(spouseId) ?? null) : null;
       // Children belong to the non-in-law parent (the bloodline person)
       const childIds = childrenOf.get(id) ?? [];
       const children = childIds
