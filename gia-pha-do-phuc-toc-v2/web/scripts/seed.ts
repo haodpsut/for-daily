@@ -42,17 +42,17 @@ async function seed() {
     RESTART IDENTITY CASCADE
   `);
 
-  // ---- 2. INSERT (dependency order) ----
+  // ---- 2. INSERT (dependency order — persons FIRST because hall FK→persons) ----
+
+  const persons = await loadJson<typeof schema.persons.$inferInsert>("persons.json");
+  await db.insert(schema.persons).values(persons);
+  console.log(`  ✓ persons: ${persons.length}`);
 
   const hall = await loadJson<typeof schema.ancestralHallInfo.$inferInsert>("ancestral_hall_info.json");
   if (hall.length > 0) {
     await db.insert(schema.ancestralHallInfo).values(hall);
     console.log(`  ✓ ancestral_hall_info: ${hall.length}`);
   }
-
-  const persons = await loadJson<typeof schema.persons.$inferInsert>("persons.json");
-  await db.insert(schema.persons).values(persons);
-  console.log(`  ✓ persons: ${persons.length}`);
 
   const relationships = await loadJson<typeof schema.relationships.$inferInsert>("relationships.json");
   await db.insert(schema.relationships).values(relationships);

@@ -19,10 +19,11 @@ import { db, schema } from "../lib/db/client";
 
 const SUPPORTED_VERSIONS = ["1.0.0"];
 
-// Insert order = dependency order (parents first)
+// Insert order = dependency order (parents first).
+// persons MUST come before ancestral_hall_info (founder_person_id FK).
 const IMPORT_ORDER: Array<[string, keyof typeof schema]> = [
-  ["ancestral_hall_info", "ancestralHallInfo"],
   ["persons", "persons"],
+  ["ancestral_hall_info", "ancestralHallInfo"],
   ["person_details_private", "personDetailsPrivate"],
   ["relationships", "relationships"],
   ["death_anniversaries", "deathAnniversaries"],
