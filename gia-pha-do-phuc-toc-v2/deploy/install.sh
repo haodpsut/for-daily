@@ -153,15 +153,21 @@ case "$GIAPHA_SEED" in
     yes) info "Seeding sample data..."; npm run seed ;;
     no)  info "Skipping seed (GIAPHA_SEED=no)" ;;
     ask)
-        # Only ask if DB is empty
+        # Check tables exist (db:push must have succeeded) AND persons is empty
+        TABLE_EXISTS=$(psql -h localhost -p "$GIAPHA_PG_PORT" -U "$DB_USER" -d "$GIAPHA_DB_NAME" \
+                       -tAc "SELECT count(*) FROM information_schema.tables WHERE table_schema='public' AND table_name='persons'" 2>/dev/null)
+        TABLE_EXISTS="${TABLE_EXISTS:-0}"
+        if [ "$TABLE_EXISTS" != "1" ]; then
+            err "Table 'persons' không tồn tại — db:push step 9 đã fail. Kiểm tra log npm ở trên."
+        fi
         ROW_COUNT=$(psql -h localhost -p "$GIAPHA_PG_PORT" -U "$DB_USER" -d "$GIAPHA_DB_NAME" \
-                    -tAc "SELECT count(*) FROM persons" 2>/dev/null || echo "0")
+                    -tAc "SELECT count(*) FROM persons" 2>/dev/null)
+        ROW_COUNT="${ROW_COUNT:-0}"
         if [ "$ROW_COUNT" = "0" ]; then
             if [ -t 0 ]; then
                 read -p "    DB trống. Insert dữ liệu mẫu? [Y/n] " -r
                 if [[ ! $REPLY =~ ^[Nn]$ ]]; then npm run seed; fi
             else
-                # Non-interactive (curl | bash) → default YES on empty DB
                 info "Non-interactive mode + empty DB → seeding sample data"
                 npm run seed
             fi

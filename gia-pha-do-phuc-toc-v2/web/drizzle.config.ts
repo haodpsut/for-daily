@@ -14,6 +14,8 @@ export default defineConfig({
   out: "./drizzle",
   dialect: "postgresql",
   dbCredentials: { url: databaseUrl },
-  verbose: true,
-  strict: true,
+  verbose: false,
+  // strict: false → drizzle-kit push không hỏi confirm (cần thiết cho non-TTY install).
+  // Rủi ro mất data ở schema-change destructive được mitigated bởi backup.sh chạy trước update.sh.
+  strict: false,
 });
