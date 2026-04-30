@@ -37,7 +37,7 @@ export default async function Dashboard() {
           <p className="serif text-sm uppercase tracking-wider text-stone-500">Từ đường</p>
           <h1 className="serif mt-2 text-3xl font-bold text-stone-900">{hall.name}</h1>
           {hall.address && <p className="mt-2 text-sm text-stone-600">{hall.address}</p>}
-          {hall.contactInfo && typeof hall.contactInfo === "object" && (
+          {!!hall.contactInfo && typeof hall.contactInfo === "object" && (
             <div className="mt-4 grid gap-2 text-sm text-stone-700 md:grid-cols-3">
               {Object.entries(hall.contactInfo as Record<string, unknown>).map(([k, v]) => (
                 <div key={k}><span className="text-stone-500">{k}:</span> {String(v)}</div>
