@@ -91,13 +91,15 @@ if [ -f "$PG_DATA/PG_VERSION" ]; then
     info "Already initialized at $PG_DATA"
 else
     info "Running initdb at $PG_DATA..."
-    initdb -D "$PG_DATA" -U "$DB_USER" --auth-local=trust --auth-host=md5 -E UTF8 --no-locale
+    # auth-host=trust OK vì listen_addresses bị giới hạn 'localhost' bên dưới — chỉ
+    # process cùng máy mới connect được. Single-user VPS → trust là chuẩn.
+    initdb -D "$PG_DATA" -U "$DB_USER" --auth-local=trust --auth-host=trust -E UTF8 --no-locale
     # set port + bind localhost only
     sed -i.bak \
         -e "s/^#\?port = .*/port = $GIAPHA_PG_PORT/" \
         -e "s/^#\?listen_addresses = .*/listen_addresses = 'localhost'/" \
         "$PG_DATA/postgresql.conf"
-    info "✓ Initialized (port=$GIAPHA_PG_PORT, localhost only)"
+    info "✓ Initialized (port=$GIAPHA_PG_PORT, localhost only, trust auth)"
 fi
 
 # ---- Step 5: Start Postgres ----
