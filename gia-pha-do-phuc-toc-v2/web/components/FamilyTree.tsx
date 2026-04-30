@@ -15,7 +15,9 @@ interface TreeNode {
   children: TreeNode[];
 }
 
-const DEFAULT_OPEN_DEPTH = 2; // Mặc định chỉ mở 2 đời đầu
+const DEFAULT_OPEN_DEPTH = 2;       // Mặc định chỉ mở 2 đời đầu
+const SIBLINGS_LIMIT = 8;            // Mỗi parent chỉ hiện tối đa N con, còn lại click +X nữa
+const COMPACT_THRESHOLD = 12;        // Tổng node visible > N → tự bật compact mode
 
 export default function FamilyTree({
   persons,
@@ -25,11 +27,15 @@ export default function FamilyTree({
   relationships: RelEdge[];
 }) {
   const [orientation, setOrientation] = useState<"vertical" | "horizontal">("vertical");
+  const [compact, setCompact] = useState(false);
   const [search, setSearch] = useState("");
   const [highlightId, setHighlightId] = useState<string | null>(null);
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
+  const [siblingsExpanded, setSiblingsExpanded] = useState<Set<string>>(new Set());
   const [hasInitCollapse, setHasInitCollapse] = useState(false);
   const transformRef = useRef<ReactZoomPanPinchRef | null>(null);
+
+  void COMPACT_THRESHOLD; // reserved for auto-compact heuristic
 
   const { roots } = useMemo(() => {
     const personsMap = new Map(persons.map((p) => [p.id, p]));
@@ -97,6 +103,13 @@ export default function FamilyTree({
     if (next.has(id)) next.delete(id);
     else next.add(id);
     setCollapsed(next);
+  }
+
+  function toggleSiblings(id: string) {
+    const next = new Set(siblingsExpanded);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    setSiblingsExpanded(next);
   }
 
   function expandAll() {
@@ -193,6 +206,18 @@ export default function FamilyTree({
             Tất cả
           </button>
         </div>
+
+        <button
+          onClick={() => setCompact((c) => !c)}
+          className={`rounded-md border px-3 py-1.5 text-xs transition ${
+            compact
+              ? "border-stone-900 bg-stone-900 text-white"
+              : "border-stone-300 bg-white text-stone-600 hover:text-stone-900"
+          }`}
+          title="Card nhỏ hơn để xem nhiều người"
+        >
+          ⊟ Compact
+        </button>
       </div>
 
       {/* Help text */}
@@ -240,6 +265,9 @@ export default function FamilyTree({
                       highlightId={highlightId}
                       collapsed={collapsed}
                       toggleCollapsed={toggleCollapsed}
+                      siblingsExpanded={siblingsExpanded}
+                      toggleSiblings={toggleSiblings}
+                      compact={compact}
                     />
                   ))}
                 </div>
@@ -278,15 +306,57 @@ function TreeBranch({
   highlightId,
   collapsed,
   toggleCollapsed,
+  siblingsExpanded,
+  toggleSiblings,
+  compact,
 }: {
   node: TreeNode;
   orientation: "vertical" | "horizontal";
   highlightId: string | null;
   collapsed: Set<string>;
   toggleCollapsed: (id: string) => void;
+  siblingsExpanded: Set<string>;
+  toggleSiblings: (id: string) => void;
+  compact: boolean;
 }) {
   const isCollapsed = collapsed.has(node.person.id);
-  const hasChildren = node.children.length > 0;
+  const totalChildren = node.children.length;
+  const hasChildren = totalChildren > 0;
+  const expanded = siblingsExpanded.has(node.person.id);
+  const showAll = expanded || totalChildren <= SIBLINGS_LIMIT;
+  const visibleChildren = showAll ? node.children : node.children.slice(0, SIBLINGS_LIMIT);
+  const hiddenCount = totalChildren - visibleChildren.length;
+
+  const childProps = {
+    orientation,
+    highlightId,
+    collapsed,
+    toggleCollapsed,
+    siblingsExpanded,
+    toggleSiblings,
+    compact,
+  };
+
+  const moreButton = hiddenCount > 0 ? (
+    <button
+      onClick={(e) => { e.stopPropagation(); toggleSiblings(node.person.id); }}
+      className="flex flex-col items-center justify-center min-w-[100px] rounded-lg border-2 border-dashed border-amber-400 bg-amber-50 px-3 py-3 text-xs font-medium text-amber-800 hover:bg-amber-100"
+    >
+      <span className="text-lg">+{hiddenCount}</span>
+      <span>người nữa</span>
+    </button>
+  ) : null;
+
+  const collapseButton = expanded && totalChildren > SIBLINGS_LIMIT ? (
+    <button
+      onClick={(e) => { e.stopPropagation(); toggleSiblings(node.person.id); }}
+      className="flex flex-col items-center justify-center min-w-[80px] rounded-lg border border-stone-300 bg-white px-2 py-3 text-xs text-stone-600 hover:bg-stone-50"
+      title="Thu lại"
+    >
+      <span className="text-base">−</span>
+      <span>thu lại</span>
+    </button>
+  ) : null;
 
   if (orientation === "vertical") {
     return (
@@ -298,27 +368,34 @@ function TreeBranch({
           hasChildren={hasChildren}
           isCollapsed={isCollapsed}
           onToggle={() => toggleCollapsed(node.person.id)}
-          childCount={node.children.length}
+          childCount={totalChildren}
+          compact={compact}
         />
         {hasChildren && !isCollapsed && (
           <>
             <div className="h-8 w-0.5 bg-stone-300" />
-            <div className="relative flex items-start gap-6 sm:gap-10">
-              {node.children.length > 1 && (
+            <div className="relative flex items-start gap-4 sm:gap-6">
+              {visibleChildren.length > 1 && (
                 <div className="absolute left-[10%] right-[10%] top-0 h-0.5 bg-stone-300" />
               )}
-              {node.children.map((child) => (
+              {visibleChildren.map((child) => (
                 <div key={child.person.id} className="flex flex-col items-center">
                   <div className="h-8 w-0.5 bg-stone-300" />
-                  <TreeBranch
-                    node={child}
-                    orientation={orientation}
-                    highlightId={highlightId}
-                    collapsed={collapsed}
-                    toggleCollapsed={toggleCollapsed}
-                  />
+                  <TreeBranch node={child} {...childProps} />
                 </div>
               ))}
+              {moreButton && (
+                <div className="flex flex-col items-center">
+                  <div className="h-8 w-0.5 bg-amber-400" />
+                  {moreButton}
+                </div>
+              )}
+              {collapseButton && (
+                <div className="flex flex-col items-center">
+                  <div className="h-8 w-0.5 bg-stone-300" />
+                  {collapseButton}
+                </div>
+              )}
             </div>
           </>
         )}
@@ -335,27 +412,34 @@ function TreeBranch({
         hasChildren={hasChildren}
         isCollapsed={isCollapsed}
         onToggle={() => toggleCollapsed(node.person.id)}
-        childCount={node.children.length}
+        childCount={totalChildren}
+        compact={compact}
       />
       {hasChildren && !isCollapsed && (
         <>
           <div className="w-8 h-0.5 bg-stone-300" />
-          <div className="relative flex flex-col gap-6">
-            {node.children.length > 1 && (
+          <div className="relative flex flex-col gap-4">
+            {visibleChildren.length > 1 && (
               <div className="absolute top-[10%] bottom-[10%] left-0 w-0.5 bg-stone-300" />
             )}
-            {node.children.map((child) => (
+            {visibleChildren.map((child) => (
               <div key={child.person.id} className="flex flex-row items-center">
                 <div className="w-8 h-0.5 bg-stone-300" />
-                <TreeBranch
-                  node={child}
-                  orientation={orientation}
-                  highlightId={highlightId}
-                  collapsed={collapsed}
-                  toggleCollapsed={toggleCollapsed}
-                />
+                <TreeBranch node={child} {...childProps} />
               </div>
             ))}
+            {moreButton && (
+              <div className="flex flex-row items-center">
+                <div className="w-8 h-0.5 bg-amber-400" />
+                {moreButton}
+              </div>
+            )}
+            {collapseButton && (
+              <div className="flex flex-row items-center">
+                <div className="w-8 h-0.5 bg-stone-300" />
+                {collapseButton}
+              </div>
+            )}
           </div>
         </>
       )}
@@ -371,6 +455,7 @@ function PersonPair({
   isCollapsed,
   onToggle,
   childCount,
+  compact,
 }: {
   person: PersonNode;
   spouse: PersonNode | null;
@@ -379,14 +464,15 @@ function PersonPair({
   isCollapsed: boolean;
   onToggle: () => void;
   childCount: number;
+  compact: boolean;
 }) {
   return (
     <div className="relative flex items-center gap-2">
-      <PersonCard person={person} highlight={highlightId === person.id} />
+      <PersonCard person={person} highlight={highlightId === person.id} compact={compact} />
       {spouse && (
         <>
           <span className="select-none text-amber-600 text-xl font-bold">⚭</span>
-          <PersonCard person={spouse} highlight={highlightId === spouse.id} />
+          <PersonCard person={spouse} highlight={highlightId === spouse.id} compact={compact} />
         </>
       )}
       {hasChildren && (
@@ -406,13 +492,34 @@ function PersonPair({
   );
 }
 
-function PersonCard({ person, highlight }: { person: PersonNode; highlight?: boolean }) {
+function PersonCard({
+  person,
+  highlight,
+  compact,
+}: {
+  person: PersonNode;
+  highlight?: boolean;
+  compact: boolean;
+}) {
   const isMale = person.gender === "male";
   const colorClass = person.isInLaw
     ? "border-amber-300 bg-gradient-to-br from-amber-50 to-amber-100 text-amber-950"
     : isMale
       ? "border-sky-300 bg-gradient-to-br from-sky-50 to-sky-100 text-sky-950"
       : "border-rose-300 bg-gradient-to-br from-rose-50 to-rose-100 text-rose-950";
+
+  if (compact) {
+    return (
+      <Link
+        id={`node-${person.id}`}
+        href={`/dashboard/phahe/${person.id}`}
+        onClick={(e) => e.stopPropagation()}
+        className={`block min-w-[80px] max-w-[110px] rounded-lg border px-2 py-1 text-center shadow-sm transition hover:shadow-md ${colorClass} ${highlight ? "ring-2 ring-amber-400 ring-offset-1 scale-105" : ""}`}
+      >
+        <div className="serif text-[11px] font-semibold leading-tight truncate">{person.fullName}</div>
+      </Link>
+    );
+  }
 
   return (
     <Link

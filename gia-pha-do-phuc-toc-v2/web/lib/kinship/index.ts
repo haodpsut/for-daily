@@ -10,6 +10,11 @@
  *  - Special: anh em cột chèo, chị em dâu
  */
 
+/**
+ * Person fields used by the kinship algorithm + tree/UI components.
+ * Required fields = needed by algo. Optional fields = used only by UI.
+ * Drizzle's full Person row from `lib/db/schema` satisfies this interface.
+ */
 export interface PersonNode {
   id: string;
   fullName: string;
@@ -18,6 +23,11 @@ export interface PersonNode {
   birthOrder: number | null;
   generation: number | null;
   isInLaw: boolean;
+
+  // Optional — used by tree/detail UI, ignored by algorithm
+  isDeceased?: boolean;
+  deathYear?: number | null;
+  otherNames?: string | null;
 }
 
 export interface RelEdge {
