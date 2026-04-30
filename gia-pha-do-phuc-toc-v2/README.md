@@ -19,6 +19,17 @@
 
 ## Chạy nhanh
 
+### Trên VPS (1 lệnh duy nhất, conda-only, không cần root)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/haodpsut/for-daily/main/gia-pha-do-phuc-toc-v2/deploy/install.sh | bash
+```
+
+→ Tự cài conda env + Postgres + npm deps + schema + seed + pm2 trong ~5-10 phút.
+Xem chi tiết + tuỳ chỉnh: [`deploy/README.md`](deploy/README.md).
+
+### Trên local Windows (dev)
+
 Vào [`web/`](web/) và làm theo [`web/README.md`](web/README.md).
 
 ## License

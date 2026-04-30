@@ -1,0 +1,14 @@
+# Force LF line endings for shell scripts — CRLF breaks bash on Linux VPS
+*.sh        text eol=lf
+deploy/**   text eol=lf
+
+# Other text files: normalize on commit, native on checkout
+*.ts        text
+*.tsx       text
+*.js        text
+*.mjs       text
+*.json      text
+*.md        text
+*.yml       text
+*.yaml      text
+*.css       text
