@@ -13,6 +13,7 @@ const TABS = [
   { href: "/dashboard/admin/occurrences",    label: "Lần lễ" },
   { href: "/dashboard/admin/contributions",  label: "Công đức" },
   { href: "/dashboard/admin/reports",        label: "Báo cáo năm" },
+  { href: "/dashboard/admin/users",          label: "Tài khoản" },
 ];
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {

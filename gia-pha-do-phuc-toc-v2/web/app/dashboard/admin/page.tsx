@@ -19,6 +19,7 @@ const TILES = [
   { href: "/dashboard/admin/occurrences",    title: "Lần thực hiện",   key: "occ",      desc: "Mỗi lần tổ chức nghi lễ / giỗ thực tế" },
   { href: "/dashboard/admin/contributions",  title: "Công đức",        key: "contrib",  desc: "Đóng góp tiền + hiện vật" },
   { href: "/dashboard/admin/reports",        title: "Báo cáo năm",     key: "report",   desc: "Tổng kết & công bố hàng năm" },
+  { href: "/dashboard/admin/users",          title: "Tài khoản",       key: "users",    desc: "Quản lý user — đổi role, khoá, xoá" },
 ];
 
 export default async function AdminIndex() {
@@ -64,22 +65,15 @@ export default async function AdminIndex() {
           </Link>
         ))}
 
-        <div className="rounded-lg border border-stone-200 bg-stone-50 p-5">
-          <div className="flex items-baseline justify-between">
-            <h2 className="serif text-xl font-semibold text-stone-900">Tài khoản</h2>
-            <span className="text-sm font-medium text-amber-700">{userCount}</span>
-          </div>
-          <p className="mt-2 text-sm text-stone-600">Quản lý user (admin / editor / member). <em>Sắp ra mắt.</em></p>
-        </div>
       </div>
 
       <div className="mt-8 rounded-lg border border-stone-200 bg-white p-6 text-sm text-stone-600">
         <h3 className="serif text-base font-semibold text-stone-900">Sắp tới</h3>
         <ul className="mt-2 list-disc pl-5 space-y-1">
-          <li>Quản lý tài khoản — admin duyệt member mới + đổi role</li>
           <li>Thư viện ảnh + upload (storage R2 hoặc local FS)</li>
           <li>Approval flow + invite-only registration</li>
           <li>Audit log — xem ai sửa gì khi nào</li>
+          <li>Calendar view giỗ kỵ (lịch âm 12 tháng)</li>
         </ul>
       </div>
     </main>
