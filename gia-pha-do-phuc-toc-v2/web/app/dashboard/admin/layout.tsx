@@ -8,6 +8,11 @@ const TABS = [
   { href: "/dashboard/admin/anniversaries",  label: "Giỗ kỵ" },
   { href: "/dashboard/admin/heritage",       label: "Di sản" },
   { href: "/dashboard/admin/graves",         label: "Mồ mả" },
+  { href: "/dashboard/admin/grave-visits",   label: "Tảo mộ" },
+  { href: "/dashboard/admin/rituals",        label: "Nghi lễ" },
+  { href: "/dashboard/admin/occurrences",    label: "Lần lễ" },
+  { href: "/dashboard/admin/contributions",  label: "Công đức" },
+  { href: "/dashboard/admin/reports",        label: "Báo cáo năm" },
 ];
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -25,7 +30,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 <Link
                   key={t.href}
                   href={t.href}
-                  className="rounded px-2 py-1 text-rose-700 hover:bg-white hover:text-rose-900"
+                  className="rounded px-2 py-1 whitespace-nowrap text-rose-700 hover:bg-white hover:text-rose-900"
                 >
                   {t.label}
                 </Link>
